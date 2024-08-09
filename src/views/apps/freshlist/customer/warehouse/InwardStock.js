@@ -98,7 +98,7 @@ class StockTransfer extends React.Component {
           filter: true,
         },
         {
-          headerName: "Actions",
+          headerName: "Inwared Stock",
           field: "sortorder",
           field: "transactions",
           width: 100,
@@ -118,15 +118,13 @@ class StockTransfer extends React.Component {
                         await _Get(Warehouse_Inward_list, params?.data?._id)
                           .then((res) => {
                             this.setState({ Loading: false });
-
                             console.log(res?.Warehouse);
                             let Inprocess = res?.Warehouse?.filter(
                               (ele) => ele?.transferStatus == "InProcess"
                             );
-                            console.log({
-                              ...params?.data,
-                              inward: Inprocess,
-                            });
+                           res?.Warehouse?.forEach((ele)=>{
+                            ele["grandTotal"] = Number(ele?.grandTotal.toFixed(2));
+                           })
                             this.setState({
                               ViewOneData: {
                                 ...params?.data,
@@ -214,7 +212,7 @@ class StockTransfer extends React.Component {
           sortable: true,
           editable: true,
           width: 260,
-          
+
           cellRendererFramework: (params) => {
             return (
               <>
@@ -230,7 +228,7 @@ class StockTransfer extends React.Component {
           field: "warehouseName",
           filter: true,
           sortable: true,
-           
+
           cellRendererFramework: (params) => {
             return (
               <>
@@ -246,7 +244,7 @@ class StockTransfer extends React.Component {
           field: "mobileNo",
           filter: true,
           sortable: true,
-           width: 140,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -381,8 +379,12 @@ class StockTransfer extends React.Component {
     this.setState({ ShowBill: false });
   };
   handleStockTrxInvoiceShow = (data) => {
-    this.setState({ ShowBill: true });
-    this.setState({ ViewOneUserView: true });
+    this.setState({
+      ShowBill: true,
+      ViewOneUserView: true,
+      BillViewData: data,
+    });
+    
 
     this.setState({ BillViewData: data });
   };
@@ -816,20 +818,23 @@ class StockTransfer extends React.Component {
             <Card>
               <Row className="mt-2 ml-2 mr-2">
                 <Col lg="5" md="5" xl="5">
-                  
                   <h2
-                                className="float-left "
-                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'24px' }}>
-                                Inward Stock
-                              </h2>
+                    className="float-left "
+                    style={{
+                      fontWeight: "600",
+                      textTransform: "uppercase",
+                      fontSize: "24px",
+                    }}>
+                    Inward Stock
+                  </h2>
                 </Col>
                 <Col xl="3" lg="3">
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
-                    />
-                  </Col>
-                  {/*
+                  <SuperAdminUI
+                    onDropdownChange={this.handleDropdownChange}
+                    onSubmit={this.handleParentSubmit}
+                  />
+                </Col>
+                {/*
                 {this.state.MasterShow && (
                   <Col>
                     <SuperAdminUI
@@ -839,16 +844,13 @@ class StockTransfer extends React.Component {
                   </Col>
                 )}*/}
                 <Col xl="3" lg="3" xs="8">
-                <div className="table-input ">
-                              <Input
-                                placeholder="search Item here..."
-                                onChange={(e) =>
-                                  this.updateSearchQuery(e.target.value)
-                                }
-                                value={this.state.value}
-                              />
-                            </div>
-                
+                  <div className="table-input ">
+                    <Input
+                      placeholder="search Item here..."
+                      onChange={(e) => this.updateSearchQuery(e.target.value)}
+                      value={this.state.value}
+                    />
+                  </div>
                 </Col>
 
                 <Col xl="1" lg="1" xs="4">
@@ -869,10 +871,10 @@ class StockTransfer extends React.Component {
                     )}
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.Download && (
-                      <span className=" "
-                       onMouseEnter={this.toggleDropdown}
-                            onMouseLeave={this.toggleDropdown}
-                      >
+                      <span
+                        className=" "
+                        onMouseEnter={this.toggleDropdown}
+                        onMouseLeave={this.toggleDropdown}>
                         <div className="dropdown-container float-right">
                           <ImDownload
                             style={{ cursor: "pointer" }}
@@ -933,7 +935,6 @@ class StockTransfer extends React.Component {
                   <CardBody style={{ marginTop: "-3rem" }}>
                     {this.state.rowData === null ? null : (
                       <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                        
                         <ContextLayout.Consumer className="ag-theme-alpine">
                           {(context) => (
                             <AgGridReact
@@ -1139,114 +1140,123 @@ class StockTransfer extends React.Component {
                   </>
                 ) : (
                   <>
-                    <Row>
-                      <Col>
-                        <Label>WareHouse Name :</Label>
-                        <h5 className="mx-1">
-                          <span>
-                            {this.state.ViewOneData?.warehouseName &&
-                              this.state.ViewOneData?.warehouseName}
-                          </span>
-                        </h5>
-                      </Col>
-                    </Row>
-                    <Row className="p-2">
-                      <Col>
-                        <div className="d-flex justify-content-center">
-                          <h4>Product Details</h4>
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row>
-                      {this.state.ViewOneData?.inward?.length > 0 && (
+                    <div className="py-2">
+                      <Row>
                         <Col>
-                          <Table style={{ cursor: "pointer" }} responsive>
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Update Status</th>
-                                <th>Current Status</th>
-                                <th>Date</th>
-                                <th>WareHouse From</th>
-                                <th>WareHouse To</th>
-                                <th>Product-qty</th>
-                                <th>Total</th>
-                                <th>Bill</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {this.state.ViewOneData?.inward?.length > 0 &&
-                                this.state.ViewOneData?.inward?.map(
-                                  (ele, i) => (
-                                    <>
-                                      <tr>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>
-                                          <Col>
-                                            <CustomInput
-                                              onChange={(e) =>
-                                                this.UpdateStock(ele, e)
-                                              }
-                                              type="select">
-                                              <option value="NA">
-                                                --Select--
-                                              </option>
-                                              <option value="Completed">
-                                                Completed
-                                              </option>
-                                              <option value="Pending">
-                                                Pending
-                                              </option>
-                                              <option value="Hold">Hold</option>
-                                            </CustomInput>
-                                          </Col>
-                                        </td>
-                                        <td>
-                                          <Badge color="warning">
-                                            {ele?.transferStatus}
-                                          </Badge>
-                                        </td>
-                                        <td>{ele?.stockTransferDate}</td>
-                                        <td>
-                                          {ele?.warehouseFromId?.warehouseName}
-                                        </td>
-                                        <td>
-                                          {ele?.warehouseToId?.warehouseName}
-                                        </td>
-                                        <td>
-                                          {ele?.productItems?.map((element) => (
-                                            <>
-                                              {
-                                                element?.productId
-                                                  ?.Product_Title
-                                              }
-                                              -{element?.transferQty}
-                                            </>
-                                          ))}
-                                        </td>
-                                        <td>{ele?.grandTotal}</td>
-                                        <td>
-                                          {" "}
-                                          <FaDownload
-                                            onClick={() =>
-                                              this.handleStockTrxInvoiceShow(
-                                                ele
-                                              )
-                                            }
-                                            color="green"
-                                            style={{ cursor: "pointer" }}
-                                            size={20}
-                                          />
-                                        </td>
-                                      </tr>
-                                    </>
-                                  )
-                                )}
-                            </tbody>
-                          </Table>
+                          <Label>WareHouse Name :</Label>
+                          <h5 className="mx-1">
+                            <span>
+                              {this.state.ViewOneData?.warehouseName &&
+                                this.state.ViewOneData?.warehouseName}
+                            </span>
+                          </h5>
                         </Col>
-                      )}
-                    </Row>
+                      </Row>
+                      <Row className="p-2">
+                        <Col>
+                          <div className="d-flex justify-content-center">
+                            <h4>Product Details</h4>
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row>
+                        {this.state.ViewOneData?.inward?.length > 0 && (
+                          <Col>
+                            <Table style={{ cursor: "pointer" }} responsive>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Update Status</th>
+                                  <th>Current Status</th>
+                                  <th>Date</th>
+                                  <th>WareHouse From</th>
+                                  <th>WareHouse To</th>
+                                  <th>Product-qty</th>
+                                  <th>Total</th>
+                                  <th>Challan</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {this.state.ViewOneData?.inward?.length > 0 &&
+                                  this.state.ViewOneData?.inward?.map(
+                                    (ele, i) => (
+                                      <>
+                                        <tr>
+                                          <th scope="row">{i + 1}</th>
+                                          <td>
+                                            <Col>
+                                              <CustomInput
+                                                onChange={(e) =>
+                                                  this.UpdateStock(ele, e)
+                                                }
+                                                type="select">
+                                                <option value="NA">
+                                                  --Select--
+                                                </option>
+                                                <option value="Completed">
+                                                  Completed
+                                                </option>
+                                                <option value="Pending">
+                                                  Pending
+                                                </option>
+                                                <option value="Hold">
+                                                  Hold
+                                                </option>
+                                              </CustomInput>
+                                            </Col>
+                                          </td>
+                                          <td>
+                                            <Badge color="warning">
+                                              {ele?.transferStatus}
+                                            </Badge>
+                                          </td>
+                                          <td>{ele?.stockTransferDate}</td>
+                                          <td>
+                                            {
+                                              ele?.warehouseFromId
+                                                ?.warehouseName
+                                            }
+                                          </td>
+                                          <td>
+                                            {ele?.warehouseToId?.warehouseName}
+                                          </td>
+                                          <td>
+                                            {ele?.productItems?.map(
+                                              (element) => (
+                                                <>
+                                                  {
+                                                    element?.productId
+                                                      ?.Product_Title
+                                                  }
+                                                  -{element?.transferQty}
+                                                </>
+                                              )
+                                            )}
+                                          </td>
+                                          <td>{ele?.grandTotal}</td>
+                                          <td>
+                                            {" "}
+                                            <FaDownload
+                                              onClick={() =>
+                                                this.handleStockTrxInvoiceShow(
+                                                  ele
+                                                )
+                                              }
+                                              color="green"
+                                              style={{ cursor: "pointer" }}
+                                              size={20}
+                                            />
+                                          </td>
+                                        </tr>
+                                      </>
+                                    )
+                                  )}
+                              </tbody>
+                            </Table>
+                          </Col>
+                        )}
+                      </Row>
+                    </div>
                   </>
                 )}
               </>

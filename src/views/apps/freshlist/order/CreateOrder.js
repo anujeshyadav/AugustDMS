@@ -430,7 +430,7 @@ const CreateOrder = (args) => {
       if (ele?.disCountPercentage > 1) {
         return {
           productId: ele?.productId,
-          productData: ele?.productData,
+          // productData: ele?.productData,
           discountPercentage: ele?.disCountPercentage,
           availableQty: ele?.wholeQty - ele?.qty,
           // availableQty: ele?.wholeQty - ele?.qty * ele?.price,
@@ -458,7 +458,7 @@ const CreateOrder = (args) => {
       } else {
         return {
           productId: ele?.productId,
-          productData: ele?.productData,
+          // productData: ele?.productData,
           discountPercentage: ele?.disCountPercentage,
           availableQty: ele?.wholeQty - ele?.qty,
           // availableQty: ele?.wholeQty - ele?.qty * ele?.price,
@@ -498,16 +498,16 @@ const CreateOrder = (args) => {
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,
       address: `${Party?.address1} ${Party?.address2}`,
+      igstTaxType: gstdetails?.Tax?.IgstTaxType,
       grandTotal: Number((gstdetails?.Tax?.GrandTotal).toFixed(2)),
-      roundOff: Number(gstdetails?.Tax?.RoundOff),
+      roundOff: Number(gstdetails?.Tax?.RoundOff?.toFixed(2)),
       // roundOff: Number(
       //   (gstdetails?.Tax?.GrandTotal - gstdetails?.Tax?.RoundOff).toFixed(2)
       // ),
       amount: Number((gstdetails?.Tax?.Amount).toFixed(2)),
-      sgstTotal: gstdetails?.Tax?.CgstTotal,
-      igstTaxType: gstdetails?.Tax?.IgstTaxType,
-      cgstTotal: gstdetails?.Tax?.CgstTotal,
-      igstTotal: gstdetails?.Tax?.IgstTotal,
+      sgstTotal: Number(gstdetails?.Tax?.CgstTotal.toFixed(2)),
+      cgstTotal: Number(gstdetails?.Tax?.CgstTotal.toFixed(2)),
+      igstTotal: Number(gstdetails?.Tax?.IgstTotal.toFixed(2)),
       gstDetails: gstdetails?.gstDetails,
       MobileNo: Party?.contactNumber,
       pincode: Party?.pincode,
@@ -626,7 +626,7 @@ const CreateOrder = (args) => {
         await SaveOrder(payload)
           .then((res) => {
             setLoading(false);
-            console.log(res);
+            // console.log(res);
             swal("Order Created Successfully");
             History.goBack();
           })

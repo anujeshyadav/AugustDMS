@@ -100,9 +100,12 @@ class StockTransfer extends React.Component {
                   color="green"
                   onClick={(e) => {
                     this.togglemodal();
-                    this.setState({ ViewOneData: params?.data });
-                    this.setState({ ViewOneUserView: true });
-                    this.setState({ EditOneUserView: false });
+                    this.setState({
+                      ViewOneData: params?.data,
+                      ViewOneUserView: true,
+                      EditOneUserView: false,
+                    });
+                   
                   }}
                 />
                 {/* <Edit
@@ -348,7 +351,6 @@ class StockTransfer extends React.Component {
     // await ViewFactoryStock(userid, pageparmission?.database)
     await _Get(Stock_trx_FtoW_List, pageparmission?.database)
       .then((res) => {
-        debugger;
         console.log(res?.Warehouse);
         this.setState({ rowData: res?.Warehouse });
         this.setState({ AllcolumnDefs: this.state.columnDefs });
@@ -1042,7 +1044,9 @@ class StockTransfer extends React.Component {
                         <h5>
                           <strong>
                             {this.state.ViewOneData &&
-                              this.state.ViewOneData?.grandTotal}{" "}
+                              this.state.ViewOneData?.grandTotal?.toFixed(
+                                2
+                              )}{" "}
                           </strong>
                           Rs/-
                         </h5>
@@ -1108,8 +1112,8 @@ class StockTransfer extends React.Component {
                               <th>#</th>
                               <th>Product Name</th>
                               <th>Price</th>
-                              <th>Size</th>
-                              <th>Unit</th>
+                              <th>Primary Unit</th>
+                              <th>Secondry Unit</th>
                               <th>Quantity</th>
                               <th>Total</th>
                             </tr>
@@ -1123,14 +1127,10 @@ class StockTransfer extends React.Component {
                                       <th scope="row">{i + 1}</th>
                                       <td>{ele?.productId?.Product_Title}</td>
                                       <td>{ele?.price}</td>
-                                      <td>{ele?.Size}</td>
-                                      <td>{ele?.unitType}</td>
+                                      <td>{ele?.primaryUnit}</td>
+                                      <td>{ele?.secondarySize}</td>
                                       <td>{ele?.transferQty}</td>
-                                      <td>
-                                        {ele?.price *
-                                          ele?.Size *
-                                          ele?.transferQty}
-                                      </td>
+                                      <td>{ele?.totalPrice}</td>
                                     </tr>
                                   </>
                                 )

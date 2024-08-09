@@ -422,7 +422,6 @@ class HouseProductList extends React.Component {
     await _Get(PurchaseProductList_Product, db)
       .then((res) => {
         this.setState({ Loading: false });
-        debugger;
         this.setState({
           rowData: res?.Product?.reverse(),
           rowAllData: res?.Product?.reverse(),

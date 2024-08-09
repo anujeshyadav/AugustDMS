@@ -81,7 +81,7 @@ class PurchaseOrderViewList extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -631,9 +631,9 @@ class PurchaseOrderViewList extends React.Component {
       <>
         <>
           <Card>
-            <Row className="ml-2 mr-2 ">
-              <Col className="mt-2">
-                <h1 className="float-left" style={{ fontWeight: "500" }}>
+            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+              <Col  >
+                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
                   Purchased List
                 </h1>
               </Col>
@@ -812,7 +812,7 @@ class PurchaseOrderViewList extends React.Component {
             {InsiderPermissions && InsiderPermissions.View && (
               <>
                 {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                  <div className="ag-theme-material w-100   ag-grid-table">
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact
@@ -826,7 +826,7 @@ class PurchaseOrderViewList extends React.Component {
                           colResizeDefault={"shift"}
                           animateRows={true}
                           floatingFilter={false}
-                          // // pagination={true}
+                          pagination={true}
                           paginationPageSize={this.state.paginationPageSize}
                           pivotPanelShow="always"
                           enableRtl={context.state.direction === "rtl"}

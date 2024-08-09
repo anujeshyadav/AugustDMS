@@ -77,13 +77,14 @@ const StockTrxPOinvoice = ({
   tableList,
   AllCharges,
 }) => {
+  debugger;
   // const { items, customerName, date, total, place_supply } = invoiceData;
   const curentDate = new Date();
   let day = curentDate.getDate();
   let month = curentDate.getMonth() + 1;
   let year = curentDate.getFullYear();
   let currentDate = `${day}-${month}-${year}`;
-  // console.log(BilData);
+  console.log(BilData);
   return (
     <>
       <Document>
@@ -471,7 +472,7 @@ const StockTrxPOinvoice = ({
                             curentDate.toTimeString().split(" ")[0]}
                         </Text>
                       </View>
-                      <View
+                      {/* <View
                         style={{ flexDirection: "row", paddingBottom: "3px" }}>
                         <Text
                           style={{
@@ -484,7 +485,7 @@ const StockTrxPOinvoice = ({
                         <Text style={{ fontSize: "8px", fontWeight: "bold" }}>
                           : Due on Receipt
                         </Text>
-                      </View>
+                      </View> */}
                     </View>
                   </View>
                 </View>
@@ -798,7 +799,7 @@ const StockTrxPOinvoice = ({
 
                           marginLeft: "5px",
                         }}>
-                        {ele?.transferQty * ele?.Size}
+                        {ele?.transferQty}
                       </Text>
                     </View>
                     {/* <View
@@ -831,7 +832,7 @@ const StockTrxPOinvoice = ({
                           fontWeight: "1000",
                           marginLeft: "4px",
                         }}>
-                        {ele?.unitType && ele?.unitType?.split("(")[0]}
+                        {ele?.primaryUnit}
                       </Text>
                     </View>
                     <View

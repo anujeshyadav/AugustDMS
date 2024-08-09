@@ -71,7 +71,7 @@ class ViewOnewarehouse extends React.Component {
       Show: false,
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       InsiderPermissions: {},
 
       currenPageSize: "",
@@ -939,7 +939,7 @@ class ViewOnewarehouse extends React.Component {
                                     colResizeDefault={"shift"}
                                     animateRows={true}
                                     floatingFilter={false}
-                                    // pagination={true}
+                                    pagination={true}
                                     paginationPageSize={
                                       this.state.paginationPageSize
                                     }

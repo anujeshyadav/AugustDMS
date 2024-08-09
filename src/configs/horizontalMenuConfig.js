@@ -1091,6 +1091,14 @@ const horizontalMenuConfig = [
             navLink: "/app/rupioo/report/LowStockReports",
           },
           {
+            id: "Opening Stock Report",
+            title: "Opening Stock Report",
+            type: "item",
+            icon: <GiCardboardBoxClosed size={22} />,
+            permissions: ["admin", "editor"],
+            navLink: "/app/softNumen/warranty/openingStock",
+          },
+          {
             id: "Closing Stock Report",
             title: "Closing Stock Report",
             type: "item",

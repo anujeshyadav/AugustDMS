@@ -291,8 +291,6 @@ class Login extends React.Component {
       })
       .catch((err) => {
         this.setState({ Loader: false });
-        debugger;
-        console.log(err.response?.data.message);
 
         if (err.response?.data.message == "Incorrect password") {
           swal({

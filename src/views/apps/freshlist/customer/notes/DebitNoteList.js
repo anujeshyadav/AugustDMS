@@ -75,7 +75,7 @@ class DebitNoteList extends React.Component {
       InsiderPermissions: {},
 
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -678,11 +678,11 @@ class DebitNoteList extends React.Component {
               ) : (
                 <>
                   <Card>
-                    <Row className=" ml-2 mr-2">
+                    <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                       <Col className="mt-2">
                         <h1
                           className="float-left"
-                          style={{ fontWeight: "600" }}>
+                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',  }}>
                           Debit Note List
                         </h1>
                       </Col>
@@ -705,12 +705,14 @@ class DebitNoteList extends React.Component {
                           />
                         </Col>
                       )}
-                      <Col>
-                        <div className="d-flex justify-content-end p-1">
+                      <Col lg="1" >
+                        <div className=" mt-2">
                           <Button
+                          className="cssshfgajhdfg"
                             onClick={this.toggleModal}
+                            style={{height:'35px',paddingTop:'8px'}}
                             color="primary"
-                            size="sm">
+                            >
                             + Add
                           </Button>
                         </div>
@@ -795,7 +797,7 @@ class DebitNoteList extends React.Component {
                     {InsiderPermissions && InsiderPermissions.View && (
                       <>
                         {this.state.rowData === null ? null : (
-                          <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                          <div className="ag-theme-material w-100   ag-grid-table">
                             {/* <div className="d-flex flex-wrap justify-content-between align-items-center">
                               <div className="mb-1">
                                 <UncontrolledDropdown className="p-1 ag-dropdown">
@@ -869,7 +871,7 @@ class DebitNoteList extends React.Component {
                                   colResizeDefault={"shift"}
                                   animateRows={true}
                                   floatingFilter={false}
-                                  // // pagination={true}
+                                 pagination={true}
                                   paginationPageSize={
                                     this.state.paginationPageSize
                                   }

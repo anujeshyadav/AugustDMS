@@ -74,7 +74,7 @@ class PurchaseReturn extends React.Component {
       ViewData: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -179,7 +179,7 @@ class PurchaseReturn extends React.Component {
             console.log(params.data);
             return (
               <div className="cursor-pointer text-center">
-                {params.data?.Return_amount}
+            {params.data?.Return_amount}
               </div>
             );
           },
@@ -271,7 +271,11 @@ class PurchaseReturn extends React.Component {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
-                <div>{(params.data?.amount).toFixed(2)}</div>
+                <div>
+               
+                    {(params.data?.amount).toFixed(2)}
+                
+                </div>
               </div>
             );
           },
@@ -286,7 +290,11 @@ class PurchaseReturn extends React.Component {
             console.log(params.data);
             return (
               <div className="cursor-pointer text-center">
-                <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
+                <div>
+                  
+                    {params.data?.igstTotal && params.data?.igstTotal}
+                 
+                </div>
               </div>
             );
           },
@@ -299,7 +307,11 @@ class PurchaseReturn extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
+                <div>
+                  
+                    {params.data?.sgstTotal && params.data?.sgstTotal}
+                
+                </div>
               </div>
             );
           },
@@ -312,7 +324,11 @@ class PurchaseReturn extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
+                <div>
+                 
+                    {params.data?.cgstTotal && params.data?.cgstTotal}
+                 
+                </div>
               </div>
             );
           },
@@ -326,7 +342,9 @@ class PurchaseReturn extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>{params.data?.roundOff}</div>
+                <div>
+                  {params.data?.roundOff} 
+                </div>
               </div>
             );
           },
@@ -339,7 +357,9 @@ class PurchaseReturn extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>{params?.data?.Return_amount}</div>
+                <div>
+                  {params?.data?.Return_amount} 
+                </div>
               </div>
             );
           },
@@ -380,7 +400,6 @@ class PurchaseReturn extends React.Component {
   };
 
   handleChangeView = (data, types) => {
-    debugger;
     this.setState({ ViewOneData: data });
   };
   async Apicalling(id, db) {
@@ -765,11 +784,11 @@ class PurchaseReturn extends React.Component {
               ) : (
                 <>
                   <Card>
-                    <Row className=" ml-2 mr-2">
-                      <Col className="mt-2">
+                    <Row  style={{marginLeft:'3px',marginRight:'3px'}}>
+                      <Col  >
                         <h1
                           className="float-left"
-                          style={{ fontWeight: "600" }}>
+                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
                           Purchase Return List
                         </h1>
                       </Col>
@@ -889,9 +908,9 @@ class PurchaseReturn extends React.Component {
                         )}
                       </Col>
                     </Row>
-                    <CardBody style={{ marginTop: "0rem" }}>
+                    <CardBody style={{ marginTop: "-1rem" }}>
                       {this.state.rowData === null ? null : (
-                        <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                        <div className="ag-theme-material w-100   ag-grid-table">
                           {/* <div className="d-flex flex-wrap justify-content-between align-items-center">
                             <div className="mb-1">
                               <UncontrolledDropdown className="p-1 ag-dropdown">
@@ -965,7 +984,7 @@ class PurchaseReturn extends React.Component {
                                 colResizeDefault={"shift"}
                                 animateRows={true}
                                 floatingFilter={false}
-                                // // pagination={true}
+                                pagination={true}
                                 paginationPageSize={
                                   this.state.paginationPageSize
                                 }
@@ -1284,7 +1303,7 @@ class PurchaseReturn extends React.Component {
                               <th scope="row">{i + 1}</th>
                               <td>{ele?.productId?.Product_Title}</td>
                               <td>{ele?.productId?.HSN_Code}</td>
-                              <td>{ele?.price?.toFixed(2)}</td>
+                              <td>{ele?.productId?.Product_MRP}</td>
                               {/* <td>{ele?.Size}</td> */}
                               <td>{ele?.qtyReturn}</td>
                               {/* <td>{ele?.unitType}</td> */}

@@ -94,17 +94,185 @@ class OpeningStock extends React.Component {
           width: 80,
           filter: true,
         },
+        // {
+        //   headerName: "Created At",
+        //   field: "createdAt",
+        //   filter: true,
+        //   width: 130,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer">
+        //           <span>{params?.data?.createdAt?.split("T")[0]}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "Opening stock details",
+        //   headerClass: "header-group-style",
+        //   children: [
+        //     {
+        //       headerName: "Opening qty",
+        //       field: "openingQty",
+        //       headerClass: "header-style",
+        //     },
+        //     {
+        //       headerName: "purchase Rate",
+        //       field: "purchaseRate",
+        //       headerClass: "header-style",
+        //     },
+        //     {
+        //       headerName: "Tax amount",
+        //       field: "taxAmount",
+        //       headerClass: "header-style",
+        //     },
+        //     {
+        //       headerName: "total",
+        //       field: "total",
+        //       headerClass: "header-style",
+        //     },
+        //   ],
+        // },
         {
-          headerName: "Created At",
-          field: "createdAt",
+          headerName: "Product Name",
+          field: "productId.Product_Title",
           filter: true,
-          width: 130,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.createdAt?.split("T")[0]}</span>
+                  <span>{params?.data?.productId?.Product_Title}</span>
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "HSNCode",
+          field: "productId.HSN_Code",
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.productId?.HSN_Code}</span>
+                </div>
+              </>
+            );
+          },
+        },
+
+        {
+          headerName: "Price",
+          field: "productId.Product_MRP",
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>
+                    {params?.data?.productId?.Product_MRP &&
+                      params?.data?.productId?.Product_MRP?.toFixed(2)}
+                  </span>
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "Quantity",
+          field: "currentStock",
+          filter: true,
+          width: 140,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  {params?.data?.currentStock}
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "Purchase Rate",
+          field: "productId.Purchase_Rate",
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.productId?.Purchase_Rate}</span>
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "Tax Rate",
+          field: "productId.GSTRate",
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.productId?.GSTRate}</span>
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "Tax Amount",
+          field: "taxAmount",
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.taxAmount?.toFixed(2)}</span>
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "Total",
+          field: "TotalAmount",
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.TotalAmount?.toFixed(2)}</span>
+                </div>
+              </>
+            );
+          },
+        },
+
+        {
+          headerName: "unit Type",
+          field: "productId.secondaryUnit",
+          filter: true,
+          sortable: true,
+
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  {params?.data?.productId?.secondaryUnit}
                 </div>
               </>
             );
@@ -161,99 +329,6 @@ class OpeningStock extends React.Component {
             );
           },
         },
-
-        {
-          headerName: "Product HSN_Code",
-          field: "productId.HSN_Code",
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.productId?.HSN_Code}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Products",
-          field: "productId.Product_Title",
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.productId?.Product_Title}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Price",
-          field: "price",
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.price}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Purchase Rate",
-          field: "productId.Purchase_Rate",
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.productId?.Purchase_Rate}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Current Stock",
-          field: "currentStock",
-          filter: true,
-          width: 140,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  {params?.data?.currentStock}
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "unit Type",
-          field: "productId.unitType",
-          filter: true,
-          sortable: true,
-
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  {params?.data?.productId?.unitType}
-                </div>
-              </>
-            );
-          },
-        },
       ],
     };
   }
@@ -263,44 +338,62 @@ class OpeningStock extends React.Component {
       modal: !prevState.modal,
     }));
   };
+//  isToday(dateString) {
+//     const date = new Date(dateString);
+//     const today = new Date();
 
+//     return date.getDate() === today.getDate() &&
+//            date.getMonth() === today.getMonth() &&
+//            date.getFullYear() === today.getFullYear();
+// }
   async Apicalling(id, db) {
     this.setState({ Loading: true });
     await _Get(WareHouse_Closing_Stock, db)
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Warehouse;
-        debugger;
         let closing = value?.filter((ele) => ele?.closingStatus == "closing");
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
-            return { ...ele, ...val };
+            let Total =
+              val?.productId?.Opening_Stock * val?.productId?.Product_MRP;
+            let taxAmount = Total * val?.productId?.GSTRate * 0.01;
+            let TotalAmount = Number((Total + taxAmount).toFixed(2));
+            let Charges = { Total, taxAmount, TotalAmount };
+            return { ...ele, ...val, Total, taxAmount, TotalAmount };
           });
         });
+        const today = new Date();
+        const yesterday = new Date(new Date());
+        yesterday.setDate(today.getDate() - 1);
+        let todays = new Date(yesterday).toISOString()?.split("T")[0];
+        let todayReport = alldata?.filter(
+          (ele) => ele?.createdAt?.split("T")[0] == todays
+        );
         if (alldata?.length) {
-          this.setState({ rowData: alldata });
-          this.setState({ rowAllData: alldata });
-
-          this.setState({ AllcolumnDefs: this.state.columnDefs });
-          this.setState({ SelectedCols: this.state.columnDefs });
-          this.setState({ AllcolumnDefs: this.state.columnDefs });
-          this.setState({ SelectedCols: this.state.columnDefs });
+          this.setState({
+            rowData: todayReport,
+            rowAllData: alldata,
+            AllcolumnDefs: this.state.columnDefs,
+          });
         }
         let userHeading = JSON.parse(localStorage.getItem("closingstock"));
         if (userHeading?.length) {
-          this.setState({ columnDefs: userHeading });
-          // this.gridApi.setColumnDefs(userHeading);
-          this.setState({ SelectedcolumnDefs: userHeading });
+          this.setState({
+            columnDefs: userHeading,
+            SelectedcolumnDefs: userHeading,
+          });
         } else {
-          this.setState({ columnDefs: this.state.columnDefs });
-          this.setState({ SelectedcolumnDefs: this.state.columnDefs });
+          this.setState({
+            columnDefs: this.state.columnDefs,
+            SelectedcolumnDefs: this.state.columnDefs,
+          });
         }
         this.setState({ SelectedCols: this.state.columnDefs });
       })
       .catch((err) => {
-        this.setState({ Loading: false });
-        console.log(err);
-        this.setState({ rowData: [] });
+        this.setState({ Loading: false, rowData: [] });
+       
       });
   }
   async componentDidMount() {
@@ -415,14 +508,14 @@ class OpeningStock extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("OpeningStockReport", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("OpeningStockReport.pdf");
   }
 
   exportToPDF = async () => {
@@ -466,7 +559,7 @@ class OpeningStock extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "OpeningStockReport.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -490,7 +583,7 @@ class OpeningStock extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `OpeningStockReport.${excelType}`);
       },
     });
   };

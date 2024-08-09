@@ -39,28 +39,20 @@ const CreateTarget = (args) => {
   const [ProductWTWList, setProductWTWList] = useState([]);
   const [WareHouseone, setWareHouseone] = useState([]);
   const [WareHousetwo, setWareHousetwo] = useState([]);
-  const [TypeOfTrx, setTypeOfTrx] = useState("");
   const [grandTotalAmt, setGrandTotalAmt] = useState(0);
-  const [UnitList, setUnitList] = useState([]);
-  const [UserInfo, setUserInfo] = useState({});
   const [modal, setModal] = useState(false);
   const [items, setItems] = useState("");
   const [audit, setAudit] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [WareHouselist, setWarehouseList] = useState([]);
   const toggle = (item) => {
-    setItems(item);
+    // setItems(item);
     setModal(!modal);
   };
   const audittoggle = () => {
     setAudit(!audit);
   };
-  const handleopentoggle = (iteam) => {
-    toggle(iteam);
-  };
-  const handleHistory = () => {
-    audittoggle();
-  };
+
   const [product, setProduct] = useState([
     {
       product: "",
@@ -86,7 +78,6 @@ const CreateTarget = (args) => {
   const handleProductChangeProduct = (e, index, avalaibleSize) => {
     if (avalaibleSize >= Number(e.target.value)) {
       setIndex(index);
-      // console.log(product);
 
       const { name, value } = e.target;
       const list = [...product];
@@ -107,11 +98,12 @@ const CreateTarget = (args) => {
       if (list.length > 0) {
         const x = list?.map((val) => {
           GrandTotal[index] = val.price * val.transferQty;
-          list[index]["totalprice"] = val.price * val.transferQty;
+          list[index]["totalprice"] = Number(
+            (val.price * val.transferQty).toFixed(2)
+          );
           return val.price * val.transferQty;
         });
         amt = x.reduce((a, b) => a + b);
-        console.log("GrandTotal", amt);
       }
       // console.log(list)
       setProduct(list);
@@ -119,30 +111,6 @@ const CreateTarget = (args) => {
     } else {
       return null;
     }
-  };
-  const handleProductChangeProductone = (e, index) => {
-    setIndex(index);
-
-    const { name, value } = e.target;
-    const list = [...product];
-    if (name.includes("transferQty")) {
-      list[index][name] = Number(value);
-    } else {
-      list[index][name] = value;
-    }
-    console.log(GrandTotal);
-
-    let amt = 0;
-    if (list.length > 0) {
-      const x = list?.map((val) => {
-        GrandTotal[index] = val.price * val.transferQty;
-        list[index]["totalprice"] = val.price * val.transferQty;
-        return val.price * val.transferQty;
-      });
-      amt = x.reduce((a, b) => a + b);
-    }
-    setProduct(list);
-    setGrandTotalAmt(amt);
   };
 
   const handleRemoveSelected = (selectedList, selectedItem, index) => {
@@ -156,115 +124,27 @@ const CreateTarget = (args) => {
     let amt = myarr?.reduce((a, b) => a + b);
     setGrandTotalAmt(amt);
   };
-  const handleRemoveSelectedone = (selectedList, selectedItem, index) => {
-    SelectedSize.splice(index, 1);
-    let myarr = product?.map((ele, i) => {
-      console.log(ele?.price * SelectedSize[i]?.unitQty);
-      let indextotal = SelectedSize[i]?.unitQty;
-      GrandTotal[index] = indextotal;
-      return indextotal;
-    });
 
-    let amt = myarr.reduce((a, b) => a + b);
-    setGrandTotalAmt(amt);
-  };
   const handleSelection = (selectedList, selectedItem, index) => {
     SelectedITems.push(selectedItem);
     setProduct((prevProductList) => {
-      const updatedProductList = [...prevProductList]; // Create a copy of the productList array
-      const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
-      updatedProduct.price = selectedItem?.price; // Update the price of the copied product
-      updatedProduct.product = selectedItem?.productId; // Update the price of the copied product
+      debugger;
+      const updatedProductList = [...prevProductList];
+      const updatedProduct = { ...updatedProductList[index] };
+      updatedProduct.price = selectedItem?.Product_MRP;
+      updatedProduct.product = selectedItem?.productId;
       updatedProduct.productId = selectedItem?.productId?._id;
       updatedProduct.discount = selectedItem?.discount;
       updatedProduct.Size = selectedItem?.primaryUnit;
+      updatedProduct.primaryUnit = selectedItem?.primaryUnit;
+      updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
+      updatedProduct.secondarySize = selectedItem?.secondarySize;
       updatedProduct.igstTaxType = selectedItem?.igstTaxType;
       updatedProduct.AvailaleQty = selectedItem?.currentStock;
-      updatedProduct.gstPercentage = selectedItem?.gstPercentage;
-      // updatedProduct.AvailaleQty =
-      //   selectedItem?.currentStock /
-      //   (selectedItem?.Size > 1 ? selectedItem?.Size : 1);
+      updatedProduct.gstPercentage = selectedItem?.GSTRate;
       updatedProductList[index] = updatedProduct; // Replace the product at the specified index with the updated one
-
-      return updatedProductList; // Return the updated product list to set the state
+      return updatedProductList;
     });
-  };
-  const handleSelectionProduct = (selectedList, selectedItem, index) => {
-    SelectedITems.push(selectedItem);
-    setProduct((prevProductList) => {
-      const updatedProductList = [...prevProductList]; // Create a copy of the productList array
-      const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
-      updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
-      updatedProduct.productId = selectedItem?._id;
-      updatedProduct.AvailaleQty = selectedItem?.Size;
-      updatedProductList[index] = updatedProduct; // Replace the product at the specified index with the updated one
-
-      return updatedProductList; // Return the updated product list to set the state
-    });
-  };
-  const handleSelectionone = (selectedList, selectedItem, index) => {
-    SelectedSize.push(selectedItem);
-    setProduct((prevProductList) => {
-      const updatedProductList = [...prevProductList]; // Create a copy of the productList array
-      const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
-      updatedProduct.Size = selectedItem?.unitQty; // Update the price of the copied product
-      updatedProduct.unitType = selectedItem?.primaryUnit;
-      updatedProductList[index] = updatedProduct; // Replace the product at the specified index with the updated one
-      let myarr = prevProductList?.map((ele, i) => {
-        console.log(ele?.transferQty * ele?.price * SelectedSize[i]?.unitQty);
-        let indextotal =
-          ele?.transferQty * ele?.price * SelectedSize[i]?.unitQty;
-        GrandTotal[index] = indextotal;
-        return indextotal;
-      });
-      let amt = myarr.reduce((a, b) => a + b);
-      setGrandTotalAmt(amt);
-      return updatedProductList; // Return the updated product list to set the state
-    });
-  };
-  const handleInputChange = (e, type, i) => {
-    const { name, value, checked } = e.target;
-    setindex(i);
-    if (type == "checkbox") {
-      if (checked) {
-        setFormData({
-          ...formData,
-          [name]: checked,
-        });
-      } else {
-        setFormData({
-          ...formData,
-          [name]: checked,
-        });
-      }
-    } else {
-      if (type == "number") {
-        if (/^\d{0,10}$/.test(value)) {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-          setError("");
-        } else {
-          setError(
-            "Please enter a valid number with a maximum length of 10 digits"
-          );
-        }
-      } else {
-        if (value.length <= 10) {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-          setError("");
-        } else {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-        }
-      }
-    }
   };
 
   useEffect(() => {
@@ -276,15 +156,6 @@ const CreateTarget = (args) => {
           setWarehouseList(value);
         }
         console.log(value);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    UnitListView(userData?._id, userData?.database)
-      .then((res) => {
-        console.log(res?.Unit);
-        setUnitList(res?.Unit);
       })
       .catch((err) => {
         console.log(err);
@@ -302,11 +173,6 @@ const CreateTarget = (args) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userData"));
-
-    setUserInfo(userInfo);
   }, []);
 
   let addMoreProduct = () => {
@@ -343,20 +209,20 @@ const CreateTarget = (args) => {
     setProduct(newFormValues);
   };
 
-  const WareHousetoWareHouse = (e) => {
+  const WareHousetoWareHouse = async (e) => {
     e.preventDefault();
+    setLoading(true);
     let userdata = JSON.parse(localStorage.getItem("userData"));
-
     let Allproduct = product?.map((ele, i) => {
       return {
         productId: ele?.productId,
-        unitType: ele?.unitType,
+        primaryUnit: ele?.primaryUnit,
+        secondaryUnit: ele?.secondaryUnit,
+        secondarySize: ele?.secondarySize,
         price: ele?.price,
-        Size: ele?.Size,
         transferQty: ele?.transferQty,
         totalPrice: ele?.totalprice,
         currentStock: ele?.AvailaleQty,
-        igstTaxType: ele?.igstTaxType,
         gstPercentage: ele?.gstPercentage,
       };
     });
@@ -366,13 +232,12 @@ const CreateTarget = (args) => {
       warehouseToId: WareHousetwo[0]?._id,
       warehouseFromId: WareHouseone[0]?._id,
       stockTransferDate: StockTrxdate,
-      grandTotal: grandTotalAmt,
+      grandTotal: Number(grandTotalAmt.toFixed(2)),
       transferStatus: "InProcess",
       created_by: userdata?._id,
     };
-    console.log(payload);
-    setLoading(true);
-    WarehousetoWareHouseTrx(payload)
+
+    await WarehousetoWareHouseTrx(payload)
       .then((res) => {
         setLoading(false);
 
@@ -386,67 +251,25 @@ const CreateTarget = (args) => {
         swal("Something Went Wrong");
       });
   };
-  const submitHandler = (e) => {
-    e.preventDefault();
-    let userdata = JSON.parse(localStorage.getItem("userData"));
 
-    let Allproduct = product?.map((ele, i) => {
-      console.log(ele);
-      return {
-        productId: ele?.productId,
-        unitType: ele?.unitType,
-        price: ele?.price,
-        Size: ele?.Size,
-        transferQty: ele?.transferQty,
-        totalPrice: ele?.totalprice,
-        currentStock: ele?.transferQty * ele?.Size,
-      };
-    });
-    let payload = {
-      productItems: Allproduct,
-      warehouseToId: WareHouseone[0]?._id,
-      stockTransferDate: StockTrxdate,
-      grandTotal: grandTotalAmt,
-      transferStatus: "InProcess",
-      created_by: userdata?._id,
-    };
-
-    if (error) {
-      swal("Error occured while Entering Details");
-    } else {
-      StocktrxFtoW(payload)
-        .then((res) => {
-          swal("Stock Assigned to WareHouse");
-          // }
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-  const onSelect1 = (selectedList, selectedItem, index) => {
-    console.log(selectedList);
-    setWareHouseone(selectedList);
-  };
   const onSelectone = (selectedList, selectedItem, index) => {
     setWareHouseone(selectedList);
+    debugger;
     let MySelectedwarehouseProduct = selectedList[0]?.productItems?.map(
       (ele, i) => {
         return {
           ...ele?.productId,
           ...ele,
-          Product_Title: ele?.productId?.Product_Title,
+          Product_Title: ele?.productId?.Product_Title
+            ? ele?.productId?.Product_Title
+            : "Not Found",
         };
       }
     );
 
     setProductWTWList(MySelectedwarehouseProduct);
   };
-  const onRemove1 = (selectedList, removedItem, index) => {
-    console.log(selectedList);
-    console.log(index);
-  };
+
   const onRemoveone = (selectedList, removedItem, index) => {
     console.log(selectedList);
     console.log(index);
@@ -552,7 +375,7 @@ const CreateTarget = (args) => {
             {product &&
               product?.map((product, index) => (
                 <Row className="" key={index}>
-                  <Col className="mb-1" lg="2" md="2" sm="12">
+                  <Col className="mb-1" lg="3" md="3" sm="12">
                     <div className="">
                       <Label>Product Name</Label>
                       <Multiselect
@@ -574,10 +397,15 @@ const CreateTarget = (args) => {
                       />
                     </div>
                   </Col>
-                  <Col className="mb-1" lg="2" md="2" sm="12">
+                  <Col className="mb-1" lg="1" md="1" sm="12">
                     <div className="">
-                      <Label>Size</Label>
-                      <Input type="text" value={product?.Size} readOnly />
+                      <Label>Primary Unit</Label>
+                      <Input
+                        type="text"
+                        placeholder="PACk"
+                        value={product?.Size}
+                        readOnly
+                      />
                       {/* <Multiselect
                         required
                         selectionLimit={1}
@@ -597,7 +425,7 @@ const CreateTarget = (args) => {
                       /> */}
                     </div>
                   </Col>
-                  <Col className="mb-1" lg="2" md="2" sm="12">
+                  <Col className="mb-1" lg="1" md="1" sm="12">
                     <div className="">
                       <Label>Available Qty</Label>
                       <Input
@@ -610,9 +438,9 @@ const CreateTarget = (args) => {
                       />
                     </div>
                   </Col>
-                  <Col className="mb-1" lg="2" md="2" sm="12">
+                  <Col className="mb-1" lg="1" md="1" sm="12">
                     <div className="">
-                      <Label>Quantity To be Transfer</Label>
+                      <Label>Qty Transfer</Label>
                       <Input
                         type="number"
                         min={0}
@@ -630,7 +458,7 @@ const CreateTarget = (args) => {
                     </div>
                   </Col>
 
-                  <Col className="mb-1" lg="2" md="2" sm="12">
+                  <Col className="mb-1" lg="1" md="1" sm="12">
                     <div className="">
                       <Label>Price</Label>
                       <Input
@@ -638,7 +466,7 @@ const CreateTarget = (args) => {
                         name="price"
                         readOnly
                         placeholder="Price"
-                        value={product.price}
+                        value={product.price && product.price?.toFixed(2)}
                       />
                     </div>
                   </Col>
@@ -650,7 +478,7 @@ const CreateTarget = (args) => {
                         name="totalprice"
                         readOnly
                         placeholder="TtlPrice"
-                        value={product.price * product.transferQty}
+                        value={(product.price * product.transferQty).toFixed(2)}
                       />
                     </div>
                   </Col>
@@ -658,13 +486,13 @@ const CreateTarget = (args) => {
                   <Col className="d-flex mt-1 abb" lg="3" md="3" sm="12">
                     <div className="btnStyle">
                       {index ? (
-                        <Badge
+                        <Button
                           type="button"
                           color="danger"
                           className="button remove "
                           onClick={() => removeMoreProduct(index)}>
                           - Remove
-                        </Badge>
+                        </Button>
                       ) : null}
                     </div>
 
@@ -689,7 +517,7 @@ const CreateTarget = (args) => {
                     <strong>
                       {grandTotalAmt && grandTotalAmt == "NaN"
                         ? 0
-                        : grandTotalAmt}{" "}
+                        : grandTotalAmt.toFixed(2)}{" "}
                     </strong>
                   </Label>
                 </div>
@@ -715,7 +543,10 @@ const CreateTarget = (args) => {
                 <Row>
                   <Col>
                     <div className="d-flex justify-content-center">
-                      <Button.Ripple color="secondary" className="mt-2">
+                      <Button.Ripple
+                        color="secondary"
+                        disabled={Loading ? true : true}
+                        className="mt-2">
                         Loading...
                       </Button.Ripple>
                     </div>
