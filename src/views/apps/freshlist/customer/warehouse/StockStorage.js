@@ -1016,6 +1016,7 @@ import {
   ModalHeader,
   ModalBody,
   Spinner,
+  Badge,
 } from "reactstrap";
 import { ContextLayout } from "../../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
@@ -1081,7 +1082,7 @@ class StockStorage extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 190,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
@@ -1089,24 +1090,17 @@ class StockStorage extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Route
                       render={({ history }) => (
-                        <span
-                          style={{
-                            border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
-                            backgroundColor: "#39cccc",
+                        <Badge
+                          className=""
+                          size="20px"
+                          color="primary"
+                          onClick={() => {
+                            this.props.history.push(
+                              `/app/rupioo/warehouse/ViewOnewarehouse/${params?.data?._id}`
+                            );
                           }}>
-                          <Eye
-                            className=""
-                            size="20px"
-                            color="white"
-                            onClick={() => {
-                              this.props.history.push(
-                                `/app/rupioo/warehouse/ViewOnewarehouse/${params?.data?._id}`
-                              );
-                            }}
-                          />
-                        </span>
+                          Stock
+                        </Badge>
                       )}
                     />
                   )}
@@ -1168,14 +1162,14 @@ class StockStorage extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return params.data?.status === "Active" ? (
-              <div className="badge badge-pill badge-success">
+              <div className=" ">
                 {params.data?.status}
               </div>
             ) : params.data?.status === "Deactive" ? (
-              <div className="badge badge-pill badge-warning">
+              <div className=" ">
                 {params.data?.status}
               </div>
             ) : null;
@@ -1204,7 +1198,7 @@ class StockStorage extends React.Component {
           field: "warehouseName",
           filter: true,
           sortable: true,
-          width: 260,
+          
           cellRendererFramework: (params) => {
             return (
               <>
@@ -1220,7 +1214,7 @@ class StockStorage extends React.Component {
           field: "mobileNo",
           filter: true,
           sortable: true,
-          width: 260,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -1232,9 +1226,10 @@ class StockStorage extends React.Component {
           },
         },
         {
-          headerName: "Landline Number",
+          headerName: "Landline No",
           field: "landlineNumber",
           filter: true,
+           width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -1251,7 +1246,7 @@ class StockStorage extends React.Component {
           field: "address",
           filter: true,
           sortable: true,
-          width: 460,
+           width: 340,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -1266,6 +1261,7 @@ class StockStorage extends React.Component {
           headerName: "Created At",
           field: "createdAt",
           filter: true,
+           width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -1282,6 +1278,7 @@ class StockStorage extends React.Component {
           headerName: "Updated date",
           field: "updatedAt",
           filter: true,
+           width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -1325,13 +1322,26 @@ class StockStorage extends React.Component {
     }
   };
   async Apicalling(id, db) {
+    let userData = JSON.parse(localStorage.getItem("userData"));
+
     this.setState({ Loading: true });
     await _Get(Create_Warehouse_List, db)
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Warehouse;
-        if (value?.length) {
-          this.setState({ rowData: value });
+        let List = [];
+        if (
+          userData?.rolename?.roleName === "MASTER" ||
+          userData?.rolename?.roleName === "SuperAdmin"
+        ) {
+          if (value?.length) {
+            List = value;
+          }
+        } else {
+          List = value?.filter((ele) => ele?.created_by?._id == userData?._id);
+        }
+        if (List?.length) {
+          this.setState({ rowData: List });
         }
         let userHeading = JSON.parse(localStorage.getItem("WareHouseList"));
         if (userHeading?.length) {
@@ -1726,27 +1736,52 @@ class StockStorage extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row className="mt-2 ml-2 mr-2">
-                        <Col lg="3" md="3" sm="12">
-                          <h4>Warehouse Stock List</h4>
+                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                        <Col  >
+                          <h2 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>Warehouse Stock List</h2>
                         </Col>
 
                         {this.state.MasterShow && (
-                          <Col>
+                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
                             />
                           </Col>
                         )}
-                        <Col>
+                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                            <div className="table-input ">
+                                    <Input
+                                      placeholder="search Item here..."
+                                      onChange={(e) =>
+                                        this.updateSearchQuery(e.target.value)
+                                      }
+                                      value={this.state.value}
+                                    />
+                                  </div>
+                          </Col>
+                        <Col style={{marginTop:"25px"}} lg="1" xl="1">
+                          {InsiderPermissions && InsiderPermissions.View && (
+                            <>
+                              <span className=" ">
+                                <FaFilter
+                                  style={{ cursor: "pointer" }}
+                                  title="filter coloumn"
+                                  size="35px"
+                                  onClick={this.LookupviewStart}
+                                  color="#39cccc"
+                                  className="float-right mb-1"
+                                />
+                              </span>
+                            </>
+                          )}
                           {InsiderPermissions &&
                             InsiderPermissions.Download && (
                               <>
                                 <span
                                   onMouseEnter={this.toggleDropdown}
                                   onMouseLeave={this.toggleDropdown}
-                                  className="mx-1">
+                                  className=" ">
                                   <div className="dropdown-container float-right">
                                     <ImDownload
                                       style={{ cursor: "pointer" }}
@@ -1803,90 +1838,15 @@ class StockStorage extends React.Component {
                               </>
                             )}
 
-                          {InsiderPermissions && InsiderPermissions.View && (
-                            <>
-                              <span className="mx-1">
-                                <FaFilter
-                                  style={{ cursor: "pointer" }}
-                                  title="filter coloumn"
-                                  size="35px"
-                                  onClick={this.LookupviewStart}
-                                  color="#39cccc"
-                                  className="float-right mb-1"
-                                />
-                              </span>
-                            </>
-                          )}
+                        
                         </Col>
                       </Row>
 
                       <>
-                        <CardBody>
+                        <CardBody style={{marginTop:"-2rem"}}>
                           {this.state.rowData === null ? null : (
-                            <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                              <div className="d-flex flex-wrap justify-content-between align-items-center">
-                                <div className="mb-1">
-                                  <UncontrolledDropdown className="p-1 ag-dropdown">
-                                    <DropdownToggle tag="div">
-                                      {this.gridApi
-                                        ? this.state.currenPageSize
-                                        : "" * this.state.getPageSize -
-                                          (this.state.getPageSize - 1)}
-                                      -
-                                      {this.state.rowData.length -
-                                        this.state.currenPageSize *
-                                          this.state.getPageSize >
-                                      0
-                                        ? this.state.currenPageSize *
-                                          this.state.getPageSize
-                                        : this.state.rowData.length}{" "}
-                                      of {this.state.rowData.length}
-                                      <ChevronDown
-                                        className="ml-50"
-                                        size={15}
-                                      />
-                                    </DropdownToggle>
-                                    <DropdownMenu right>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(5)}>
-                                        5
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(20)}>
-                                        20
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(50)}>
-                                        50
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(100)}>
-                                        100
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(134)}>
-                                        134
-                                      </DropdownItem>
-                                    </DropdownMenu>
-                                  </UncontrolledDropdown>
-                                </div>
-                                <div className="d-flex flex-wrap justify-content-end mb-1">
-                                  <div className="table-input mr-1">
-                                    <Input
-                                      placeholder="search Item here..."
-                                      onChange={(e) =>
-                                        this.updateSearchQuery(e.target.value)
-                                      }
-                                      value={this.state.value}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
+                            <div className="ag-theme-material w-100   ag-grid-table">
+                             
                               <ContextLayout.Consumer className="ag-theme-alpine">
                                 {(context) => (
                                   <AgGridReact

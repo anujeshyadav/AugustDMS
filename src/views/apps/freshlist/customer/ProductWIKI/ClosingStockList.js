@@ -50,7 +50,7 @@ import { ImDownload } from "react-icons/im";
 import { WareHouse_Closing_Stock } from "../../../../../ApiEndPoint/Api";
 
 const SelectedColums = [];
-
+let WarehouseIncharge = false;
 class ClosingStock extends React.Component {
   static contextType = UserContext;
   constructor(props) {
@@ -213,7 +213,7 @@ class ClosingStock extends React.Component {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  {params?.data?.currentStock} 
+                  {params?.data?.currentStock}
                 </div>
               </>
             );
@@ -228,9 +228,7 @@ class ClosingStock extends React.Component {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  
-                    {params?.data?.productId?.unitType}
-                  
+                  {params?.data?.productId?.unitType}
                 </div>
               </>
             );
@@ -246,35 +244,57 @@ class ClosingStock extends React.Component {
     }));
   };
 
-  async Apicalling(id, db) {
+  async Apicalling(id, db, WarehouseIncharge) {
+    let userData = JSON.parse(localStorage.getItem("userData"));
+
     this.setState({ Loading: true });
     await _Get(WareHouse_Closing_Stock, db)
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Warehouse;
-        let closing = value?.filter((ele) => ele?.closingStatus == "closing");
+        console.log(WarehouseIncharge);
+        console.log(value);
+        debugger;
+        let List = [];
+        if (
+          userData?.rolename?.roleName === "MASTER" ||
+          userData?.rolename?.roleName === "SuperAdmin"
+        ) {
+          if (value?.length) {
+            List = value;
+          }
+        } else {
+          List = value?.filter(
+            (ele) => ele?.warehouseId?.created_by?._id == userData?._id
+          );
+        }
+        let closing = List?.filter((ele) => ele?.closingStatus == "closing");
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
             return { ...ele, ...val };
           });
         });
-        if (alldata?.length) {
-          this.setState({ rowData: alldata });
-          this.setState({ rowAllData: alldata });
 
-          this.setState({ AllcolumnDefs: this.state.columnDefs });
-          this.setState({ SelectedCols: this.state.columnDefs });
-          this.setState({ AllcolumnDefs: this.state.columnDefs });
-          this.setState({ SelectedCols: this.state.columnDefs });
+        if (alldata?.length) {
+          this.setState({
+            rowData: alldata,
+            rowAllData: alldata,
+            AllcolumnDefs: this.state.columnDefs,
+            SelectedCols: this.state.columnDefs,
+          });
         }
         let userHeading = JSON.parse(localStorage.getItem("closingstock"));
         if (userHeading?.length) {
-          this.setState({ columnDefs: userHeading });
+          this.setState({
+            columnDefs: userHeading,
+            SelectedcolumnDefs: userHeading,
+          });
           // this.gridApi.setColumnDefs(userHeading);
-          this.setState({ SelectedcolumnDefs: userHeading });
         } else {
-          this.setState({ columnDefs: this.state.columnDefs });
-          this.setState({ SelectedcolumnDefs: this.state.columnDefs });
+          this.setState({
+            columnDefs: this.state.columnDefs,
+            SelectedcolumnDefs: this.state.columnDefs,
+          });
         }
         this.setState({ SelectedCols: this.state.columnDefs });
       })
@@ -292,7 +312,12 @@ class ClosingStock extends React.Component {
     }
     const InsidePermissions = CheckPermission("Closing Stock");
     this.setState({ InsiderPermissions: InsidePermissions });
-    await this.Apicalling(userInfo?._id, userInfo?.database);
+    if (userInfo?.rolename?.roleName === "WareHouse Incharge") {
+      WarehouseIncharge = true;
+    } else {
+      WarehouseIncharge = false;
+    }
+    await this.Apicalling(userInfo?._id, userInfo?.database, WarehouseIncharge);
   }
 
   togglemodal = () => {
@@ -581,7 +606,7 @@ class ClosingStock extends React.Component {
     let SuperAdmin = JSON.parse(localStorage.getItem("SuperadminIdByMaster"));
     let id = SuperAdmin.split(" ")[0];
     let db = SuperAdmin.split(" ")[1];
-    this.Apicalling(id, db);
+    this.Apicalling(id, db, WarehouseIncharge);
   };
   handleDropdownChange = (selectedValue) => {
     localStorage.setItem("SuperadminIdByMaster", JSON.stringify(selectedValue));
@@ -618,152 +643,149 @@ class ClosingStock extends React.Component {
     } = this.state;
     return (
       <>
-        
-            <Card>
-              <Row  style={{marginLeft:'3px',marginRight:'3px'}}>
-                <Col lg="2" md="2" sm="12">
-                  
-                  <h2
-                                className="float-left "
-                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'24px',marginTop:'30px' }}>
-                                Closing Stock
-                              </h2>
-                </Col>
-                {this.state.MasterShow && this.state.MasterShow ? (
-                  <Col lg="2" md="2" sm="6" style={{marginTop:'30px'}}>
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
-                    />
-                  </Col>
-                ) : (
-                  <Col></Col>
-                )}
-                <Col xl="2" lg="2" style={{marginTop:'10px'}}>
-                
-                  <div className="table-input ">
-                    <Label>Start Date</Label>
-                    <Input
-                      type="date"
-                      name="startDate"
-                      value={this.state.startDate}
-                      onChange={this.handleDate}
-                    />
-                  </div>
-                  </Col>
-                  <Col xl="2" lg="2" style={{marginTop:'10px'}}>
-                  <div className="table-input ">
-                    <Label>End Date</Label>
-                    <Input
-                      type="date"
-                      name="EndDate"
-                      value={this.state.EndDate}
-                      onChange={this.handleDate}
-                    />
-                  </div>
-                  </Col>
-                  <Col xl="1" lg="1" style={{marginTop:'30px'}}>
-                  <div className="table-input  ">
-                    <Button
-                      type="submit"
-                      
-                      color="primary"
-                      onClick={this.handleSubmitDate}>
-                      Submit
-                    </Button>
-                  </div>
-                  </Col>
-                  <Col xl="2" lg="2" style={{marginTop:'30px'}}>
-                  <div className="table-input ">
-                    <Input
-                      
-                      placeholder="search Item here..."
-                      onChange={(e) =>
-                        this.updateSearchQuery(e.target.value)
-                      }
-                      value={this.state.value}
-                    />
-                  </div>
-                
-                </Col>
+        <Card>
+          <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+            <Col lg="2" md="2" sm="12">
+              <h2
+                className="float-left "
+                style={{
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  fontSize: "24px",
+                  marginTop: "30px",
+                }}>
+                Closing Stock
+              </h2>
+            </Col>
+            {this.state.MasterShow && this.state.MasterShow ? (
+              <Col lg="2" md="2" sm="6" style={{ marginTop: "30px" }}>
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
+              </Col>
+            ) : (
+              <Col></Col>
+            )}
+            <Col xl="2" lg="2" style={{ marginTop: "10px" }}>
+              <div className="table-input ">
+                <Label>Start Date</Label>
+                <Input
+                  type="date"
+                  name="startDate"
+                  value={this.state.startDate}
+                  onChange={this.handleDate}
+                />
+              </div>
+            </Col>
+            <Col xl="2" lg="2" style={{ marginTop: "10px" }}>
+              <div className="table-input ">
+                <Label>End Date</Label>
+                <Input
+                  type="date"
+                  name="EndDate"
+                  value={this.state.EndDate}
+                  onChange={this.handleDate}
+                />
+              </div>
+            </Col>
+            <Col xl="1" lg="1" style={{ marginTop: "30px" }}>
+              <div className="table-input  ">
+                <Button
+                  type="submit"
+                  color="primary"
+                  onClick={this.handleSubmitDate}>
+                  Submit
+                </Button>
+              </div>
+            </Col>
+            <Col xl="2" lg="2" style={{ marginTop: "30px" }}>
+              <div className="table-input ">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
 
-                <Col xl="1" lg="1" style={{marginTop:'30px'}}>
-                  {InsiderPermissions && InsiderPermissions?.View && (
-                    <span className="">
-                      <FaFilter
-                        style={{ cursor: "pointer" }}
-                        title="filter coloumn"
-                        size="35px"
-                        onClick={this.LookupviewStart}
-                        color="#39cccc"
-                        className="float-right "
-                      />
-                    </span>
-                  )}
-                  {InsiderPermissions && InsiderPermissions?.Download && (
-                    <span
-                      onMouseEnter={this.toggleDropdown}
-                      onMouseLeave={this.toggleDropdown}
-                      className="">
-                      <div className="dropdown-container float-right">
-                        <ImDownload
+            <Col xl="1" lg="1" style={{ marginTop: "30px" }}>
+              {InsiderPermissions && InsiderPermissions?.View && (
+                <span className="">
+                  <FaFilter
+                    style={{ cursor: "pointer" }}
+                    title="filter coloumn"
+                    size="35px"
+                    onClick={this.LookupviewStart}
+                    color="#39cccc"
+                    className="float-right "
+                  />
+                </span>
+              )}
+              {InsiderPermissions && InsiderPermissions?.Download && (
+                <span
+                  onMouseEnter={this.toggleDropdown}
+                  onMouseLeave={this.toggleDropdown}
+                  className="">
+                  <div className="dropdown-container float-right">
+                    <ImDownload
+                      style={{ cursor: "pointer" }}
+                      title="Download file"
+                      size="35px"
+                      className="dropdown-button  "
+                      color="#39cccc"
+                    />
+                    {isOpen && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          zIndex: "1",
+                          border: "1px solid rgb(8, 91, 245)",
+                          backgroundColor: "white",
+                        }}
+                        className="dropdown-content dropdownmy">
+                        <h5
+                          onClick={() => this.exportToPDF()}
                           style={{ cursor: "pointer" }}
-                          title="Download file"
-                          size="35px"
-                          className="dropdown-button  "
-                          color="#39cccc"
-                        />
-                        {isOpen && (
-                          <div
-                          style={{
-                            position: "absolute",
-                            zIndex: "1",
-                            border: "1px solid rgb(8, 91, 245)",
-                            backgroundColor: "white",
-                          }}
-                            className="dropdown-content dropdownmy">
-                            <h5
-                              onClick={() => this.exportToPDF()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive mt-1">
-                              .PDF
-                            </h5>
-                            <h5
-                              onClick={() => this.gridApi.exportDataAsCsv()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .CSV
-                            </h5>
-                            <h5
-                              onClick={this.convertCSVtoExcel}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XLS
-                            </h5>
-                            <h5
-                              onClick={this.exportToExcel}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XLSX
-                            </h5>
-                            <h5
-                              onClick={() => this.convertCsvToXml()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XML
-                            </h5>
-                          </div>
-                        )}
+                          className=" mx-1 myactive mt-1">
+                          .PDF
+                        </h5>
+                        <h5
+                          onClick={() => this.gridApi.exportDataAsCsv()}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .CSV
+                        </h5>
+                        <h5
+                          onClick={this.convertCSVtoExcel}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .XLS
+                        </h5>
+                        <h5
+                          onClick={this.exportToExcel}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .XLSX
+                        </h5>
+                        <h5
+                          onClick={() => this.convertCsvToXml()}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .XML
+                        </h5>
                       </div>
-                    </span>
-                  )}
-                </Col>
-              </Row>
-              <CardBody style={{ marginTop: "-3rem" }}>
-                {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-{/*
+                    )}
+                  </div>
+                </span>
+              )}
+            </Col>
+          </Row>
+          <CardBody style={{ marginTop: "-3rem" }}>
+            {this.state.rowData === null ? null : (
+              <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                <div className="d-flex flex-wrap justify-content-between align-items-center">
+                  {/*
                       <div className="">
                         <UncontrolledDropdown className="p-1 ag-dropdown">
                           <DropdownToggle tag="div">
@@ -812,34 +834,33 @@ class ClosingStock extends React.Component {
                         </UncontrolledDropdown>
                       </div>
                        */}
-                    </div>
-                    <ContextLayout.Consumer className="ag-theme-alpine">
-                      {(context) => (
-                        <AgGridReact
-                          id="myAgGrid"
-                          gridOptions={this.gridOptions}
-                          rowSelection="multiple"
-                          defaultColDef={defaultColDef}
-                          columnDefs={columnDefs}
-                          rowData={rowData}
-                          onGridReady={this.onGridReady}
-                          colResizeDefault={"shift"}
-                          animateRows={true}
-                          floatingFilter={false}
-                            pagination={true}
-                          paginationPageSize={this.state.paginationPageSize}
-                          pivotPanelShow="always"
-                          enableRtl={context.state.direction === "rtl"}
-                          ref={this.gridRef} // Attach the ref to the grid
-                          domLayout="autoHeight" // Adjust layout as needed
-                        />
-                      )}
-                    </ContextLayout.Consumer>
-                  </div>
-                )}
-              </CardBody>
-            </Card>
-         
+                </div>
+                <ContextLayout.Consumer className="ag-theme-alpine">
+                  {(context) => (
+                    <AgGridReact
+                      id="myAgGrid"
+                      gridOptions={this.gridOptions}
+                      rowSelection="multiple"
+                      defaultColDef={defaultColDef}
+                      columnDefs={columnDefs}
+                      rowData={rowData}
+                      onGridReady={this.onGridReady}
+                      colResizeDefault={"shift"}
+                      animateRows={true}
+                      floatingFilter={false}
+                      pagination={true}
+                      paginationPageSize={this.state.paginationPageSize}
+                      pivotPanelShow="always"
+                      enableRtl={context.state.direction === "rtl"}
+                      ref={this.gridRef} // Attach the ref to the grid
+                      domLayout="autoHeight" // Adjust layout as needed
+                    />
+                  )}
+                </ContextLayout.Consumer>
+              </div>
+            )}
+          </CardBody>
+        </Card>
 
         <Modal
           isOpen={this.state.modal}

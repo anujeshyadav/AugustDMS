@@ -233,6 +233,7 @@ export const view_create_order_historyBy_id = "/order/view-sales-by-id/";
 export const view_Sales_order_List = "/order/view-sales-order/";
 export const Delete_Sales_order = "/order/delete-sales-order/";
 export const Delete_Sales = "/order/delete-sales/";
+export const Order_By_Billing = "/order/order-billing/";
 // By other
 export const Save_Place_Order = "/order/save-place-order";
 export const Place_Order_List = "/order/view-place-order/";
@@ -674,3 +675,8 @@ export const Create_Debit_Note = "/debit-note/save-debit-note";
 export const Last_Ledger_Balance = "/ledger/view-last-ledger/";
 
 //end last Ledger Balance
+
+
+// find product at warehouse
+export const Find_Product_InWarehose = "/good-dispatch/product-warehouse/";
+//

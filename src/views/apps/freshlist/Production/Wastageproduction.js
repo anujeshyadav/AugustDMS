@@ -75,7 +75,7 @@ class Wastageproduction extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -99,7 +99,7 @@ class Wastageproduction extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 180,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
@@ -171,7 +171,7 @@ class Wastageproduction extends React.Component {
           headerName: "Product Name",
           field: "product_name.Product_Title",
           filter: true,
-          width: 200,
+           
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -187,7 +187,7 @@ class Wastageproduction extends React.Component {
           headerName: "Product Req",
           field: "productItems.length",
           filter: true,
-          width: 200,
+          
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -200,7 +200,7 @@ class Wastageproduction extends React.Component {
           headerName: "Product Total",
           field: "grandTotal",
           filter: true,
-          width: 200,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -213,7 +213,7 @@ class Wastageproduction extends React.Component {
           headerName: "GST",
           field: "gstApplied",
           filter: true,
-          width: 200,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -223,10 +223,10 @@ class Wastageproduction extends React.Component {
           },
         },
         {
-          headerName: "MiscellaneousExpennses",
+          headerName: "Miscellaneous Expennses",
           field: "miscellaneousExpennses",
           filter: true,
-          width: 200,
+           width: 250,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -239,7 +239,7 @@ class Wastageproduction extends React.Component {
           headerName: "Other Charges",
           field: "otherCharges",
           filter: true,
-          width: 200,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -252,7 +252,7 @@ class Wastageproduction extends React.Component {
           headerName: "Discount",
           field: "discount",
           filter: true,
-          width: 200,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -262,10 +262,10 @@ class Wastageproduction extends React.Component {
           },
         },
         {
-          headerName: "grandTotal",
+          headerName: "grand Total",
           field: "grandTotal",
           filter: true,
-          width: 200,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -718,19 +718,29 @@ class Wastageproduction extends React.Component {
     } = this.state;
     return (
       <>
-        <Col className="app-user-list">
-          <Col sm="12">
+        
             <Card>
-              <Row className="ml-2 mt-2 mr-2">
+              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                 <Col>
-                  <h1 className="float-left " style={{ fontWeight: "600" }}>
-                    {" "}
+                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                    
                     Wastage Material with Product List
                   </h1>
                 </Col>
+                <Col lg="2" style={{marginTop:"25px"}}>
+                 <div className="table-input ">
+                          <Input
+                            placeholder="search Item here..."
+                            onChange={(e) =>
+                              this.updateSearchQuery(e.target.value)
+                            }
+                            value={this.state.value}
+                          />
+                        </div>
+                </Col>
                 {InsiderPermissions && InsiderPermissions?.View && (
-                  <Col>
-                    <span className="mx-1">
+                  <Col lg="1" style={{marginTop:"25px"}}>
+                    <span className=" ">
                       <FaFilter
                         style={{ cursor: "pointer" }}
                         title="filter coloumn"
@@ -740,7 +750,8 @@ class Wastageproduction extends React.Component {
                         className="float-right"
                       />
                     </span>
-                    <span className="mx-1">
+                    <span className=" " onMouseEnter={this.toggleDropdown}
+                    onMouseLeave={this.toggleDropdown}>
                       <div className="dropdown-container float-right">
                         <ImDownload
                           style={{ cursor: "pointer" }}
@@ -813,69 +824,10 @@ class Wastageproduction extends React.Component {
                   </Col>
                 )}
               </Row>
-              <CardBody style={{ marginTop: "0rem" }}>
+              <CardBody style={{ marginTop: "-3rem" }}>
                 {this.state.rowData === null ? null : (
                   <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-                      <div className="mb-1">
-                        <UncontrolledDropdown className="p-1 ag-dropdown">
-                          <DropdownToggle tag="div">
-                            {this.gridApi
-                              ? this.state.currenPageSize
-                              : "" * this.state.getPageSize -
-                                (this.state.getPageSize - 1)}{" "}
-                            -{" "}
-                            {this.state.rowData.length -
-                              this.state.currenPageSize *
-                                this.state.getPageSize >
-                            0
-                              ? this.state.currenPageSize *
-                                this.state.getPageSize
-                              : this.state.rowData.length}{" "}
-                            of {this.state.rowData.length}
-                            <ChevronDown className="ml-50" size={15} />
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(5)}>
-                              5
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(20)}>
-                              20
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(50)}>
-                              50
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(100)}>
-                              100
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(134)}>
-                              134
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                      <div className="d-flex flex-wrap justify-content-end mb-1">
-                        <div className="table-input mr-1">
-                          <Input
-                            placeholder="search Item here..."
-                            onChange={(e) =>
-                              this.updateSearchQuery(e.target.value)
-                            }
-                            value={this.state.value}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                     
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact
@@ -889,7 +841,7 @@ class Wastageproduction extends React.Component {
                           colResizeDefault={"shift"}
                           animateRows={true}
                           floatingFilter={false}
-                          // pagination={true}
+                          pagination={true}
                           paginationPageSize={this.state.paginationPageSize}
                           pivotPanelShow="always"
                           enableRtl={context.state.direction === "rtl"}
@@ -902,8 +854,7 @@ class Wastageproduction extends React.Component {
                 )}
               </CardBody>
             </Card>
-          </Col>
-        </Col>
+          
 
         <Modal
           isOpen={this.state.modal}

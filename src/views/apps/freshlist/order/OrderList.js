@@ -53,6 +53,8 @@ import SuperAdminUI from "../../../SuperAdminUi/SuperAdminUI";
 import {
   Delete_Sales,
   Delete_Sales_order,
+  Find_Product_InWarehose,
+  Order_By_Billing,
   Sales_OrderTo_Dispatch,
   Sales_OrderTo_DispatchList,
   ViewOther_Charges,
@@ -70,6 +72,7 @@ import Multiselect from "multiselect-react-dropdown";
 import InvoiceGenerator from "../subcategory/InvoiceGeneratorone";
 import { FcCancel } from "react-icons/fc";
 import { MdCancel } from "react-icons/md";
+import { param } from "jquery";
 
 const SelectedColums = [];
 const toWords = new ToWords({
@@ -382,36 +385,68 @@ class OrderList extends React.Component {
                                 this.state.Dispatching ? "secondary" : "primary"
                               }
                               title=" Ready for Dispatch"
-                              onClick={async () => {
-                                this.setState({ Dispatching: true });
-                                await _Get(
-                                  Sales_OrderTo_Dispatch,
-                                  params?.data?._id
-                                )
-                                  .then((res) => {
-                                    debugger;
-                                    this.setState({ Dispatching: false });
+                              onClick={() => {
+                                this.setState({ Loading: true });
+                                params.data.orderItems?.forEach((ele, i) => {
+                                  (async () => {
+                                    try {
+                                      // ele["Warehouses"] = [];
+                                      let WarehouseList = await _Get(
+                                        Find_Product_InWarehose,
+                                        ele?.productId?._id
+                                      );
 
-                                    // console.log(res);
-                                    let userData = JSON.parse(
-                                      localStorage.getItem("userData")
-                                    );
-
-                                    this.Apicalling(
-                                      userData?._id,
-                                      userData?.database
-                                    );
-                                  })
-                                  .catch((err) => {
-                                    this.setState({ Dispatching: false });
-
-                                    swal(
-                                      "error",
-                                      err.response?.data?.message,
-                                      "error"
-                                    );
-                                    console.log(err);
+                                      if (
+                                        WarehouseList?.Warehouse?.length > 0
+                                      ) {
+                                        ele["warehouse"] =
+                                          WarehouseList?.Warehouse[0]?._id;
+                                      }
+                                      ele["Warehouses"] =
+                                        WarehouseList?.Warehouse;
+                                    } catch {
+                                      ele["Warehouses"] = [];
+                                    }
+                                  })();
+                                });
+                                const myTimeout = setTimeout(() => {
+                                  this.setState({
+                                    Loading: false,
+                                    ViewOneUserView: true,
+                                    ViewOneData: params.data,
+                                    UpdateStatus: true,
                                   });
+                                  this.togglemodal();
+                                }, 1500);
+                                // this.setState({ Dispatching: true });
+                                // await _Get(
+                                //   Sales_OrderTo_Dispatch,
+                                //   params?.data?._id
+                                // )
+                                //   .then((res) => {
+                                //     debugger;
+                                //     this.setState({ Dispatching: false });
+
+                                //     // console.log(res);
+                                //     let userData = JSON.parse(
+                                //       localStorage.getItem("userData")
+                                //     );
+
+                                //     this.Apicalling(
+                                //       userData?._id,
+                                //       userData?.database
+                                //     );
+                                //   })
+                                //   .catch((err) => {
+                                //     this.setState({ Dispatching: false });
+
+                                //     swal(
+                                //       "error",
+                                //       err.response?.data?.message,
+                                //       "error"
+                                //     );
+                                //     console.log(err);
+                                //   });
                                 // history.push({
                                 //   pathname: `/app/AjGroup/dispatch/CreateDispach/${params?.data?._id}`,
                                 //   state: { data: params?.data },
@@ -557,8 +592,6 @@ class OrderList extends React.Component {
           filter: true,
           width: 135,
           cellRendererFramework: (params) => {
-            // console.log(params.data);
-
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -769,7 +802,6 @@ class OrderList extends React.Component {
     //  this.setState({ wordsNumber: words });
     //  .....................................
     if (UserInformation?.CompanyDetails?.BillNumber) {
-      // debugger;
       await _Post(
         Sales_OrderTo_DispatchList,
         this.state.PrintData?._id,
@@ -787,8 +819,6 @@ class OrderList extends React.Component {
           );
           this.setState({ wordsNumber: words });
           this.componentDidMount();
-
-          console.log(res);
         })
         .catch((err) => {
           this.setState({ ButtonText: "Submit" });
@@ -801,6 +831,14 @@ class OrderList extends React.Component {
       // this.toggleModalOne();
     }
   };
+
+  HandleUpdateWareHouse = (e, i, ele) => {
+    let data = { ...this.state.ViewOneData };
+    data.orderItems[i]["warehouse"] = e.target.value;
+
+    this.setState({ ViewOneData: data });
+  };
+
   handleCancelShow = (data) => {
     console.log(data);
   };
@@ -809,7 +847,6 @@ class OrderList extends React.Component {
     this.setState({ ShowMyBill: false });
   };
   // handleAddCharges = (e) => {
-  //   debugger;
   //   const selected =
   //     e.target.options[e.target.selectedIndex].getAttribute("data_id");
   //   let getValue = Number(selected?.split("*")[0]);
@@ -817,7 +854,6 @@ class OrderList extends React.Component {
   //   let value = { ...this.state?.PrintMainData };
   //   let Allvalue = { ...this.state?.PrintData };
   //   value["otherCharges"] = Number(e.target.value);
-  //   // debugger;
   //   value["amount"] = Number(value?.amount + getValue);
   //   if (value?.igstTaxType == 1) {
   //     let otherigst = Number((getValue * GST).toFixed(2));
@@ -891,7 +927,6 @@ class OrderList extends React.Component {
   //       let discountAmount = Number(
   //         (subtotal / ((100 + ele?.percentage) / 100)).toFixed(2)
   //       );
-  //       debugger;
   //       latestSubTotal = discountAmount;
   //       subtotal = discountAmount; // If you need to adjust the original subtotal too.
   //       ele["discountedAmount"] = Number(discountAmount.toFixed(2));
@@ -1072,11 +1107,9 @@ class OrderList extends React.Component {
   //   value["vehicleNo"] = Allvalue?.vehicleNo;
   //   this.setState({ PrintData: value });
   //   this.setState({ PrintMainData: value });
-  //   debugger;
   // };
 
   handleAddCharges = (e) => {
-    debugger;
     let value = _.cloneDeep(this.state?.PrintMainData);
     let Allvalue = _.cloneDeep(this.state?.PrintData);
 
@@ -1281,7 +1314,6 @@ class OrderList extends React.Component {
       );
     } else {
       if (lastdiscount?.discountedAmount > 0) {
-        debugger;
         // Sum = lastdiscount?.discountedAmount + value?.amount;
         Sum = lastdiscount?.discountedAmount;
         gstCalculation = Number(
@@ -1316,7 +1348,6 @@ class OrderList extends React.Component {
       decimalValue = Number(
         value?.grandTotal?.toFixed(2)?.toString()?.split(".")[1]
       );
-      debugger;
       if (decimalValue > 49) {
         let roundoff = 100 - decimalValue;
         value["grandTotal"] = parseFloat(value.grandTotal) + roundoff / 100;
@@ -1340,20 +1371,30 @@ class OrderList extends React.Component {
       modalOne: !prevState.modalOne,
     }));
   };
+  // toggleDispatch = () => {
+  //   this.setState((prevState) => ({
+  //     dispatch: !prevState.dispatch,
+  //   }));
+  // };
   LookupviewStart = () => {
     this.setState((prevState) => ({
       modal: !prevState.modal,
     }));
   };
   handleChangeView = (data, types) => {
-    console.log(data);
     let type = types;
     if (type == "readonly") {
-      this.setState({ ViewOneUserView: true });
-      this.setState({ ViewOneData: data });
+      this.setState({
+        ViewOneUserView: true,
+        UpdateStatus: false,
+        ViewOneData: data,
+      });
     } else {
-      this.setState({ EditOneUserView: true });
-      this.setState({ EditOneData: data });
+      this.setState({
+        EditOneUserView: true,
+        UpdateStatus: false,
+        EditOneData: data,
+      });
     }
   };
   async Apicalling(id, db) {
@@ -1361,7 +1402,6 @@ class OrderList extends React.Component {
     await _Get(view_create_order_history, id, db)
       .then((res) => {
         this.setState({ Loading: false });
-        debugger;
         if (res?.orderHistory) {
           let newList = res?.orderHistory?.filter(
             (lst) => lst.status == "pending"
@@ -1666,6 +1706,30 @@ class OrderList extends React.Component {
     this.setState({ PrintData: this.state.ViewOneData });
     this.setState({ PrintMainData: this.state.ViewOneData });
   };
+  handleSubmitData = async (e) => {
+    e.preventDefault();
+    this.setState({ Loading: true });
+
+    let Allvalue = _.cloneDeep(this.state.ViewOneData);
+    Allvalue?.orderItems?.forEach((item, index) => {
+      delete item?.Warehouses;
+      item["productId"] = item?.productId?._id;
+    });
+    // let checkAssignedWarehouse=Allvalue?.orderItems?.every((itms)=>itms?.warehouse)
+    await _Post(Order_By_Billing, this.state.ViewOneData?._id, Allvalue)
+      .then((res) => {
+        this.setState({ Loading: false });
+        this.togglemodal();
+        let userData = JSON.parse(localStorage.getItem("userData"));
+        this.Apicalling(userData?._id, userData?.database);
+        swal("success", "Order Forwarded Successfully", "success");
+      })
+      .catch((err) => {
+        this.setState({ Loading: false });
+
+        swal("error", "Error Occured Successfully", "error");
+      });
+  };
   render() {
     if (this.state.Loading) {
       return (
@@ -1796,7 +1860,31 @@ class OrderList extends React.Component {
                           onClick={() =>
                             history.push("/app/softnumen/order/createorder")
                           }>
-                          <FaPlus size={15} /> Create Order
+                          <FaPlus size={15} /> Order
+                        </Button>
+                      )}
+                    />
+                  </span>
+                )}
+                {InsiderPermissions && InsiderPermissions?.Create && (
+                  <span>
+                    <Route
+                      render={({ history }) => (
+                        <Button
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "500",
+                            height: "43px",
+                            textTransform: "uppercase",
+                          }}
+                          className="float-right"
+                          color="#39cccc"
+                          onClick={() =>
+                            history.push("/app/jupitech/order/CreateChallan")
+                          }>
+                          <FaPlus size={15} /> challan
                         </Button>
                       )}
                     />
@@ -2076,7 +2164,7 @@ class OrderList extends React.Component {
           isOpen={this.state.modalone}
           toggle={this.togglemodal}
           className={this.props.className}
-          style={{ maxWidth: "1050px" }}>
+          style={{ maxWidth: this.state.ShowBill ? "1050px" : "90%" }}>
           <ModalHeader toggle={this.togglemodal}>
             {this.state.ShowBill ? "Bill Download" : "All Products"}
           </ModalHeader>
@@ -2194,72 +2282,117 @@ class OrderList extends React.Component {
                         </div>
                       </Col>
                     </Row>
-                    <Row>
-                      <Col>
-                        <Table style={{ cursor: "pointer" }} responsive>
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Product Name</th>
-                              <th>HSN CODE</th>
-                              <th>Price</th>
-                              {/* <th>Size</th> */}
-                              <th>Quantity</th>
-                              <th>Unit</th>
-                              <th>TAXABLE</th>
-                              {this.state.ViewOneData?.igstTaxType &&
-                              this.state.ViewOneData?.igstTaxType == 1 ? (
-                                <>
-                                  <th>IGST</th>
-                                </>
-                              ) : (
-                                <>
-                                  <th>SGST</th>
-                                  <th>CGST</th>
-                                </>
-                              )}
-                              <th>Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {this.state.ViewOneData?.orderItems &&
-                              this.state.ViewOneData?.orderItems?.map(
-                                (ele, i) => (
+                    <Form onSubmit={this.handleSubmitData}>
+                      <Row>
+                        <Col>
+                          <Table style={{ cursor: "pointer" }} responsive>
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>HSN CODE</th>
+                                <th>Price</th>
+                                {/* <th>Size</th> */}
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>TAXABLE</th>
+                                {this.state.ViewOneData?.igstTaxType &&
+                                this.state.ViewOneData?.igstTaxType == 1 ? (
                                   <>
-                                    <tr>
-                                      <th scope="row">{i + 1}</th>
-                                      <td>{ele?.productId?.Product_Title}</td>
-                                      <td>{ele?.productId?.HSN_Code}</td>
-                                      <td>
-                                        {ele?.productId?.Product_MRP?.toFixed(
-                                          2
-                                        )}
-                                      </td>
-                                      {/* <td>{ele?.Size}</td> */}
-                                      <td>{ele?.qty}</td>
-                                      <td>{ele?.primaryUnit}</td>
-                                      <td>{ele?.taxableAmount}</td>
-                                      {this.state.ViewOneData?.igstTaxType &&
-                                      this.state.ViewOneData?.igstTaxType ==
-                                        1 ? (
-                                        <>
-                                          <td>{ele?.igstRate}</td>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <td>{ele?.sgstRate}</td>
-                                          <td>{ele?.cgstRate}</td>
-                                        </>
-                                      )}
-                                      <td>{ele?.grandTotal}</td>
-                                    </tr>
+                                    <th>IGST</th>
                                   </>
-                                )
-                              )}
-                          </tbody>
-                        </Table>
-                      </Col>
-                    </Row>
+                                ) : (
+                                  <>
+                                    <th>SGST</th>
+                                    <th>CGST</th>
+                                  </>
+                                )}
+                                <th>Total</th>
+                                {this.state.UpdateStatus && (
+                                  <th>Dispatching_WareHouse</th>
+                                )}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {this.state.ViewOneData?.orderItems &&
+                                this.state.ViewOneData?.orderItems?.map(
+                                  (ele, i) => (
+                                    <>
+                                      <tr>
+                                        <th scope="row">{i + 1}</th>
+                                        <td>
+                                          {ele?.productId?.Product_Title?.toUpperCase()}
+                                        </td>
+                                        <td>{ele?.productId?.HSN_Code}</td>
+                                        <td>
+                                          {ele?.productId?.Product_MRP?.toFixed(
+                                            2
+                                          )}
+                                        </td>
+                                        {/* <td>{ele?.Size}</td> */}
+                                        <td>{ele?.qty}</td>
+                                        <td>{ele?.primaryUnit}</td>
+                                        <td>{ele?.taxableAmount}</td>
+                                        {this.state.ViewOneData?.igstTaxType &&
+                                        this.state.ViewOneData?.igstTaxType ==
+                                          1 ? (
+                                          <>
+                                            <td>{ele?.igstRate}</td>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <td>{ele?.sgstRate}</td>
+                                            <td>{ele?.cgstRate}</td>
+                                          </>
+                                        )}
+                                        <td>{ele?.grandTotal}</td>
+                                        {this.state.UpdateStatus && (
+                                          <td>
+                                            <CustomInput
+                                              required
+                                              onChange={(e) =>
+                                                this.HandleUpdateWareHouse(
+                                                  e,
+                                                  i,
+                                                  ele
+                                                )
+                                              }
+                                              name="warehouse"
+                                              value={ele?.warehouse}
+                                              type="select">
+                                              <option value="">
+                                                --Select WareHouse--
+                                              </option>
+                                              {ele?.Warehouses?.map(
+                                                (data, id) => (
+                                                  <option value={data?._id}>
+                                                    {data?.warehouseName?.toUpperCase()}
+                                                  </option>
+                                                )
+                                              )}
+                                            </CustomInput>
+                                          </td>
+                                        )}
+                                      </tr>
+                                    </>
+                                  )
+                                )}
+                            </tbody>
+                          </Table>
+                        </Col>
+                      </Row>
+                      {this.state.UpdateStatus && (
+                        <Row>
+                          <Col>
+                            <div className="d-flex justify-content-center pt-1">
+                              <Button type="submit" color="primary">
+                                Submit
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
+                      )}
+                    </Form>
                   </>
                 ) : null}
               </>
@@ -2537,6 +2670,30 @@ class OrderList extends React.Component {
             </>
           </ModalBody>
         </Modal>
+        {/* <Modal
+          isOpen={this.state.dispatch}
+          toggle={this.toggleDispatch}
+          className={this.props.className}
+          backdrop="false"
+          style={{ maxWidth: "1080px" }}>
+          <ModalHeader toggle={this.toggleDispatch}>Dispatch Item </ModalHeader>
+          <ModalBody>
+            <div className="container"></div>
+            {JSON.stringify(this.state.ViewOneData)}
+            <div className="d-flex-justify-content-center">Order Details</div>
+            <Row>
+              <Col>
+                <Label>Party Name</Label>
+                <div>{this.state.ViewOneData?.partyId?.firstName}</div>
+              </Col>
+            </Row>
+            {this.state.ViewOneData?.orderItems?.map((ele, index) => (
+              <Row>
+                <Col key={index}> </Col>
+              </Row>
+            ))}
+          </ModalBody>
+        </Modal> */}
       </>
     );
   }

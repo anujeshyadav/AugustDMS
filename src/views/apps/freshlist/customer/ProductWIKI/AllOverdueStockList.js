@@ -99,7 +99,7 @@ class OverDueStock extends React.Component {
           field: "product.Product_Title",
           filter: true,
           sortable: true,
-           
+
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -117,7 +117,7 @@ class OverDueStock extends React.Component {
           field: "product.HSN_Code",
           filter: true,
           sortable: true,
-           width: 140,
+          width: 140,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -165,18 +165,19 @@ class OverDueStock extends React.Component {
         // },
         {
           headerName: "SUPPLIER NAME",
-          field: "partyId.ownerName",
+          field: "product.partyId?.ownerName",
           filter: true,
           sortable: true,
-         
+
           editable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
                   <span>
-                    {params?.data?.partyId?.ownerName &&
-                      params?.data?.partyId?.ownerName}
+                    {params?.data?.product?.partyId?.ownerName
+                      ? params?.data?.product?.partyId?.ownerName
+                      : params?.data?.product?.partyId?.firstName}
                   </span>
                 </div>
               </>

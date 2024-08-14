@@ -106,12 +106,11 @@ class StockTransfer extends React.Component {
               <div className="actions cursor-pointer">
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.View && (
-                    <FaList
-                      className="mr-50"
+                    <Badge
                       title="Outward Stock Products"
                       size="25px"
                       style={{ cursor: "pointer" }}
-                      color="green"
+                      color="primary"
                       onClick={async (e) => {
                         this.setState({ Loading: true });
 
@@ -126,10 +125,7 @@ class StockTransfer extends React.Component {
                             let Inprocess = res?.Warehouse?.filter(
                               (ele) => ele?.transferStatus == "InProcess"
                             );
-                            console.log({
-                              ...params?.data,
-                              inward: Inprocess,
-                            });
+                           
                             this.setState({
                               ViewOneData: {
                                 ...params?.data,
@@ -147,7 +143,7 @@ class StockTransfer extends React.Component {
                             console.log(err.response);
                           });
                       }}
-                    />
+                    >Outward</Badge>
                   )}
                 {/* {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.Edit && (
@@ -403,26 +399,32 @@ class StockTransfer extends React.Component {
   async Apicalling(id, db, WarehouseIncharge) {
     this.setState({ Loading: true });
     let userHeading = JSON.parse(localStorage.getItem("Outward Stock"));
-    this.setState({ AllcolumnDefs: this.state.columnDefs });
-    this.setState({ SelectedCols: this.state.columnDefs });
+    this.setState({
+      AllcolumnDefs: this.state.columnDefs,
+      SelectedCols: this.state.columnDefs,
+    });
 
     if (userHeading?.length) {
-      this.setState({ columnDefs: userHeading });
+      this.setState({
+        columnDefs: userHeading,
+        SelectedcolumnDefs: userHeading,
+      });
       // this.gridApi.setColumnDefs(userHeading);
-      this.setState({ SelectedcolumnDefs: userHeading });
     } else {
-      this.setState({ columnDefs: this.state.columnDefs });
-      this.setState({ SelectedcolumnDefs: this.state.columnDefs });
+      this.setState({
+        SelectedcolumnDefs: this.state.columnDefs,
+        columnDefs: this.state.columnDefs,
+      });
     }
     if (WarehouseIncharge) {
       let Url = `${Warehouse_ListBy_id + id}/${db}`;
       await _GetList(Url)
         .then((res) => {
-          this.setState({ Loading: false });
           let value = res?.Warehouse;
-          if (value?.length) {
-            this.setState({ rowData: value });
-          }
+          this.setState({
+            rowData: value?.length > 0 ? value : [],
+            Loading: false,
+          });
         })
         .catch((err) => {
           this.setState({ Loading: false });
@@ -1258,13 +1260,13 @@ class StockTransfer extends React.Component {
                                         </td>
                                         <td>
                                           {ele?.productItems?.map((element) => (
-                                            <>
+                                            <div>
                                               {
                                                 element?.productId
-                                                  ?.Product_Title
+                                                  ?.Product_Title?.toUpperCase()
                                               }
                                               -{element?.transferQty}
-                                            </>
+                                            </div>
                                           ))}
                                         </td>
                                         <td>{ele?.grandTotal}</td>

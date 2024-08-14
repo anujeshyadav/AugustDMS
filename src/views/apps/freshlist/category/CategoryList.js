@@ -40,7 +40,7 @@ class CategoryList extends React.Component {
     Createpermisson: null,
     MasterShow: false,
     Deletepermisson: null,
-    paginationPageSize: 20,
+    paginationPageSize: 15,
     currenPageSize: "",
     getPageSize: "",
     defaultColDef: {
@@ -54,7 +54,7 @@ class CategoryList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 100,
+        width: 80,
         filter: true,
       },
       // {
@@ -99,7 +99,7 @@ class CategoryList extends React.Component {
         headerName: "Category Name",
         field: "name",
         filter: true,
-        width: 230,
+        
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -155,14 +155,14 @@ class CategoryList extends React.Component {
         headerName: "Status",
         field: "status",
         filter: true,
-        width: 200,
+        width: 140,
         cellRendererFramework: (params) => {
           return params.data.status === "Active" ? (
-            <div className="badge badge-pill badge-success">
+            <div className=" ">
               {params.data.status}
             </div>
           ) : params.data.status === "Deactive" ? (
-            <div className="badge badge-pill badge-warning">
+            <div className=" ">
               {params.data.status}
             </div>
           ) : null;
@@ -172,7 +172,7 @@ class CategoryList extends React.Component {
         headerName: "Actions",
         field: "sortorder",
         field: "transactions",
-        width: 300,
+        width: 140,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -348,28 +348,26 @@ class CategoryList extends React.Component {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       // console.log(rowData),
-      <Row className="app-user-list">
-        <Col sm="12"></Col>
-        <Col sm="12">
+       
           <Card>
-            <Row className="mt-2 ml-2 mr-2">
-              <Col>
-                <h1 sm="6" className="float-left" style={{ fontWeight: "600" }}>
+            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+              <Col  >
+                <h1 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
                   Category List
                 </h1>
               </Col>
               {/*
               {this.state.MasterShow && (
-                <Col>
+                <Col >
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
                   />
                 </Col>
               )}*/}
-              <Col>
-                <div className=" mb-1">
-                  <div className="table-input mr-1">
+              <Col xl="2" lg="2" style={{marginTop:'25px'}}>
+                <div className=" ">
+                  <div className="table-input ">
                     <Input
                       placeholder="search..."
                       onChange={(e) => this.updateSearchQuery(e.target.value)}
@@ -379,73 +377,34 @@ class CategoryList extends React.Component {
                 </div>
               </Col>
 
-              <Col>
-                <div className="d-flex flex-wrap justify-content-between align-items-center">
-                  {/* <div className="mb-1">
-                    <UncontrolledDropdown className="p-1 ag-dropdown">
-                      <DropdownToggle tag="div">
-                        {this.gridApi
-                          ? this.state.currenPageSize
-                          : "" * this.state.getPageSize -
-                            (this.state.getPageSize - 1)}{" "}
-                        -{" "}
-                        {this.state.rowData.length -
-                          this.state.currenPageSize * this.state.getPageSize >
-                        0
-                          ? this.state.currenPageSize * this.state.getPageSize
-                          : this.state.rowData.length}{" "}
-                        of {this.state.rowData.length}
-                        <ChevronDown className="ml-50" size={15} />
-                      </DropdownToggle>
-                      <DropdownMenu right>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(20)}>
-                          20
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(50)}>
-                          50
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(100)}>
-                          100
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(134)}>
-                          134
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </div> */}
-                </div>
-              </Col>
-              <Col></Col>
-              <Col>
+            
+              
+              <Col xl="2" lg="2" style={{marginTop:'25px'}}>
                 <div className="">
                   <Button
                     color="rgb(8, 91, 245)"
-                    className="float-right"
-                    style={{ backgroundColor: "rgb(8, 91, 245)" }}
+                    className="float-right categorysbutton45"
+                    style={{ backgroundColor: "rgb(8, 91, 245)" , height:"35px"}}
                     onClick={() => this.gridApi.exportDataAsCsv()}>
                     <span style={{ color: "white" }}> Export as CSV</span>
                   </Button>
                 </div>
               </Col>
-              <Col>
+              <Col xl="2" lg="2" style={{marginTop:'25px'}}>
+              <div>
                 <Button
-                  style={{ cursor: "pointer" }}
-                  className="btn btn-success float-right"
+                    style={{ backgroundColor: "rgb(8, 91, 245)" , height:"35px",color:"white"}}
+                 color="rgb(8, 91, 245)"
+                    className="float-right categorysbutton45"
                   onClick={() =>
                     this.props.history.push(
                       "/app/freshlist/category/addCategory"
                     )
                   }>
-                  + Add Category
+                   <span style={{ color: "white" }}>  + Add Category</span>
+                 
                 </Button>
+                </div>
               </Col>
               {/* <Col>
                 {this.state.Createpermisson && (
@@ -467,7 +426,7 @@ class CategoryList extends React.Component {
             </Row>
             <>
               {this.state.rowData === null ? null : (
-                <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                <div className="ag-theme-material w-100   ag-grid-table">
                   <ContextLayout.Consumer className="ag-theme-alpine">
                     {(context) => (
                       <AgGridReact
@@ -485,7 +444,7 @@ class CategoryList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                         pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}
@@ -498,8 +457,7 @@ class CategoryList extends React.Component {
               )}
             </>
           </Card>
-        </Col>
-      </Row>
+        
     );
   }
 }

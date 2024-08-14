@@ -140,9 +140,10 @@ const CreateAccount = () => {
             UserData["shift"] = UserData?.shift?._id;
             SetRules(res?.User?.setRule);
             // setSelectedRoleToAssign(res?.User?.warehouse);
-
+// debugger
             if (res?.User?.warehouse?.length > 0) {
               let value = res?.User?.warehouse;
+              // debugger
               let selectedwarehouse = value?.map((element) => {
                 return element?.id;
               });

@@ -70,7 +70,7 @@ class GoodDispatchList extends React.Component {
       modal: false,
       ViewOneData: {},
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [
@@ -116,7 +116,7 @@ class GoodDispatchList extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 190,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
@@ -125,7 +125,7 @@ class GoodDispatchList extends React.Component {
                     <Route
                       render={({ history }) => (
                         <Eye
-                          className="mr-50"
+                        
                           size="25px"
                           color="green"
                           onClick={() => {
@@ -179,24 +179,24 @@ class GoodDispatchList extends React.Component {
           width: 140,
           cellRendererFramework: (params) => {
             return params.data?.status?.toLowerCase()?.includes("completed") ? (
-              <div className="badge badge-pill bg-success">Completed</div>
+              <div className=" ">Completed</div>
             ) : params.data?.status === "pending" ? (
-              <div className="badge badge-pill badge-warning">
+              <div className=" ">
                 {params.data?.status}
               </div>
             ) : params.data?.status === "return" ? (
-              <div className="badge badge-pill bg-danger">Returned</div>
+              <div className=" ">Returned</div>
             ) : params.data?.status === "cancelled" ? (
-              <div className="badge badge-pill bg-danger">
+              <div className=" ">
                 {params.data.status}
               </div>
             ) : params.data?.status === "Inprocess" ? (
-              <div className="badge badge-pill bg-success">
+              <div className=" ">
                 {params.data.status}
               </div>
             ) : (
               <>
-                <div className="badge badge-pill bg-warning">
+                <div className=" ">
                   {params.data.status}
                 </div>
               </>
@@ -204,7 +204,7 @@ class GoodDispatchList extends React.Component {
           },
         },
         {
-          headerName: "Orderid",
+          headerName: "Order id",
           field: "_id",
           filter: true,
           resizable: true,
@@ -280,28 +280,28 @@ class GoodDispatchList extends React.Component {
                             {params.data?.status
                               ?.toLowerCase()
                               ?.includes("completed") ? (
-                              <div className="badge badge-pill bg-success">
+                              <div className=" ">
                                 Completed
                               </div>
                             ) : params.data?.status === "pending" ? (
-                              <div className="badge badge-pill badge-warning">
+                              <div className=" ">
                                 {params.data?.status}
                               </div>
                             ) : params.data?.status === "return" ? (
-                              <div className="badge badge-pill bg-danger">
+                              <div className=" ">
                                 Returned
                               </div>
                             ) : params.data?.status === "cancelled" ? (
-                              <div className="badge badge-pill bg-danger">
+                              <div className=" ">
                                 {params.data.status}
                               </div>
                             ) : params.data?.status === "Inprocess" ? (
-                              <div className="badge badge-pill bg-success">
+                              <div className=" ">
                                 {params.data.status}
                               </div>
                             ) : (
                               <>
-                                <div className="badge badge-pill bg-warning">
+                                <div className=" ">
                                   {params.data.status}
                                 </div>
                               </>
@@ -343,11 +343,11 @@ class GoodDispatchList extends React.Component {
           },
         },
         {
-          headerName: "FullName",
+          headerName: "Full Name",
           field: "fullName",
           filter: true,
           resizable: true,
-          width: 150,
+          width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center justify-content-center cursor-pointer">
@@ -359,11 +359,11 @@ class GoodDispatchList extends React.Component {
           },
         },
         {
-          headerName: "MobileNo",
+          headerName: "Mobile No",
           field: "MobileNo",
           filter: true,
           resizable: true,
-          width: 160,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center justify-content-center cursor-pointer">
@@ -379,7 +379,7 @@ class GoodDispatchList extends React.Component {
           field: "address",
           filter: true,
           resizable: true,
-          width: 200,
+          width: 300,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center justify-content-center cursor-pointer">
@@ -391,11 +391,11 @@ class GoodDispatchList extends React.Component {
           },
         },
         {
-          headerName: "GrandTotal",
+          headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
           resizable: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center justify-content-center cursor-pointer">
@@ -411,7 +411,7 @@ class GoodDispatchList extends React.Component {
           field: "taxAmount",
           filter: true,
           resizable: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center justify-content-center cursor-pointer">
@@ -444,7 +444,7 @@ class GoodDispatchList extends React.Component {
           field: "params?.data?.orderItems?.length",
           filter: true,
           resizable: true,
-          width: 180,
+          width: 170,
           cellRendererFramework: (params) => {
             // console.log(params.data);
             return (
@@ -899,18 +899,27 @@ class GoodDispatchList extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row className="ml-2 mr-2 mt-2">
+                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                         <Col>
                           <h1
-                            className="float-left"
-                            style={{ fontWeight: "600" }}>
+                           className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
                             Good Dispatch List
                           </h1>
                         </Col>
-
+                        <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                        <div className="table-input ">
+                                  <Input
+                                    placeholder="search Item here..."
+                                    onChange={(e) =>
+                                      this.updateSearchQuery(e.target.value)
+                                    }
+                                    value={this.state.value}
+                                  />
+                                </div>
+                        </Col>
                         {InsiderPermissions && InsiderPermissions?.View && (
-                          <Col>
-                            <span className="mx-1">
+                          <Col lg="1" style={{marginTop:"25px"}}>
+                            <span className=" ">
                               <FaFilter
                                 style={{ cursor: "pointer" }}
                                 title="filter coloumn"
@@ -920,7 +929,8 @@ class GoodDispatchList extends React.Component {
                                 className="float-right"
                               />
                             </span>
-                            <span className="mx-1">
+                            <span className=" " onMouseEnter={this.toggleDropdown}
+                  onMouseLeave={this.toggleDropdown}>
                               <div className="dropdown-container float-right">
                                 <ImDownload
                                   style={{ cursor: "pointer" }}
@@ -1000,69 +1010,10 @@ class GoodDispatchList extends React.Component {
                           </Col>
                         )}
                       </Row>
-                      <CardBody style={{ marginTop: "0rem" }}>
+                      <CardBody style={{ marginTop: "-3rem" }}>
                         {this.state.rowData === null ? null : (
                           <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                            <div className="d-flex flex-wrap justify-content-between align-items-center">
-                              <div className="mb-1">
-                                <UncontrolledDropdown className="p-1 ag-dropdown">
-                                  <DropdownToggle tag="div">
-                                    {this.gridApi
-                                      ? this.state.currenPageSize
-                                      : "" * this.state.getPageSize -
-                                        (this.state.getPageSize - 1)}{" "}
-                                    -{" "}
-                                    {this.state.rowData.length -
-                                      this.state.currenPageSize *
-                                        this.state.getPageSize >
-                                    0
-                                      ? this.state.currenPageSize *
-                                        this.state.getPageSize
-                                      : this.state.rowData.length}{" "}
-                                    of {this.state.rowData.length}
-                                    <ChevronDown className="ml-50" size={15} />
-                                  </DropdownToggle>
-                                  <DropdownMenu right>
-                                    <DropdownItem
-                                      tag="div"
-                                      onClick={() => this.filterSize(5)}>
-                                      5
-                                    </DropdownItem>
-                                    <DropdownItem
-                                      tag="div"
-                                      onClick={() => this.filterSize(20)}>
-                                      20
-                                    </DropdownItem>
-                                    <DropdownItem
-                                      tag="div"
-                                      onClick={() => this.filterSize(50)}>
-                                      50
-                                    </DropdownItem>
-                                    <DropdownItem
-                                      tag="div"
-                                      onClick={() => this.filterSize(100)}>
-                                      100
-                                    </DropdownItem>
-                                    <DropdownItem
-                                      tag="div"
-                                      onClick={() => this.filterSize(134)}>
-                                      134
-                                    </DropdownItem>
-                                  </DropdownMenu>
-                                </UncontrolledDropdown>
-                              </div>
-                              <div className="d-flex flex-wrap justify-content-end mb-1">
-                                <div className="table-input mr-1">
-                                  <Input
-                                    placeholder="search Item here..."
-                                    onChange={(e) =>
-                                      this.updateSearchQuery(e.target.value)
-                                    }
-                                    value={this.state.value}
-                                  />
-                                </div>
-                              </div>
-                            </div>
+                            
                             <ContextLayout.Consumer className="ag-theme-alpine">
                               {(context) => (
                                 <AgGridReact
@@ -1095,7 +1046,7 @@ class GoodDispatchList extends React.Component {
                                   colResizeDefault={"shift"}
                                   animateRows={true}
                                   floatingFilter={false}
-                                  // pagination={true}
+                                 pagination={true}
                                   paginationPageSize={
                                     this.state.paginationPageSize
                                   }

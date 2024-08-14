@@ -654,7 +654,7 @@ class InvoiceGenerator extends React.Component {
       ],
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 10,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -1851,6 +1851,12 @@ class InvoiceGenerator extends React.Component {
                     <Form onSubmit={this.handleSubmitOtherCharges}>
                       <div className="d-flex justify-content-center mt-2 mb-2">
                         <h3>Charges</h3>
+                      </div>
+                      <div className="d-flex justify-content-end container ">
+
+                        <h3>
+                          No of Packages: {this.state.PrintData?.NoOfPackage ? this.state.PrintData?.NoOfPackage: "Not Found"}
+                        </h3>
                       </div>
                       <Row className="main div heading px-3 py-3">
                         <Col lg="6">

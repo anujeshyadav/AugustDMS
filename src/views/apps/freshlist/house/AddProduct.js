@@ -335,6 +335,7 @@ const AddProduct = () => {
         secondarySize: Data?.secondarySize,
         Opening_Stock: Number(Data?.Opening_Stock),
         Purchase_Rate: Number(Data?.Purchase_Rate),
+        landedCost: Number(Data?.Purchase_Rate),
         // files: Image,
         MIN_stockalert: Number(Data?.MIN_stockalert),
 
@@ -1067,18 +1068,18 @@ const AddProduct = () => {
                         value={Data.Purchase_Rate}
                         onChange={(e) => {
                           let value = e.target.value;
-                          let mrp =
-                            Number(value) *
-                            1.02 *
-                            Number(
-                              ((100 + Number(Data?.GSTRate)) / 100).toFixed(2)
-                            );
+                          // let mrp =
+                          //   Number(value) *
+                          //   1.02 *
+                          //   Number(
+                          //     ((100 + Number(Data?.GSTRate)) / 100).toFixed(2)
+                          //   );
 
                           setData({
                             ...Data,
                             ["Purchase_Rate"]: value,
                             // ["saleRate"]: value*1.03,
-                            ["Product_MRP"]: Number(mrp?.toFixed(2)),
+                            // ["Product_MRP"]: Number(mrp?.toFixed(2)),
                           });
                         }}
                         // onChange={handleInputChange}

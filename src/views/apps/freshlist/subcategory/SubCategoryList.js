@@ -36,7 +36,7 @@ class SubCategoryList extends React.Component {
   state = {
     rowData: [],
     CatList: [],
-    paginationPageSize: 20,
+    paginationPageSize: 15,
     currenPageSize: "",
     MasterShow: false,
     InsiderPermissions: {},
@@ -54,7 +54,7 @@ class SubCategoryList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 100,
+        width: 80,
         filter: true,
       },
       // {
@@ -162,14 +162,14 @@ class SubCategoryList extends React.Component {
         headerName: "Status",
         field: "status",
         filter: true,
-        width: 150,
+        width: 140,
         cellRendererFramework: (params) => {
           return params.data?.status === "Active" ? (
-            <div className="badge badge-pill badge-success">
+            <div className=" ">
               {params.data?.status}
             </div>
           ) : params.data?.status === "Inactive" ? (
-            <div className="badge badge-pill badge-warning">
+            <div className=" ">
               {params.data.status}
             </div>
           ) : null;
@@ -179,7 +179,7 @@ class SubCategoryList extends React.Component {
         headerName: "Actions",
         field: "sortorder",
         field: "transactions",
-        width: 150,
+        width: 140,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -343,18 +343,16 @@ class SubCategoryList extends React.Component {
     }
     const { rowData, columnDefs, defaultColDef, Show } = this.state;
     return (
-      <Row className="app-user-list">
-        <Col sm="12"></Col>
-        <Col sm="12">
+      < >
           <Card>
-            <Row className="mt-2 ml-2 mr-2">
-              <Col lg="3" md="3" xs="12">
-                <h4 sm="6" className="float-left" style={{ fontWeight: "600" }}>
+            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+              <Col  >
+                <h4   className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'30px' }}>
                   SubCategory List
                 </h4>
               </Col>
               {this.state.MasterShow && this.state.MasterShow ? (
-                <Col>
+                <Col lg="2" md="2" sm="2" style={{marginTop:"25px"}}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -383,19 +381,48 @@ class SubCategoryList extends React.Component {
                   ))}
                 </CustomInput>
               </Col> */}
-
-              <Col lg="2" md="2" sm="2">
+              <Col lg="2" md="2" sm="2" style={{marginTop:"25px"}}>
+               <div className="table-input ">
+                          <Input
+                            placeholder="search..."
+                            onChange={(e) =>
+                              this.updateSearchQuery(e.target.value)
+                            }
+                            value={this.state.value}
+                          />
+                        </div>
+              </Col>
+               <Col lg="3" md="3"   style={{marginTop:"25px"}}>
+              <div style={{display:"flex",justifyContent:"space-between"}}>
+                        <div  className="float-right">
+                          <Button.Ripple
+                           style={{
+                        cursor: "pointer",
+                        backgroundColor: "rgb(8, 91, 245)",
+                        color: "white",
+                        fontWeight: "600",
+                      }}
+                           color="rgb(8, 91, 245)"
+                    className="float-right categorysbutton45"
+                            onClick={() => this.gridApi.exportDataAsCsv()}>
+                            Export as CSV
+                          </Button.Ripple>
+                        </div>
+               
+              <div>
+              
                 <Route
                   render={({ history }) => (
                     <Button
                       style={{
                         cursor: "pointer",
-                        backgroundColor: "#39cccc",
+                        backgroundColor: "rgb(8, 91, 245)",
                         color: "white",
                         fontWeight: "600",
                       }}
-                      className="btn float-right mt-1 "
-                      color="#39cccc"
+                     color="rgb(8, 91, 245)"
+                    className="float-right categorysbutton45 mr-2"
+                    
                       onClick={() =>
                         history.push(
                           "/app/freshlist/subcategory/addSubCategory"
@@ -405,75 +432,16 @@ class SubCategoryList extends React.Component {
                     </Button>
                   )}
                 />
+                </div>
+                </div>
               </Col>
             </Row>
             {/* {Show ? ( */}
             <>
               <>
                 {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-                      <div className="mb-1">
-                        <UncontrolledDropdown className="p-1 ag-dropdown">
-                          <DropdownToggle tag="div">
-                            {this.gridApi
-                              ? this.state.currenPageSize
-                              : "" * this.state.getPageSize -
-                                (this.state.getPageSize - 1)}{" "}
-                            -{" "}
-                            {this.state.rowData.length -
-                              this.state.currenPageSize *
-                                this.state.getPageSize >
-                            0
-                              ? this.state.currenPageSize *
-                                this.state.getPageSize
-                              : this.state.rowData.length}{" "}
-                            of {this.state.rowData.length}
-                            <ChevronDown className="ml-50" size={15} />
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(20)}>
-                              20
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(50)}>
-                              50
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(100)}>
-                              100
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(134)}>
-                              134
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                      <div className="d-flex flex-wrap justify-content-between mb-1">
-                        <div className="table-input mr-1">
-                          <Input
-                            placeholder="search..."
-                            onChange={(e) =>
-                              this.updateSearchQuery(e.target.value)
-                            }
-                            value={this.state.value}
-                          />
-                        </div>
-                        <div className="export-btn">
-                          <Button.Ripple
-                            color="primary"
-                            onClick={() => this.gridApi.exportDataAsCsv()}>
-                            Export as CSV
-                          </Button.Ripple>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="ag-theme-material w-100  ag-grid-table">
+                     
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact
@@ -491,7 +459,7 @@ class SubCategoryList extends React.Component {
                           colResizeDefault={"shift"}
                           animateRows={true}
                           floatingFilter={false}
-                          // pagination={true}
+                           pagination={true}
                           paginationPageSize={this.state.paginationPageSize}
                           pivotPanelShow="always"
                           enableRtl={context.state.direction === "rtl"}
@@ -506,8 +474,7 @@ class SubCategoryList extends React.Component {
             </>
             {/* ) : null} */}
           </Card>
-        </Col>
-      </Row>
+        </ >
     );
   }
 }

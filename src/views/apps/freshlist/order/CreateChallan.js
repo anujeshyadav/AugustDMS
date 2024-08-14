@@ -487,7 +487,7 @@ const CreateOrder = (args) => {
     if (arnNumber > 49999) {
       arnStatus = true;
     }
-    const fullname = Party?.firstName;
+    const fullname = Party?.firstName + " " + Party?.lastName;
     const payload = {
       database: UserInfo?.database,
       ARN: "",
@@ -526,7 +526,6 @@ const CreateOrder = (args) => {
           History.goBack();
         })
         .catch((err) => {
-          setLoading(false);
           swal("SomeThing Went Wrong");
           console.log(err.response);
         });
@@ -632,7 +631,6 @@ const CreateOrder = (args) => {
             History.goBack();
           })
           .catch((err) => {
-            setLoading(false);
             swal("SomeThing Went Wrong");
             console.log(err.response);
           });
@@ -647,6 +645,24 @@ const CreateOrder = (args) => {
   const onRemove1 = (selectedList, removedItem, index) => {
     console.log(selectedList);
   };
+  useEffect(() => {
+    // Function to handle key down events
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey && event.key === "e") {
+        console.log("Ctrl+e was pressed");
+        alert("dfsdf");
+        // Add your logic here
+      }
+    };
+
+    // Add event listener to the document
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Clean up the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
   return (
     <div>
       <div>
@@ -654,7 +670,7 @@ const CreateOrder = (args) => {
           <Row className="m-1">
             <Col className="">
               <div>
-                <h1 className="">Create Sales Order</h1>
+                <h1 className="">Create Challan</h1>
               </div>
             </Col>
             <Col>

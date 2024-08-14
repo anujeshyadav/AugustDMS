@@ -45,6 +45,8 @@ const CreateTarget = (args) => {
   const [audit, setAudit] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [WareHouselist, setWarehouseList] = useState([]);
+  const [WareHouseTolist, setToWarehouseList] = useState([]);
+  const [WareHouseAll, setWholeWarehosue] = useState([]);
   const toggle = (item) => {
     // setItems(item);
     setModal(!modal);
@@ -150,12 +152,24 @@ const CreateTarget = (args) => {
   useEffect(() => {
     let userData = JSON.parse(localStorage.getItem("userData"));
     _Get(WareahouseList_For_addProduct, userData?.database)
-      .then((values) => {
-        let value = values?.Warehouse;
-        if (value) {
-          setWarehouseList(value);
+      .then((res) => {
+        let value = res?.Warehouse;
+        setWholeWarehosue(value);
+        let List = [];
+        if (
+          userData?.rolename?.roleName === "MASTER" ||
+          userData?.rolename?.roleName === "SuperAdmin"
+        ) {
+          if (value?.length) {
+            List = value;
+          }
+        } else {
+          List = value?.filter((ele) => ele?.created_by?._id == userData?._id);
         }
-        console.log(value);
+        if (value?.length) {
+          setToWarehouseList(value);
+          setWarehouseList(List);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -163,11 +177,6 @@ const CreateTarget = (args) => {
 
     ProductListView(userData?._id, userData?.database)
       .then((res) => {
-        console.log(res.Product);
-        let AllProduct = res?.Product?.filter(
-          (ele) => ele?.addProductType == "Product"
-        );
-
         setProductList(res.Product);
       })
       .catch((err) => {
@@ -222,7 +231,7 @@ const CreateTarget = (args) => {
         price: ele?.price,
         transferQty: ele?.transferQty,
         totalPrice: ele?.totalprice,
-        currentStock: ele?.AvailaleQty,
+        // currentStock: ele?.AvailaleQty,
         gstPercentage: ele?.gstPercentage,
       };
     });
@@ -254,7 +263,10 @@ const CreateTarget = (args) => {
 
   const onSelectone = (selectedList, selectedItem, index) => {
     setWareHouseone(selectedList);
-    debugger;
+    let secondryShow = WareHouseAll?.filter(
+      (ele) => ele?._id !== selectedItem?._id
+    );
+    setToWarehouseList(secondryShow);
     let MySelectedwarehouseProduct = selectedList[0]?.productItems?.map(
       (ele, i) => {
         return {
@@ -272,7 +284,7 @@ const CreateTarget = (args) => {
 
   const onRemoveone = (selectedList, removedItem, index) => {
     console.log(selectedList);
-    console.log(index);
+    setToWarehouseList(WareHouseAll);
   };
   const onSelect2 = (selectedList, selectedItem, index) => {
     console.log(selectedList);
@@ -351,7 +363,7 @@ const CreateTarget = (args) => {
                     required
                     selectionLimit={1}
                     isObject="false"
-                    options={WareHouselist} // Options to display in the dropdown
+                    options={WareHouseTolist} // Options to display in the dropdown
                     onSelect={onSelect2} // Function will trigger on select event
                     onRemove={onRemove2} // Function will trigger on remove event
                     displayValue="warehouseName" // Property name to display in the dropdown options
@@ -458,7 +470,7 @@ const CreateTarget = (args) => {
                     </div>
                   </Col>
 
-                  <Col className="mb-1" lg="1" md="1" sm="12">
+                  {/* <Col className="mb-1" lg="1" md="1" sm="12">
                     <div className="">
                       <Label>Price</Label>
                       <Input
@@ -469,8 +481,8 @@ const CreateTarget = (args) => {
                         value={product.price && product.price?.toFixed(2)}
                       />
                     </div>
-                  </Col>
-                  <Col className="mb-1" lg="2" md="2" sm="12">
+                  </Col> */}
+                  {/* <Col className="mb-1" lg="2" md="2" sm="12">
                     <div className="">
                       <Label>Total Price</Label>
                       <Input
@@ -481,7 +493,7 @@ const CreateTarget = (args) => {
                         value={(product.price * product.transferQty).toFixed(2)}
                       />
                     </div>
-                  </Col>
+                  </Col> */}
 
                   <Col className="d-flex mt-1 abb" lg="3" md="3" sm="12">
                     <div className="btnStyle">
@@ -510,7 +522,7 @@ const CreateTarget = (args) => {
               ))}
 
             <Row>
-              <Col className="mb-1" lg="12" md="12" sm="12">
+              {/* <Col className="mb-1" lg="12" md="12" sm="12">
                 <div className=" d-flex justify-content-end">
                   <Label className="pr-5">
                     Grand Total :{" "}
@@ -521,7 +533,7 @@ const CreateTarget = (args) => {
                     </strong>
                   </Label>
                 </div>
-              </Col>
+              </Col> */}
             </Row>
             {!Loading && !Loading ? (
               <>

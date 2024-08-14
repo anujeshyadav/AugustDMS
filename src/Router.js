@@ -549,6 +549,9 @@ const StockTransfer = lazy(() =>
 const CreateOrder = lazy(() =>
   import("./views/apps/freshlist/order/CreateOrder")
 );
+const CreateChallan = lazy(() =>
+  import("./views/apps/freshlist/order/CreateChallan")
+);
 const CreatePayment = lazy(() =>
   import("./views/apps/freshlist/order/CreatePayment")
 );
@@ -1748,6 +1751,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/softnumen/order/createorder"
             component={CreateOrder}
+          />
+          <AppRoute
+            path="/app/jupitech/order/CreateChallan"
+            component={CreateChallan}
           />
           <AppRoute
             path="/app/ajgroup/order/CreatePayment/:id"

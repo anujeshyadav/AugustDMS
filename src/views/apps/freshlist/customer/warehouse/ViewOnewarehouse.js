@@ -214,7 +214,7 @@ class ViewOnewarehouse extends React.Component {
           filter: true,
           sortable: true,
           editable: true,
-          width: 260,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -230,7 +230,7 @@ class ViewOnewarehouse extends React.Component {
           field: "currentStock",
           filter: true,
           sortable: true,
-          width: 260,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -246,7 +246,7 @@ class ViewOnewarehouse extends React.Component {
           field: "pendingStock",
           filter: true,
           sortable: true,
-          width: 260,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -261,6 +261,7 @@ class ViewOnewarehouse extends React.Component {
           headerName: "Total Price",
           field: "totalPrice",
           filter: true,
+          width: 130,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -724,9 +725,9 @@ class ViewOnewarehouse extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row className="mt-2 ml-2 mr-2">
-                        <Col lg="3" md="3" sm="12">
-                          <h3>
+                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                        <Col  >
+                          <h3 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
                             {this.state.rowAllData?.warehouseName &&
                               this.state.rowAllData?.warehouseName}
                             {"  "}
@@ -735,7 +736,7 @@ class ViewOnewarehouse extends React.Component {
                         </Col>
 
                         {this.state.MasterShow ? (
-                          <Col>
+                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -744,7 +745,23 @@ class ViewOnewarehouse extends React.Component {
                         ) : (
                           <Col></Col>
                         )}
-                        <Col lg="3" md="3" sm="12">
+                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                           <Button
+                            style={{
+                      cursor: "pointer",
+                      // backgroundColor: "rgb(8, 91, 245)",
+                      float:"right",
+                      height:"35px",
+                      color: "white",
+                      fontWeight: "600",
+                    }}
+                     className="float-right categorysbutton45 ml-3"
+                            onClick={() => this.props.history.goBack()}>
+                            {" "}
+                            Back
+                          </Button>
+                          </Col>
+                        <Col lg="1" style={{marginTop:"25px"}}>
                           {/* <div className="d-flex justify-content-end">
                             <Button
                               color="primary"
@@ -753,20 +770,27 @@ class ViewOnewarehouse extends React.Component {
                               Back
                             </Button>
                           </div> */}
-                          <Button
-                            className="float-right mb-1 mx-1"
-                            color="primary"
-                            onClick={() => this.props.history.goBack()}>
-                            {" "}
-                            Back
-                          </Button>
+                            {InsiderPermissions && InsiderPermissions.View && (
+                            <>
+                              <span className=" ">
+                                <FaFilter
+                                  style={{ cursor: "pointer" }}
+                                  title="filter coloumn"
+                                  size="35px"
+                                  onClick={this.LookupviewStart}
+                                  color="#39cccc"
+                                  className="float-right  "
+                                />
+                              </span>
+                            </>
+                          )}
                           {InsiderPermissions &&
                             InsiderPermissions.Download && (
                               <>
                                 <span
                                   onMouseEnter={this.toggleDropdown}
                                   onMouseLeave={this.toggleDropdown}
-                                  className="mx-1">
+                                  className=" ">
                                   <div className="dropdown-container float-right">
                                     <ImDownload
                                       style={{ cursor: "pointer" }}
@@ -823,25 +847,12 @@ class ViewOnewarehouse extends React.Component {
                               </>
                             )}
 
-                          {InsiderPermissions && InsiderPermissions.View && (
-                            <>
-                              <span className="mx-1">
-                                <FaFilter
-                                  style={{ cursor: "pointer" }}
-                                  title="filter coloumn"
-                                  size="35px"
-                                  onClick={this.LookupviewStart}
-                                  color="#39cccc"
-                                  className="float-right mb-1"
-                                />
-                              </span>
-                            </>
-                          )}
+                       
                         </Col>
                       </Row>
 
                       <>
-                        <CardBody>
+                        <CardBody style={{marginTop:"-3rem"}} >
                           {this.state.rowData === null ? null : (
                             <div className="ag-theme-material w-100 my-2 ag-grid-table">
                               {/* <div className="d-flex flex-wrap justify-content-between align-items-center">

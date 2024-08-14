@@ -316,13 +316,13 @@ class HouseProductList extends React.Component {
           cellRendererFramework: (params) => {
             return params.value == "completed" ? (
               <div
-              // className="badge badge-pill badge-success"
+              // className=" "
               >
                 {params.data.status}
               </div>
             ) : params.value == "pending" ? (
               <div
-              // className="badge badge-pill badge-warning"
+              // className=" "
               >
                 {params.data.status}
               </div>
@@ -876,35 +876,73 @@ class HouseProductList extends React.Component {
     } = this.state;
     return (
       <>
-        <Row className="app-user-list">
-          <Col sm="12">
+        
             <Card>
-              <Row className="mt-2 ml-2 mr-2">
-                <Col lg="2" md="2" sm="12">
-                  <h1 className="float-left" style={{ fontWeight: "600" }}>
+              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                <Col  >
+                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
                     Product List
                   </h1>
                 </Col>
-                <Col lg="2" md="2" sm="12">
-                  <div className="d-flex flex-wrap justify-content-end mb-1">
-                    <div className="table-input mr-1">
-                      <Input
-                        placeholder="search Item here..."
-                        onChange={(e) => this.updateSearchQuery(e.target.value)}
-                        value={this.state.value}
-                      />
-                    </div>
-                  </div>
-                </Col>
+             
                 {this.state.MasterShow && (
-                  <Col lg="5" md="5" sm="12">
+                  <Col  xl="2" lg="2" style={{marginTop:"25px"}}>
                     <SuperAdminUI
                       onDropdownChange={this.handleDropdownChange}
                       onSubmit={this.handleParentSubmit}
                     />
                   </Col>
                 )}
-                <Col>
+                <Col  xl="2" lg="2" style={{marginTop:"25px"}}>
+                
+                  <div className="table-input ">
+                    <Input
+                      placeholder="search Item here..."
+                      onChange={(e) => this.updateSearchQuery(e.target.value)}
+                      value={this.state.value}
+                    />
+                  </div>
+               
+              </Col>
+              <Col xl="2" lg="2" style={{marginTop:"25px"}}>
+              {InsiderPermissions && InsiderPermissions.Create && (
+                <span className=" ">
+                  <Route
+                    render={({ history }) => (
+                      <Button
+                        color="rgb(8, 91, 245)"
+                        style={{
+                          cursor: "pointer",
+                           backgroundColor: "rgb(8, 91, 245) !important",
+                          color: "white",
+                          fontWeight: "600",
+                          height:"35px"
+                        }}
+                    className="float-right categorysbutton45"
+                     
+                        onClick={() =>
+                          history.push("/app/freshlist/house/AddProduct")
+                        }>
+                        Add Product
+                      </Button>
+                    )}
+                  />
+                </span>
+              )}
+              </Col>
+                <Col xl="1" lg="1" style={{marginTop:"25px"}}>
+                {InsiderPermissions && InsiderPermissions.View && (
+                  <span className=" ">
+                    <FaFilter
+                      style={{ cursor: "pointer" }}
+                      title="filter coloumn"
+                      size="35px"
+                      onClick={this.LookupviewStart}
+                      color="rgb(8, 91, 245)"
+                      className="float-right  "
+                    />
+                  </span>
+                )}
                   {InsiderPermissions && InsiderPermissions.Download && (
                     <div
                       onMouseEnter={this.toggleDropdown}
@@ -977,95 +1015,15 @@ class HouseProductList extends React.Component {
                       )}
                     </div>
                   )}
-                  {InsiderPermissions && InsiderPermissions.View && (
-                    <span className="mx-1">
-                      <FaFilter
-                        style={{ cursor: "pointer" }}
-                        title="filter coloumn"
-                        size="35px"
-                        onClick={this.LookupviewStart}
-                        color="rgb(8, 91, 245)"
-                        className="float-right mx-1"
-                      />
-                    </span>
-                  )}
-                  {InsiderPermissions && InsiderPermissions.Create && (
-                    <span className="mx-1 mr-1">
-                      <Route
-                        render={({ history }) => (
-                          <Button
-                            style={{
-                              cursor: "pointer",
-                              // backgroundColor: "rgb(8, 91, 245)",
-                              color: "white",
-                              fontWeight: "600",
-                            }}
-                            className="btn float-right"
-                            color="primary"
-                            onClick={() =>
-                              history.push("/app/freshlist/house/AddProduct")
-                            }>
-                            Add Product
-                          </Button>
-                        )}
-                      />
-                    </span>
-                  )}
+                  
+                 
                 </Col>
               </Row>
 
               <>
                 {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-                      <div className="mb-1">
-                        <UncontrolledDropdown className="p-1 ag-dropdown">
-                          <DropdownToggle tag="div">
-                            {this.gridApi
-                              ? this.state.currenPageSize
-                              : "" * this.state.getPageSize -
-                                (this.state.getPageSize - 1)}{" "}
-                            -{" "}
-                            {this.state.rowData.length -
-                              this.state.currenPageSize *
-                                this.state.getPageSize >
-                            0
-                              ? this.state.currenPageSize *
-                                this.state.getPageSize
-                              : this.state.rowData.length}{" "}
-                            of {this.state.rowData.length}
-                            <ChevronDown className="ml-50" size={15} />
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(5)}>
-                              5
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(20)}>
-                              20
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(50)}>
-                              50
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(100)}>
-                              100
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(134)}>
-                              134
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                    </div>
+                  <div className="ag-theme-material w-100   ag-grid-table">
+                    
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact
@@ -1092,8 +1050,7 @@ class HouseProductList extends React.Component {
                 )}
               </>
             </Card>
-          </Col>
-        </Row>
+          
 
         <Modal
           isOpen={this.state.modal}

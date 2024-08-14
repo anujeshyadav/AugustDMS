@@ -71,7 +71,7 @@ class WareHouseList extends React.Component {
       Show: false,
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 12,
+      paginationPageSize: 15,
       InsiderPermissions: {},
 
       currenPageSize: "",
@@ -81,7 +81,7 @@ class WareHouseList extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 240,
+          width: 190,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
@@ -200,14 +200,14 @@ class WareHouseList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return params.data?.status === "Active" ? (
-              <div className="badge badge-pill badge-success">
+              <div className=" ">
                 {params.data?.status}
               </div>
             ) : params.data?.status === "Deactive" ? (
-              <div className="badge badge-pill badge-warning">
+              <div className=" ">
                 {params.data?.status}
               </div>
             ) : null;
@@ -220,7 +220,7 @@ class WareHouseList extends React.Component {
           filter: true,
           sortable: true,
           editable: true,
-          width: 260,
+           
           cellRendererFramework: (params) => {
             return (
               <>
@@ -236,7 +236,7 @@ class WareHouseList extends React.Component {
           field: "warehouseName",
           filter: true,
           sortable: true,
-          width: 260,
+          
           cellRendererFramework: (params) => {
             return (
               <>
@@ -252,7 +252,7 @@ class WareHouseList extends React.Component {
           field: "mobileNo",
           filter: true,
           sortable: true,
-          width: 260,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -267,6 +267,7 @@ class WareHouseList extends React.Component {
           headerName: "Landline Number",
           field: "landlineNumber",
           filter: true,
+          width: 170,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -283,7 +284,7 @@ class WareHouseList extends React.Component {
           field: "address",
           filter: true,
           sortable: true,
-          width: 460,
+          width: 400,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -298,6 +299,7 @@ class WareHouseList extends React.Component {
           headerName: "Created At",
           field: "createdAt",
           filter: true,
+          width: 120,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -314,6 +316,7 @@ class WareHouseList extends React.Component {
           headerName: "Updated date",
           field: "updatedAt",
           filter: true,
+          width: 135,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -358,12 +361,28 @@ class WareHouseList extends React.Component {
   };
   async Apicalling(id, db) {
     this.setState({ Loading: true });
+    let userInfo = JSON.parse(localStorage.getItem("userData"));
+    //  if (userInfo?.rolename?.roleName === "MASTER") {
+
+    //  }
     await _Get(Create_Warehouse_List, db)
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Warehouse;
-        if (value?.length) {
-          this.setState({ rowData: value });
+        
+        let List = [];
+        if (
+          userInfo?.rolename?.roleName === "MASTER" ||
+          userInfo?.rolename?.roleName === "SuperAdmin"
+        ) {
+          if (value?.length) {
+            List = value;
+          }
+        } else {
+          List = value?.filter((ele) => ele?.created_by?._id == id);
+        }
+        if (List?.length) {
+          this.setState({ rowData: List });
         }
         let userHeading = JSON.parse(localStorage.getItem("WareHouseList"));
         if (userHeading?.length) {
@@ -766,33 +785,86 @@ class WareHouseList extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row className="mt-2 ml-2 mr-2">
-                        <Col lg="3" md="3" sm="12">
-                          <h4>Warehouse List</h4>
+                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                        <Col  >
+                          <h2 className="float-left "
+                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}} >Warehouse List</h2>
                         </Col>
 
                         {this.state.MasterShow && (
-                          <Col>
+                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
                             />
                           </Col>
                         )}
-                        <Col>
+                           <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                          <div className="table-input ">
+                                    <Input
+                                      placeholder="search Item here..."
+                                      onChange={(e) =>
+                                        this.updateSearchQuery(e.target.value)
+                                      }
+                                      value={this.state.value}
+                                    />
+                                  </div>
+                          </Col>
+                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                           {InsiderPermissions && InsiderPermissions.Create && (
+                            <span>
+                              <Route
+                                render={({ history }) => (
+                                  <Button
+                                   style={{
+                              cursor: "pointer",
+                              // backgroundColor: "rgb(8, 91, 245)",
+                              float:"right",
+                              height:"35px",
+                              color: "white",
+                              fontWeight: "600",
+                            }}
+                             className="float-right categorysbutton45 ml-3"
+                                    onClick={() =>
+                                      history.push(
+                                        "/app/softNumen/warehouse/CreateWareHouse/0"
+                                      )
+                                    }>
+                                    Warehouse
+                                  </Button>
+                                )}
+                              />
+                            </span>
+                          )}
+                          </Col>
+                        <Col lg="1" style={{marginTop:"25px"}}>
+                         {InsiderPermissions && InsiderPermissions.View && (
+                            <>
+                              <span className=" ">
+                                <FaFilter
+                                  style={{ cursor: "pointer" }}
+                                  title="filter coloumn"
+                                  size="35px"
+                                  onClick={this.LookupviewStart}
+                                  color="#39cccc"
+                                  className="float-right "
+                                />
+                              </span>
+                            </>
+                          )}
                           {InsiderPermissions &&
                             InsiderPermissions.Download && (
                               <>
                                 <span
                                   onMouseEnter={this.toggleDropdown}
                                   onMouseLeave={this.toggleDropdown}
-                                  className="mx-1">
+                                  className=" ">
                                   <div className="dropdown-container float-right">
                                     <ImDownload
                                       style={{ cursor: "pointer" }}
                                       title="download file"
                                       size="35px"
-                                      className="dropdown-button mb-1"
+                                      className="dropdown-button "
                                       color="#39cccc"
                                     />
                                     {isOpen && (
@@ -853,114 +925,16 @@ class WareHouseList extends React.Component {
                               </>
                             )}
 
-                          {InsiderPermissions && InsiderPermissions.View && (
-                            <>
-                              <span className="mx-1">
-                                <FaFilter
-                                  style={{ cursor: "pointer" }}
-                                  title="filter coloumn"
-                                  size="35px"
-                                  onClick={this.LookupviewStart}
-                                  color="#39cccc"
-                                  className="float-right mb-1"
-                                />
-                              </span>
-                            </>
-                          )}
-                          {InsiderPermissions && InsiderPermissions.Create && (
-                            <span>
-                              <Route
-                                render={({ history }) => (
-                                  <Button
-                                    style={{
-                                      cursor: "pointer",
-                                      backgroundColor: "#39cccc",
-                                      color: "white",
-                                      fontWeight: "600",
-                                    }}
-                                    className="float-right mr-1 "
-                                    color="#39cccc"
-                                    onClick={() =>
-                                      history.push(
-                                        "/app/softNumen/warehouse/CreateWareHouse/0"
-                                      )
-                                    }>
-                                    Warehouse
-                                  </Button>
-                                )}
-                              />
-                            </span>
-                          )}
+                         
+                         
                         </Col>
                       </Row>
 
                       <>
                         <>
                           {this.state.rowData === null ? null : (
-                            <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                              <div className="d-flex flex-wrap justify-content-between align-items-center">
-                                {/* <div className="mb-1">
-                                  <UncontrolledDropdown className="p-1 ag-dropdown">
-                                    <DropdownToggle tag="div">
-                                      {this.gridApi
-                                        ? this.state.currenPageSize
-                                        : "" * this.state.getPageSize -
-                                          (this.state.getPageSize - 1)}
-                                      -
-                                      {this.state.rowData.length -
-                                        this.state.currenPageSize *
-                                          this.state.getPageSize >
-                                      0
-                                        ? this.state.currenPageSize *
-                                          this.state.getPageSize
-                                        : this.state.rowData.length}{" "}
-                                      of {this.state.rowData.length}
-                                      <ChevronDown
-                                        className="ml-50"
-                                        size={15}
-                                      />
-                                    </DropdownToggle>
-                                    <DropdownMenu right>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(5)}>
-                                        5
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(20)}>
-                                        20
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(50)}>
-                                        50
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(100)}>
-                                        100
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        tag="div"
-                                        onClick={() => this.filterSize(134)}>
-                                        134
-                                      </DropdownItem>
-                                    </DropdownMenu>
-                                  </UncontrolledDropdown>
-                                </div> */}
-                                <div className="d-flex flex-wrap justify-content-end mb-1">
-                                  <div className="table-input mr-1">
-                                    <Input
-                                      placeholder="search Item here..."
-                                      onChange={(e) =>
-                                        this.updateSearchQuery(e.target.value)
-                                      }
-                                      value={this.state.value}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
+                            <div className="ag-theme-material w-100   ag-grid-table">
+                               
                               <ContextLayout.Consumer className="ag-theme-alpine">
                                 {(context) => (
                                   <AgGridReact

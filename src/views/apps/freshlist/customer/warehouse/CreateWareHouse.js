@@ -48,6 +48,8 @@ const CreateWareHouse = () => {
         .then((res) => {
           let warehoue = res?.Warehouse;
           setFormData({
+            Username: warehoue?.Username,
+            Password: warehoue?.Password,
             warehouseName: warehoue?.warehouseName,
             warehouseAddress: warehoue?.address,
             warehouseMobile: warehoue?.mobileNo,
@@ -87,6 +89,8 @@ const CreateWareHouse = () => {
     e.preventDefault();
     const userInfor = JSON.parse(localStorage.getItem("userData"));
     let payload = {
+      Username: formData?.Username,
+      Password: formData?.Password,
       warehouseName: formData?.warehouseName,
       id: formData?.id,
       mobileNo: formData?.warehouseMobile,
@@ -156,6 +160,48 @@ const CreateWareHouse = () => {
           <CardBody>
             <Form className="m-1" onSubmit={submitHandler}>
               <Row>
+                <Col lg="3" md="3" sm="12">
+                  <FormGroup>
+                    <Label>
+                      UserName <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      required
+                      type="text"
+                      placeholder="Enter UserName"
+                      name="Username"
+                      value={formData["Username"]}
+                      onChange={(e) => {
+                        const inputPan = e.target.value;
+                        setFormData({
+                          ...formData,
+                          ["Username"]: inputPan,
+                        });
+                      }}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col lg="3" md="3" sm="12">
+                  <FormGroup>
+                    <Label>
+                      Password <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      required
+                      type="password"
+                      placeholder="Enter UserName"
+                      name="Password"
+                      value={formData["Password"]}
+                      onChange={(e) => {
+                        const inputPan = e.target.value;
+                        setFormData({
+                          ...formData,
+                          ["Password"]: inputPan,
+                        });
+                      }}
+                    />
+                  </FormGroup>
+                </Col>
                 <Col lg="3" md="3" sm="12">
                   <FormGroup>
                     <Label>

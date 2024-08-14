@@ -82,7 +82,7 @@ class HSNWiseReport extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -1335,9 +1335,9 @@ class HSNWiseReport extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row className="ml-2  mr-2">
-              <Col style={{ marginTop: "25px" }}>
-                <h2 className="float-left " style={{ fontWeight: "500" }}>
+            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+              <Col  >
+                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
                   HSN Summary Report
                 </h2>
               </Col>
@@ -1489,7 +1489,7 @@ class HSNWiseReport extends React.Component {
             <hr className="mt-1" />
             <Row className="">
               <Col>
-                <div className="mx-2 ">
+                <div className="mx-1 ">
                   <Nav
                     tabs
                     style={{
@@ -1549,7 +1549,7 @@ class HSNWiseReport extends React.Component {
                     </NavItem>
                   </Nav>
 
-                  <CardBody style={{ marginTop: "0rem" }}>
+                  <CardBody style={{ marginTop: "-3rem" }}>
                     {this.state.rowData === null ? null : (
                       <div className="ag-theme-material w-100 my-2 ag-grid-table">
                         <ContextLayout.Consumer className="ag-theme-alpine">
@@ -1565,7 +1565,7 @@ class HSNWiseReport extends React.Component {
                               colResizeDefault={"shift"}
                               animateRows={true}
                               floatingFilter={false}
-                              // pagination={true}
+                             pagination={true}
                               paginationPageSize={this.state.paginationPageSize}
                               pivotPanelShow="always"
                               enableRtl={context.state.direction === "rtl"}

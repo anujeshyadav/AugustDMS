@@ -260,7 +260,7 @@ class OrderList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 100,
+          width: 160,
           cellRendererFramework: (params) => {
             return params.data?.status?.toLowerCase()?.includes("completed") ? (
               <div className="text-center">{params.data?.status}</div>
@@ -268,7 +268,7 @@ class OrderList extends React.Component {
               <div className=" text-center ">{params.data?.status}</div>
             ) : params.data?.status == "pending" ? (
               <div className="text-center">Pending</div>
-            ) : params.data?.status == "Cancelled" ? (
+            ) : params.data?.status == "Cancel in process" ? (
               <div className="text-center">
                 <Badge
                   onClick={() => this.handleCancelShow(params.data)}
@@ -336,13 +336,9 @@ class OrderList extends React.Component {
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.Create && (
                       <>
-                        {params.data?.status === "Inprocess" ||
-                        params.data?.status
-                          ?.toLowerCase()
-                          ?.includes("cancelled") ||
-                        params.data?.status
-                          ?.toLowerCase()
-                          ?.includes("completed") ? (
+                        {params.data?.status == "Inprocess" ||
+                        params.data?.status == "Cancel in process" ||
+                        params.data?.status == "completed" ? (
                           <>
                             {params.data?.status
                               ?.toLowerCase()
@@ -1363,7 +1359,7 @@ class OrderList extends React.Component {
         debugger;
         if (res?.orderHistory) {
           let newList = res?.orderHistory?.filter(
-            (lst) => lst.status == "Cancelled"
+            (lst) => lst.status == "Cancel in process"
             // (lst) => lst.status == "pending"
           );
 

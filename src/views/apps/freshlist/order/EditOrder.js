@@ -469,7 +469,7 @@ const EditOrder = (args) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const gstdetails = GstCalculation(Party, product, Context);
-    const fullname = UserInfo?.firstName + " " + UserInfo?.lastName;
+    const fullname = UserInfo?.firstName;
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {
         return {

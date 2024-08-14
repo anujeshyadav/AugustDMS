@@ -85,7 +85,7 @@ class HouseProductList extends React.Component {
       setMySelectedarr: [],
       formValues: [{}],
       SelectedCols: [],
-      paginationPageSize: 30,
+      paginationPageSize: 15,
       MasterShow: false,
       currenPageSize: "",
       getPageSize: "",
@@ -131,16 +131,17 @@ class HouseProductList extends React.Component {
 
         {
           headerName: "Purchase Rate",
-          field: "landedCost",
+          field: "Purchase_Rate",
           filter: true,
           width: 160,
           cellRendererFramework: (params) => {
+         
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <span>
-                  {params?.data?.landedCost
-                    ? params?.data?.landedCost
-                    : params?.data?.Purchase_Rate}
+                  {params?.data?.Purchase_Rate 
+                    ? params?.data?.Purchase_Rate
+                    : params?.data?.landedCost}
                 </span>
               </div>
             );
@@ -155,9 +156,9 @@ class HouseProductList extends React.Component {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <span>
-                  {params?.data?.ProfitPercentage
+                  {params?.data?.ProfitPercentage > 3
                     ? params?.data?.ProfitPercentage
-                    : "NA"}
+                    : "3"}
                 </span>
               </div>
             );
@@ -982,71 +983,149 @@ class HouseProductList extends React.Component {
     } = this.state;
     return (
       <>
-        <Row className="app-user-list">
-          <Col sm="12">
-            <Card>
-              <Row className="mt-2 ml-2 mr-2">
-                <Col lg="2" md="2" sm="12">
-                  <h1 className="float-left" style={{ fontWeight: "600" }}>
-                    Product Price List
-                  </h1>
-                </Col>
-                <Col lg="2" md="2" sm="12">
-                  <div className="d-flex flex-wrap justify-content-end mb-1">
-                    <div className="table-input mr-1">
-                      <Input
-                        placeholder="search Item here..."
-                        onChange={(e) => this.updateSearchQuery(e.target.value)}
-                        value={this.state.value}
-                      />
-                    </div>
-                  </div>
-                </Col>
-                {this.state.MasterShow ? (
-                  <Col lg="5" md="5" sm="12">
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
-                    />
-                  </Col>
-                ) : (
-                  <Col></Col>
-                )}
-                <Col lg="3" md="4" sm="12">
-                  {InsiderPermissions && InsiderPermissions.Download && (
-                    <div
-                      onMouseEnter={this.toggleDropdown}
-                      onMouseLeave={this.toggleDropdown}
-                      className="dropdown-container float-right">
-                      <ImDownload
-                        style={{ cursor: "pointer" }}
-                        title="download file"
-                        size="35px"
-                        className="dropdown-button"
-                        color="rgb(8, 91, 245)"
-                      />
-                      {isOpen && (
-                        <div
+        <Card>
+          <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+            <Col>
+              <h1
+                className="float-left"
+                style={{
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  fontSize: "22px",
+                  marginTop: "25px",
+                }}>
+                Product Price List
+              </h1>
+            </Col>
+
+            {this.state.MasterShow ? (
+              <Col lg="2" md="2" sm="12" style={{ marginTop: "25px" }}>
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
+              </Col>
+            ) : (
+              <Col></Col>
+            )}
+            <Col lg="2" md="2" sm="12" style={{ marginTop: "25px" }}>
+              <div className="table-input ">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
+
+            <Col lg="3" style={{ marginTop: "25px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {InsiderPermissions && InsiderPermissions.Edit && (
+                  <span className=" ">
+                    <Route
+                      render={({ history }) => (
+                        <Button
                           style={{
-                            position: "absolute",
-                            zIndex: "1",
-                            // border: "1px solid #39cccc",
-                            backgroundColor: "white",
+                            cursor: "pointer",
+                            // backgroundColor: "rgb(8, 91, 245)",
+                            float: "right",
+                            height: "35px",
+                            color: "white",
+                            fontWeight: "600",
                           }}
-                          className="dropdown-content dropdownmy">
-                          <h5
-                            onClick={() => this.exportToPDF()}
-                            style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive mt-1">
-                            .PDF
-                          </h5>
-                          {/* <h5
+                          className="float-right categorysbutton45 ml-3"
+                          onClick={() => {
+                            this.setState({ BulkEdit: true, EditCol: false });
+                            this.LookupviewStart();
+                            this.setState({
+                              formValues: this.state.rowData,
+                              FormAllValue: this.state.rowData,
+                            });
+                          }}
+                          // onClick={() =>
+                          //   history.push("/app/freshlist/house/AddProduct")
+                          // }
+                        >
+                          Bulk Edit
+                        </Button>
+                      )}
+                    />
+                  </span>
+                )}
+                {InsiderPermissions && InsiderPermissions.Create && (
+                  <span className=" ">
+                    <Route
+                      render={({ history }) => (
+                        <Button
+                          style={{
+                            cursor: "pointer",
+                            // backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            height: "35px",
+                            fontWeight: "600",
+                          }}
+                          className="float-right categorysbutton45"
+                          onClick={() =>
+                            history.push("/app/freshlist/house/AddProduct")
+                          }>
+                          Add Product
+                        </Button>
+                      )}
+                    />
+                  </span>
+                )}
+              </div>
+            </Col>
+            <Col lg="1" style={{ marginTop: "25px" }}>
+              {InsiderPermissions && InsiderPermissions.View && (
+                <span className=" ">
+                  <FaFilter
+                    style={{ cursor: "pointer" }}
+                    title="filter coloumn"
+                    size="35px"
+                    onClick={() => {
+                      this.setState({ BulkEdit: false, EditCol: true });
+                      this.LookupviewStart();
+                    }}
+                    color="rgb(8, 91, 245)"
+                    className="float-right  "
+                  />
+                </span>
+              )}
+              {InsiderPermissions && InsiderPermissions.Download && (
+                <div
+                  onMouseEnter={this.toggleDropdown}
+                  onMouseLeave={this.toggleDropdown}
+                  className="dropdown-container float-right">
+                  <ImDownload
+                    style={{ cursor: "pointer" }}
+                    title="download file"
+                    size="35px"
+                    className="dropdown-button"
+                    color="rgb(8, 91, 245)"
+                  />
+                  {isOpen && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        zIndex: "1",
+                        border: "1px solid #39cccc",
+                        backgroundColor: "white",
+                      }}
+                      className="dropdown-content dropdownmy">
+                      <h5
+                        onClick={() => this.exportToPDF()}
+                        style={{ cursor: "pointer" }}
+                        className=" mx-1 myactive mt-1">
+                        .PDF
+                      </h5>
+                      {/* <h5
                             onClick={() => this.gridApi.exportDataAsCsv()}
                             style={{ cursor: "pointer" }}
                             className=" mx-1 myactive">
                             .CSV
                           </h5> */}
-                          {/* <h5
+                      {/* <h5
                             onClick={() =>
                               this.convertCSVtoExcel("productList")
                             }
@@ -1054,124 +1133,61 @@ class HouseProductList extends React.Component {
                             className=" mx-1 myactive">
                             .XLS
                           </h5> */}
-                          <h5
-                            onClick={() => this.exportToExcel("productList")}
-                            style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive">
-                            .XLSX
-                          </h5>
-                          {/* <h5
+                      <h5
+                        onClick={() => this.exportToExcel("productList")}
+                        style={{ cursor: "pointer" }}
+                        className=" mx-1 myactive">
+                        .XLSX
+                      </h5>
+                      {/* <h5
                             onClick={() => this.convertCsvToXml("productList")}
                             style={{ cursor: "pointer" }}
                             className=" mx-1 myactive">
                             .XML
                           </h5> */}
-                          {InsiderPermissions &&
-                            InsiderPermissions?.BulkUpload && (
-                              <h5>
-                                <a
-                                  style={{
-                                    cursor: "pointer",
-                                    color: "black",
-                                  }}
-                                  className=" mx-1 myactive"
-                                  href={UploadProductSample}
-                                  download>
-                                  . Format
-                                </a>
-                              </h5>
-                            )}
-                        </div>
+                      {InsiderPermissions && InsiderPermissions?.BulkUpload && (
+                        <h5>
+                          <a
+                            style={{
+                              cursor: "pointer",
+                              color: "black",
+                            }}
+                            className=" mx-1 myactive"
+                            href={UploadProductSample}
+                            download>
+                            . Format
+                          </a>
+                        </h5>
                       )}
                     </div>
                   )}
-                  {InsiderPermissions && InsiderPermissions.View && (
-                    <span className="mx-1">
-                      <FaFilter
-                        style={{ cursor: "pointer" }}
-                        title="filter coloumn"
-                        size="35px"
-                        onClick={() => {
-                          this.setState({ BulkEdit: false, EditCol: true });
-                          this.LookupviewStart();
-                        }}
-                        color="rgb(8, 91, 245)"
-                        className="float-right mx-1"
-                      />
-                    </span>
-                  )}
-                  {InsiderPermissions && InsiderPermissions.Edit && (
-                    <span className="mx-1 mr-1">
-                      <Route
-                        render={({ history }) => (
-                          <Button
-                            style={{
-                              cursor: "pointer",
-                              // backgroundColor: "rgb(8, 91, 245)",
-                              color: "white",
-                              fontWeight: "600",
-                            }}
-                            // className="btn float-right"
-                            color="primary"
-                            onClick={() => {
-                              this.setState({ BulkEdit: true, EditCol: false });
-                              this.LookupviewStart();
-                              this.setState({ formValues: this.state.rowData });
-                            }}
-                            // onClick={() =>
-                            //   history.push("/app/freshlist/house/AddProduct")
-                            // }
-                          >
-                            Bulk Edit
-                          </Button>
-                        )}
-                      />
-                    </span>
-                  )}
-                  {InsiderPermissions && InsiderPermissions.Create && (
-                    <span className="mx-1 mr-1">
-                      <Route
-                        render={({ history }) => (
-                          <Button
-                            style={{
-                              cursor: "pointer",
-                              // backgroundColor: "rgb(8, 91, 245)",
-                              color: "white",
-                              fontWeight: "600",
-                            }}
-                            // className="btn float-right"
-                            color="primary"
-                            onClick={() =>
-                              history.push("/app/freshlist/house/AddProduct")
-                            }>
-                            Add Product
-                          </Button>
-                        )}
-                      />
-                    </span>
-                  )}
-                </Col>
-              </Row>
+                </div>
+              )}
+            </Col>
+          </Row>
 
-              <>
-                {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                    <div className="" style={{ color: "red" }}>
-                      <strong className="mx-1">
-                        Note: If Profit % is not set then By Default Sale Rate
-                        is 3% more then Purchase Rate else you want To Set-{" "}
-                        <span
-                          style={{ cursor: "pointer", color: "blue" }}
-                          onClick={() => {
-                            this.setState({ BulkEdit: true, EditCol: false });
-                            this.LookupviewStart();
-                            this.setState({ formValues: this.state.rowData });
-                          }}>
-                          Click Here
-                        </span>
-                      </strong>
-                    </div>
-                    {/* <div className="d-flex flex-wrap justify-content-between align-items-center">
+          <>
+            {this.state.rowData === null ? null : (
+              <div className="ag-theme-material w-100 my-1 ag-grid-table">
+                <div className="" style={{ color: "red" }}>
+                  <strong className="mx-1">
+                    Note: If Profit % is not set then By Default Sale Rate is 3%
+                    more then Purchase Rate else you want To Set-{" "}
+                    <span
+                      style={{ cursor: "pointer", color: "blue" }}
+                      onClick={() => {
+                        this.setState({ BulkEdit: true, EditCol: false });
+                        this.LookupviewStart();
+                        this.setState({
+                          formValues: this.state.rowData,
+                          FormAllValue: this.state.rowData,
+                        });
+                      }}>
+                      Click Here
+                    </span>
+                  </strong>
+                </div>
+                {/* <div className="d-flex flex-wrap justify-content-between align-items-center">
                       <div className="mb-1">
                         <UncontrolledDropdown className="p-1 ag-dropdown">
                           <DropdownToggle tag="div">
@@ -1220,34 +1236,32 @@ class HouseProductList extends React.Component {
                         </UncontrolledDropdown>
                       </div>
                     </div> */}
-                    <ContextLayout.Consumer className="ag-theme-alpine">
-                      {(context) => (
-                        <AgGridReact
-                          id="myAgGrid"
-                          gridOptions={this.gridOptions}
-                          rowSelection="multiple"
-                          defaultColDef={defaultColDef}
-                          columnDefs={columnDefs}
-                          rowData={rowData}
-                          onGridReady={this.onGridReady}
-                          colResizeDefault={"shift"}
-                          animateRows={true}
-                          floatingFilter={false}
-                          pagination={true}
-                          paginationPageSize={this.state.paginationPageSize}
-                          pivotPanelShow="always"
-                          enableRtl={context.state.direction === "rtl"}
-                          ref={this.gridRef} // Attach the ref to the grid
-                          domLayout="autoHeight" // Adjust layout as needed
-                        />
-                      )}
-                    </ContextLayout.Consumer>
-                  </div>
-                )}
-              </>
-            </Card>
-          </Col>
-        </Row>
+                <ContextLayout.Consumer className="ag-theme-alpine">
+                  {(context) => (
+                    <AgGridReact
+                      id="myAgGrid"
+                      gridOptions={this.gridOptions}
+                      rowSelection="multiple"
+                      defaultColDef={defaultColDef}
+                      columnDefs={columnDefs}
+                      rowData={rowData}
+                      onGridReady={this.onGridReady}
+                      colResizeDefault={"shift"}
+                      animateRows={true}
+                      floatingFilter={false}
+                      pagination={true}
+                      paginationPageSize={this.state.paginationPageSize}
+                      pivotPanelShow="always"
+                      enableRtl={context.state.direction === "rtl"}
+                      ref={this.gridRef} // Attach the ref to the grid
+                      domLayout="autoHeight" // Adjust layout as needed
+                    />
+                  )}
+                </ContextLayout.Consumer>
+              </div>
+            )}
+          </>
+        </Card>
 
         <Modal
           isOpen={this.state.modal}
@@ -1258,6 +1272,30 @@ class HouseProductList extends React.Component {
             {this.state.BulkEdit ? "Edit Product Price List" : "Change Fileds"}
           </ModalHeader>
           <ModalBody className="modalbodyhead">
+            <div className="">
+              <Row>
+                <Col lg="4" md="4" sm="12">
+                  <Input
+                    type="text"
+                    onChange={(e) => {
+                      let value = e.target.value?.toUpperCase();
+                      let AllData = [];
+                      if (value?.length > 0) {
+                        AllData = this.state.FormAllValue?.filter((element) =>
+                          element.Product_Title.toUpperCase()?.includes(value)
+                        );
+                      }
+                      if (AllData?.length > 0) {
+                        this.setState({ formValues: AllData });
+                      } else {
+                        this.setState({ formValues: this.state.FormAllValue });
+                      }
+                    }}
+                    placeholder="Search Proudct here"
+                  />
+                </Col>
+              </Row>
+            </div>
             <div className="d-flex justify-content-center">
               <h3 className="mb-1">Edit Product MRP or Sales Rate</h3>
             </div>
@@ -1303,9 +1341,13 @@ class HouseProductList extends React.Component {
                           <Input
                             type="number"
                             min={1}
-                            placeholder="Profit %"
+                            placeholder="3 %"
                             name="ProfitPercentage"
-                            value={element?.ProfitPercentage}
+                            value={
+                              element?.ProfitPercentage
+                                ? element?.ProfitPercentage
+                                : 3
+                            }
                             onChange={(e) => {
                               let { name, value } = e.target;
                               let formValues = this.state.formValues;

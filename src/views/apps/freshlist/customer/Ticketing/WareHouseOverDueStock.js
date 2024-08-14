@@ -148,7 +148,7 @@ class WareHouseOverDueStock extends React.Component {
         },
         {
           headerName: "SUPPLIER NAME",
-          field: "partyId.ownerName",
+          field: "product?.partyId.ownerName",
           filter: true,
           sortable: true,
           width: 170,
@@ -158,8 +158,9 @@ class WareHouseOverDueStock extends React.Component {
               <>
                 <div className="actions cursor-pointer text-center">
                   <span>
-                    {params?.data?.partyId?.ownerName &&
-                      params?.data?.partyId?.ownerName}
+                    {params?.data?.product?.partyId?.ownerName
+                      ? params?.data?.product?.partyId?.ownerName
+                      : params?.data?.product?.partyId?.firstName}
                   </span>
                 </div>
               </>
@@ -174,10 +175,11 @@ class WareHouseOverDueStock extends React.Component {
           width: 200,
           editable: true,
           cellRendererFramework: params => {
+            
             return (
               <>
                 <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.product?.purchaseDate}</span>
+                  <span>{ params?.data?.product?.purchaseDate}</span>
                 </div>
               </>
             );
@@ -581,10 +583,16 @@ class WareHouseOverDueStock extends React.Component {
     return (
       <>
         <Card>
-          <Row  style={{marginLeft:'3px',marginRight:'3px'}}>
+          <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
             <Col style={{ marginTop: "25px" }}>
-              <h3 className="float-left "  style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'24px' }}>
-                Closing Stock Report
+              <h3
+                className="float-left "
+                style={{
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  fontSize: "24px",
+                }}>
+                Dead Stock Report
               </h3>
             </Col>
             {this.state.MasterShow && this.state.MasterShow ? (
@@ -601,7 +609,7 @@ class WareHouseOverDueStock extends React.Component {
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
-                  onChange={e => this.updateSearchQuery(e.target.value)}
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
                   value={this.state.value}
                 />
               </div>
@@ -639,12 +647,10 @@ class WareHouseOverDueStock extends React.Component {
                         backgroundColor: "rgb(8, 91, 245)",
                         color: "white",
                         fontWeight: "600",
-                        height:"43px"
+                        height: "43px",
                       }}
-                     
                       color="#39cccc"
-                      onClick={this.handleSubmitDate}
-                    >
+                      onClick={this.handleSubmitDate}>
                       Submit
                     </Button>
                   </div>
@@ -669,8 +675,7 @@ class WareHouseOverDueStock extends React.Component {
                 <span
                   onMouseEnter={this.toggleDropdown}
                   onMouseLeave={this.toggleDropdown}
-                  className=""
-                >
+                  className="">
                   <div className="dropdown-container float-right">
                     <ImDownload
                       style={{ cursor: "pointer" }}
@@ -687,41 +692,35 @@ class WareHouseOverDueStock extends React.Component {
                           border: "1px solid rgb(8, 91, 245)",
                           backgroundColor: "white",
                         }}
-                        className="dropdown-content dropdownmy"
-                      >
+                        className="dropdown-content dropdownmy">
                         <h5
                           onClick={() => this.exportToPDF()}
                           style={{ cursor: "pointer" }}
-                          className=" mx-1 myactive mt-1"
-                        >
+                          className=" mx-1 myactive mt-1">
                           .PDF
                         </h5>
                         <h5
                           onClick={() => this.gridApi.exportDataAsCsv()}
                           style={{ cursor: "pointer" }}
-                          className=" mx-1 myactive"
-                        >
+                          className=" mx-1 myactive">
                           .CSV
                         </h5>
                         <h5
                           onClick={this.convertCSVtoExcel}
                           style={{ cursor: "pointer" }}
-                          className=" mx-1 myactive"
-                        >
+                          className=" mx-1 myactive">
                           .XLS
                         </h5>
                         <h5
                           onClick={this.exportToExcel}
                           style={{ cursor: "pointer" }}
-                          className=" mx-1 myactive"
-                        >
+                          className=" mx-1 myactive">
                           .XLSX
                         </h5>
                         <h5
                           onClick={() => this.convertCsvToXml()}
                           style={{ cursor: "pointer" }}
-                          className=" mx-1 myactive"
-                        >
+                          className=" mx-1 myactive">
                           .XML
                         </h5>
                       </div>
@@ -735,7 +734,7 @@ class WareHouseOverDueStock extends React.Component {
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100  ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
-                  {context => (
+                  {(context) => (
                     <AgGridReact
                       id="myAgGrid"
                       gridOptions={this.gridOptions}
@@ -747,7 +746,7 @@ class WareHouseOverDueStock extends React.Component {
                       colResizeDefault={"shift"}
                       animateRows={true}
                       floatingFilter={false}
-                     pagination={true}
+                      pagination={true}
                       paginationPageSize={this.state.paginationPageSize}
                       pivotPanelShow="always"
                       enableRtl={context.state.direction === "rtl"}
@@ -765,8 +764,7 @@ class WareHouseOverDueStock extends React.Component {
           isOpen={this.state.modal}
           toggle={this.LookupviewStart}
           className={this.props.className}
-          style={{ maxWidth: "1050px" }}
-        >
+          style={{ maxWidth: "1050px" }}>
           <ModalHeader toggle={this.LookupviewStart}>Change Fileds</ModalHeader>
           <ModalBody className="modalbodyhead">
             <Row>
@@ -779,15 +777,15 @@ class WareHouseOverDueStock extends React.Component {
                         return (
                           <>
                             <div
-                              onClick={e => this.handleChangeHeader(e, ele, i)}
+                              onClick={(e) =>
+                                this.handleChangeHeader(e, ele, i)
+                              }
                               key={i}
-                              className="mycustomtag mt-1"
-                            >
+                              className="mycustomtag mt-1">
                               <span className="mt-1">
                                 <h5
                                   style={{ cursor: "pointer" }}
-                                  className="allfields"
-                                >
+                                  className="allfields">
                                   <input
                                     type="checkbox"
                                     // checked={check && check}
@@ -846,15 +844,14 @@ class WareHouseOverDueStock extends React.Component {
                                             : ""
                                         }`,
                                       }}
-                                      className="allfields"
-                                    >
+                                      className="allfields">
                                       <IoMdRemoveCircleOutline
                                         onClick={() => {
                                           const SelectedCols =
                                             this.state.SelectedcolumnDefs?.slice();
                                           const delindex =
                                             SelectedCols?.findIndex(
-                                              element =>
+                                              (element) =>
                                                 element?.headerName ==
                                                 ele?.headerName
                                             );
@@ -913,8 +910,7 @@ class WareHouseOverDueStock extends React.Component {
                     style={{ cursor: "pointer" }}
                     className=""
                     color="primary"
-                    onClick={this.HandleSetVisibleField}
-                  >
+                    onClick={this.HandleSetVisibleField}>
                     Submit
                   </Badge>
                 </div>
