@@ -20,6 +20,7 @@ import {
   Label,
   Table,
   CustomInput,
+  Spinner,
 } from "reactstrap";
 
 import { ContextLayout } from "../../../../../utility/context/Layout";
@@ -65,6 +66,7 @@ import {
 
 const SelectedColums = [];
 let WarehouseIncharge = false;
+let SuperAdmin = false;
 class StockTransfer extends React.Component {
   static contextType = UserContext;
   constructor(props) {
@@ -376,13 +378,16 @@ class StockTransfer extends React.Component {
     let userid = pageparmission?._id;
     if (pageparmission?.rolename?.roleName === "WareHouse Incharge") {
       WarehouseIncharge = true;
+    } else if (pageparmission?.rolename?.roleName === "SuperAdmin") {
+      SuperAdmin = true;
     } else {
       WarehouseIncharge = false;
     }
     await this.ViewStockList(
       pageparmission?._id,
       pageparmission?.database,
-      WarehouseIncharge
+      WarehouseIncharge,
+      SuperAdmin
     );
 
     // Stock_trxFactorytoWList(userid)
@@ -394,7 +399,8 @@ class StockTransfer extends React.Component {
     //   });
   }
 
-  ViewStockList = async (id, db, WarehouseIncharge) => {
+  ViewStockList = async (id, db, WarehouseIncharge, SuperAdmin) => {
+    this.setState({ Loading: false });
     // let pageparmission = JSON.parse(localStorage.getItem("userData"));
     // let userid = pageparmission?._id;
     // await ViewFactoryStock(userid, pageparmission?.database)
@@ -404,6 +410,7 @@ class StockTransfer extends React.Component {
         // let TotalTransfered = res?.Warehouse?.filter(
         //   (ele) => ele?.transferStatus == "InProcess"
         // )?.reverse();
+        debugger;
         if (WarehouseIncharge) {
           let Url = `${Warehouse_ListBy_id + id}/${db}`;
           await _GetList(Url)
@@ -442,6 +449,15 @@ class StockTransfer extends React.Component {
               });
               console.log(err);
             });
+        } else if (SuperAdmin) {
+          TotalTransfered?.forEach((ele) => {
+            ele["ShowDropDown"] = true;
+          });
+
+          this.setState({
+            rowData: TotalTransfered,
+            Loading: false,
+          });
         } else {
           this.setState({
             rowData: TotalTransfered,
@@ -449,7 +465,6 @@ class StockTransfer extends React.Component {
             AllcolumnDefs: this.state.columnDefs,
           });
         }
-        console.log(res?.Warehouse);
         let userHeading = JSON.parse(localStorage.getItem("stockTransfer"));
         if (userHeading?.length) {
           this.setState({
@@ -465,6 +480,10 @@ class StockTransfer extends React.Component {
         this.setState({ SelectedCols: this.state.columnDefs });
       })
       .catch((err) => {
+        this.setState({
+          rowData: [],
+          Loading: false,
+        });
         console.log(err);
       });
   };
@@ -742,6 +761,23 @@ class StockTransfer extends React.Component {
     }
   };
   render() {
+    if (this.state.Loading) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20rem",
+          }}>
+          <Spinner
+            style={{
+              height: "4rem",
+              width: "4rem",
+            }}
+            color="primary"></Spinner>
+        </div>
+      );
+    }
     const {
       rowData,
       columnDefs,

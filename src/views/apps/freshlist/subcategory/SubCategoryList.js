@@ -190,20 +190,23 @@ class SubCategoryList extends React.Component {
                                 onClick={() =>
                                     history.push(`/app/customer/viewCustomer/${params.data._id}`)}
                             /> */}
-              <Route
-                render={({ history }) => (
-                  <Edit
-                    className="mr-50"
-                    size="25px"
-                    color="blue"
-                    onClick={() =>
-                      history.push(
-                        `/app/freshlist/subcategory/editSubCategory/${params.data._id}/${params.data?.subcategory?._id}`
-                      )
-                    }
-                  />
-                )}
-              />
+              {this.state.InsiderPermissions?.Edit && (
+                <Route
+                  render={({ history }) => (
+                    <Edit
+                      className="mr-50"
+                      size="25px"
+                      color="blue"
+                      onClick={() =>
+                        history.push(
+                          `/app/freshlist/subcategory/editSubCategory/${params.data._id}/${params.data?.subcategory?._id}`
+                        )
+                      }
+                    />
+                  )}
+                />
+              )}
+              {this.state.InsiderPermissions?.Delete &&
               <Route
                 render={({ history }) => (
                   <Trash2
@@ -211,11 +214,12 @@ class SubCategoryList extends React.Component {
                     size="25px"
                     color="red"
                     onClick={() => {
-                      this.runthisfunction(params.data._id);
+                      this.runthisfunction(params.data);
                     }}
                   />
                 )}
               />
+              }
             </div>
           );
         },
@@ -235,8 +239,11 @@ class SubCategoryList extends React.Component {
               return ele?.subcategories?.map((element, i) => {
                 return { ...ele, subcategory: element };
               });
+            } else {
+              return [];
             }
           });
+
           this.setState({ rowData: vale });
         }
       })
@@ -259,9 +266,8 @@ class SubCategoryList extends React.Component {
     await this.Apicalling(pageparmission?._id, pageparmission?.database);
   }
   async runthisfunction(id) {
-    console.log(id);
 
-    Delete_SubCategory(this.state.category, id)
+    Delete_SubCategory(id?._id, id?.subcategory?._id)
       .then((res) => {
         let selectedData = this.gridApi.getSelectedRows();
         this.gridApi.updateRowData({ remove: selectedData });

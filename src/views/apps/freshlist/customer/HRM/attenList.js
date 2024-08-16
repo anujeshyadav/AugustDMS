@@ -1509,9 +1509,9 @@ function List() {
   return (
     <div>
       <div className="card p-1">
-        <Row>
-          <Col lg="4" md="4" sm="12" xs="12">
-            <h1 className="mb-3">Attendance List</h1>
+        <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+          <Col  className="mb-3" >
+            <h1 className=" " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>Attendance List</h1>
           </Col>
           {/* <Col lg="3" md="3" sm="12">
             <div className="d-flex justify-content-end">
@@ -1522,21 +1522,23 @@ function List() {
               </CustomInput>
             </div>
           </Col> */}
-          <Col>
-            <div className="d-flex justify-content-end">
-              <Button color="primary" onClick={handleLogs}>
-                Logs
-              </Button>
-            </div>
-          </Col>
-          <Col lg="2" md="2" sm="12">
+          <Col lg="2" className="mb-3" style={{marginTop:"25px"}} sm="12">
             <Input
-              width={30}
+              
               type="text"
+             className="cssforsearchattentlist"
               placeholder="Search Name here ..."
               onChange={(e) => setSearch(e.target.value?.toLowerCase())}
             />
           </Col>
+          <Col lg="1"  className="mb-3" style={{marginTop:"25px"}}>
+            <div className="d-flex justify-content-end">
+              <Button color="primary" className="cssforlogsbutton"  onClick={handleLogs}>
+                Logs
+              </Button>
+            </div>
+          </Col>
+          
         </Row>
         <div className="d-flex justify-content-space-between"></div>
 

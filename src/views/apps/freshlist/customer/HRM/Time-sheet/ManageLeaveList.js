@@ -83,7 +83,7 @@ class ManageLeaveList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
 
@@ -645,12 +645,22 @@ class ManageLeaveList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-1 mr-1 ">
-            <Col style={{ marginTop: "10px" }}>
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
                 Manage Leave List
               </h1>
             </Col>
+             {this.state.MasterShow && (
+              <Col lg="2">
+                <div className="">
+                  <SuperAdminUI
+                    onDropdownChange={this.handleDropdownChange}
+                    onSubmit={this.handleParentSubmit}
+                  />
+                </div>
+              </Col>
+            )}
             <Col style={{ marginTop: "30px" }} xl="2" lg="2" md="2">
               <div className="table-input cssforproductlist">
                 <Input
@@ -660,7 +670,8 @@ class ManageLeaveList extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+
+            <Col xl="4" lg="4"  >
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                   <div className="table-input cssforproductlist">
@@ -815,21 +826,9 @@ class ManageLeaveList extends React.Component {
               )}
             </Col>
           </Row>
-          <Row className="ml-2 mr-2 mt-1">
-            <Col></Col>
-            {this.state.MasterShow && (
-              <Col lg="4">
-                <div className="">
-                  <SuperAdminUI
-                    onDropdownChange={this.handleDropdownChange}
-                    onSubmit={this.handleParentSubmit}
-                  />
-                </div>
-              </Col>
-            )}
-          </Row>
+          
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   <ContextLayout.Consumer className="ag-theme-alpine">
@@ -845,7 +844,7 @@ class ManageLeaveList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

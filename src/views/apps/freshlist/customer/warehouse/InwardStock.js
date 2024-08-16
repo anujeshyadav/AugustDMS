@@ -88,244 +88,10 @@ class StockTransfer extends React.Component {
       ViewOneData: {},
       BillViewData: {},
       SelectedCols: [],
-      paginationPageSize: 12,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
-      // columnDefs: [
-      //   {
-      //     headerName: "S.No",
-      //     valueGetter: "node.rowIndex + 1",
-      //     field: "node.rowIndex + 1",
-      //     width: 90,
-      //     filter: true,
-      //   },
-      //   {
-      //     headerName: "Inwared Stock",
-      //     field: "sortorder",
-      //     field: "transactions",
-      //     width: 140,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div className="actions cursor-pointer">
-      //           {this.state.InsiderPermissions &&
-      //             this.state.InsiderPermissions?.Edit && (
-      //               <Badge
-      //                 title="Inward Stock Update Products"
-      //                 size="25px"
-      //                 color="primary"
-      //                 onClick={async (e) => {
-      //                   this.setState({ Loading: true });
 
-      //                   await _Get(Warehouse_Inward_list, params?.data?._id)
-      //                     .then((res) => {
-      //                       this.setState({ Loading: false });
-      //                       let Inprocess = res?.Warehouse?.filter(
-      //                         (ele) => ele?.transferStatus == "InProcess"
-      //                       );
-      //                       res?.Warehouse?.forEach((ele) => {
-      //                         ele["grandTotal"] = Number(
-      //                           ele?.grandTotal.toFixed(2)
-      //                         );
-      //                       });
-      //                       this.setState({
-      //                         ViewOneData: {
-      //                           ...params?.data,
-      //                           inward: Inprocess,
-      //                         },
-      //                         ViewOneUserView: true,
-      //                         InventorysShow: false,
-      //                         EditOneUserView: false,
-      //                       });
-      //                       this.togglemodal();
-      //                     })
-      //                     .catch((err) => {
-      //                       this.setState({ Loading: false });
-      //                       swal("No Data Found", "Error", "error");
-      //                       console.log(err.response);
-      //                     });
-      //                 }}>
-      //                 Inward Stock
-      //               </Badge>
-      //             )}
-      //           {/* {this.state.InsiderPermissions &&
-      //             this.state.InsiderPermissions?.Edit && (
-      //               <FaInbox
-      //                 title="Inward Stock Products"
-      //                 className="mr-20"
-      //                 size="25px"
-      //                 color="blue"
-      //                 onClick={async (e) => {
-      //                   // await ViewOneWarehouseStock(
-      //                   //   params?.data?._id,
-      //                   //   params?.data?.database
-      //                   // )
-      //                   //   .then((res) => {
-      //                   //     console.log(res?.Factory);
-      //                   //     debugger;
-      //                   //   })
-      //                   //   .catch((err) => {
-      //                   //     console.log(err);
-      //                   //   });
-      //                   await this.ViewStockList(
-      //                     params?.data?._id,
-      //                     params?.data?.database
-      //                   );
-
-      //                   this.setState({ InventorysShow: true });
-      //                   this.setState({ ViewOneUserView: true });
-      //                   this.setState({ EditOneUserView: false });
-      //                   // this.setState({ EditOneUserView: true });
-      //                   // this.setState({ ViewOneUserView: false });
-      //                 }}
-      //               />
-      //             )} */}
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   // {
-      //   //   headerName: "Status",
-      //   //   field: "transferStatus",
-      //   //   filter: true,
-      //   //   width: 150,
-      //   //   cellRendererFramework: (params) => {
-      //   //     return params.data?.transferStatus === "Completed" ? (
-      //   //       <div className="badge badge-pill badge-success">
-      //   //         {params.data?.transferStatus}
-      //   //       </div>
-      //   //     ) : params.data?.transferStatus === "InProcess" ? (
-      //   //       <div className="badge badge-pill badge-warning">
-      //   //         {params.data?.transferStatus}
-      //   //       </div>
-      //   //     ) : params.data?.transferStatus === "Hold" ? (
-      //   //       <div className="badge badge-pill badge-danger">
-      //   //         {params.data?.transferStatus}
-      //   //       </div>
-      //   //     ) : params.data?.transferStatus === "Pending" ? (
-      //   //       <div className="badge badge-pill badge-warning">
-      //   //         {params.data?.transferStatus}
-      //   //       </div>
-      //   //     ) : null;
-      //   //   },
-      //   // },
-      //   {
-      //     headerName: "Warehouse Id",
-      //     field: "_id",
-      //     filter: true,
-      //     sortable: true,
-      //     editable: true,
-      //     width: 260,
-
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer">
-      //             <span>{params?.data?._id}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Warehouse Name",
-      //     field: "warehouseName",
-      //     filter: true,
-      //     sortable: true,
-
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer">
-      //             <span>{params?.data?.warehouseName}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Mobile No",
-      //     field: "mobileNo",
-      //     filter: true,
-      //     sortable: true,
-      //     width: 140,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer">
-      //             <span>{params?.data?.mobileNo}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Landline Number",
-      //     field: "landlineNumber",
-      //     filter: true,
-      //     sortable: true,
-      //     width: 200,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer">
-      //             <span>{params?.data?.landlineNumber}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Address",
-      //     field: "address",
-      //     filter: true,
-      //     sortable: true,
-      //     width: 330,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer">
-      //             <span>{params?.data?.address}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Created At",
-      //     field: "createdAt",
-      //     filter: true,
-      //     width: 140,
-      //     sortable: true,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer">
-      //             <span>{params?.data?.createdAt?.split("T")[0]}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-
-      //   {
-      //     headerName: "Updated date",
-      //     field: "updatedAt",
-      //     filter: true,
-      //     width: 140,
-      //     sortable: true,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer">
-      //             <div className="actions cursor-pointer">
-      //               <span>{params?.data?.updatedAt?.split("T")[0]}</span>
-      //             </div>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      // ],
       columnDefs: [
         {
           headerName: "S.No",
@@ -334,186 +100,168 @@ class StockTransfer extends React.Component {
           width: 80,
           filter: true,
         },
-        {
-          headerName: "Actions",
-          field: "sortorder",
-          field: "transactions",
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="actions cursor-pointer">
-                <Eye
-                  size="25px"
-                  color="green"
-                  onClick={(e) => {
-                    // this.togglemodal();
-                    this.togglemodal();
-                    this.setState({
-                      ViewOneData: params?.data,
-                      ViewOneUserView: true,
-                      EditOneUserView: false,
-                    });
-                  }}
-                />
-                {/* <Edit
-                  className="mr-50"
-                  size="25px"
-                  color="blue"
-                  onClick={e => {
-                    this.togglemodal();
-                    this.setState({ ViewOneData: params?.data });
-                    this.setState({ EditOneUserView: true });
-                    this.setState({ ViewOneUserView: false });
+        // {
+        //   headerName: "Actions",
+        //   field: "sortorder",
+        //   field: "transactions",
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="actions cursor-pointer">
+        //         <Eye
+        //           size="25px"
+        //           color="green"
+        //           onClick={(e) => {
+        //             // this.togglemodal();
+        //             this.togglemodal();
+        //             this.setState({
+        //               ViewOneData: params?.data,
+        //               ViewOneUserView: true,
+        //               EditOneUserView: false,
+        //             });
+        //           }}
+        //         />
+        //         {/* <Edit
+        //           className="mr-50"
+        //           size="25px"
+        //           color="blue"
+        //           onClick={e => {
+        //             this.togglemodal();
+        //             this.setState({ ViewOneData: params?.data });
+        //             this.setState({ EditOneUserView: true });
+        //             this.setState({ ViewOneUserView: false });
 
-                    console.log(params?.data);
-                  }}
-                /> */}
-                {/* <Trash2
-                  className="mr-50"
-                  size="25px"
-                  color="red"
-                  onClick={() => {
-                    let selectedData = this.gridApi.getSelectedRows();
-                    this.runthisfunction(params.data._id);
-                    this.gridApi.updateRowData({ remove: selectedData });
-                  }}
-                /> */}
-              </div>
-            );
-          },
-        },
+        //             console.log(params?.data);
+        //           }}
+        //         /> */}
+        //         {/* <Trash2
+        //           className="mr-50"
+        //           size="25px"
+        //           color="red"
+        //           onClick={() => {
+        //             let selectedData = this.gridApi.getSelectedRows();
+        //             this.runthisfunction(params.data._id);
+        //             this.gridApi.updateRowData({ remove: selectedData });
+        //           }}
+        //         /> */}
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "Status",
+        //   field: "transferStatus",
+        //   filter: true,
+        //   width: 140,
+        //   cellRendererFramework: (params) => {
+        //     return params.data?.transferStatus === "Completed" ? (
+        //       <div className=" ">{params.data?.transferStatus}</div>
+        //     ) : params.data?.transferStatus === "InProcess" ? (
+        //       <div className=" ">{params.data?.transferStatus}</div>
+        //     ) : params.data?.transferStatus === "Hold" ? (
+        //       <div className=" ">{params.data?.transferStatus}</div>
+        //     ) : params.data?.transferStatus === "Pending" ? (
+        //       <div className=" ">{params.data?.transferStatus}</div>
+        //     ) : null;
+        //   },
+        // },
         {
-          headerName: "Status",
-          field: "transferStatus",
+          headerName: "Party Name",
+          field: "PartyName",
           filter: true,
-          width: 140,
-          cellRendererFramework: (params) => {
-            return params.data?.transferStatus === "Completed" ? (
-              <div className=" ">{params.data?.transferStatus}</div>
-            ) : params.data?.transferStatus === "InProcess" ? (
-              <div className=" ">{params.data?.transferStatus}</div>
-            ) : params.data?.transferStatus === "Hold" ? (
-              <div className=" ">{params.data?.transferStatus}</div>
-            ) : params.data?.transferStatus === "Pending" ? (
-              <div className=" ">{params.data?.transferStatus}</div>
-            ) : null;
-          },
-        },
-        {
-          headerName: "Trx Date",
-          field: "stockTransferDate",
-          filter: true,
-          width: 140,
-          cellRendererFramework: (params) => {
-            return (
-              <div>
-                <span>{params.data?.stockTransferDate}</span>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "Total Product",
-          field: "productItems",
-          filter: true,
-
+          width: 190,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params.data?.productItems?.length} Products</span>
+                <span>{params.data?.PartyName}</span>
               </div>
             );
           },
         },
         {
-          headerName: "Transferred From",
-          field: "warehouseFromId.warehouseName",
+          headerName: "Product Name",
+          field: "productId.Product_Title",
           filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            console.log(params.data);
-            return (
-              <div>
-                {<span>{params.data?.warehouseFromId?.warehouseName}</span>}
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "Transferred To",
-          field: "warehouseToId.warehouseName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            console.log(params.data);
-            return (
-              <div>
-                {<span>{params.data?.warehouseToId?.warehouseName}</span>}
-              </div>
-            );
-          },
-        },
-
-        {
-          headerName: "Transfer to Mobile No.",
-          field: "warehouseToId.mobileNo",
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.warehouseToId?.mobileNo}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Request Id",
-          field: "warehouseNo",
-          filter: true,
-          sortable: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.warehouseNo}</span>
-                </div>
-              </>
+              <div>
+                <span>{params.data?.productId?.Product_Title}</span>
+              </div>
             );
           },
         },
         {
-          headerName: "Created date",
-          field: "createdAt",
+          headerName: "HSN",
+          field: "productId.HSN_Code",
           filter: true,
           width: 140,
-          sortable: true,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.createdAt?.split("T")[0]}</span>
-                </div>
-              </>
+              <div>
+                <span>{params.data?.productId?.HSN_Code}</span>
+              </div>
             );
           },
         },
         {
-          headerName: "updated At",
-          field: "updatedAt",
+          headerName: "Purchase Rate",
+          field: "productId.Purchase_Rate",
           filter: true,
           width: 140,
-          sortable: true,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.updatedAt.split("T")[0]}</span>
-                </div>
-              </>
+              <div>
+                <span>
+                  {params.data?.productId?.Purchase_Rate &&
+                    params.data?.productId?.Purchase_Rate}
+                </span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Tax Rate",
+          field: "productId.GSTRate",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>
+                  {params.data?.productId?.GSTRate &&
+                    params.data?.productId?.GSTRate}
+                </span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Tax Amount",
+          field: "TotalTax",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.TotalTax && params?.data?.TotalTax}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Total",
+          field: "totalPrice",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>
+                  {params.data?.totalPrice &&
+                    params.data?.totalPrice?.toFixed(2)}
+                </span>
+              </div>
             );
           },
         },
@@ -585,15 +333,29 @@ class StockTransfer extends React.Component {
 
   async Apicalling(id, db, WarehouseIncharge) {
     this.setState({ Loading: true });
+    let AllData = [];
     await PurchaseOrderList(id, db)
       .then((res) => {
-        // debugger;
         let Completed = res?.orderHistory?.filter(
           (ele) => ele?.status == "completed"
         );
-        console.log(res?.orderHistory);
+        let Alldata = Completed?.flatMap((element, index) => {
+          return element?.orderItems?.map((val, i) => {
+            return {
+              ...val,
+              order: element,
+              PartyName: element?.partyId?.firstName,
+              TotalTax: val?.igstTaxType
+                ? val?.igstRate.toFixed(2)
+                : (val?.cgstRate + val?.sgstRate).toFixed(2),
+            };
+          });
+        });
+        AllData = [...Alldata];
       })
       .catch((err) => {
+        // AllData = [];
+
         console.log(err);
       });
     let userHeading = JSON.parse(localStorage.getItem("InwardStock"));
@@ -615,10 +377,10 @@ class StockTransfer extends React.Component {
     }
     await _Get(Stock_trx_FtoW_List, db)
       .then(async (res) => {
-        let TotalTransfered = res?.Warehouse;
-        // let TotalTransfered = res?.Warehouse?.filter(
-        //   (ele) => ele?.transferStatus == "InProcess"
-        // );
+        // let TotalTransfered = res?.Warehouse;
+        let TotalTransfered = res?.Warehouse?.filter(
+          (ele) => ele?.transferStatus == "Completed"
+        );
         if (WarehouseIncharge) {
           let Url = `${Warehouse_ListBy_id + id}/${db}`;
           await _GetList(Url)
@@ -634,8 +396,22 @@ class StockTransfer extends React.Component {
                   // filterItem == item?.warehouseFromId?._id
                 )
               );
+              let Alldata = filteredData?.flatMap((element, index) => {
+                return element?.productItems?.map((val, i) => {
+                  return {
+                    ...val,
+                    order: element,
+                    PartyName: element?.warehouseFromId?.warehouseName,
+                    TotalTax:
+                      (val?.price *
+                      val?.transferQty *
+                      val?.productId?.GSTRate*0.01).toFixed(2),
+                  };
+                });
+              });
+              AllData = [...AllData, ...Alldata];
               this.setState({
-                rowData: filteredData,
+                rowData: AllData,
                 Loading: false,
               });
             })
@@ -643,8 +419,24 @@ class StockTransfer extends React.Component {
               console.log(err);
             });
         } else {
+               let Alldata = TotalTransfered?.flatMap((element, index) => {
+                 return element?.productItems?.map((val, i) => {
+                   return {
+                     ...val,
+                     order: element,
+                     PartyName: element?.warehouseFromId?.warehouseName,
+                     TotalTax: (
+                       val?.price *
+                       val?.transferQty *
+                       val?.productId?.GSTRate *
+                       0.01
+                     ).toFixed(2),
+                   };
+                 });
+               });
+          AllData = [...AllData, ...Alldata];
           this.setState({
-            rowData: TotalTransfered,
+            rowData: AllData,
             Loading: false,
           });
         }
@@ -954,7 +746,6 @@ class StockTransfer extends React.Component {
     }
   };
   changeHandler = (e) => {
-    console.log(e.target.value, this.state.warehouse);
 
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -1039,14 +830,14 @@ class StockTransfer extends React.Component {
                   </h2>
                 </Col>
 
-                {this.state.MasterShow && (
+                {this.state.MasterShow ? (
                   <Col>
                     <SuperAdminUI
                       onDropdownChange={this.handleDropdownChange}
                       onSubmit={this.handleParentSubmit}
                     />
                   </Col>
-                )}
+                ): <Col></Col>}
                 <Col xl="3" lg="3" xs="8">
                   <div className="table-input ">
                     <Input

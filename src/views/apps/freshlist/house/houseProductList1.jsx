@@ -484,9 +484,11 @@ class HouseProductList extends React.Component {
     }
   };
   async Apicalling(id, db) {
-    this.setState({ Loading: true });
-    this.setState({ AllcolumnDefs: this.state.columnDefs });
-    this.setState({ SelectedCols: this.state.columnDefs });
+    this.setState({
+      Loading: true,
+      AllcolumnDefs: this.state.columnDefs,
+      SelectedCols: this.state.columnDefs,
+    });
 
     let userHeading = JSON.parse(localStorage.getItem("PriceList"));
     if (userHeading?.length) {
@@ -494,10 +496,12 @@ class HouseProductList extends React.Component {
       this.gridApi.setColumnDefs(userHeading);
       this.setState({ SelectedcolumnDefs: userHeading });
     } else {
-      this.setState({ columnDefs: this.state.columnDefs });
-      this.setState({ SelectedcolumnDefs: this.state.columnDefs });
+      this.setState({
+        columnDefs: this.state.columnDefs,
+        SelectedcolumnDefs: this.state.columnDefs,
+      });
     }
-    let maxDiscount;
+    let maxDiscount = 0;
     await _Get(View_CustomerGroup, db)
       .then((res) => {
         this.setState({ Loading: false });
@@ -510,11 +514,12 @@ class HouseProductList extends React.Component {
             (prevMax, obj) => (obj.discount > prevMax ? obj.discount : prevMax),
             -Infinity
           );
-          this.setState({ maxDiscount: max });
-          maxDiscount = max;
+          this.setState({ maxDiscount: max > 0 ? max : 0 });
+          maxDiscount = max > 0 ? max : 0;
         }
       })
       .catch((err) => {
+        this.setState({ maxDiscount: 0 });
         console.log(err);
       });
     await _Get(PurchaseProductList_Product, db)
@@ -534,7 +539,7 @@ class HouseProductList extends React.Component {
           if (cost > ele?.SalesRate) {
             ele["lossStatus"] = true;
           } else {
-            ele["lossStatus"] = false;
+            ele["lossStatus"] = false;  
           }
         });
         this.setState({ rowData: res?.Product?.reverse() });
@@ -1311,7 +1316,7 @@ class HouseProductList extends React.Component {
                   {this.state.formValues?.length > 0 &&
                     this.state.formValues?.map((element, index) => (
                       <Row key={index}>
-                        <Col lg="2" md="2" sm="6">
+                        <Col lg="4" md="4" sm="6">
                           {" "}
                           <Label>Product Name</Label>
                           <Input
@@ -1418,7 +1423,7 @@ class HouseProductList extends React.Component {
                             readOnly
                             placeholder="Grade Discount"
                             name="maxDiscount"
-                            value={element.maxDiscount || ""}
+                            value={element.maxDiscount || 0}
                             onChange={(e) => this.handleChange(index, e)}
                           />
                         </Col>
@@ -1434,8 +1439,8 @@ class HouseProductList extends React.Component {
                             onChange={(e) => this.handleChange(index, e)}
                           />
                         </Col>
-                        <Col lg="2" md="2" sm="6">
-                          <Label>Product MRP *</Label>
+                        <Col lg="1" md="1" sm="6">
+                          <Label>MRP *</Label>
                           <Input
                             required
                             type="text"

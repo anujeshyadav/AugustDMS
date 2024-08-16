@@ -20,15 +20,19 @@ import { Route, useParams, useHistory } from "react-router-dom";
 import swal from "sweetalert";
 import {
   Create_CustomerGroup,
+  PurchaseProductList_Product,
   Update_CustomerGroup_by_id,
+  View_CustomerGroup,
   View_CustomerGroup_by_id,
 } from "../../../../ApiEndPoint/Api";
 
 let GrandTotal = [];
 let SelectedITems = [];
+let maxDiscount = 0;
 const CreateCustomerGroup = (args) => {
   const [UserInfo, setUserInfo] = useState({});
   const [selectedData, setData] = useState({});
+  const [ProductData, setProductData] = useState([]);
   const [Type, setType] = useState("");
   let Param = useParams();
   let History = useHistory();
@@ -38,6 +42,49 @@ const CreateCustomerGroup = (args) => {
     setUserInfo(userInfo);
   }, []);
   useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("userData"));
+
+    _Get(View_CustomerGroup, user?.database)
+      .then((res) => {
+        if (res?.CustomerGroup) {
+          let myActive = res?.CustomerGroup?.filter(
+            (ele) => ele?.status == "Active"
+          );
+
+          let max = myActive.reduce(
+            (prevMax, obj) => (obj.discount > prevMax ? obj.discount : prevMax),
+            -Infinity
+          );
+          maxDiscount = max > 0 ? max : 0;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    _Get(PurchaseProductList_Product, user?.database)
+      .then((res) => {
+        res?.Product?.forEach((ele) => {
+          let Mrp = ele?.Product_MRP;
+          let gst = (100 + ele?.GSTRate) / 100;
+          let Dis = (100 + maxDiscount) / 100;
+          if (!!ele?.SalesRate) {
+            ele["SalesRate"] = ele?.SalesRate;
+          } else {
+            ele["SalesRate"] = Number((Mrp / (gst * Dis)).toFixed(2));
+          }
+          ele["maxDiscount"] = maxDiscount;
+          let cost = ele?.landedCost ? ele?.landedCost : ele?.Purchase_Rate;
+          if (cost > ele?.SalesRate) {
+            ele["lossStatus"] = true;
+          } else {
+            ele["lossStatus"] = false;
+          }
+        });
+        setProductData(res?.Product?.reverse());
+        //  this.setState({ rowData: res?.Product?.reverse() });
+      })
+      .catch((err) => {});
+
     if (Param?.id == 0) {
       setType("Create");
     } else {
@@ -64,6 +111,9 @@ const CreateCustomerGroup = (args) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(ProductData);
+    console.log(maxDiscount);
+    debugger;
     let payload = {
       id: selectedData?.GroupName,
       groupName: selectedData?.GroupName,

@@ -172,7 +172,7 @@ const CreateWareHouse = () => {
                       name="Username"
                       value={formData["Username"]}
                       onChange={(e) => {
-                        const inputPan = e.target.value;
+                        const inputPan = e.target.value?.toUpperCase();
                         setFormData({
                           ...formData,
                           ["Username"]: inputPan,

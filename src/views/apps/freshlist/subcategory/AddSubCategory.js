@@ -67,7 +67,7 @@ export class AddSubCategory extends Component {
     this.setState({ status: e.target.value });
   };
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value?.toUpperCase() });
   };
 
   // All Category Api
@@ -149,7 +149,11 @@ export class AddSubCategory extends Component {
                     placeholder="Select Category"
                     name="category"
                     value={this.state.category}
-                    onChange={this.changeHandler}>
+                    onChange={(e) => {
+                      this.setState({ category: e.target.value });
+                    }}
+                    // onChange={this.changeHandler}
+                  >
                     <option>--Select Category--</option>
                     {this.state.CatList?.map((cat) => (
                       <option value={cat?._id} key={cat?._id}>

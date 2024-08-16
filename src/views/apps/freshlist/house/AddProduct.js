@@ -520,7 +520,7 @@ const AddProduct = () => {
                       <Col>
                         <div className="d-flex justify-content-center">
                           <Button.Ripple color="primary" className="mt-2">
-                            Loading...
+                            Submitting...
                           </Button.Ripple>
                         </div>
                       </Col>
@@ -670,7 +670,7 @@ const AddProduct = () => {
                           setData({
                             ...Data,
                             ["id"]: filteredValue,
-                            ["Product_Title"]: inputPan,
+                            ["Product_Title"]: inputPan?.toUpperCase(),
                           });
                         }}
                       />

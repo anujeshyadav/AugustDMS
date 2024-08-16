@@ -259,7 +259,7 @@ const EditAddProduct = () => {
     // }
     await _Put(Update_Product, Params?.id, formdata)
       .then((res) => {
-        // history.goBack();
+        history.goBack();
         if (res?.status) {
           swal("Product Details Updated Successfully");
         }
@@ -484,7 +484,14 @@ const EditAddProduct = () => {
                     name="Product_Title"
                     placeholder="Product Title"
                     value={Data.Product_Title}
-                    onChange={handleInputChange}
+                    onChange={(e) => {
+                      let value = e.target.value?.toUpperCase();
+                      setData({
+                        ...Data,
+                        Product_Title: value,
+                      });
+                    }}
+                    // onChange={handleInputChange}
                   />
                 </Col>
                 {/* <Col className="mb-1" lg="3" md="3">

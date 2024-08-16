@@ -73,7 +73,7 @@ class JobList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
 
@@ -685,13 +685,22 @@ class JobList extends React.Component {
         <>
           <div>
             <Card>
-              <Row className="ml-2 mr-2 ">
-                <Col className="mt-2">
-                  <h1 className="float-left" style={{ fontWeight: "600" }}>
+              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                <Col  >
+                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
                     Job List
                   </h1>
                 </Col>
-                <Col lg="3" md="6" sm="12" className="mt-2">
+                
+                {this.state.MasterShow && (
+                  <Col lg="2" md="6" sm="12" className="mt-2">
+                    <SuperAdminUI
+                      onDropdownChange={this.handleDropdownChange}
+                      onSubmit={this.handleParentSubmit}
+                    />
+                  </Col>
+                )}
+                <Col lg="2" md="6" sm="12" className="mt-2">
                   <div className="table-input cssforproductlist">
                     <Input
                       placeholder="search Item here..."
@@ -700,17 +709,9 @@ class JobList extends React.Component {
                     />
                   </div>
                 </Col>
-                {this.state.MasterShow && (
-                  <Col lg="3" md="6" sm="12" className="mt-2">
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
-                    />
-                  </Col>
-                )}
                 <Col lg="2" className="mt-2" xs="6">
                   {InsiderPermissions && InsiderPermissions.Create && (
-                    <span>
+                    <span >
                       <Route
                         render={({ history }) => (
                           <Button
@@ -722,7 +723,7 @@ class JobList extends React.Component {
                               height: "43px",
                             }}
                             color="#39cccc"
-                            className="float-left"
+                            className="float-right "
                             onClick={() =>
                               history.push("/app/ajgroup/HRM/RecPlace/jobForm")
                             }
@@ -817,7 +818,7 @@ class JobList extends React.Component {
                 </Col>
               </Row>
               {InsiderPermissions && InsiderPermissions.View && (
-                <CardBody style={{ marginTop: "0rem" }}>
+                <CardBody style={{ marginTop: "-3rem" }}>
                   {this.state.rowData === null ? null : (
                     <div className="ag-theme-material w-100 my-2 ag-grid-table">
                       {/*
@@ -895,7 +896,7 @@ class JobList extends React.Component {
                             colResizeDefault={"shift"}
                             animateRows={true}
                             floatingFilter={false}
-                            // pagination={true}
+                            pagination={true}
                             paginationPageSize={this.state.paginationPageSize}
                             pivotPanelShow="always"
                             enableRtl={context.state.direction === "rtl"}

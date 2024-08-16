@@ -600,29 +600,30 @@ class HouseProductList extends React.Component {
   }
 
   exportToExcel = async (fileName, e) => {
-    this.state.rowAllData?.forEach((ele) => {
-      delete ele?.Product_image;
-      delete ele?.createdAt;
-      delete ele?.created_by;
-      delete ele?.updatedAt;
-      delete ele?.status;
-      delete ele?.__v;
-      delete ele?._id;
-      delete ele?.database;
-      delete ele?.partyId;
-      delete ele?.landedCost;
-      delete ele?.purchaseStatus;
-      delete ele?.purchaseDate;
-      delete ele?.salesDate;
-      delete ele?.unitType;
-      delete ele?.Unit;
-      delete ele?.discount;
-      ele["warehouse"] = ele?.warehouse?.id
-        ? ele?.warehouse?.id
-        : ele?.warehouse;
+    
+    let Data = this.state.rowAllData?.map((item, i) => {
+      return {
+        id: item?.id,
+        primaryUnit: item?.primaryUnit,
+        secondaryUnit: item?.secondaryUnit,
+        secondarySize: item?.secondarySize,
+        category: item?.category,
+        SubCategory: item?.SubCategory,
+        warehouse: item?.warehouse?.id,
+        Product_Title: item?.Product_Title,
+        HSN_Code: item?.HSN_Code,
+        GSTRate: item?.GSTRate,
+        Product_Desc: item?.Product_Desc,
+        Product_MRP: item?.Product_MRP,
+        MIN_stockalert: item?.MIN_stockalert,
+        Opening_Stock: item?.Opening_Stock,
+        Purchase_Rate: item?.Purchase_Rate,
+        SalesRate: item?.SalesRate,
+        ProfitPercentage: item?.ProfitPercentage,
+      };
     });
-    this.setState({ rowAllData: this.state.rowData });
-    const worksheet = XLSX.utils.json_to_sheet(this.state.rowAllData);
+    // this.setState({ rowAllData: this.state.rowData });
+    const worksheet = XLSX.utils.json_to_sheet(Data);
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");

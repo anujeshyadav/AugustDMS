@@ -1091,6 +1091,17 @@ const EditOrder = (args) => {
                               </li>
                             </>
                           )}
+                          <li>
+                            <div className="totalclas">
+                              <span className="">RoundOff: </span>
+                              <strong>
+                                {!!GSTData?.Tax?.RoundOff &&
+                                GSTData?.Tax?.RoundOff
+                                  ? (GSTData?.Tax?.RoundOff).toFixed(2)
+                                  : 0}
+                              </strong>
+                            </div>
+                          </li>
                           <hr />
                           <li>
                             {" "}

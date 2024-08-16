@@ -61,7 +61,7 @@ export class AddCategory extends Component {
     this.setState({ status: e.target.value });
   };
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value?.toUpperCase() });
   };
   submitHandler = (e) => {
     e.preventDefault();

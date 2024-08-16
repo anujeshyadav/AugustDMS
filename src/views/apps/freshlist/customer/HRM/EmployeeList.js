@@ -80,7 +80,7 @@ class EmployeeList extends React.Component {
       rowData: [],
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 12,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [
@@ -965,64 +965,29 @@ class EmployeeList extends React.Component {
                   <Col sm="12">
                     <Card>
                       <Row
-                        className="mt-2 "
-                        style={{ marginLeft: "5px", marginRight: "5px" }}>
-                        <Col lg="2" md="2" sm="12">
+                        
+                        style={{ marginLeft: "3px", marginRight: "3px" }}>
+                        <Col  >
                           <h1
                             className="float-left "
-                            style={{ fontWeight: "600" }}>
+                            style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
                             Employee list
                           </h1>
                         </Col>
-                        <Col lg="3" md="6" sm="12">
+                       
+                        {this.state.MasterShow ? (
+                          <Col lg="2"   sm="12" style={{marginTop:"25px"}}>
+                            <SuperAdminUI
+                              onDropdownChange={this.handleDropdownChange}
+                              onSubmit={this.handleParentSubmit}
+                            />
+                          </Col>
+                        ) : (
+                          <Col></Col>
+                        )}
+                           <Col lg="2"   sm="12" style={{marginTop:"25px"}}>
                           <div className="d-flex justify-content-space-between">
-                            <div className="mb-1 mr-1">
-                              {/* <UncontrolledDropdown className="p-1 ag-dropdown">
-                                <DropdownToggle tag="div">
-                                  {this.gridApi
-                                    ? this.state.currenPageSize
-                                    : "" * this.state.getPageSize -
-                                      (this.state.getPageSize - 1)}{" "}
-                                  -{" "}
-                                  {this.state.rowData.length -
-                                    this.state.currenPageSize *
-                                      this.state.getPageSize >
-                                  0
-                                    ? this.state.currenPageSize *
-                                      this.state.getPageSize
-                                    : this.state.rowData.length}{" "}
-                                  of {this.state.rowData.length}
-                                  <ChevronDown className="ml-50" size={15} />
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(10)}>
-                                    10
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(20)}>
-                                    20
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(50)}>
-                                    50
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(100)}>
-                                    100
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(134)}>
-                                    134
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </UncontrolledDropdown> */}
-                            </div>
+                             
                             <div className="table-input cssforproductlist">
                               <Input
                                 placeholder="search Item here..."
@@ -1034,21 +999,69 @@ class EmployeeList extends React.Component {
                             </div>
                           </div>
                         </Col>
-                        {this.state.MasterShow ? (
-                          <Col lg="3" md="4" sm="12">
-                            <SuperAdminUI
-                              onDropdownChange={this.handleDropdownChange}
-                              onSubmit={this.handleParentSubmit}
-                            />
+                          <Col lg="3" xl="3" style={{marginTop:"25px"}}>
+                          <div>
+                            {InsiderPermissions && InsiderPermissions.Create && (
+                            <>
+                            <div style={{display:"flex", justifyContent:"space-between"}}>
+                              <span className="">
+                                <Route
+                                  render={({ history }) => (
+                                    <Button
+                                      style={{
+                                        cursor: "pointer",
+                                        backgroundColor: "rgb(8, 91, 245)",
+                                        color: "white",
+                                        fontWeight: "600",
+                                        height: "43px",
+                                      }}
+                                      className="float-right  "
+                                      color="#39cccc"
+                                      onClick={() =>
+                                        history.push(
+                                          "/app/SoftNumen/account/CreateAccount/0"
+                                        )
+                                      }>
+                                      <FaPlus size={15} /> Employee
+                                    </Button>
+                                  )}
+                                />
+                              </span>
+                              <span>
+                                <a
+                                  className="float-right  "
+                                  color="#39cccc"
+                                  target="_blank"
+                                  href="https://face.rupioo.com"
+                                  // onClick={() =>
+                                  //   history.push(
+                                  //     "/app/Ajgroup/account/AssignTeamMember"
+                                  //   )
+                                  // }
+                                >
+                                  <Button color="primary"  style={{
+                      cursor: "pointer",
+                      // backgroundColor: "rgb(8, 91, 245)",
+                      float:"right",
+                      height:"35px",
+                      color: "white",
+                      fontWeight: "600",
+                    }}
+                     className="float-right categorysbutton45 ">
+                                    Register Employee
+                                  </Button>
+                                </a>
+                              </span>
+                              </div>
+                            </>
+                          )}
+                          </div>
                           </Col>
-                        ) : (
-                          <Col></Col>
-                        )}
 
-                        <Col lg="4" md="4" sm="12">
+                        <Col lg="1"  style={{marginTop:"25px"}}>
                           {InsiderPermissions && InsiderPermissions.View && (
                             <>
-                              <span className="mx-1">
+                              <span className=" ">
                                 <FaFilter
                                   style={{ cursor: "pointer" }}
                                   title="filter coloumn"
@@ -1066,7 +1079,7 @@ class EmployeeList extends React.Component {
                                 <span
                                   onMouseEnter={this.toggleDropdown}
                                   onMouseLeave={this.toggleDropdown}
-                                  className="mx-1">
+                                  className=" ">
                                   <div className="dropdown-container float-right">
                                     <ImDownload
                                       style={{ cursor: "pointer" }}
@@ -1139,54 +1152,11 @@ class EmployeeList extends React.Component {
                               </>
                             )}
 
-                          {InsiderPermissions && InsiderPermissions.Create && (
-                            <>
-                              <span className="">
-                                <Route
-                                  render={({ history }) => (
-                                    <Button
-                                      style={{
-                                        cursor: "pointer",
-                                        backgroundColor: "rgb(8, 91, 245)",
-                                        color: "white",
-                                        fontWeight: "600",
-                                        height: "43px",
-                                      }}
-                                      className="float-right mr-1 mb-2"
-                                      color="#39cccc"
-                                      onClick={() =>
-                                        history.push(
-                                          "/app/SoftNumen/account/CreateAccount/0"
-                                        )
-                                      }>
-                                      <FaPlus size={15} /> Employee
-                                    </Button>
-                                  )}
-                                />
-                              </span>
-                              <span>
-                                <a
-                                  className="float-right  mr-1"
-                                  color="#39cccc"
-                                  target="_blank"
-                                  href="https://face.rupioo.com"
-                                  // onClick={() =>
-                                  //   history.push(
-                                  //     "/app/Ajgroup/account/AssignTeamMember"
-                                  //   )
-                                  // }
-                                >
-                                  <Button color="primary">
-                                    Register Employee
-                                  </Button>
-                                </a>
-                              </span>
-                            </>
-                          )}
+                        
                         </Col>
                       </Row>
                       {InsiderPermissions && InsiderPermissions?.View && (
-                        <CardBody style={{ marginTop: "0rem" }}>
+                        <CardBody style={{ marginTop: "-3rem" }}>
                           {this.state.rowData === null ? null : (
                             <div>
                               <div className="ag-theme-material w-100 my-1 ag-grid-table">
@@ -1206,7 +1176,7 @@ class EmployeeList extends React.Component {
                                       colResizeDefault={"shift"}
                                       animateRows={true}
                                       floatingFilter={false}
-                                      // pagination={true}
+                                       pagination={true}
                                       paginationPageSize={
                                         this.state.paginationPageSize
                                       }

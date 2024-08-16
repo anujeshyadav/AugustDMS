@@ -60,6 +60,8 @@ import SuperAdminUI from "../../../../SuperAdminUi/SuperAdminUI";
 
 import {
   Create_Warehouse_List,
+  Stock_trx_FtoW_List,
+  view_create_order_history,
   Warehouse_ListBy_id,
   Warehouse_OutwardStock_list,
 } from "../../../../../ApiEndPoint/Api";
@@ -85,240 +87,180 @@ class StockTransfer extends React.Component {
       ViewOneData: {},
       BillViewData: {},
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 13,
       currenPageSize: "",
       getPageSize: "",
+
       columnDefs: [
         {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 90,
+          width: 80,
           filter: true,
         },
-        {
-          headerName: "Actions",
-          field: "sortorder",
-          field: "transactions",
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="actions cursor-pointer">
-                {this.state.InsiderPermissions &&
-                  this.state.InsiderPermissions?.View && (
-                    <Badge
-                      title="Outward Stock Products"
-                      size="25px"
-                      style={{ cursor: "pointer" }}
-                      color="primary"
-                      onClick={async (e) => {
-                        this.setState({ Loading: true });
+        // {
+        //   headerName: "Actions",
+        //   field: "sortorder",
+        //   field: "transactions",
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="actions cursor-pointer">
+        //         <Eye
+        //           size="25px"
+        //           color="green"
+        //           onClick={(e) => {
+        //             // this.togglemodal();
+        //             this.togglemodal();
+        //             this.setState({
+        //               ViewOneData: params?.data,
+        //               ViewOneUserView: true,
+        //               EditOneUserView: false,
+        //             });
+        //           }}
+        //         />
+        //         {/* <Edit
+        //           className="mr-50"
+        //           size="25px"
+        //           color="blue"
+        //           onClick={e => {
+        //             this.togglemodal();
+        //             this.setState({ ViewOneData: params?.data });
+        //             this.setState({ EditOneUserView: true });
+        //             this.setState({ ViewOneUserView: false });
 
-                        await _Get(
-                          Warehouse_OutwardStock_list,
-                          params?.data?._id
-                        )
-                          .then((res) => {
-                            this.setState({ Loading: false });
-
-                            console.log(res?.Warehouse);
-                            let Inprocess = res?.Warehouse?.filter(
-                              (ele) => ele?.transferStatus == "InProcess"
-                            );
-                           
-                            this.setState({
-                              ViewOneData: {
-                                ...params?.data,
-                                inward: Inprocess,
-                              },
-                              ViewOneUserView: true,
-                              InventorysShow: false,
-                              EditOneUserView: false,
-                            });
-                            this.togglemodal();
-                          })
-                          .catch((err) => {
-                            this.setState({ Loading: false });
-                            swal("No Data Found", "Error", "error");
-                            console.log(err.response);
-                          });
-                      }}
-                    >Outward</Badge>
-                  )}
-                {/* {this.state.InsiderPermissions &&
-                  this.state.InsiderPermissions?.Edit && (
-                    <FaInbox
-                      title="Inward Stock Products"
-                      className="mr-20"
-                      size="25px"
-                      color="blue"
-                      onClick={async (e) => {
-                        // await ViewOneWarehouseStock(
-                        //   params?.data?._id,
-                        //   params?.data?.database
-                        // )
-                        //   .then((res) => {
-                        //     console.log(res?.Factory);
-                        //     debugger;
-                        //   })
-                        //   .catch((err) => {
-                        //     console.log(err);
-                        //   });
-                        await this.ViewStockList(
-                          params?.data?._id,
-                          params?.data?.database
-                        );
-
-                        this.setState({ InventorysShow: true });
-                        this.setState({ ViewOneUserView: true });
-                        this.setState({ EditOneUserView: false });
-                        // this.setState({ EditOneUserView: true });
-                        // this.setState({ ViewOneUserView: false });
-                      }}
-                    />
-                  )} */}
-              </div>
-            );
-          },
-        },
+        //             console.log(params?.data);
+        //           }}
+        //         /> */}
+        //         {/* <Trash2
+        //           className="mr-50"
+        //           size="25px"
+        //           color="red"
+        //           onClick={() => {
+        //             let selectedData = this.gridApi.getSelectedRows();
+        //             this.runthisfunction(params.data._id);
+        //             this.gridApi.updateRowData({ remove: selectedData });
+        //           }}
+        //         /> */}
+        //       </div>
+        //     );
+        //   },
+        // },
         // {
         //   headerName: "Status",
         //   field: "transferStatus",
         //   filter: true,
-        //   width: 150,
+        //   width: 140,
         //   cellRendererFramework: (params) => {
         //     return params.data?.transferStatus === "Completed" ? (
-        //       <div className="badge badge-pill badge-success">
-        //         {params.data?.transferStatus}
-        //       </div>
+        //       <div className=" ">{params.data?.transferStatus}</div>
         //     ) : params.data?.transferStatus === "InProcess" ? (
-        //       <div className="badge badge-pill badge-warning">
-        //         {params.data?.transferStatus}
-        //       </div>
+        //       <div className=" ">{params.data?.transferStatus}</div>
         //     ) : params.data?.transferStatus === "Hold" ? (
-        //       <div className="badge badge-pill badge-danger">
-        //         {params.data?.transferStatus}
-        //       </div>
+        //       <div className=" ">{params.data?.transferStatus}</div>
         //     ) : params.data?.transferStatus === "Pending" ? (
-        //       <div className="badge badge-pill badge-warning">
-        //         {params.data?.transferStatus}
-        //       </div>
+        //       <div className=" ">{params.data?.transferStatus}</div>
         //     ) : null;
         //   },
         // },
         {
-          headerName: "Warehouse Id",
-          field: "_id",
+          headerName: "Party Name",
+          field: "PartyName",
           filter: true,
-          sortable: true,
-          editable: true,
-          width: 260,
+          width: 190,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?._id}</span>
-                </div>
-              </>
+              <div>
+                <span>{params.data?.PartyName}</span>
+              </div>
             );
           },
         },
         {
-          headerName: "Warehouse Name",
-          field: "warehouseName",
+          headerName: "Product Name",
+          field: "productId.Product_Title",
           filter: true,
-          sortable: true,
-           
+          width: 180,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.warehouseName}</span>
-                </div>
-              </>
+              <div>
+                <span>{params.data?.productId?.Product_Title}</span>
+              </div>
             );
           },
         },
         {
-          headerName: "Mobile No",
-          field: "mobileNo",
+          headerName: "HSN",
+          field: "productId.HSN_Code",
           filter: true,
-          sortable: true,
           width: 140,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.mobileNo}</span>
-                </div>
-              </>
+              <div>
+                <span>{params.data?.productId?.HSN_Code}</span>
+              </div>
             );
           },
         },
         {
-          headerName: "Landline Number",
-          field: "landlineNumber",
-          filter: true,
-          sortable: true,
-          width: 170,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.landlineNumber}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Address",
-          field: "address",
-          filter: true,
-          sortable: true,
-          width: 360,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.address}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Created At",
-          field: "createdAt",
+          headerName: "SALES RATE",
+          field: "productId.basicPrice",
           filter: true,
           width: 140,
-          sortable: true,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.createdAt?.split("T")[0]}</span>
-                </div>
-              </>
+              <div>
+                <span>
+                  {params.data?.productId?.basicPrice &&
+                    params.data?.productId?.basicPrice}
+                </span>
+              </div>
             );
           },
         },
-
         {
-          headerName: "Updated date",
-          field: "updatedAt",
+          headerName: "Tax Rate",
+          field: "productId.GSTRate",
           filter: true,
           width: 140,
-          sortable: true,
           cellRendererFramework: (params) => {
             return (
-              <>
-                <div className="actions cursor-pointer">
-                  <div className="actions cursor-pointer">
-                    <span>{params?.data?.updatedAt?.split("T")[0]}</span>
-                  </div>
-                </div>
-              </>
+              <div>
+                <span>
+                  {params.data?.productId?.GSTRate &&
+                    params.data?.productId?.GSTRate}
+                </span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Tax Amount",
+          field: "TotalTax",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.TotalTax && params?.data?.TotalTax}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Total",
+          field: "totalPrice",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>
+                  {params.data?.totalPrice &&
+                    params.data?.totalPrice?.toFixed(2)}
+                </span>
+              </div>
             );
           },
         },
@@ -398,6 +340,33 @@ class StockTransfer extends React.Component {
 
   async Apicalling(id, db, WarehouseIncharge) {
     this.setState({ Loading: true });
+    let AllData = [];
+    await _Get(view_create_order_history, id, db)
+      .then((res) => {
+        let Completed = res?.orderHistory?.filter((ele) =>
+          ele?.status?.toLowerCase()?.includes("dispatch")
+        );
+        debugger;
+        let Alldata = Completed?.flatMap((element, index) => {
+          return element?.orderItems?.map((val, i) => {
+            debugger;
+            return {
+              ...val,
+              order: element,
+              PartyName: element?.partyId?.firstName,
+              TotalTax:
+                val?.igstRate > 0
+                  ? val?.igstRate.toFixed(2)
+                  : (val?.cgstRate + val?.sgstRate).toFixed(2),
+            };
+          });
+        });
+
+        AllData = [...Alldata];
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     let userHeading = JSON.parse(localStorage.getItem("Outward Stock"));
     this.setState({
       AllcolumnDefs: this.state.columnDefs,
@@ -409,43 +378,83 @@ class StockTransfer extends React.Component {
         columnDefs: userHeading,
         SelectedcolumnDefs: userHeading,
       });
-      // this.gridApi.setColumnDefs(userHeading);
     } else {
       this.setState({
         SelectedcolumnDefs: this.state.columnDefs,
         columnDefs: this.state.columnDefs,
       });
     }
-    if (WarehouseIncharge) {
-      let Url = `${Warehouse_ListBy_id + id}/${db}`;
-      await _GetList(Url)
-        .then((res) => {
-          let value = res?.Warehouse;
+
+    await _Get(Stock_trx_FtoW_List, db)
+      .then(async (res) => {
+        let TotalTransfered = res?.Warehouse?.filter(
+          (ele) => ele?.transferStatus == "Completed"
+        );
+        if (WarehouseIncharge) {
+          let Url = `${Warehouse_ListBy_id + id}/${db}`;
+          await _GetList(Url)
+            .then((response) => {
+              let assignedWarehouse = response?.Warehouse.map((ele) => {
+                return ele?._id;
+              });
+
+              const filteredData = TotalTransfered?.filter((item) =>
+                assignedWarehouse.some(
+                  (filterItem) => filterItem == item?.warehouseFromId?._id
+                  // filterItem == item?.warehouseToId?._id ||
+                  // filterItem == item?.warehouseFromId?._id
+                )
+              );
+              let Alldata = filteredData?.flatMap((element, index) => {
+                return element?.productItems?.map((val, i) => {
+                  return {
+                    ...val,
+                    order: element,
+                    PartyName: element?.warehouseToId?.warehouseName,
+                    TotalTax: (
+                      val?.productId?.basicPrice *
+                      val?.transferQty *
+                      val?.productId?.GSTRate *
+                      0.01
+                    ).toFixed(2),
+                  };
+                });
+              });
+              AllData = [...AllData, ...Alldata];
+              this.setState({
+                rowData: AllData,
+                Loading: false,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          let Alldata = TotalTransfered?.flatMap((element, index) => {
+            return element?.productItems?.map((val, i) => {
+              return {
+                ...val,
+                order: element,
+                PartyName: element?.warehouseToId?.warehouseName,
+                TotalTax: (
+                  val?.productId?.basicPrice *
+                  val?.transferQty *
+                  val?.productId?.GSTRate *
+                  0.01
+                ).toFixed(2),
+              };
+            });
+          });
+          AllData = [...AllData, ...Alldata];
           this.setState({
-            rowData: value?.length > 0 ? value : [],
+            rowData: AllData,
             Loading: false,
           });
-        })
-        .catch((err) => {
-          this.setState({ Loading: false });
-          this.setState({ rowData: [] });
-          console.log(err);
-        });
-    } else {
-      await _Get(Create_Warehouse_List, db)
-        .then((res) => {
-          this.setState({ Loading: false });
-          let value = res?.Warehouse;
-          if (value?.length) {
-            this.setState({ rowData: value });
-          }
-        })
-        .catch((err) => {
-          this.setState({ Loading: false });
-          this.setState({ rowData: [] });
-          console.log(err);
-        });
-    }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   async componentDidMount() {
     const UserInformation = this.context?.UserInformatio;
@@ -590,14 +599,14 @@ class StockTransfer extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("OutwardStock", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("outwardStock.pdf");
   }
 
   exportToPDF = async () => {
@@ -641,7 +650,7 @@ class StockTransfer extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "outwardStock.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -665,7 +674,7 @@ class StockTransfer extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `outwardStock.${excelType}`);
       },
     });
   };
@@ -818,34 +827,35 @@ class StockTransfer extends React.Component {
             <Card>
               <Row className="mt-2 ml-2 mr-2">
                 <Col lg="5" md="5" xl="5">
-                  
                   <h2
-                                className="float-left "
-                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'24px' }}>
-                                Outward Stock
-                              </h2>
+                    className="float-left "
+                    style={{
+                      fontWeight: "600",
+                      textTransform: "uppercase",
+                      fontSize: "24px",
+                    }}>
+                    Outward Stock
+                  </h2>
                 </Col>
                 <Col xl="3" lg="3">
-                <SuperAdminUI
-                  onDropdownChange={this.handleDropdownChange}
-                  onSubmit={this.handleParentSubmit}
-                />
-              </Col>
-                      {/*
+                  <SuperAdminUI
+                    onDropdownChange={this.handleDropdownChange}
+                    onSubmit={this.handleParentSubmit}
+                  />
+                </Col>
+                {/*
                 {this.state.MasterShow && (
                  
                 )}*/}
-                 <Col xl="3" lg="3" xs="8">
-                 <div className="table-input  ">
-                     <Input
-                       placeholder="search Item here..."
-                       onChange={(e) =>
-                         this.updateSearchQuery(e.target.value)
-                       }
-                       value={this.state.value}
-                     />
-                   </div>
-                   {/*
+                <Col xl="3" lg="3" xs="8">
+                  <div className="table-input  ">
+                    <Input
+                      placeholder="search Item here..."
+                      onChange={(e) => this.updateSearchQuery(e.target.value)}
+                      value={this.state.value}
+                    />
+                  </div>
+                  {/*
                  <div className="d-flex flex-wrap justify-content-between align-items-center">
                  <div className="mb-1">
                    <UncontrolledDropdown className="p-1 ag-dropdown">
@@ -898,7 +908,7 @@ class StockTransfer extends React.Component {
                    
                  </div>
                </div>*/}
-                 </Col>
+                </Col>
                 <Col xl="1" lg="1" xs="4">
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.View && (
@@ -978,7 +988,6 @@ class StockTransfer extends React.Component {
                   <CardBody style={{ marginTop: "-3rem" }}>
                     {this.state.rowData === null ? null : (
                       <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                       
                         <ContextLayout.Consumer className="ag-theme-alpine">
                           {(context) => (
                             <AgGridReact
@@ -1261,10 +1270,7 @@ class StockTransfer extends React.Component {
                                         <td>
                                           {ele?.productItems?.map((element) => (
                                             <div>
-                                              {
-                                                element?.productId
-                                                  ?.Product_Title?.toUpperCase()
-                                              }
+                                              {element?.productId?.Product_Title?.toUpperCase()}
                                               -{element?.transferQty}
                                             </div>
                                           ))}

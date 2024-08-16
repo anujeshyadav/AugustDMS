@@ -774,7 +774,8 @@ const CreateAccount = () => {
                                   name="firstName"
                                   value={formData?.firstName}
                                   onChange={(e) => {
-                                    const inputPan = e.target.value;
+                                    const inputPan =
+                                      e.target.value?.toUpperCase();
                                     const filteredValue = inputPan.replace(
                                       /\s/g,
                                       ""

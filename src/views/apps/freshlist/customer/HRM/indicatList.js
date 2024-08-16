@@ -75,7 +75,7 @@ class IndicList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -636,14 +636,23 @@ class IndicList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Indicator List
               </h1>
             </Col>
-            <Col className="mt-2" lg="3">
-              {" "}
+           
+            {this.state.MasterShow && (
+              <Col style={{marginTop:"25px"}} lg="2">
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
+              </Col>
+            )}
+             <Col style={{marginTop:"25px"}} lg="2">
+              
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -652,15 +661,7 @@ class IndicList extends React.Component {
                 />
               </div>
             </Col>
-            {this.state.MasterShow && (
-              <Col className="mt-2" lg="3">
-                <SuperAdminUI
-                  onDropdownChange={this.handleDropdownChange}
-                  onSubmit={this.handleParentSubmit}
-                />
-              </Col>
-            )}
-            <Col className="mt-2" xs="8" lg="2">
+            <Col style={{marginTop:"25px"}} xs="8" lg="2">
               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
                   <Route
@@ -688,7 +689,7 @@ class IndicList extends React.Component {
                 </span>
               )}
             </Col>
-            <Col className="mt-2" xs="4" lg="1">
+            <Col style={{marginTop:"25px"}} xs="4" lg="1">
               {InsiderPermissions && InsiderPermissions.View && (
                 <>
                   <span className="">
@@ -771,7 +772,7 @@ class IndicList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -846,7 +847,7 @@ class IndicList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}
