@@ -150,14 +150,14 @@ class InvoiceGenerator extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 72,
+          width: 55,
           filter: true,
         },
         {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 250,
+          width: 180,
           cellRendererFramework: (params) => {
             return params.data?.status === "InProcess" ? (
               <div className="text-center">Pending For Delivery</div>
@@ -180,7 +180,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 130,
+          width: 80,
           cellRendererFramework: (params) => {
             console.log(params.data);
             return (
@@ -200,7 +200,7 @@ class InvoiceGenerator extends React.Component {
                       render={() => (
                         <Eye
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="green"
                           onClick={() => {
                             this.setState({ ViewOneData: params?.data });
@@ -214,7 +214,7 @@ class InvoiceGenerator extends React.Component {
                   this.state.InsiderPermissions?.Delete && (
                     <Trash2
                       className=""
-                      size="30px"
+                      size="20px"
                       color="red"
                       onClick={() => {
                         this.runthisfunction(params?.data?._id);
@@ -229,7 +229,7 @@ class InvoiceGenerator extends React.Component {
                         .includes("completed") && (
                         <CornerDownLeft
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="green"
                           onClick={() => {
                             localStorage.setItem(
@@ -273,7 +273,7 @@ class InvoiceGenerator extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          width: 235,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer text-center">
@@ -285,11 +285,11 @@ class InvoiceGenerator extends React.Component {
           },
         },
         {
-          headerName: "Order Creation Date",
+          headerName: "Order Date",
           field: "createdAt",
           filter: true,
           resizable: true,
-          width: 195,
+          width: 95,
 
           cellRendererFramework: (params) => {
             return (
@@ -400,11 +400,11 @@ class InvoiceGenerator extends React.Component {
         //   },
         // },
         {
-          headerName: "Create Invoice",
+          headerName: " Invoice",
           field: "invoice",
           filter: true,
           resizable: true,
-          width: 150,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -448,7 +448,7 @@ class InvoiceGenerator extends React.Component {
           field: "firstName",
           filter: true,
           resizable: true,
-          width: 255,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -464,7 +464,7 @@ class InvoiceGenerator extends React.Component {
           field: "partyId.email",
           filter: true,
           resizable: true,
-          width: 260,
+          width: 230,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -480,7 +480,7 @@ class InvoiceGenerator extends React.Component {
           field: "partyId.address",
           filter: true,
           resizable: true,
-          width: 200,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -495,7 +495,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Company Pan Number",
           field: "partyId.comPanNo",
           filter: true,
-          width: 210,
+          width: 175,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -510,7 +510,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Party Full Name",
           field: "partyId.ownerName",
           filter: true,
-          width: 212,
+          width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -525,7 +525,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Party Limit",
           field: "partyId.limit",
           filter: true,
-          width: 125,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -540,7 +540,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Transposrter",
           field: "partyId.assignTransporter",
           filter: true,
-          width: 130,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -561,7 +561,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "IGST ",
           field: "igstTotal",
           filter: true,
-          width: 132,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" cursor-pointer text-center">
@@ -574,7 +574,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "SGST ",
           field: "sgstTotal",
           filter: true,
-          width: 132,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -587,7 +587,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "CGST ",
           field: "cgstTotal",
           filter: true,
-          width: 132,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -600,7 +600,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Taxable Amount",
           field: "amount",
           filter: true,
-          width: 162,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -613,7 +613,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 125,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -626,7 +626,7 @@ class InvoiceGenerator extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 132,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -641,7 +641,7 @@ class InvoiceGenerator extends React.Component {
           field: "params?.data?.orderItems?.length",
           filter: true,
           resizable: true,
-          width: 155,
+          width: 125,
           cellRendererFramework: (params) => {
             // console.log(params.data);
             return (
@@ -1453,15 +1453,11 @@ class InvoiceGenerator extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row className="ml-2 mr-2 ">
-                        <Col lg="3" md="4" sm="12" className="mt-2">
+                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                        <Col lg="3" md="4" sm="12" >
                           <h2
                             className="float-left"
-                            style={{
-                              fontWeight: "600",
-                              textTransform: "uppercase",
-                              fontSize: "24px",
-                            }}>
+                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                             Sales Invoice List
                           </h2>
                         </Col>
@@ -1617,7 +1613,7 @@ class InvoiceGenerator extends React.Component {
                       {InsiderPermissions && InsiderPermissions?.View && (
                         <>
                           {this.state.rowData === null ? null : (
-                            <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                            <div className="ag-theme-material w-100   ag-grid-table">
                               <ContextLayout.Consumer className="ag-theme-alpine">
                                 {(context) => (
                                   <AgGridReact

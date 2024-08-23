@@ -146,7 +146,7 @@ class OrderList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 105,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -154,7 +154,7 @@ class OrderList extends React.Component {
                   this.state.InsiderPermissions?.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         this.handleChangeView(params.data, "readonly");
@@ -260,7 +260,7 @@ class OrderList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 160,
+          width: 130,
           cellRendererFramework: (params) => {
             return params.data?.status?.toLowerCase()?.includes("completed") ? (
               <div className="text-center">{params.data?.status}</div>
@@ -328,7 +328,7 @@ class OrderList extends React.Component {
           field: "Create Dispatch",
           filter: true,
           resizable: true,
-
+          width: 170,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -454,7 +454,7 @@ class OrderList extends React.Component {
         //   },
         // },
         {
-          headerName: "OrderNo",
+          headerName: "Order No",
           field: "orderNo",
           filter: true,
           resizable: true,
@@ -470,11 +470,11 @@ class OrderList extends React.Component {
           },
         },
         {
-          headerName: "Order Creation Date",
+          headerName: "Order  Date",
           field: "createdAt",
           filter: true,
           resizable: true,
-          width: 198,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -501,10 +501,10 @@ class OrderList extends React.Component {
           },
         },
         {
-          headerName: "Company PanNo",
+          headerName: "Company Pan No",
           field: "partyId.comPanNo",
           filter: true,
-          width: 200,
+          width:130,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -520,7 +520,7 @@ class OrderList extends React.Component {
           field: "fullName",
           filter: true,
           resizable: true,
-          width: 242,
+          width: 240,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -569,7 +569,7 @@ class OrderList extends React.Component {
           headerName: "IGST ",
           field: "igstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -582,7 +582,7 @@ class OrderList extends React.Component {
           headerName: "SGST ",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -595,7 +595,7 @@ class OrderList extends React.Component {
           headerName: "CGST ",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -608,7 +608,7 @@ class OrderList extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+         width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -621,7 +621,7 @@ class OrderList extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 118,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -634,7 +634,7 @@ class OrderList extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -1683,20 +1683,16 @@ class OrderList extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row className=" mt-2 mx-1 mr-1">
+            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col>
                 <h2
                   className="float-left "
-                  style={{
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                    fontSize: "24px",
-                  }}>
+                  style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                   Cancel Orders ({this.state.rowData.length})
                 </h2>
               </Col>
               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12">
+                <Col lg="3" md="4" sm="12" style={{marginTop:"25px"}}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -1705,60 +1701,16 @@ class OrderList extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="3" md="6" sm="12">
+              <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
                 <div>
-                  <div className="table-input mb-1 cssforproductlist">
+                  <div className="table-input  cssforproductlist">
                     <Input
                       placeholder="search Item here..."
                       onChange={(e) => this.updateSearchQuery(e.target.value)}
                       value={this.state.value}
                     />
                   </div>
-                  {/* <div className="mb-1 mr-1">
-                    <UncontrolledDropdown className="p-1 ag-dropdown">
-                      <DropdownToggle tag="div">
-                        {this.gridApi
-                          ? this.state.currenPageSize
-                          : "" * this.state.getPageSize -
-                            (this.state.getPageSize - 1)}{" "}
-                        -{" "}
-                        {this.state.rowData.length -
-                          this.state.currenPageSize * this.state.getPageSize >
-                        0
-                          ? this.state.currenPageSize * this.state.getPageSize
-                          : this.state.rowData.length}{" "}
-                        of {this.state.rowData.length}
-                        <ChevronDown className="ml-50" size={15} />
-                      </DropdownToggle>
-                      <DropdownMenu right>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(10)}>
-                          10
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(20)}>
-                          20
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(50)}>
-                          50
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(100)}>
-                          100
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(134)}>
-                          134
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </div> */}
+                 
                 </div>
               </Col>
               {/* <Col lg="2" xs="8">
@@ -1787,7 +1739,7 @@ class OrderList extends React.Component {
                   </span>
                 )}
               </Col> */}
-              <Col lg="1" xs="4">
+              <Col lg="1" xs="4" style={{marginTop:"25px"}}>
                 {InsiderPermissions && InsiderPermissions?.View && (
                   <>
                     <span className="">
@@ -1867,7 +1819,7 @@ class OrderList extends React.Component {
                 {this.state.rowData === null ? null : (
                   <div
                     className="ag-theme-material w-100  ag-grid-table"
-                    style={{ marginTop: "-1rem" }}>
+                     >
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact

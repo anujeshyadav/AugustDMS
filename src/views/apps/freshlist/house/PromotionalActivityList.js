@@ -81,7 +81,7 @@ class PromotionalActivityList extends React.Component {
       Dropdown: [],
       AllData: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [],
@@ -623,15 +623,15 @@ class PromotionalActivityList extends React.Component {
                     <Card>
                       <Row
                         style={{
-                          marginRight: "5px",
-                          marginBottom: "4px",
-                          marginLeft: "5px",
-                          marginTop: "10px",
+                          marginRight: "3px",
+                         
+                          marginLeft: "3px",
+                           
                         }}>
-                        <Col style={{ marginTop: "10px" }}>
+                        <Col  >
                           <h2
                             className="float-left"
-                            style={{ fontWeight: "600" }}>
+                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                             Promotional list
                           </h2>
                         </Col>
@@ -641,7 +641,7 @@ class PromotionalActivityList extends React.Component {
                             lg="3"
                             md="3"
                             sm="12"
-                            style={{ marginTop: "10px" }}>
+                            style={{ marginTop: "25px" }}>
                             <div className="">
                               <SuperAdminUI
                                 onDropdownChange={this.handleDropdownChange}
@@ -659,10 +659,11 @@ class PromotionalActivityList extends React.Component {
                               lg="3"
                               md="3"
                               xs="12"
-                              style={{ marginTop: "10px" }}>
+                              style={{ marginTop: "25px" }}>
                               <CustomInput
                                 type="select"
                                 name="typeofpromotion"
+                                style={{height:"35px"}}
                                 className="float-right promotiondropdowncss"
                                 onChange={(e) => this.handleFilter(e)}>
                                 <option value="NA">
@@ -690,55 +691,9 @@ class PromotionalActivityList extends React.Component {
                           lg="2"
                           md="2"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop: "25px" }}>
                           <div className="">
-                            {/* <div className="mb-1 mr-1">
-                              <UncontrolledDropdown className="p-1 ag-dropdown">
-                                <DropdownToggle tag="div">
-                                  {this.gridApi
-                                    ? this.state.currenPageSize
-                                    : "" * this.state.getPageSize -
-                                      (this.state.getPageSize - 1)}{" "}
-                                  -{" "}
-                                  {this.state.rowData.length -
-                                    this.state.currenPageSize *
-                                      this.state.getPageSize >
-                                  0
-                                    ? this.state.currenPageSize *
-                                      this.state.getPageSize
-                                    : this.state.rowData.length}{" "}
-                                  of {this.state.rowData.length}
-                                  <ChevronDown className="ml-50" size={15} />
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(10)}>
-                                    10
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(20)}>
-                                    20
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(50)}>
-                                    50
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(100)}>
-                                    100
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(134)}>
-                                    134
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </UncontrolledDropdown>
-                            </div> */}
+                             
                             <div className="table-input cssforproductlist">
                               <Input
                                 placeholder="search Item here..."
@@ -750,7 +705,7 @@ class PromotionalActivityList extends React.Component {
                             </div>
                           </div>
                         </Col>
-                        <Col lg="1" xs="8" style={{ marginTop: "10px" }}>
+                        <Col lg="1" xs="8" style={{ marginTop: "25px" }}>
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.Create && (
                               <span>
@@ -762,11 +717,11 @@ class PromotionalActivityList extends React.Component {
                                         backgroundColor: "rgb(8, 91, 245)",
                                         color: "white",
                                         fontWeight: "600",
-                                        height: "43px",
+                                        height: "35px",
                                         paddingLeft: "-8px",
                                         paddingRight: "-8px",
                                       }}
-                                      className="float-left"
+                                      className="float-left csss645sd"
                                       color="#39cccc"
                                       onClick={() =>
                                         history.push(
@@ -781,7 +736,7 @@ class PromotionalActivityList extends React.Component {
                             )}
                         </Col>
 
-                        <Col lg="1" md="1" xs="4" style={{ marginTop: "10px" }}>
+                        <Col lg="1" md="1" xs="4" style={{ marginTop: "25px" }}>
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.View && (
                               <>
@@ -866,7 +821,7 @@ class PromotionalActivityList extends React.Component {
                               <>
                                 <>
                                   {this.state.rowData === null ? null : (
-                                    <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                                    <div className="ag-theme-material w-100   ag-grid-table">
                                       <ContextLayout.Consumer className="ag-theme-alpine">
                                         {(context) => (
                                           <AgGridReact
@@ -880,7 +835,7 @@ class PromotionalActivityList extends React.Component {
                                             colResizeDefault={"shift"}
                                             animateRows={true}
                                             floatingFilter={false}
-                                            // // pagination={true}
+                                             pagination={true}
                                             paginationPageSize={
                                               this.state.paginationPageSize
                                             }

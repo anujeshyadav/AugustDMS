@@ -91,14 +91,14 @@ class SalesOrderReturn extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -106,7 +106,7 @@ class SalesOrderReturn extends React.Component {
                   this.state.InsiderPermissions?.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         this.toggleModal();
@@ -123,7 +123,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Return SGST",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -136,7 +136,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Return CGST",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -149,7 +149,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Return IGST",
           field: "igstTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -162,7 +162,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Return Amount",
           field: "Return_amount",
           filter: true,
-          width: 162,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -206,10 +206,10 @@ class SalesOrderReturn extends React.Component {
           },
         },
         {
-          headerName: "Company Pan Number",
+          headerName: "Company Pan No",
           field: "partyId.comPanNo",
           filter: true,
-          width: 218,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -224,7 +224,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Party Limit",
           field: "partyId.limit",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -240,7 +240,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "IGST ",
           field: "orderId.igstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -258,7 +258,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "SGST Total",
           field: "orderId.sgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -277,7 +277,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "CGST  ",
           field: "orderId.cgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -295,7 +295,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Amount",
           field: "orderId.amount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -310,7 +310,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Round Off",
           field: "orderId.roundOff",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -328,7 +328,7 @@ class SalesOrderReturn extends React.Component {
           headerName: "Grand Total",
           field: "orderId.grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -610,14 +610,14 @@ class SalesOrderReturn extends React.Component {
                   <Card>
                     <Row
                       style={{
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                        marginTop: "10px",
+                        marginLeft: "3px",
+                        marginRight: "3px",
+                         
                       }}>
-                      <Col style={{ marginTop: "10px" }}>
+                      <Col style={{ marginTop:"25px" }}>
                         <h2
                           className="float-left"
-                          style={{ fontWeight: "600" }}>
+                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' }}>
                           Sales Return List
                         </h2>
                       </Col>
@@ -627,7 +627,7 @@ class SalesOrderReturn extends React.Component {
                           lg="3"
                           md="4"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop:"25px" }}>
                           <SuperAdminUI
                             onDropdownChange={this.handleDropdownChange}
                             onSubmit={this.handleParentSubmit}
@@ -636,7 +636,7 @@ class SalesOrderReturn extends React.Component {
                       ) : (
                         <Col></Col>
                       )}
-                      <Col lg="3" md="6" sm="12" style={{ marginTop: "10px" }}>
+                      <Col lg="3" md="6" sm="12" style={{ marginTop:"25px" }}>
                         <div className="">
                           {/* <UncontrolledDropdown className="p-1 ag-dropdown">
                               <DropdownToggle tag="div">
@@ -696,7 +696,7 @@ class SalesOrderReturn extends React.Component {
                         </div>
                       </Col>
 
-                      <Col style={{ marginTop: "10px" }} lg="1">
+                      <Col style={{ marginTop:"25px" }} lg="1">
                         {InsiderPermissions && InsiderPermissions?.View && (
                           <>
                             <span className="">

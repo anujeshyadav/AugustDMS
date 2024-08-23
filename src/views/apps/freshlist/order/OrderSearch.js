@@ -71,7 +71,7 @@ class OrderSearch extends React.Component {
       rowData: [],
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [
@@ -79,7 +79,7 @@ class OrderSearch extends React.Component {
           headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 100,
+          width: 55,
           filter: true,
         },
 
@@ -109,24 +109,24 @@ class OrderSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "Last Name",
-          field: "lastName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div>
-                <span>{params?.data?.lastName}</span>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "Last Name",
+        //   field: "lastName",
+        //   filter: true,
+        //   width: 200,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div>
+        //         <span>{params?.data?.lastName}</span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Email",
           field: "email",
           filter: true,
-          width: 200,
+          width: 300,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -139,7 +139,7 @@ class OrderSearch extends React.Component {
           headerName: "GST Number",
           field: "gstNumber",
           filter: true,
-          width: 200,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -152,7 +152,7 @@ class OrderSearch extends React.Component {
           headerName: "Address",
           field: "address1",
           filter: true,
-          width: 180,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -167,7 +167,7 @@ class OrderSearch extends React.Component {
           headerName: "Party Type",
           field: "partyType",
           filter: true,
-          width: 240,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -177,10 +177,10 @@ class OrderSearch extends React.Component {
           },
         },
         {
-          headerName: "Pan Num",
+          headerName: "Pan No",
           field: "panNo",
           filter: true,
-          width: 180,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -193,11 +193,11 @@ class OrderSearch extends React.Component {
           headerName: "Billing Status",
           field: "autoBillingStatus",
           filter: true,
-          width: 180,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <Badge color="danger">{params?.data?.autoBillingStatus}</Badge>
+                {params?.data?.autoBillingStatus} 
               </div>
             );
           },
@@ -206,11 +206,11 @@ class OrderSearch extends React.Component {
           headerName: "Update Status",
           field: "autoBillingStatus",
           filter: true,
-          width: 180,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <Badge color="danger">{params?.data?.autoBillingStatus}</Badge>
+                {params?.data?.autoBillingStatus} 
               </div>
             );
           },
@@ -521,15 +521,11 @@ class OrderSearch extends React.Component {
                   <Col sm="12">
                     <Card>
                       <Row
-                        style={{
-                          marginLeft: "5px",
-                          marginRight: "5px",
-                          marginTop: "10px",
-                        }}>
-                        <Col style={{ marginTop: "10px" }}>
+                       style={{marginLeft:'3px',marginRight:'3px'}}>
+                        <Col  >
                           <h2
                             className="float-left"
-                            style={{ fontWeight: "600" }}>
+                            style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                             Billing Lock List
                           </h2>
                         </Col>
@@ -539,7 +535,7 @@ class OrderSearch extends React.Component {
                             lg="3"
                             md="4"
                             sm="12"
-                            style={{ marginTop: "10px" }}>
+                            style={{ marginTop:"25px" }}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -552,55 +548,9 @@ class OrderSearch extends React.Component {
                           lg="3"
                           md="4"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop:"25px" }}>
                           <div className="">
-                            {/* <div className="mb-1 mr-1">
-                              <UncontrolledDropdown className="p-1 ag-dropdown">
-                                <DropdownToggle tag="div">
-                                  {this.gridApi
-                                    ? this.state.currenPageSize
-                                    : "" * this.state.getPageSize -
-                                      (this.state.getPageSize - 1)}{" "}
-                                  -{" "}
-                                  {this.state.rowData.length -
-                                    this.state.currenPageSize *
-                                      this.state.getPageSize >
-                                  0
-                                    ? this.state.currenPageSize *
-                                      this.state.getPageSize
-                                    : this.state.rowData.length}{" "}
-                                  of {this.state.rowData.length}
-                                  <ChevronDown className="ml-50" size={15} />
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(10)}>
-                                    10
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(20)}>
-                                    20
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(50)}>
-                                    50
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(100)}>
-                                    100
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(134)}>
-                                    134
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </UncontrolledDropdown>
-                            </div> */}
+                             
                             <div className="table-input ">
                               <Input
                                 placeholder="search Item here..."
@@ -612,7 +562,7 @@ class OrderSearch extends React.Component {
                             </div>
                           </div>
                         </Col>
-                        <Col style={{ marginTop: "10px" }} lg="1">
+                        <Col style={{ marginTop:"25px" }} lg="1">
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.View && (
                               <span className="">
@@ -707,7 +657,7 @@ class OrderSearch extends React.Component {
                                       colResizeDefault={"shift"}
                                       animateRows={true}
                                       floatingFilter={false}
-                                      // // pagination={true}
+                                      pagination={true}
                                       paginationPageSize={
                                         this.state.paginationPageSize
                                       }

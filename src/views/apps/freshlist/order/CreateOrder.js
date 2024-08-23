@@ -183,90 +183,66 @@ const CreateOrder = (args) => {
   };
 
   const handleSelection = async (selectedList, selectedItem, index) => {
-    const userdata = JSON.parse(localStorage.getItem("userData"));
+    if (selectedItem?.Opening_Stock > 0) {
+      const userdata = JSON.parse(localStorage.getItem("userData"));
 
-    let landedCost = selectedItem?.landedCost * 1.05;
-    let PurchaseRate = selectedItem?.Purchase_Rate * 1.05;
+      let landedCost = selectedItem?.landedCost * 1.05;
+      let PurchaseRate = selectedItem?.Purchase_Rate * 1.05;
 
-    // let costPrice = Number(
-    //   (
-    //     selectedItem?.Product_MRP /
-    //     ((100 + Number(selectedItem?.GSTRate)) / 100)
-    //   ).toFixed(2)
-    // );
-    // if (costPrice <= landedCost || PurchaseRate >= costPrice) {
-    //   swal(
-    //     "error",
-    //     `${
-    //       costPrice <= landedCost
-    //         ? "MRP is less Then Landed Cost"
-    //         : "Base Price is Less then Purchase Rate"
-    //     }`,
-    //     "error"
-    //   );
-    // } else {
-    SelectedITems.push(selectedItem);
-    let costPrice = Number(
-      (
-        selectedItem?.Product_MRP /
-        (((100 +
-          Number(Party?.category?.discount ? Party?.category?.discount : 0)) /
-          100) *
-          ((100 + Number(selectedItem?.GSTRate)) / 100))
-      ).toFixed(2)
-    );
-    // let URl = `${WareHouse_Current_Stock}${selectedItem?.warehouse?._id}/`;
-    // var Stock;
-    // await _Get(URl, selectedItem?._id)
-    //   .then(res => {
-    //     console.log(res?.currentStock);
-    //     console.log(res?.currentStock.currentStock);
-    //     Stock = res?.currentStock;
-    //   })
-    //   .catch(err => {
-    //     if (!!err.response?.data?.message) {
-    //       swal("Error", `${err.response?.data?.message}`, "error");
-    //     }
-    //   });
+      SelectedITems.push(selectedItem);
+      let costPrice = Number(
+        (
+          selectedItem?.Product_MRP /
+          (((100 +
+            Number(Party?.category?.discount ? Party?.category?.discount : 0)) /
+            100) *
+            ((100 + Number(selectedItem?.GSTRate)) / 100))
+        ).toFixed(2)
+      );
 
-    setProduct((prevProductList) => {
-      const updatedProductList = [...prevProductList];
-      const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
-      updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
-      updatedProduct.productId = selectedItem?._id;
-      updatedProduct.productData = selectedItem;
-      updatedProduct.basicPrice = costPrice;
+      setProduct((prevProductList) => {
+        const updatedProductList = [...prevProductList];
+        const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
+        updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
+        updatedProduct.productId = selectedItem?._id;
+        updatedProduct.productData = selectedItem;
+        updatedProduct.basicPrice = costPrice;
 
-      updatedProduct.HSN_Code = selectedItem?.HSN_Code;
-      updatedProduct.primaryUnit = selectedItem?.primaryUnit;
-      updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
-      updatedProduct.secondarySize = selectedItem?.secondarySize;
+        updatedProduct.HSN_Code = selectedItem?.HSN_Code;
+        updatedProduct.primaryUnit = selectedItem?.primaryUnit;
+        updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
+        updatedProduct.secondarySize = selectedItem?.secondarySize;
 
-      updatedProduct.disCountPercentage =
-        Party?.category?.discount && Party?.category?.discount
-          ? Party?.category?.discount
-          : 0;
-      updatedProduct.availableQty = selectedItem?.Opening_Stock;
-      updatedProduct.wholeQty = selectedItem?.Opening_Stock;
-      // updatedProduct.availableQty = Stock?.currentStock;
-      // updatedProduct.wholeQty = Stock?.currentStock;
-      updatedProductList[index] = updatedProduct;
-      const gstdetails = GstCalculation(Party, updatedProductList, Context);
-      setGSTData(gstdetails);
+        updatedProduct.disCountPercentage =
+          Party?.category?.discount && Party?.category?.discount
+            ? Party?.category?.discount
+            : 0;
+        updatedProduct.availableQty = selectedItem?.Opening_Stock;
+        updatedProduct.wholeQty = selectedItem?.Opening_Stock;
+        // updatedProduct.availableQty = Stock?.currentStock;
+        // updatedProduct.wholeQty = Stock?.currentStock;
+        updatedProductList[index] = updatedProduct;
+        const gstdetails = GstCalculation(Party, updatedProductList, Context);
+        setGSTData(gstdetails);
 
-      updatedProduct["taxableAmount"] = gstdetails?.gstDetails[index]?.taxable;
-      updatedProduct["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
-      updatedProduct["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
-      updatedProduct["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
-      updatedProduct["grandTotal"] = gstdetails?.gstDetails[index]?.grandTotal;
-      updatedProduct["gstPercentage"] =
-        gstdetails?.gstDetails[index]?.gstPercentage;
-      updatedProduct["disCountPercentage"] =
-        gstdetails?.gstDetails[index]?.discountPercentage;
+        updatedProduct["taxableAmount"] =
+          gstdetails?.gstDetails[index]?.taxable;
+        updatedProduct["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
+        updatedProduct["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
+        updatedProduct["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
+        updatedProduct["grandTotal"] =
+          gstdetails?.gstDetails[index]?.grandTotal;
+        updatedProduct["gstPercentage"] =
+          gstdetails?.gstDetails[index]?.gstPercentage;
+        updatedProduct["disCountPercentage"] =
+          gstdetails?.gstDetails[index]?.discountPercentage;
 
-      return updatedProductList; // Return the updated product list to set the state
-    });
-    // }
+        return updatedProductList; // Return the updated product list to set the state
+      });
+    } else {
+      swal("Error", "Stock Not Available", "error");
+    }
+    
   };
 
   const handleSelectionUnit = (selectedList, selectedItem, index) => {

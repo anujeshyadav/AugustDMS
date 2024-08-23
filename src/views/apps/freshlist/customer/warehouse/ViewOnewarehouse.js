@@ -725,9 +725,16 @@ class ViewOnewarehouse extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-                        <Col  >
-                          <h3 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                      <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+                        <Col>
+                          <h3
+                            className="float-left"
+                            style={{
+                              fontWeight: "600",
+                              textTransform: "uppercase",
+                              fontSize: "22px",
+                              marginTop: "25px",
+                            }}>
                             {this.state.rowAllData?.warehouseName &&
                               this.state.rowAllData?.warehouseName}
                             {"  "}
@@ -736,7 +743,7 @@ class ViewOnewarehouse extends React.Component {
                         </Col>
 
                         {this.state.MasterShow ? (
-                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                          <Col style={{ marginTop: "25px" }} lg="2" xl="2">
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -745,23 +752,34 @@ class ViewOnewarehouse extends React.Component {
                         ) : (
                           <Col></Col>
                         )}
-                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
-                           <Button
+                        <Col>
+                          <div className="table-input ">
+                            <Input
+                              placeholder="search Item here..."
+                              onChange={(e) =>
+                                this.updateSearchQuery(e.target.value)
+                              }
+                              value={this.state.value}
+                            />
+                          </div>
+                        </Col>
+                        <Col style={{ marginTop: "25px" }} lg="2" xl="2">
+                          <Button
                             style={{
-                      cursor: "pointer",
-                      // backgroundColor: "rgb(8, 91, 245)",
-                      float:"right",
-                      height:"35px",
-                      color: "white",
-                      fontWeight: "600",
-                    }}
-                     className="float-right categorysbutton45 ml-3"
+                              cursor: "pointer",
+                              // backgroundColor: "rgb(8, 91, 245)",
+                              float: "right",
+                              height: "35px",
+                              color: "white",
+                              fontWeight: "600",
+                            }}
+                            className="float-right categorysbutton45 ml-3"
                             onClick={() => this.props.history.goBack()}>
                             {" "}
                             Back
                           </Button>
-                          </Col>
-                        <Col lg="1" style={{marginTop:"25px"}}>
+                        </Col>
+                        <Col lg="1" style={{ marginTop: "25px" }}>
                           {/* <div className="d-flex justify-content-end">
                             <Button
                               color="primary"
@@ -770,7 +788,7 @@ class ViewOnewarehouse extends React.Component {
                               Back
                             </Button>
                           </div> */}
-                            {InsiderPermissions && InsiderPermissions.View && (
+                          {InsiderPermissions && InsiderPermissions.View && (
                             <>
                               <span className=" ">
                                 <FaFilter
@@ -846,13 +864,11 @@ class ViewOnewarehouse extends React.Component {
                                 </span>
                               </>
                             )}
-
-                       
                         </Col>
                       </Row>
 
                       <>
-                        <CardBody style={{marginTop:"-3rem"}} >
+                        <CardBody style={{ marginTop: "-3rem" }}>
                           {this.state.rowData === null ? null : (
                             <div className="ag-theme-material w-100 my-2 ag-grid-table">
                               {/* <div className="d-flex flex-wrap justify-content-between align-items-center">

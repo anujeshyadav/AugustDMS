@@ -100,14 +100,14 @@ class HeadtargetingList extends React.Component {
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
 
-          width: 80,
+          width: 55,
           filter: true,
         },
 
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -115,7 +115,7 @@ class HeadtargetingList extends React.Component {
                   this.state.InsiderPermissions?.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         this.Apicalling(
@@ -134,7 +134,7 @@ class HeadtargetingList extends React.Component {
                   this.state.InsiderPermissions?.Edit && (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -165,7 +165,7 @@ class HeadtargetingList extends React.Component {
           headerName: "Total Target",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 108,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -180,7 +180,7 @@ class HeadtargetingList extends React.Component {
           headerName: "User Code",
           field: "userId.code",
           filter: true,
-          width: 122,
+          width: 95,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -194,7 +194,7 @@ class HeadtargetingList extends React.Component {
           },
         },
         {
-          headerName: "First Name",
+          headerName: "Full Name",
           field: "userId.firstName",
           filter: true,
           width: 170,
@@ -205,30 +205,32 @@ class HeadtargetingList extends React.Component {
                   <span>
                     {params?.data?.userId?.firstName &&
                       params?.data?.userId?.firstName}{" "}
+                       {params?.data?.userId?.lastName &&
+                      params?.data?.userId?.lastName}
                   </span>
                 </div>
               </div>
             );
           },
         },
-        {
-          headerName: "Last Name",
-          field: "userId.lastName",
-          filter: true,
-          width: 150,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div className="">
-                  <span>
-                    {params?.data?.userId?.lastName &&
-                      params?.data?.userId?.lastName}{" "}
-                  </span>
-                </div>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "Last Name",
+        //   field: "userId.lastName",
+        //   filter: true,
+        //   width: 150,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div className="">
+        //           <span>
+        //             {params?.data?.userId?.lastName &&
+        //               params?.data?.userId?.lastName}{" "}
+        //           </span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Email",
           field: "userId.email",
@@ -285,7 +287,7 @@ class HeadtargetingList extends React.Component {
           headerName: "Created At",
           field: "createdAt",
           filter: "agSetColumnFilter",
-          width: 125,
+          width: 95,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -300,7 +302,7 @@ class HeadtargetingList extends React.Component {
           headerName: "Updated At",
           field: "updatedAt",
           filter: "agSetColumnFilter",
-          width: 125,
+          width: 95,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -616,14 +618,14 @@ class HeadtargetingList extends React.Component {
                     <Card>
                       <Row
                         style={{
-                          marginLeft: "5px",
-                          marginRight: "5px",
-                          marginTop: "10px",
+                          marginLeft: "3px",
+                          marginRight: "3px",
+                           
                         }}>
-                        <Col style={{ marginTop: "10px" }}>
+                        <Col  >
                           <h2
                             className="float-left"
-                            style={{ fontWeight: "600" }}>
+                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                             Target List
                           </h2>
                         </Col>
@@ -633,7 +635,7 @@ class HeadtargetingList extends React.Component {
                             lg="3"
                             md="4"
                             sm="12"
-                            style={{ marginTop: "10px" }}>
+                            style={{ marginTop:"25px" }}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -646,7 +648,7 @@ class HeadtargetingList extends React.Component {
                           lg="3"
                           md="6"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop: "25px" }}>
                           <div className="">
                             {/* <UncontrolledDropdown className="p-1 ag-dropdown">
                               <DropdownToggle tag="div">
@@ -705,7 +707,7 @@ class HeadtargetingList extends React.Component {
                             </div>
                           </div>
                         </Col>
-                        <Col lg="2" xs="8" style={{ marginTop: "10px" }}>
+                        <Col lg="2" xs="8" style={{ marginTop: "25px" }}>
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.Create && (
                               <span>

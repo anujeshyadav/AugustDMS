@@ -84,7 +84,7 @@ class CustomerTarget extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -103,14 +103,14 @@ class CustomerTarget extends React.Component {
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
 
-          width: 80,
+          width: 55,
           filter: true,
         },
 
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -118,7 +118,7 @@ class CustomerTarget extends React.Component {
                   this.state.InsiderPermissions?.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       // onClick={() => {
                       //   this.Apicalling(
@@ -137,7 +137,7 @@ class CustomerTarget extends React.Component {
                   this.state.InsiderPermissions?.Edit && (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -152,7 +152,7 @@ class CustomerTarget extends React.Component {
                   this.state.InsiderPermissions?.Delete && (
                     <Trash2
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="Red"
                       onClick={() => {
                         this.runthisfunction(params?.data?._id);
@@ -168,7 +168,7 @@ class CustomerTarget extends React.Component {
           headerName: "Total Target",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -183,7 +183,7 @@ class CustomerTarget extends React.Component {
           headerName: "GSTIN",
           field: "partyId.gstNumber",
           filter: true,
-          width: 122,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -202,7 +202,7 @@ class CustomerTarget extends React.Component {
           headerName: "First Name",
           field: "partyId.firstName",
           filter: true,
-          width: 170,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -220,7 +220,7 @@ class CustomerTarget extends React.Component {
           headerName: "Last Name",
           field: "partyId.lastName",
           filter: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -238,7 +238,7 @@ class CustomerTarget extends React.Component {
           headerName: "Email",
           field: "partyId.email",
           filter: true,
-          width: 250,
+          width: 300,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -273,7 +273,7 @@ class CustomerTarget extends React.Component {
           headerName: "State",
           field: "partyId.State",
           filter: true,
-          width: 180,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -292,7 +292,7 @@ class CustomerTarget extends React.Component {
           headerName: "Created At",
           field: "createdAt",
           filter: "agSetColumnFilter",
-          width: 125,
+          width: 95,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -307,7 +307,7 @@ class CustomerTarget extends React.Component {
           headerName: "Updated At",
           field: "updatedAt",
           filter: "agSetColumnFilter",
-          width: 125,
+          width: 95,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -618,11 +618,11 @@ class CustomerTarget extends React.Component {
                     <Card>
                       <Row
                         style={{
-                          marginLeft: "5px",
-                          marginRight: "5px",
-                          marginTop: "10px",
+                          marginLeft: "3px",
+                          marginRight: "3px",
+                           
                         }}>
-                        <Col style={{ marginTop: "10px" }}>
+                        <Col style={{ marginTop: "25px" }}>
                           <h2
                             className="float-left"
                             style={{ fontWeight: "600" }}>
@@ -635,7 +635,7 @@ class CustomerTarget extends React.Component {
                             lg="3"
                             md="4"
                             sm="12"
-                            style={{ marginTop: "10px" }}>
+                            style={{marginTop: "25px" }}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -648,53 +648,9 @@ class CustomerTarget extends React.Component {
                           lg="3"
                           md="6"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop: "25px" }}>
                           <div className="">
-                            {/* <UncontrolledDropdown className="p-1 ag-dropdown">
-                              <DropdownToggle tag="div">
-                                {this.gridApi
-                                  ? this.state.currenPageSize
-                                  : "" * this.state.getPageSize -
-                                    (this.state.getPageSize - 1)}{" "}
-                                -{" "}
-                                {this.state.rowData.length -
-                                  this.state.currenPageSize *
-                                    this.state.getPageSize >
-                                0
-                                  ? this.state.currenPageSize *
-                                    this.state.getPageSize
-                                  : this.state.rowData.length}{" "}
-                                of {this.state.rowData.length}
-                                <ChevronDown className="ml-50" size={15} />
-                              </DropdownToggle>
-                              <DropdownMenu right>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(10)}>
-                                  10
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(20)}>
-                                  20
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(50)}>
-                                  50
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(100)}>
-                                  100
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(134)}>
-                                  134
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </UncontrolledDropdown> */}
+                            
 
                             <div className="table-input cssforproductlist">
                               <Input
@@ -707,7 +663,7 @@ class CustomerTarget extends React.Component {
                             </div>
                           </div>
                         </Col>
-                        <Col lg="2" xs="8" style={{ marginTop: "10px" }}>
+                        <Col lg="2" xs="8" style={{ marginTop: "25px" }}>
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.Create && (
                               <span>
@@ -736,7 +692,7 @@ class CustomerTarget extends React.Component {
                             )}
                         </Col>
 
-                        <Col style={{ marginTop: "10px" }} xs="4" lg="1">
+                        <Col style={{ marginTop: "25px" }} xs="4" lg="1">
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.View && (
                               <>
@@ -819,7 +775,7 @@ class CustomerTarget extends React.Component {
                         this.state.InsiderPermissions?.View && (
                           <>
                             {this.state.rowData === null ? null : (
-                              <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                              <div className="ag-theme-material w-100   ag-grid-table">
                                 {/* <div className="d-flex flex-wrap justify-content-between align-items-center">
                                       <div className="mb-1">
                                         <UncontrolledDropdown className="p-1 ag-dropdown">
@@ -928,7 +884,7 @@ class CustomerTarget extends React.Component {
                                       colResizeDefault={"shift"}
                                       animateRows={true}
                                       floatingFilter={false}
-                                      // // pagination={true}
+                                       pagination={true}
                                       paginationPageSize={
                                         this.state.paginationPageSize
                                       }

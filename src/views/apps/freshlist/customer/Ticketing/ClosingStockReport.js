@@ -86,6 +86,163 @@ class ClosingStockReport extends React.Component {
         suppressMenu: true,
       },
 
+      // columnDefs: [
+      //   {
+      //     headerName: "Product Name",
+      //     field: "warehouseId.mobileNo",
+      //     filter: true,
+      //     sortable: true,
+      //     width: 140,
+      //     editable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.warehouseId?.mobileNo}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "HSN",
+      //     field: "warehouseId.mobileNo",
+      //     filter: true,
+      //     sortable: true,
+      //     width: 140,
+      //     editable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.warehouseId?.mobileNo}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Tax Rate",
+      //     field: "warehouseId.mobileNo",
+      //     filter: true,
+      //     sortable: true,
+      //     width: 140,
+      //     editable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.warehouseId?.mobileNo}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Openning stock details",
+      //     headerClass: "header-group-style",
+      //     children: [
+      //       {
+      //         headerName: "Opening qty",
+      //         field: "openingQty",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Purchase Rate",
+      //         field: "purchaseRate",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Tax amount",
+      //         field: "taxAmount",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Total",
+      //         field: "total",
+      //         headerClass: "header-style",
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     headerName: "Inward stock details",
+      //     headerClass: "header-group-style",
+      //     children: [
+      //       {
+      //         headerName: "Inward Qty",
+      //         field: "openingQty",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Purchase Rate",
+      //         field: "purchaseRate",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Tax amount",
+      //         field: "taxAmount",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Total",
+      //         field: "total",
+      //         headerClass: "header-style",
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     headerName: "Outward stock details",
+      //     headerClass: "header-group-style",
+      //     children: [
+      //       {
+      //         headerName: "Sale Qty",
+      //         field: "openingQty",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Sale Rate",
+      //         field: "purchaseRate",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Tax amount",
+      //         field: "taxAmount",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Total",
+      //         field: "total",
+      //         headerClass: "header-style",
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     headerName: "Outward stock details",
+      //     headerClass: "header-group-style",
+      //     children: [
+      //       {
+      //         headerName: "Closing Stock",
+      //         field: "openingQty",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Avg price",
+      //         field: "purchaseRate",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Tax amount",
+      //         field: "taxAmount",
+      //         headerClass: "header-style",
+      //       },
+      //       {
+      //         headerName: "Total",
+      //         field: "total",
+      //         headerClass: "header-style",
+      //       },
+      //     ],
+      //   },
+      // ],
       columnDefs: [
         {
           headerName: "UID",
@@ -95,6 +252,7 @@ class ClosingStockReport extends React.Component {
           width: 80,
           filter: true,
         },
+
         {
           headerName: "Warehouse Name",
           field: "warehouseId.warehouseName",

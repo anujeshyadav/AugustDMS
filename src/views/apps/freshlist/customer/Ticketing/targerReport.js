@@ -80,7 +80,7 @@ class targerReport extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -106,7 +106,7 @@ class targerReport extends React.Component {
           headerName: "Month",
           field: "month",
           filter: true,
-          width: 150,
+          width: 70,
           cellRendererFramework: (params) => {
             let month = new Date(params?.data?.createdAt).getMonth() + 1;
 
@@ -120,23 +120,24 @@ class targerReport extends React.Component {
         {
           headerName: "View Target",
           field: "sortorder",
-          width: 130,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
                 <Route
                   render={({ history }) => (
                     <span
-                      style={{
-                        border: "1px solid white",
-                        padding: "10px",
-                        borderRadius: "30px",
-                        backgroundColor: "#39cccc",
-                      }}>
+                      // style={{
+                      //   border: "1px solid white",
+                      //   padding: "10px",
+                      //   borderRadius: "30px",
+                      //   backgroundColor: "#39cccc",
+                      // }}
+                      >
                       <Eye
                         className=""
                         size="20px"
-                        color="white"
+                        color="green"
                         onClick={async () => {
                           await this.handleChangeView(params.data);
                         }}
@@ -152,7 +153,7 @@ class targerReport extends React.Component {
           headerName: "Sales Person Name",
           field: "firstName",
           filter: true,
-          width: 205,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -589,9 +590,9 @@ class targerReport extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row className="ml-2  mr-2">
-              <Col className="" style={{ marginTop: "34px" }}>
-                <h2 className="float-left " style={{ fontWeight: "600" }}>
+            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+              <Col   >
+                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                   Target Report
                 </h2>
                 {/* <Row>
@@ -629,7 +630,7 @@ class targerReport extends React.Component {
                 </Row> */}
               </Col>
               {this.state.MasterShow ? (
-                <Col lg="2" md="4" sm="12" style={{ marginTop: "34px" }}>
+                <Col lg="2" md="4" sm="12" style={{ marginTop:"25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -638,10 +639,10 @@ class targerReport extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="2" xl="2">
+              <Col lg="3" xl="3">
                 <div
                   className="table-input cssforproductlist "
-                  style={{ marginTop: "34px" }}>
+                  style={{ marginTop:"25px" }}>
                   <Input
                     placeholder="search Item here..."
                     onChange={(e) => this.updateSearchQuery(e.target.value)}
@@ -649,9 +650,9 @@ class targerReport extends React.Component {
                   />
                 </div>
               </Col>
-              <Col lg="5" md="5" sm="12" xs="12" className="mt-1">
+              <Col lg="4" md="4" sm="12" xs="12" >
                 <Row>
-                  <Col lg="5" md="5" sm="12">
+                  <Col lg="5" md="5" sm="12" style={{marginTop:"4px"}}>
                     <div className="table-input cssforproductlist">
                       <Label>Start Date</Label>
                       <Input
@@ -662,7 +663,7 @@ class targerReport extends React.Component {
                       />
                     </div>
                   </Col>
-                  <Col lg="5" md="5" sm="12">
+                  <Col lg="5" md="5" sm="12" style={{marginTop:"4px"}}>
                     <div className="table-input cssforproductlist">
                       <Label>End Date</Label>
                       <Input
@@ -673,8 +674,8 @@ class targerReport extends React.Component {
                       />
                     </div>
                   </Col>
-                  <Col lg="2" md="2" sm="2">
-                    <div className="table-input" style={{ marginTop: "21px" }}>
+                  <Col lg="2" md="2" sm="2" style={{marginTop:"25px"}}>
+                    <div className="table-input"  >
                       <Button
                         type="submit"
                         style={{
@@ -693,7 +694,7 @@ class targerReport extends React.Component {
                 </Row>
               </Col>
 
-              <Col lg="1" style={{ marginTop: "34px" }}>
+              <Col lg="1" style={{ marginTop:"25px" }}>
                 {InsiderPermissions && InsiderPermissions?.View && (
                   <span className="">
                     <FaFilter
@@ -767,7 +768,7 @@ class targerReport extends React.Component {
             </Row>
             <>
               {this.state.rowData === null ? null : (
-                <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                <div className="ag-theme-material w-100   ag-grid-table">
                   <ContextLayout.Consumer className="ag-theme-alpine">
                     {(context) => (
                       <AgGridReact
@@ -781,7 +782,7 @@ class targerReport extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // // pagination={true}
+                         pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

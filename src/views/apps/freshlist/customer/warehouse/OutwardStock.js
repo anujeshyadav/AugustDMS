@@ -204,16 +204,28 @@ class StockTransfer extends React.Component {
           },
         },
         {
+          headerName: "Quantity",
+          field: "qty",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params.data?.qty}</span>
+              </div>
+            );
+          },
+        },
+        {
           headerName: "SALES RATE",
-          field: "productId.basicPrice",
+          field: "Purchase_Rate",
           filter: true,
           width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
                 <span>
-                  {params.data?.productId?.basicPrice &&
-                    params.data?.productId?.basicPrice}
+                  {params.data?.Purchase_Rate && params.data?.Purchase_Rate}
                 </span>
               </div>
             );
@@ -235,30 +247,29 @@ class StockTransfer extends React.Component {
             );
           },
         },
-        {
-          headerName: "Tax Amount",
-          field: "TotalTax",
-          filter: true,
-          width: 140,
-          cellRendererFramework: (params) => {
-            return (
-              <div>
-                <span>{params?.data?.TotalTax && params?.data?.TotalTax}</span>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "Tax Amount",
+        //   field: "TotalTax",
+        //   filter: true,
+        //   width: 140,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div>
+        //         <span>{params?.data?.TotalTax && params?.data?.TotalTax}</span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Total",
-          field: "totalPrice",
+          field: "Total",
           filter: true,
           width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
                 <span>
-                  {params.data?.totalPrice &&
-                    params.data?.totalPrice?.toFixed(2)}
+                  {params.data?.Total && params.data?.Total?.toFixed(2)}
                 </span>
               </div>
             );
@@ -346,18 +357,22 @@ class StockTransfer extends React.Component {
         let Completed = res?.orderHistory?.filter((ele) =>
           ele?.status?.toLowerCase()?.includes("dispatch")
         );
-        debugger;
+        debugger
         let Alldata = Completed?.flatMap((element, index) => {
           return element?.orderItems?.map((val, i) => {
-            debugger;
+            let PurchaseRate = Number((val?.taxableAmount / val?.qty).toFixed(2));
             return {
               ...val,
               order: element,
               PartyName: element?.partyId?.firstName,
-              TotalTax:
-                val?.igstRate > 0
-                  ? val?.igstRate.toFixed(2)
-                  : (val?.cgstRate + val?.sgstRate).toFixed(2),
+              qty: val?.qty,
+              Purchase_Rate: PurchaseRate,
+              Total: val?.qty * PurchaseRate,
+              // Total: val?.qty * val?.price,
+              // TotalTax:
+              //   val?.igstRate > 0
+              //     ? val?.igstRate.toFixed(2)
+              //     : (val?.cgstRate + val?.sgstRate).toFixed(2),
             };
           });
         });
@@ -410,13 +425,16 @@ class StockTransfer extends React.Component {
                   return {
                     ...val,
                     order: element,
+                    qty: val?.transferQty,
                     PartyName: element?.warehouseToId?.warehouseName,
-                    TotalTax: (
-                      val?.productId?.basicPrice *
-                      val?.transferQty *
-                      val?.productId?.GSTRate *
-                      0.01
-                    ).toFixed(2),
+                    Purchase_Rate: val?.productId?.Purchase_Rate,
+                    Total: val?.transferQty * val?.productId?.Purchase_Rate,
+                    // TotalTax: (
+                    //   val?.productId?.basicPrice *
+                    //   val?.transferQty *
+                    //   val?.productId?.GSTRate *
+                    //   0.01
+                    // ).toFixed(2),
                   };
                 });
               });
@@ -435,13 +453,17 @@ class StockTransfer extends React.Component {
               return {
                 ...val,
                 order: element,
+                qty: val?.transferQty,
                 PartyName: element?.warehouseToId?.warehouseName,
-                TotalTax: (
-                  val?.productId?.basicPrice *
-                  val?.transferQty *
-                  val?.productId?.GSTRate *
-                  0.01
-                ).toFixed(2),
+                Purchase_Rate: val?.productId?.Purchase_Rate,
+                Total: val?.transferQty * val?.productId?.Purchase_Rate,
+
+                // TotalTax: (
+                //   val?.productId?.basicPrice *
+                //   val?.transferQty *
+                //   val?.productId?.GSTRate *
+                //   0.01
+                // ).toFixed(2),
               };
             });
           });

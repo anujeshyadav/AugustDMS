@@ -76,7 +76,7 @@ class CreditNoteList extends React.Component {
       ViewData: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -93,7 +93,7 @@ class CreditNoteList extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -134,7 +134,7 @@ class CreditNoteList extends React.Component {
           headerName: "Total Amount",
           field: "totalAmount",
           filter: true,
-          width: 150,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer ">
@@ -148,7 +148,7 @@ class CreditNoteList extends React.Component {
           field: "createdAt",
           filter: true,
           resizable: true,
-          width: 148,
+          width: 118,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -163,7 +163,7 @@ class CreditNoteList extends React.Component {
           headerName: "Company Name",
           field: "partyId.CompanyName",
           filter: true,
-          width: 220,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -176,7 +176,7 @@ class CreditNoteList extends React.Component {
           headerName: "Contact Number",
           field: "partyId.contactNumber",
           filter: true,
-          width: 172,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -189,7 +189,7 @@ class CreditNoteList extends React.Component {
           headerName: "Owner Name",
           field: "partyId.ownerName",
           filter: true,
-          width: 220,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -202,7 +202,7 @@ class CreditNoteList extends React.Component {
           headerName: "Party Address",
           field: "partyId.address",
           filter: true,
-          width: 220,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -216,7 +216,7 @@ class CreditNoteList extends React.Component {
           headerName: "Email",
           field: "partyId.email",
           filter: true,
-          width: 230,
+          width: 300,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -539,18 +539,18 @@ class CreditNoteList extends React.Component {
           <Card>
             <Row
               style={{
-                marginTop: "10px",
-                marginLeft: "5px",
-                marginRight: "5px",
+                
+                marginLeft: "3px",
+                marginRight: "3px",
               }}>
-              <Col style={{ marginTop: "10px" }}>
-                <h2 className="float-left" style={{ fontWeight: "600" }}>
+              <Col style={{ marginTop:"25px" }}>
+                <h2 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px'  }}>
                   Credit Note List
                 </h2>
               </Col>
 
               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" style={{ marginTop: "10px" }}>
+                <Col lg="3" md="4" sm="12" style={{ marginTop:"25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -559,53 +559,9 @@ class CreditNoteList extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="3" md="6" sm="12" style={{ marginTop: "10px" }}>
+              <Col lg="3" md="6" sm="12" style={{ marginTop:"25px" }}>
                 <div className="">
-                  {/* <UncontrolledDropdown className="p-1 ag-dropdown">
-                            <DropdownToggle tag="div">
-                              {this.gridApi
-                                ? this.state.currenPageSize
-                                : "" * this.state.getPageSize -
-                                  (this.state.getPageSize - 1)}{" "}
-                              -{" "}
-                              {this.state.rowData.length -
-                                this.state.currenPageSize *
-                                  this.state.getPageSize >
-                              0
-                                ? this.state.currenPageSize *
-                                  this.state.getPageSize
-                                : this.state.rowData.length}{" "}
-                              of {this.state.rowData.length}
-                              <ChevronDown className="ml-50" size={15} />
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(10)}>
-                                10
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(20)}>
-                                20
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(50)}>
-                                50
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(100)}>
-                                100
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(134)}>
-                                134
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledDropdown> */}
+                   
 
                   <div className="table-input cssforproductlist">
                     <Input
@@ -616,15 +572,24 @@ class CreditNoteList extends React.Component {
                   </div>
                 </div>
               </Col>
-              <Col>
-                <div className="d-flex justify-content-end p-1">
-                  <Button onClick={this.toggleModal} color="primary" size="sm">
+              <Col style={{ marginTop:"25px" }} lg="1">
+                <div  >
+                  <Button onClick={this.toggleModal}   style={{
+                    cursor: "pointer",
+                    backgroundColor: "rgb(8, 91, 245)",
+                    color: "white",
+                    fontWeight: "600",
+                    height: "43px",
+                  }}
+                  className="float-left "
+                  color="#39cccc"
+                    >
                     + Add
                   </Button>
                 </div>
               </Col>
 
-              <Col style={{ marginTop: "10px" }} lg="1">
+              <Col style={{ marginTop:"25px" }} lg="1">
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.View && (
                     <>
@@ -705,7 +670,7 @@ class CreditNoteList extends React.Component {
               this.state.InsiderPermissions?.View && (
                 <>
                   {this.state.rowData === null ? null : (
-                    <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                    <div className="ag-theme-material w-100   ag-grid-table">
                       <ContextLayout.Consumer className="ag-theme-alpine">
                         {(context) => (
                           <AgGridReact
@@ -719,7 +684,7 @@ class CreditNoteList extends React.Component {
                             colResizeDefault={"shift"}
                             animateRows={true}
                             floatingFilter={false}
-                            // // pagination={true}
+                             pagination={true}
                             paginationPageSize={this.state.paginationPageSize}
                             pivotPanelShow="always"
                             enableRtl={context.state.direction === "rtl"}

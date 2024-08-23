@@ -135,13 +135,13 @@ class HouseProductList extends React.Component {
           filter: true,
           width: 160,
           cellRendererFramework: (params) => {
-         
+        
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <span>
-                  {params?.data?.Purchase_Rate 
-                    ? params?.data?.Purchase_Rate
-                    : params?.data?.landedCost}
+                  {params?.data?.landedCost > params?.data?.Purchase_Rate
+                    ? params?.data?.landedCost
+                    : params?.data?.Purchase_Rate}
                 </span>
               </div>
             );
@@ -535,13 +535,17 @@ class HouseProductList extends React.Component {
             ele["SalesRate"] = Number((Mrp / (gst * Dis)).toFixed(2));
           }
           ele["maxDiscount"] = maxDiscount;
-          let cost = ele?.landedCost ? ele?.landedCost : ele?.Purchase_Rate;
+          let cost =
+            ele?.landedCost > ele?.Purchase_Rate
+              ? ele?.landedCost
+              : ele?.Purchase_Rate;
           if (cost > ele?.SalesRate) {
             ele["lossStatus"] = true;
           } else {
             ele["lossStatus"] = false;  
           }
         });
+        console.log(res?.Product);
         this.setState({ rowData: res?.Product?.reverse() });
       })
       .catch((err) => {
@@ -970,9 +974,7 @@ class HouseProductList extends React.Component {
               height: "4rem",
               width: "4rem",
             }}
-            color="primary">
-            Loading...
-          </Spinner>
+            color="primary"></Spinner>
         </div>
       );
     }
@@ -1276,40 +1278,49 @@ class HouseProductList extends React.Component {
           <ModalHeader toggle={this.LookupviewStart}>
             {this.state.BulkEdit ? "Edit Product Price List" : "Change Fileds"}
           </ModalHeader>
-          <ModalBody className="modalbodyhead">
-            <div className="">
-              <Row>
-                <Col lg="4" md="4" sm="12">
-                  <Input
-                    type="text"
-                    onChange={(e) => {
-                      let value = e.target.value?.toUpperCase();
-                      let AllData = [];
-                      if (value?.length > 0) {
-                        AllData = this.state.FormAllValue?.filter((element) =>
-                          element.Product_Title.toUpperCase()?.includes(value)
-                        );
-                      }
-                      if (AllData?.length > 0) {
-                        this.setState({ formValues: AllData });
-                      } else {
-                        this.setState({ formValues: this.state.FormAllValue });
-                      }
-                    }}
-                    placeholder="Search Proudct here"
-                  />
-                </Col>
-              </Row>
-            </div>
-            <div className="d-flex justify-content-center">
-              <h3 className="mb-1">Edit Product MRP or Sales Rate</h3>
-            </div>
-            <div className="mb-1" style={{ color: "red" }}>
-              <strong>
-                Note: If Profit % is Zero then By Default Sale Rate is 3% more
-                then Purchase Rate else you want To Set *
-              </strong>
-            </div>
+          <ModalBody className={this.state.BulkEdit ? "" : "modalbodyhead"}>
+            {this.state.BulkEdit ? (
+              <>
+                <div className="">
+                  <Row>
+                    <Col lg="4" md="4" sm="12">
+                      <Input
+                        type="text"
+                        onChange={(e) => {
+                          let value = e.target.value?.toUpperCase();
+                          let AllData = [];
+                          if (value?.length > 0) {
+                            AllData = this.state.FormAllValue?.filter(
+                              (element) =>
+                                element.Product_Title.toUpperCase()?.includes(
+                                  value
+                                )
+                            );
+                          }
+                          if (AllData?.length > 0) {
+                            this.setState({ formValues: AllData });
+                          } else {
+                            this.setState({
+                              formValues: this.state.FormAllValue,
+                            });
+                          }
+                        }}
+                        placeholder="Search Proudct here"
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <h3 className="mb-1">Edit Product MRP or Sales Rate</h3>
+                </div>
+                <div className="mb-1" style={{ color: "red" }}>
+                  <strong>
+                    Note: If Profit % is Zero then By Default Sale Rate is 3%
+                    more then Purchase Rate else you want To Set *
+                  </strong>
+                </div>
+              </>
+            ) : null}
             {this.state.BulkEdit ? (
               <Form onSubmit={this.handleSubmit}>
                 <>
@@ -1336,7 +1347,8 @@ class HouseProductList extends React.Component {
                             type="text"
                             placeholder="Landed Cost"
                             name="landedCost"
-                            value={element.landedCost || element.Purchase_Rate}
+                            value={element.Purchase_Rate || element.landedCost}
+                            // value={element.landedCost || element.Purchase_Rate}
                             onChange={(e) => this.handleChange(index, e)}
                           />
                         </Col>
@@ -1357,7 +1369,9 @@ class HouseProductList extends React.Component {
                               let { name, value } = e.target;
                               let formValues = this.state.formValues;
                               let LandedCost =
-                                element?.landedCost || element?.Purchase_Rate;
+                                element?.Purchase_Rate || element?.landedCost;
+                              // let LandedCost =
+                              //   element?.landedCost || element?.Purchase_Rate;
 
                               formValues[index][name] = Number(value);
                               formValues[index]["SalesRate"] = Number(

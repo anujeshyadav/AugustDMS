@@ -1246,11 +1246,11 @@ td {
 }
 
 .promotiondropdowncss {
-  height: 43px !important;
+  height: 35px !important;
 }
 
 select.float-right.promotiondropdowncss.custom-select {
-  height: 43px !important;
+  height: 35px !important;
   padding-top: 7px !important;
 }
 
@@ -1429,7 +1429,7 @@ span.badge.badge-secondary {
 
 .ag-theme-material * {
   box-sizing: border-box;
-  font-size: 14px !important;
+  font-size: 12px !important;
   text-transform: uppercase !important;
 }
 .align-middle {
@@ -1450,7 +1450,7 @@ span.badge.badge-secondary {
 
 .ag-theme-material * {
   box-sizing: border-box;
-  font-size: 14px !important;
+  font-size: 12px !important;
   text-transform: uppercase !important;
 
 }
@@ -1494,7 +1494,7 @@ button.float-left.btn.btn-\#39cccc {
 }
 
 h3.mb-1.text-center.text-bold-600 {
-  font-size: 24px !important;
+  font-size: 18px !important;
   text-transform: uppercase !important;
 }
 
@@ -1522,12 +1522,12 @@ h5.mb-0.pb-1 {
 }
 
 h2.float-left {
-  font-size: 22px !important;
+  font-size: 18px !important;
   text-transform: uppercase !important;
 }
 
 h3.float-left {
-  font-size: 22px !important;
+  font-size: 18px !important;
   text-transform: uppercase !important;
 }
 
@@ -1633,4 +1633,75 @@ button.cssshfgajhdfg.btn.btn-primary {
 .categorysbutton45 {
   padding-top: 10px !important;
   background-color: rgb(8, 91, 245) !important;
+}
+[dir] .card {
+  margin-bottom: 2.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: none;
+}
+
+html[dir] body .vertical-layout.fixed-footer .footer,
+html[dir] body .horizontal-layout.fixed-footer .footer {
+  background: #fff;
+  box-shadow: none;
+}
+
+html[dir] body {
+  background-color: #ffffff !important;
+}
+
+body {
+  background-color: #ffffff !important;
+}
+
+//21/08/2024
+button.btn.btn.btn-primary {
+  padding-top: 10px !important;
+  height: 35px !important;
+}
+
+button.float-left.csss645sd.btn.btn-\#39cccc {
+  padding-left: 7px !important;
+  padding-right: 7px !important;
+}
+.searchWrapper {
+  border: 1px solid #ccc;
+  border-radius: 8px !important;
+  min-height: 22px;
+  padding: 1px !important;
+  padding-left: 5px !important;
+  position: relative;
+}
+input#search_input {
+  font-weight: 600;
+  font-size: 14px !important;
+  height: 28px !important;
+  /* padding: 5px 39px !important; */
+}
+
+.ag-header-group-cell.header-group-style.ag-header-group-cell-with-group {
+  border: 1px solid #9fa19f;
+  background-color: #edad76;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.ag-header-group-cell-label,
+.ag-header-cell-label {
+  justify-content: center !important;
+  display: flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+  align-items: center;
+  text-overflow: ellipsis;
+  align-self: stretch;
+}
+[dir] select.custom-select {
+  height: 35px !important;
+}
+[dir] .cssforp1ending54 select {
+  margin-top: -4px;
 }

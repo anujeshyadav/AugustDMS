@@ -247,7 +247,7 @@ class SalesLead extends React.Component {
           field: "MarkToAssign",
           filter: true,
           resizable: true,
-          width: 120,
+          width: 105,
           cellRendererFramework: params => {
             return (
               <div className="text-center cursor-pointer">
@@ -294,7 +294,7 @@ class SalesLead extends React.Component {
           field: "CompanyName",
           filter: true,
           resizable: true,
-          width: 242,
+          width: 180,
           cellRendererFramework: params => {
             return (
               <>
@@ -320,7 +320,7 @@ class SalesLead extends React.Component {
           headerName: "Mobile No",
           field: "mobileNumber",
           filter: true,
-          width: 120,
+          width: 95,
           cellRendererFramework: params => {
             return (
               <div className="text-center cursor-pointer">
@@ -348,7 +348,7 @@ class SalesLead extends React.Component {
           headerName: "Pin code",
           field: "pincode",
           filter: true,
-          width: 90,
+          width: 80,
           cellRendererFramework: params => {
             return (
               <div className="text-center cursor-pointer">
@@ -361,7 +361,7 @@ class SalesLead extends React.Component {
           headerName: "City",
           field: "City",
           filter: true,
-          width: 110,
+          width: 130,
           cellRendererFramework: params => {
             // console.log(params.data);
 
@@ -376,7 +376,7 @@ class SalesLead extends React.Component {
           headerName: "State",
           field: "State",
           filter: true,
-          width: 160,
+          
           cellRendererFramework: params => {
             return (
               <div className="text-center cursor-pointer">
@@ -999,10 +999,10 @@ class SalesLead extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row style={{marginLeft:'5px',marginRight:"5px" }}>
+            <Row style={{marginLeft:'3px',marginRight:"3px" }}>
               {/* <iframe src="https://www.clickdimensions.com/links/TestPDFfile.pdf" /> */}
               <Col lg="2" md="3" sm="12" style={{marginTop:"25px"}}>
-                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' }}>
+                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' }}>
                   Sales Lead ({this.state.rowData.length})
                 </h2>
               </Col>
@@ -1127,6 +1127,7 @@ class SalesLead extends React.Component {
                 <Label>SalesPerson List</Label>
                 <Multiselect
                   required
+                  className="cssformulti 6545"
                   style={{height:"43px"}}
                   isObject="false"
                   selectionLimit={1} // Enable single item selection

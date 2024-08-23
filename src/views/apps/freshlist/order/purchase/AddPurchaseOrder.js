@@ -130,6 +130,7 @@ const AddPurchaseOrder = (args) => {
       const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
       updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
       updatedProduct.productId = selectedItem?._id;
+      updatedProduct.warehouseName = selectedItem?.warehouse?.warehouseName;
       updatedProduct.discount = Party?.category?.discount;
       updatedProduct.HSN_Code = selectedItem?.HSN_Code;
       updatedProduct.productData = selectedItem;
@@ -553,6 +554,19 @@ const AddPurchaseOrder = (args) => {
                               onRemove1(selectedList, selectedItem, index);
                             }}
                             displayValue="Product_Title" // Property name to display in the dropdown options
+                          />
+                        </div>
+                        <div
+                          className="viewspacebetween1"
+                          style={{ width: "140px" }}>
+                          <Label>Warehouse</Label>
+                          <Input
+                            readOnly
+                            type="text"
+                            name="warehouseName"
+                            placeholder="warehouseName"
+                            value={product?.warehouseName}
+                            // onChange={(e) => handleRequredQty(e, index)}
                           />
                         </div>
                         <div

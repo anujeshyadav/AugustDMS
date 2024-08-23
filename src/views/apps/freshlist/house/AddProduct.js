@@ -246,9 +246,7 @@ const AddProduct = () => {
   //     reader.readAsDataURL(fiels[i]);
   //   }
   // };
-  useEffect(() => {
-    console.log(Image);
-  }, [Image?.length]);
+ 
 
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -316,6 +314,8 @@ const AddProduct = () => {
       let payload = {
         id: Data?.id,
         database: userData?.database,
+        // ProfitPercentage: 0,
+
         // unitType: Data?.unitType,
         // unitQty: Number(Data?.unitQty),
         category: Data?.category,

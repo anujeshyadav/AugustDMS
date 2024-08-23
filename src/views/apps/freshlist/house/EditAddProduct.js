@@ -39,6 +39,7 @@ const EditAddProduct = () => {
   const [UnitList, setUnitList] = useState([]);
   const [wareHouseList, setWareHouseList] = useState([]);
   const [formImages, setFormImages] = useState([]);
+  const [Loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [imageUri, setImageUris] = useState([]);
   const [Image, setImage] = useState([]);
@@ -100,20 +101,20 @@ const EditAddProduct = () => {
       .then((res) => {
         // console.log(res?.Product);
         let data = res?.Product;
-        if (data?.landedCost > 0) {
-          let ProductMrp = Number(
-            (
-              data?.landedCost *
-              1.05 *
-              Number(((100 + Number(data?.GSTRate)) / 100).toFixed(2))
-            ).toFixed(2)
-          );
-          if (data?.Product_MRP > ProductMrp) {
-            data["Product_MRP"] = data?.Product_MRP;
-          } else {
-            data["Product_MRP"] = ProductMrp;
-          }
-        }
+        // if (data?.landedCost > 0) {
+        //   let ProductMrp = Number(
+        //     (
+        //       data?.landedCost *
+        //       1.05 *
+        //       Number(((100 + Number(data?.GSTRate)) / 100).toFixed(2))
+        //     ).toFixed(2)
+        //   );
+        //   if (data?.Product_MRP > ProductMrp) {
+        //     data["Product_MRP"] = data?.Product_MRP;
+        //   } else {
+        //     data["Product_MRP"] = ProductMrp;
+        //   }
+        // }
         setData(res?.Product);
         // console.log(res?.Product);
 
@@ -206,11 +207,12 @@ const EditAddProduct = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     let formdata = new FormData();
     let userData = JSON.parse(localStorage.getItem("userData"));
     let payload = {
       database: userData?.database,
+      // ProfitPercentage: Data?.ProfitPercentage ? Data?.ProfitPercentage : 0,
       // unitType: Data?.unitType,
       // unitQty: Number(Data?.unitQty),
       category: Data?.category,
@@ -247,7 +249,6 @@ const EditAddProduct = () => {
       // formdata.append("files", ele);
       // debugger;
       Image?.map((ele) => {
-        debugger;
         formdata.append("files", ele);
       });
     }
@@ -259,14 +260,18 @@ const EditAddProduct = () => {
     // }
     await _Put(Update_Product, Params?.id, formdata)
       .then((res) => {
+        setLoading(false);
+
         history.goBack();
         if (res?.status) {
           swal("Product Details Updated Successfully");
         }
       })
       .catch((err) => {
+        setLoading(false);
+
         console.log(err);
-        swal("Please Fill Correct Details");
+        swal("Error", "SomeThing went wrong ", "error");
       });
   };
   const handlechangeSubcat = (e) => {
@@ -893,23 +898,22 @@ const EditAddProduct = () => {
                     required
                     type="number"
                     id="Purchase_Rate"
+                    step="0.01"
+                    // min={Data.landedCost}
                     name="Purchase_Rate"
                     placeholder="PurchaseRate"
                     value={Data.Purchase_Rate}
                     onChange={(e) => {
                       let value = e.target.value;
-                      let mrp = value * 1.05;
                       if (Data.landedCost) {
                         setData({
                           ...Data,
                           ["Purchase_Rate"]: value,
-                          // ["Product_MRP"]: Data.landedCost * 1.05,
                         });
                       } else {
                         setData({
                           ...Data,
                           ["Purchase_Rate"]: value,
-                          // ["Product_MRP"]: mrp,
                         });
                       }
                     }}
@@ -1072,9 +1076,13 @@ const EditAddProduct = () => {
                   </div>
                 </Col>
                 <Col lg="3" md="3" sm="6" className="">
-                  <Button.Ripple color="primary" type="submit" className="mr-1">
-                    Submit
-                  </Button.Ripple>
+                  <Button
+                    disabled={!Loading ? false : true}
+                    color="primary"
+                    type="submit"
+                    className="mr-1">
+                    {!Loading ? "Submit" : "Submitting..."}
+                  </Button>
                 </Col>
                 {formImages &&
                   formImages?.map((ele, i) => {

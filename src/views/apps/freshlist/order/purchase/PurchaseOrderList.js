@@ -98,7 +98,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 100,
+          width: 55,
 
           filter: true,
         },
@@ -106,7 +106,7 @@ class PurchaseOrderViewList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 75,
           height: 35,
           cellRendererFramework: (params) => {
             return (
@@ -133,7 +133,7 @@ class PurchaseOrderViewList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         this.togglemodal();
@@ -147,7 +147,7 @@ class PurchaseOrderViewList extends React.Component {
                       this.state.InsiderPermissions.Delete && (
                         <Trash2
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="red"
                           onClick={() => {
                             this.runthisfunction(
@@ -189,7 +189,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 115,
+          width: 110,
           cellRendererFramework: (params) => {
             // console.log(params.data);
             return params.value == "comleted" ? (
@@ -221,7 +221,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "Supplier Name",
           field: "partyId.ownerName",
           filter: true,
-          width: 220,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center">
@@ -233,10 +233,10 @@ class PurchaseOrderViewList extends React.Component {
           },
         },
         {
-          headerName: "Pan Number",
+          headerName: "Pan No",
           field: "partyId.comPanNo",
           filter: true,
-          width: 155,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -253,7 +253,7 @@ class PurchaseOrderViewList extends React.Component {
           field: "partyId.email",
           filter: true,
           editable: true,
-          width: 250,
+          width: 330,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -269,7 +269,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "IGST ",
           field: "igstTotal",
           filter: true,
-          width: 127,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -282,7 +282,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "SGST ",
           field: "sgstTotal",
           filter: true,
-          width: 127,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -295,7 +295,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "CGST ",
           field: "cgstTotal",
           filter: true,
-          width: 127,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -308,7 +308,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -323,7 +323,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 132,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -336,7 +336,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "Charges",
           field: "coolieAndCartage",
           filter: true,
-          width: 132,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -349,7 +349,7 @@ class PurchaseOrderViewList extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 150,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -633,62 +633,28 @@ class PurchaseOrderViewList extends React.Component {
           <Card>
             <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col  >
-                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
+                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
                   Purchased List
                 </h1>
               </Col>
+              {this.state.MasterShow ? (
+                <Col lg="3" md="4" sm="12"  style={{ marginTop:'25px' }}>
+                  <SuperAdminUI
+                    onDropdownChange={this.handleDropdownChange}
+                    onSubmit={this.handleParentSubmit}
+                  />
+                </Col>
+              ) : (
+                <Col></Col>
+              )}
               <Col
                 lg="3"
                 md="6"
                 sm="12"
-                className="mt-2"
-                style={{ height: "20px" }}>
+                 
+                style={{ marginTop:'25px' }}>
                 <div className="">
-                  {/* <div className="mb-1 mr-1">
-                    <UncontrolledDropdown className="p-1 ag-dropdown">
-                      <DropdownToggle tag="div">
-                        {this.gridApi
-                          ? this.state.currenPageSize
-                          : "" * this.state.getPageSize -
-                            (this.state.getPageSize - 1)}{" "}
-                        -{" "}
-                        {this.state.rowData.length -
-                          this.state.currenPageSize * this.state.getPageSize >
-                        0
-                          ? this.state.currenPageSize * this.state.getPageSize
-                          : this.state.rowData.length}{" "}
-                        of {this.state.rowData.length}
-                        <ChevronDown className="ml-50" size={15} />
-                      </DropdownToggle>
-                      <DropdownMenu right>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(10)}>
-                          10
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(20)}>
-                          20
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(50)}>
-                          50
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(100)}>
-                          100
-                        </DropdownItem>
-                        <DropdownItem
-                          tag="div"
-                          onClick={() => this.filterSize(134)}>
-                          134
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </div> */}
+                  
                   <div
                     className="table-input cssforproductlist"
                     style={{ height: "20px" }}>
@@ -701,17 +667,8 @@ class PurchaseOrderViewList extends React.Component {
                   </div>
                 </div>
               </Col>
-              {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" className="mt-2">
-                  <SuperAdminUI
-                    onDropdownChange={this.handleDropdownChange}
-                    onSubmit={this.handleParentSubmit}
-                  />
-                </Col>
-              ) : (
-                <Col></Col>
-              )}
-              <Col className="">
+              
+              <Col className=""  style={{ marginTop:'25px' }}>
                 {InsiderPermissions && InsiderPermissions.View && (
                   <>
                     <span className="">
@@ -721,7 +678,7 @@ class PurchaseOrderViewList extends React.Component {
                         size="35px"
                         onClick={this.LookupviewStart}
                         color="rgb(8, 91, 245)"
-                        className="float-right mt-2"
+                        className="float-right  "
                       />
                     </span>
                   </>
@@ -736,7 +693,7 @@ class PurchaseOrderViewList extends React.Component {
                         style={{ cursor: "pointer" }}
                         title="download file"
                         size="35px"
-                        className="dropdown-button mt-2"
+                        className="dropdown-button "
                         color="rgb(8, 91, 245)"
                         onClick={this.toggleDropdown}
                       />
@@ -796,7 +753,7 @@ class PurchaseOrderViewList extends React.Component {
                             fontWeight: "600",
                             height: "43px",
                           }}
-                          className="float-right mr-1 mt-2"
+                          className="float-right mr-1 "
                           color="#39cccc"
                           onClick={() =>
                             history.push("/app/AJgroup/order/AddPurchaseOrder")

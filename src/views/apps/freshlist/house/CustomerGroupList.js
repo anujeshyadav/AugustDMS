@@ -19,7 +19,10 @@ import {
   Table,
   Label,
   Spinner,
+  Alert,
+  Progress,
 } from "reactstrap";
+import axiosConfig from "../../../../axiosConfig";
 
 import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
@@ -57,12 +60,13 @@ import { CheckPermission } from "../house/CheckPermission";
 import SuperAdminUI from "../../../SuperAdminUi/SuperAdminUI";
 import {
   Delete_CustomerGroup_by_id,
+  Product_Price_Bulk_Update,
   PurchaseProductList_Product,
   View_CustomerGroup,
 } from "../../../../ApiEndPoint/Api";
 
 const SelectedColums = [];
-
+let maxDiscount = 0;
 class PurchaseOrderViewList extends React.Component {
   static contextType = UserContext;
   constructor(props) {
@@ -123,7 +127,9 @@ class PurchaseOrderViewList extends React.Component {
                       size="25px"
                       fill="red"
                       color="red"
-                      onClick={() => this.runthisfunction(params?.data?._id)}
+                      onClick={() => {
+                        this.runthisfunction(params?.data);
+                      }}
                     />
                   )}
               </div>
@@ -234,6 +240,49 @@ class PurchaseOrderViewList extends React.Component {
       ],
     };
   }
+  handleUpdateAllProduct = async (data) => {
+    this.setState({ UpdatingProduct: true });
+    let remaining = this.state.rowData?.filter((ele) => ele?._id !== data?._id);
+    let max = remaining?.length
+      ? remaining.reduce(
+          (prevMax, obj) => (obj.discount > prevMax ? obj.discount : prevMax),
+          -Infinity
+        )
+      : 0;
+    maxDiscount = max > 0 ? max : 0;
+    let wholeProduct = this.state.rowProductData;
+
+    wholeProduct?.forEach((ele) => {
+      let gst = (100 + ele?.GSTRate) / 100;
+      let Dis = (100 + maxDiscount) / 100;
+      let profitPer = ele?.ProfitPercentage > 3 ? ele?.ProfitPercentage : 3;
+      let profitPercentage = Number((100 + profitPer) / 100);
+
+      ele["SalesRate"] = Number(
+        (ele?.Purchase_Rate * profitPercentage).toFixed(2)
+      );
+      ele["Product_MRP"] = Number((ele?.SalesRate * gst * Dis).toFixed(2));
+    });
+    let value = wholeProduct?.map((ele) => {
+      return {
+        id: ele?._id,
+        Product_MRP: ele?.Product_MRP,
+        SalesRate: ele?.SalesRate,
+        ProfitPercentage: ele?.ProfitPercentage,
+        maxDiscount: ele?.maxDiscount,
+      };
+    });
+    localStorage.setItem("MaxGst", maxDiscount);
+    await axiosConfig
+      .put(Product_Price_Bulk_Update, { Products: value })
+      .then((res) => {
+        swal("Success", "Product Updated Successfully", "success");
+        this.setState({ UpdatingProduct: false });
+      })
+      .catch((err) => {
+        this.setState({ UpdatingProduct: false });
+      });
+  };
   togglemodal = () => {
     this.setState((prevState) => ({
       modalone: !prevState.modalone,
@@ -269,43 +318,29 @@ class PurchaseOrderViewList extends React.Component {
           if (myActive?.length) {
             this.setState({ rowData: myActive?.reverse() });
           }
-          let max = myActive?.reduce(
-            (prevMax, obj) => (obj.discount > prevMax ? obj.discount : prevMax),
-            -Infinity
-          );
+          // let max = myActive?.reduce(
+          //   (prevMax, obj) => (obj.discount > prevMax ? obj.discount : prevMax),
+          //   -Infinity
+          // );
+          let max = myActive?.length
+            ? myActive.reduce(
+                (prevMax, obj) =>
+                  obj.discount > prevMax ? obj.discount : prevMax,
+                -Infinity
+              )
+            : 0;
+          localStorage.setItem("MaxGst", max);
           this.setState({ maxDiscount: max });
 
-          // (async () => {
-          //   await _Get(PurchaseProductList_Product, db)
-          //     .then((res) => {
-          //       // this.setState({ Loading: false });
-          //       // console.log(res?.Product?.reverse());
-          //       res?.Product?.forEach((ele) => {
-          //         let Mrp = ele?.Product_MRP;
-          //         let gst = (100 + ele?.GSTRate) / 100;
-          //         let Dis = (100 + maxDiscount) / 100;
-          //         if (!!ele?.SalesRate) {
-          //           ele["SalesRate"] = ele?.SalesRate;
-          //         } else {
-          //           ele["SalesRate"] = Number((Mrp / (gst * Dis)).toFixed(2));
-          //         }
-          //         ele["maxDiscount"] = maxDiscount;
-          //         let cost = ele?.landedCost
-          //           ? ele?.landedCost
-          //           : ele?.Purchase_Rate;
-          //         if (cost > ele?.SalesRate) {
-          //           ele["lossStatus"] = true;
-          //         } else {
-          //           ele["lossStatus"] = false;
-          //         }
-          //       });
-          //       this.setState({ rowProductData: res?.Product?.reverse() });
-          //     })
-          //     .catch((err) => {
-          //       this.setState({ Loading: false });
-          //       this.setState({ rowData: [] });
-          //     });
-          // })();
+          (async () => {
+            await _Get(PurchaseProductList_Product, db)
+              .then((res) => {
+                this.setState({ rowProductData: res?.Product?.reverse() });
+              })
+              .catch((err) => {
+                this.setState({ rowProductData: [] });
+              });
+          })();
         }
         this.setState({ AllcolumnDefs: this.state.columnDefs });
         this.setState({ SelectedCols: this.state.columnDefs });
@@ -342,7 +377,7 @@ class PurchaseOrderViewList extends React.Component {
     this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
-  runthisfunction(id) {
+  runthisfunction(data) {
     swal("Warning", "Sure You Want to Delete it", {
       buttons: {
         cancel: "cancel",
@@ -351,8 +386,13 @@ class PurchaseOrderViewList extends React.Component {
     }).then((value) => {
       switch (value) {
         case "delete":
-          _Delete(Delete_CustomerGroup_by_id, id)
+          _Delete(Delete_CustomerGroup_by_id, data?._id)
             .then((res) => {
+              let findMaxDiscount = Number(localStorage.getItem("MaxGst"));
+              if (findMaxDiscount == data?.discount) {
+                this.handleUpdateAllProduct(data);
+              }
+              this.componentDidMount();
               let selectedData = this.gridApi.getSelectedRows();
               this.gridApi.updateRowData({ remove: selectedData });
             })
@@ -640,6 +680,20 @@ class PurchaseOrderViewList extends React.Component {
     return (
       <>
         <>
+          {this.state.UpdatingProduct && (
+            <Alert color="danger">
+              Updating Product Data , Please Wait ...
+              <div>
+                <h5 style={{ color: "red" }}>
+                  Do Not Refresh Your Page or Go Back
+                </h5>
+              </div>
+            </Alert>
+          )}
+          {/* {this.state.UpdatingProduct && (
+            <Progress animated color="success" value={61} />
+          )} */}
+
           <Col sm="12">
             <Card>
               <Row className="ml-2 mr-2 ">
@@ -817,7 +871,13 @@ class PurchaseOrderViewList extends React.Component {
                             </DropdownMenu>
                           </UncontrolledDropdown>
                               </div>*/}
-                        <div className="d-flex flex-wrap justify-content-end mb-1"></div>
+                      </div>
+                      <div
+                        style={{ color: "red", fontWeight: 600 }}
+                        className="text-bold">
+                        Note: - If you apply , update or Delete the highest
+                        discount percentage, please allow some time for the
+                        product rates to be fully updated. *{" "}
                       </div>
                       <ContextLayout.Consumer className="ag-theme-alpine">
                         {(context) => (

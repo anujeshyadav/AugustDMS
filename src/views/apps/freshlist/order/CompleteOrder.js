@@ -115,7 +115,7 @@ class CompleteOrder extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -144,7 +144,7 @@ class CompleteOrder extends React.Component {
                   this.state.InsiderPermissions?.Edit && (
                     <CornerDownLeft
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         localStorage.setItem(
@@ -251,7 +251,7 @@ class CompleteOrder extends React.Component {
           field: "fullName",
           filter: true,
           resizable: true,
-          width: 300,
+          width: 240,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -263,10 +263,10 @@ class CompleteOrder extends React.Component {
           },
         },
         {
-          headerName: "Company Pan Number",
+          headerName: "Company Pan No",
           field: "partyId.comPanNo",
           filter: true,
-          width: 215,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="dcursor-pointer text-center">
@@ -281,7 +281,7 @@ class CompleteOrder extends React.Component {
           headerName: "Party Limit",
           field: "partyId.limit",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -297,7 +297,7 @@ class CompleteOrder extends React.Component {
           headerName: "IGST ",
           field: "igstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -310,7 +310,7 @@ class CompleteOrder extends React.Component {
           headerName: "SGST ",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+           width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -323,7 +323,7 @@ class CompleteOrder extends React.Component {
           headerName: "CGST ",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -336,7 +336,7 @@ class CompleteOrder extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -349,7 +349,7 @@ class CompleteOrder extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -362,7 +362,7 @@ class CompleteOrder extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -702,18 +702,14 @@ class CompleteOrder extends React.Component {
                   <Card>
                     <Row
                       style={{
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                        marginTop: "10px",
+                        marginLeft: "3px",
+                        marginRight: "3px",
+                         
                       }}>
-                      <Col style={{ marginTop: "10px" }}>
+                      <Col  >
                         <h2
                           className="float-left"
-                          style={{
-                            fontWeight: "600",
-                            textTransform: "uppercase",
-                            fontSize: "24px",
-                          }}>
+                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                           Sales Completed List
                         </h2>
                       </Col>
@@ -723,7 +719,7 @@ class CompleteOrder extends React.Component {
                           lg="3"
                           md="4"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop:"25px" }}>
                           <SuperAdminUI
                             onDropdownChange={this.handleDropdownChange}
                             onSubmit={this.handleParentSubmit}
@@ -732,53 +728,9 @@ class CompleteOrder extends React.Component {
                       ) : (
                         <Col></Col>
                       )}
-                      <Col lg="3" md="6" sm="12" style={{ marginTop: "10px" }}>
+                      <Col lg="3" md="6" sm="12" style={{ marginTop:"25px" }}>
                         <div className="">
-                          {/* <UncontrolledDropdown className="p-1 ag-dropdown">
-                            <DropdownToggle tag="div">
-                              {this.gridApi
-                                ? this.state.currenPageSize
-                                : "" * this.state.getPageSize -
-                                  (this.state.getPageSize - 1)}{" "}
-                              -{" "}
-                              {this.state.rowData.length -
-                                this.state.currenPageSize *
-                                  this.state.getPageSize >
-                              0
-                                ? this.state.currenPageSize *
-                                  this.state.getPageSize
-                                : this.state.rowData.length}{" "}
-                              of {this.state.rowData.length}
-                              <ChevronDown className="ml-50" size={15} />
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(10)}>
-                                10
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(20)}>
-                                20
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(50)}>
-                                50
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(100)}>
-                                100
-                              </DropdownItem>
-                              <DropdownItem
-                                tag="div"
-                                onClick={() => this.filterSize(134)}>
-                                134
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledDropdown> */}
+                           
 
                           <div className="table-input cssforproductlist">
                             <Input
@@ -791,7 +743,7 @@ class CompleteOrder extends React.Component {
                           </div>
                         </div>
                       </Col>
-                      <Col lg="1" style={{ marginTop: "10px" }}>
+                      <Col lg="1" style={{ marginTop:"25px" }}>
                         {InsiderPermissions && InsiderPermissions?.View && (
                           <>
                             <span className="">

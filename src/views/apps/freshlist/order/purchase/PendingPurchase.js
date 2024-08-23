@@ -100,7 +100,7 @@ class PendingPurchase extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -248,7 +248,7 @@ class PendingPurchase extends React.Component {
           headerName: "Contact Number",
           field: "partyId.contactNumber",
           filter: true,
-          width: 168,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -263,7 +263,7 @@ class PendingPurchase extends React.Component {
           headerName: "Company Name",
           field: "partyId.CompanyName",
           filter: true,
-          width: 228,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -278,7 +278,7 @@ class PendingPurchase extends React.Component {
           headerName: "Owner Name",
           field: "partyId.ownerName",
           filter: true,
-          width: 226,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -293,7 +293,7 @@ class PendingPurchase extends React.Component {
           headerName: "First Name",
           field: "partyId.firstName",
           filter: true,
-          width: 226,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -324,7 +324,7 @@ class PendingPurchase extends React.Component {
           field: "partyId.email",
           filter: true,
           editable: true,
-          width: 260,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -354,7 +354,7 @@ class PendingPurchase extends React.Component {
           headerName: "IGST  ",
           field: "igstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -367,7 +367,7 @@ class PendingPurchase extends React.Component {
           headerName: "SGST  ",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -380,7 +380,7 @@ class PendingPurchase extends React.Component {
           headerName: "CGST  ",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -393,7 +393,7 @@ class PendingPurchase extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -403,10 +403,10 @@ class PendingPurchase extends React.Component {
           },
         },
         {
-          headerName: "RoundOff",
+          headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -419,7 +419,7 @@ class PendingPurchase extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -740,11 +740,21 @@ class PendingPurchase extends React.Component {
           <Card>
             <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col  >
-                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
+                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
                   Pending Purchased List
                 </h1>
               </Col>
-              <Col lg="3" md="6" sm="12" className="mt-2">
+               {this.state.MasterShow ? (
+                <Col lg="3" md="4" sm="12" style={{marginTop:'25px'}}>
+                  <SuperAdminUI
+                    onDropdownChange={this.handleDropdownChange}
+                    onSubmit={this.handleParentSubmit}
+                  />
+                </Col>
+              ) : (
+                <Col></Col>
+              )}
+              <Col lg="3" md="6" sm="12" style={{marginTop:'25px'}}>
                 <div className="">
                   {/* <div className="mb-1 mr-1">
                     <UncontrolledDropdown className="p-1 ag-dropdown">
@@ -800,17 +810,8 @@ class PendingPurchase extends React.Component {
                   </div>
                 </div>
               </Col>
-              {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" className="mt-2">
-                  <SuperAdminUI
-                    onDropdownChange={this.handleDropdownChange}
-                    onSubmit={this.handleParentSubmit}
-                  />
-                </Col>
-              ) : (
-                <Col></Col>
-              )}
-              <Col className="mt-2" lg="1">
+             
+              <Col style={{marginTop:'25px'}} lg="1">
                 {InsiderPermissions && InsiderPermissions.View && (
                   <>
                     <span className="">

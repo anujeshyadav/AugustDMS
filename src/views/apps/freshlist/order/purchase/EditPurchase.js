@@ -490,9 +490,6 @@ const EditPurchase = (args) => {
           primaryUnit: ele?.primaryUnit,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
-          // Size: ele?.Size,
-          // unitQty: ele?.unitQty,
-          // unitType: ele?.unitType,
           totalPrice: ele?.qty * ele?.price,
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
@@ -515,15 +512,12 @@ const EditPurchase = (args) => {
           availableQty: ele?.availableQty,
           qty: ele?.qty,
           price: ele?.price,
-          // Size: ele?.Size,
           totalPrice: ele?.qty * ele?.price,
           primaryUnit: ele?.primaryUnit,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
           basicPrice: ele?.basicPrice,
           landedCost: ele?.landedCost,
-          // unitQty: ele?.unitQty,
-          // unitType: ele?.unitType,
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
           gstPercentage: ele?.gstPercentage,
@@ -593,19 +587,7 @@ const EditPurchase = (args) => {
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
       // DateofDelivery: dateofDelivery,
     };
-    // await SavePurchaseOrder(payload)
-    //   .then((res) => {
-    //     setLoading(false);
-    //     swal("Purchase Order Added Successfully");
-    //     history.goBack();
-    //   })
-    //   .catch((err) => {
-    //     swal("SomeThing Went Wrong");
 
-    //     setLoading(false);
-    //     console.log(err);
-    //   });
-    debugger;
     await _Put(Purchase_Edit_Order, Params.id, payload)
       .then((res) => {
         setLoading(false);

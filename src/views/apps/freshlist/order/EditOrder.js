@@ -166,68 +166,65 @@ const EditOrder = (args) => {
   };
 
   const handleSelection = async (selectedList, selectedItem, index) => {
-    const userdata = JSON.parse(localStorage.getItem("userData"));
-    SelectedITems.push(selectedItem);
-    let costPrice = Number(
-      (
-        selectedItem?.Product_MRP /
-        (((100 +
-          Number(Party?.category?.discount ? Party?.category?.discount : 0)) /
-          100) *
-          ((100 + Number(selectedItem?.GSTRate)) / 100))
-      ).toFixed(2)
-    );
-    // let URl = `${WareHouse_Current_Stock}${selectedItem?.warehouse?._id}/`;
-    // var Stock;
-    // await _Get(URl, selectedItem?._id)
-    //   .then((res) => {
-    //     Stock = res?.currentStock;
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     swal("something went Wrong");
-    //   });
-    setProduct((prevProductList) => {
-      const updatedProductList = [...prevProductList];
-      const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
-      updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
-      updatedProduct.productId = selectedItem?._id;
-      updatedProduct.discount = Party?.category?.discount;
-      // updatedProduct.availableQty = Stock?.currentStock;
-      updatedProduct.availableQty = selectedItem?.Opening_Stock;
-      updatedProduct.wholeQty = selectedItem?.Opening_Stock;
-      updatedProduct.HSN_Code = selectedItem?.HSN_Code;
-      updatedProduct.basicPrice = costPrice;
+    if (selectedItem?.Opening_Stock > 0) {
+      const userdata = JSON.parse(localStorage.getItem("userData"));
+      SelectedITems.push(selectedItem);
+      let costPrice = Number(
+        (
+          selectedItem?.Product_MRP /
+          (((100 +
+            Number(Party?.category?.discount ? Party?.category?.discount : 0)) /
+            100) *
+            ((100 + Number(selectedItem?.GSTRate)) / 100))
+        ).toFixed(2)
+      );
 
-      updatedProduct["discountPercentage"] =
-        Party?.category?.discount && Party?.category?.discount
-          ? Party?.category?.discount
-          : 0;
-      updatedProduct.productData = selectedItem;
-      updatedProduct.primaryUnit = selectedItem?.primaryUnit;
-      updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
-      updatedProduct.secondarySize = selectedItem?.secondarySize;
+      setProduct((prevProductList) => {
+        const updatedProductList = [...prevProductList];
+        const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
+        updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
+        updatedProduct.productId = selectedItem?._id;
+        updatedProduct.discount = Party?.category?.discount;
+        // updatedProduct.availableQty = Stock?.currentStock;
+        updatedProduct.availableQty = selectedItem?.Opening_Stock;
+        updatedProduct.wholeQty = selectedItem?.Opening_Stock;
+        updatedProduct.HSN_Code = selectedItem?.HSN_Code;
+        updatedProduct.basicPrice = costPrice;
 
-      updatedProduct.disCountPercentage =
-        Party?.Category?.discount && Party?.Category?.discount
-          ? Party?.Category?.discount
-          : 0;
+        updatedProduct["discountPercentage"] =
+          Party?.category?.discount && Party?.category?.discount
+            ? Party?.category?.discount
+            : 0;
+        updatedProduct.productData = selectedItem;
+        updatedProduct.primaryUnit = selectedItem?.primaryUnit;
+        updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
+        updatedProduct.secondarySize = selectedItem?.secondarySize;
 
-      updatedProductList[index] = updatedProduct;
-      const gstdetails = GstCalculation(Party, updatedProductList, Context);
-      setGSTData(gstdetails);
-      updatedProduct["taxableAmount"] = gstdetails?.gstDetails[index]?.taxable;
-      updatedProduct["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
-      updatedProduct["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
-      updatedProduct["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
-      updatedProduct["grandTotal"] = gstdetails?.gstDetails[index]?.grandTotal;
-      updatedProduct["gstPercentage"] =
-        gstdetails?.gstDetails[index]?.gstPercentage;
-      updatedProduct["disCountPercentage"] =
-        gstdetails?.gstDetails[index]?.discountPercentage;
+        updatedProduct.disCountPercentage =
+          Party?.Category?.discount && Party?.Category?.discount
+            ? Party?.Category?.discount
+            : 0;
 
-      return updatedProductList; // Return the updated product list to set the state
-    });
+        updatedProductList[index] = updatedProduct;
+        const gstdetails = GstCalculation(Party, updatedProductList, Context);
+        setGSTData(gstdetails);
+        updatedProduct["taxableAmount"] =
+          gstdetails?.gstDetails[index]?.taxable;
+        updatedProduct["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
+        updatedProduct["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
+        updatedProduct["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
+        updatedProduct["grandTotal"] =
+          gstdetails?.gstDetails[index]?.grandTotal;
+        updatedProduct["gstPercentage"] =
+          gstdetails?.gstDetails[index]?.gstPercentage;
+        updatedProduct["disCountPercentage"] =
+          gstdetails?.gstDetails[index]?.discountPercentage;
+
+        return updatedProductList; // Return the updated product list to set the state
+      });
+    } else {
+      swal("Error", "Stock Not Available", "error");
+    }
   };
 
   const handleSelectionUnit = (selectedList, selectedItem, index) => {
@@ -322,15 +319,14 @@ const EditOrder = (args) => {
       setMode("Update");
       await _Get(view_create_order_historyBy_id, Params?.id)
         .then((res) => {
-          // debugger;
           let value = res?.orderHistory;
           let selectedParty = PartyListdata?.filter(
             (ele) => ele?._id == value?.partyId?._id
           );
           let URL = "order/check-party-limit/";
           _Get(URL, res?.orderHistory?.partyId?._id)
-            .then((res) => {
-              setCustomerLimit(Number(res?.CustomerLimit));
+            .then((response) => {
+              setCustomerLimit(Number(response?.CustomerLimit));
               // console.log(res?.CustomerLimit);
             })
             .catch((err) => {
@@ -378,7 +374,7 @@ const EditOrder = (args) => {
             updatedProduct[index]["price"] = element?.productId?.Product_MRP; // Update the price of the copied product
             updatedProduct[index]["basicPrice"] = costPrice; // Update the price of the copied product
             updatedProduct[index]["availableQty"] =
-              element?.productId?.Product_MRP * 100; // Update the price of the copied product
+              element?.productId?.Opening_Stock; // Update the price of the copied product
             updatedProduct[index]["discount"] =
               selectedParty[0]?.category?.discount;
             updatedProduct[index]["HSN_Code"] = element?.productId?.HSN_Code;
