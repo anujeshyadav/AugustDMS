@@ -132,7 +132,7 @@ class Receipt extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 100,
+          width: 55,
           filter: true,
         },
 
@@ -170,7 +170,7 @@ class Receipt extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 120,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
@@ -178,7 +178,7 @@ class Receipt extends React.Component {
                   this.state.InsiderPermissions?.Delete && (
                     <Trash2
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="red"
                       onClick={() => this.runthisfunction(params?.data?._id)}
                       // onClick={() =>  this.props.history.push({
@@ -195,7 +195,7 @@ class Receipt extends React.Component {
                       render={() => (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="green"
                           onClick={() =>
                             this.props.history.push({
@@ -216,7 +216,7 @@ class Receipt extends React.Component {
           field: "date",
           filter: true,
           resizable: true,
-          width: 200,
+          width: 85,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -265,7 +265,7 @@ class Receipt extends React.Component {
           },
           filter: true,
           resizable: true,
-          width: 280,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -284,7 +284,6 @@ class Receipt extends React.Component {
           resizable: true,
           width: 125,
           cellRendererFramework: (params) => {
-            console.log(params.data);
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -319,7 +318,7 @@ class Receipt extends React.Component {
           field: "amount",
           filter: true,
           resizable: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -333,7 +332,7 @@ class Receipt extends React.Component {
           field: "remark",
           filter: true,
           resizable: true,
-          width: 210,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -437,7 +436,7 @@ class Receipt extends React.Component {
           field: "createdAt",
           filter: true,
           resizable: true,
-          width: 145,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -540,7 +539,6 @@ class Receipt extends React.Component {
           this.setState({ SelectedcolumnDefs: this.state.columnDefs });
         }
         this.setState({ SelectedCols: this.state.columnDefs });
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -552,7 +550,6 @@ class Receipt extends React.Component {
 
   async componentDidMount() {
     const UserInformation = this.context;
-    console.log(UserInformation?.CompanyDetails);
     this.setState({ CompanyDetails: UserInformation?.CompanyDetails });
     let pageparmission = JSON.parse(localStorage.getItem("userData"));
     if (pageparmission?.rolename?.roleName === "MASTER") {
@@ -569,7 +566,6 @@ class Receipt extends React.Component {
     this.setState({ InsiderPermissions: InsidePermissions });
 
     let userchoice = JSON.parse(localStorage.getItem("billUI"));
-    console.log(userchoice);
     if (userchoice) {
       this.setState({ logoposition: userchoice?.imagePosition });
       this.setState({ Billtoposition: userchoice?.billTo });
@@ -760,7 +756,6 @@ class Receipt extends React.Component {
           result.data?.forEach((ele) => {
             delete ele?.Actions;
           });
-          debugger;
           const worksheet = XLSX.utils.json_to_sheet(result.data);
           const workbook = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
@@ -1042,15 +1037,15 @@ class Receipt extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row className="ml-2 mr-2 ">
-                        <Col className="mt-2">
+                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                        <Col  >
                           <h1
                             className="float-left"
-                            style={{ fontWeight: "600" }}>
+                            style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                             Receipt List
                           </h1>
                         </Col>
-                        <Col lg="3" md="6" sm="12" className="mt-2">
+                        <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
                           <div className="table-input cssforproductlist">
                             <Input
                               placeholder="search Item here..."
@@ -1062,15 +1057,23 @@ class Receipt extends React.Component {
                           </div>
                         </Col>
                         {this.state.MasterShow && (
-                          <Col lg="3" md="6" sm="12" className="mt-2">
+                          <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
                             />
                           </Col>
                         )}
-                        <Col lg="3" xs="6" className="mt-2">
-                          {InsiderPermissions && InsiderPermissions?.Create && (
+                       
+                         
+
+                       
+
+                        <Col lg="3" xs="6" style={{marginTop:"25px"}}>
+                        <div style={{display:"flex", justifyContent:"space-between"}}>
+                          <div>
+                         
+                         {InsiderPermissions && InsiderPermissions?.Create && (
                             <span>
                               <Route
                                 render={({ history }) => (
@@ -1093,6 +1096,8 @@ class Receipt extends React.Component {
                                   </Button>
                                 )}
                               />
+
+                               
                               <Route
                                 render={({ history }) => (
                                   <Button
@@ -1100,6 +1105,7 @@ class Receipt extends React.Component {
                                       cursor: "pointer",
                                       backgroundColor: "rgb(8, 91, 245)",
                                       color: "white",
+                                      marginLeft:"10px",
                                       fontWeight: "600",
                                       height: "43px",
                                     }}
@@ -1116,9 +1122,8 @@ class Receipt extends React.Component {
                               />
                             </span>
                           )}
-                        </Col>
-
-                        <Col lg="1" md="1" xs="6" className="mt-2">
+                            </div>
+                           <div>
                           {InsiderPermissions && InsiderPermissions?.View && (
                             <>
                               <span className="">
@@ -1212,12 +1217,14 @@ class Receipt extends React.Component {
                                 </div>
                               </span>
                             )}
+                               </div>
+                          </div>
                         </Col>
                       </Row>
                       {InsiderPermissions && InsiderPermissions?.View && (
                         <>
                           {this.state.rowData === null ? null : (
-                            <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                            <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                               {/* 
                             <div className="d-flex flex-wrap justify-content-between align-items-center">
                                 <div className="mb-1">

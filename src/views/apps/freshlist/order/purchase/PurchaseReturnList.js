@@ -92,14 +92,14 @@ class PurchaseReturn extends React.Component {
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
           // checkboxSelection: true,
-          width: 80,
+          width: 55,
           filter: true,
         },
 
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -107,7 +107,7 @@ class PurchaseReturn extends React.Component {
                   this.state.InsiderPermissions?.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         this.toggleModal();
@@ -135,7 +135,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Return SGST",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -148,7 +148,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Return CGST",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -161,7 +161,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Return IGST",
           field: "igstTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -174,7 +174,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Return Amount",
           field: "Return_amount",
           filter: true,
-          width: 157,
+          width: 125,
           cellRendererFramework: (params) => {
             console.log(params.data);
             return (
@@ -189,7 +189,7 @@ class PurchaseReturn extends React.Component {
           field: "orderId._id",
           filter: true,
           editable: true,
-          width: 260,
+          width: 150,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
@@ -204,7 +204,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Purchase Date",
           field: "orderId/DateofDelivery",
           filter: true,
-          width: 155,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -219,7 +219,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Supplier Name",
           field: "partyId.ownerName",
           filter: true,
-          width: 250,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -231,10 +231,10 @@ class PurchaseReturn extends React.Component {
           },
         },
         {
-          headerName: "Company Pan Number",
+          headerName: "Company Pan No",
           field: "partyId.comPanNo",
           filter: true,
-          width: 210,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -266,7 +266,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
@@ -285,7 +285,7 @@ class PurchaseReturn extends React.Component {
           headerName: "IGST  ",
           field: "igstTotal",
           filter: true,
-          width: 140,
+         width: 100,
           cellRendererFramework: (params) => {
             console.log(params.data);
             return (
@@ -303,7 +303,7 @@ class PurchaseReturn extends React.Component {
           headerName: "SGST  ",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -320,7 +320,7 @@ class PurchaseReturn extends React.Component {
           headerName: "CGST  ",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+           width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -338,7 +338,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 140,
+           width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -353,7 +353,7 @@ class PurchaseReturn extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+           width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -788,10 +788,18 @@ class PurchaseReturn extends React.Component {
                       <Col  >
                         <h1
                           className="float-left"
-                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
+                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
                           Purchase Return List
                         </h1>
                       </Col>
+                       {this.state.MasterShow && (
+                        <Col lg="3" md="4" sm="12" className="mt-2">
+                          <SuperAdminUI
+                            onDropdownChange={this.handleDropdownChange}
+                            onSubmit={this.handleParentSubmit}
+                          />
+                        </Col>
+                      )}
                       <Col lg="3" md="6" sm="12" className="mt-2">
                         <div className="table-input mr-1 cssforproductlist">
                           <Input
@@ -803,14 +811,7 @@ class PurchaseReturn extends React.Component {
                           />
                         </div>
                       </Col>
-                      {this.state.MasterShow && (
-                        <Col lg="3" md="4" sm="12" className="mt-2">
-                          <SuperAdminUI
-                            onDropdownChange={this.handleDropdownChange}
-                            onSubmit={this.handleParentSubmit}
-                          />
-                        </Col>
-                      )}
+                     
 
                       <Col className="mt-2" lg="1">
                         {InsiderPermissions && InsiderPermissions?.View && (

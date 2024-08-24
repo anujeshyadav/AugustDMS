@@ -221,7 +221,6 @@ const CreateReceipt = (args) => {
 
               History.goBack();
               swal("Added Successfully");
-              console.log(res);
             })
             .catch((err) => {
               setLoading(false);

@@ -139,14 +139,14 @@ class PurchaseInvoice extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
         {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 95,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer cursor-pointer text-center">
@@ -154,7 +154,7 @@ class PurchaseInvoice extends React.Component {
                   this.state.InsiderPermissions?.Edit && (
                     <CornerDownLeft
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         localStorage.setItem(
@@ -175,7 +175,7 @@ class PurchaseInvoice extends React.Component {
                       render={() => (
                         <Trash2
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="red"
                           onClick={() => {
                             // let selectedData = this.gridApi.getSelectedRows();
@@ -229,7 +229,7 @@ class PurchaseInvoice extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          width: 250,
+          width: 195,
           cellRendererFramework: (params) => {
             // console.log(params.data);
 
@@ -277,7 +277,7 @@ class PurchaseInvoice extends React.Component {
           field: "invoice",
           filter: true,
           resizable: true,
-          width: 140,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -289,7 +289,7 @@ class PurchaseInvoice extends React.Component {
                           <AiOutlineDownload
                             onClick={() => this.MergeBillNow(params.data)}
                             fill="green"
-                            size="30px"
+                            size="20px"
                           />
                         )}
                     </>
@@ -306,7 +306,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Contact Number",
           field: "partyId.contactNumber",
           filter: true,
-          width: 167,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -321,7 +321,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Company Name",
           field: "partyId.CompanyName",
           filter: true,
-          width: 210,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -336,7 +336,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Owner Name",
           field: "partyId.ownerName",
           filter: true,
-          width: 210,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -351,7 +351,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "First Name",
           field: "partyId.firstName",
           filter: true,
-          width: 210,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -366,7 +366,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Last Name",
           field: "partyId.lastName",
           filter: true,
-          width: 170,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -382,7 +382,7 @@ class PurchaseInvoice extends React.Component {
           field: "partyId.email",
           filter: true,
           editable: true,
-          width: 310,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -412,7 +412,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "IGST ",
           field: "igstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -425,7 +425,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "SGST  ",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+           width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -438,7 +438,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "CGST  ",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -451,7 +451,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -464,7 +464,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 140,
+           width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -477,7 +477,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -492,7 +492,7 @@ class PurchaseInvoice extends React.Component {
           field: "params?.data?.orderItems?.length",
           filter: true,
           resizable: true,
-          width: 150,
+           width: 125,
           cellRendererFramework: (params) => {
             // console.log(params.data);
             return (
@@ -1148,11 +1148,11 @@ class PurchaseInvoice extends React.Component {
                         <Col  >
                           <h1
                             className="float-left "
-                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
+                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
                             Purchased Invoice
                           </h1>
                         </Col>
-                        <Col lg="3" md="6" sm="12" className="mt-2">
+                        <Col lg="3" md="6" sm="12" style={{marginTop:'25px'}}>
                           <div className="table-input mr-1 cssforproductlist">
                             <Input
                               placeholder="search Item here..."
@@ -1164,14 +1164,14 @@ class PurchaseInvoice extends React.Component {
                           </div>
                         </Col>
                         {this.state.MasterShow && (
-                          <Col lg="3" md="4" sm="12" className="mt-2">
+                          <Col lg="3" md="4" sm="12" style={{marginTop:'25px'}}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
                             />
                           </Col>
                         )}
-                        <Col lg="1" className="mt-2">
+                        <Col lg="1" style={{marginTop:'25px'}}>
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions.View && (
                               <>

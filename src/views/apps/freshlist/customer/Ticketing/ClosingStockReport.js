@@ -86,361 +86,542 @@ class ClosingStockReport extends React.Component {
         suppressMenu: true,
       },
 
-      // columnDefs: [
-      //   {
-      //     headerName: "Product Name",
-      //     field: "warehouseId.mobileNo",
-      //     filter: true,
-      //     sortable: true,
-      //     width: 140,
-      //     editable: true,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer text-center">
-      //             <span>{params?.data?.warehouseId?.mobileNo}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "HSN",
-      //     field: "warehouseId.mobileNo",
-      //     filter: true,
-      //     sortable: true,
-      //     width: 140,
-      //     editable: true,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer text-center">
-      //             <span>{params?.data?.warehouseId?.mobileNo}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Tax Rate",
-      //     field: "warehouseId.mobileNo",
-      //     filter: true,
-      //     sortable: true,
-      //     width: 140,
-      //     editable: true,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <>
-      //           <div className="actions cursor-pointer text-center">
-      //             <span>{params?.data?.warehouseId?.mobileNo}</span>
-      //           </div>
-      //         </>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Openning stock details",
-      //     headerClass: "header-group-style",
-      //     children: [
-      //       {
-      //         headerName: "Opening qty",
-      //         field: "openingQty",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Purchase Rate",
-      //         field: "purchaseRate",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Tax amount",
-      //         field: "taxAmount",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Total",
-      //         field: "total",
-      //         headerClass: "header-style",
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     headerName: "Inward stock details",
-      //     headerClass: "header-group-style",
-      //     children: [
-      //       {
-      //         headerName: "Inward Qty",
-      //         field: "openingQty",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Purchase Rate",
-      //         field: "purchaseRate",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Tax amount",
-      //         field: "taxAmount",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Total",
-      //         field: "total",
-      //         headerClass: "header-style",
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     headerName: "Outward stock details",
-      //     headerClass: "header-group-style",
-      //     children: [
-      //       {
-      //         headerName: "Sale Qty",
-      //         field: "openingQty",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Sale Rate",
-      //         field: "purchaseRate",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Tax amount",
-      //         field: "taxAmount",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Total",
-      //         field: "total",
-      //         headerClass: "header-style",
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     headerName: "Outward stock details",
-      //     headerClass: "header-group-style",
-      //     children: [
-      //       {
-      //         headerName: "Closing Stock",
-      //         field: "openingQty",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Avg price",
-      //         field: "purchaseRate",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Tax amount",
-      //         field: "taxAmount",
-      //         headerClass: "header-style",
-      //       },
-      //       {
-      //         headerName: "Total",
-      //         field: "total",
-      //         headerClass: "header-style",
-      //       },
-      //     ],
-      //   },
-      // ],
       columnDefs: [
         {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          // checkboxSelection: true,
-          width: 80,
-          filter: true,
+          headerName: "Product Details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Product Name",
+              field: "productId.Product_Title",
+              filter: true,
+              sortable: true,
+              width: 140,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.productId?.Product_Title}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "HSN",
+              field: "productId.HSN_Code",
+              filter: true,
+              sortable: true,
+              width: 140,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.productId?.HSN_Code}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax Rate",
+              field: "productId.GSTRate",
+              filter: true,
+              sortable: true,
+              width: 140,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.productId?.GSTRate}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
         },
 
         {
-          headerName: "Warehouse Name",
-          field: "warehouseId.warehouseName",
-          filter: true,
-          sortable: true,
+          headerName: "Openning stock details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Opening qty",
+              field: "currentStock",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.currentStock}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Purchase Rate",
+              field: "price",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.price}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax",
+              field: "OpeningTax",
+              filter: true,
+              sortable: true,
+              width: 140,
 
-          editable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.warehouseId?.warehouseName}</span>
-                </div>
-              </>
-            );
-          },
-        },
-
-        {
-          headerName: "Address",
-          field: "warehouseId.address",
-          filter: true,
-          sortable: true,
-          width: 360,
-          editable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.warehouseId?.address}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Number",
-          field: "warehouseId.mobileNo",
-          filter: true,
-          sortable: true,
-          width: 140,
-          editable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.warehouseId?.mobileNo}</span>
-                </div>
-              </>
-            );
-          },
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.OpeningTax}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Total",
+              field: "OpeningTotal",
+              filter: true,
+              sortable: true,
+              headerClass: "header-style",
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.OpeningTotal}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
         },
         {
-          headerName: "LandLine Number",
-          field: "warehouseId.landlineNumber",
-          filter: true,
-          width: 170,
-          sortable: true,
-          editable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.warehouseId?.landlineNumber}</span>
-                </div>
-              </>
-            );
-          },
+          headerName: "Inward stock details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Inward Qty",
+              field: "pQty",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.pQty}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Purchase Rate",
+              field: "pRate",
+              filter: true,
+              sortable: true,
+              headerClass: "header-style",
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.pRate}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax amount",
+              field: "pTaxAmount",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.pTaxAmount}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Total",
+              field: "pTotal",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.pTotal}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
         },
         {
-          headerName: "Product HSN Code",
-          field: "productId.HSN_Code",
-          filter: true,
-          width: 185,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.productId?.HSN_Code}</span>
-                </div>
-              </>
-            );
-          },
+          headerName: "Outward stock details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Sale Qty",
+              field: "sQty",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.sQty}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Sale Rate",
+              field: "sRate",
+              filter: true,
+              sortable: true,
+              headerClass: "header-style",
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.sRate}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax amount",
+              field: "sTaxAmount",
+              filter: true,
+              sortable: true,
+              headerClass: "header-style",
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.sTaxAmount}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Total",
+              filter: true,
+              sortable: true,
+              field: "sTotal",
+              headerClass: "header-style",
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.sTotal}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
         },
         {
-          headerName: "Products",
-          field: "productId.Product_Title",
-          filter: true,
-          sortable: true,
-          width: 260,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.productId?.Product_Title}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Price",
-          field: "productId.Product_MRP",
-          filter: true,
-          width: 140,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>
-                    {params?.data?.productId?.Product_MRP?.toFixed(2)}
-                  </span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Current Stock",
-          field: "currentStock",
-          filter: true,
-          sortable: true,
-          width: 140,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  {params?.data?.currentStock}
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Unit Type",
-          field: "productId?.secondaryUnit",
-          filter: true,
-
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  {params?.data?.productId?.secondaryUnit}
-                </div>
-              </>
-            );
-          },
-        },
-
-        {
-          headerName: "Created At",
-          field: "createdAt",
-          filter: true,
-          width: 140,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.createdAt?.split("T")[0]}</span>
-                </div>
-              </>
-            );
-          },
-        },
-
-        {
-          headerName: "Updated date",
-          field: "updatedAt",
-          filter: true,
-          width: 140,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <div className="actions cursor-pointer">
-                    <span>{params?.data?.updatedAt?.split("T")[0]}</span>
-                  </div>
-                </div>
-              </>
-            );
-          },
+          headerName: "Outward stock details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Closing Stock",
+              field: "cQty",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cQty}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Avg price",
+              field: "cRate",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cRate}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax amount",
+              field: "cTaxAmount",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cTaxAmount}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Total",
+              field: "cTotal",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cTotal}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
         },
       ],
+      // columnDefs: [
+      //   {
+      //     headerName: "UID",
+      //     valueGetter: "node.rowIndex + 1",
+      //     field: "node.rowIndex + 1",
+      //     // checkboxSelection: true,
+      //     width: 80,
+      //     filter: true,
+      //   },
+
+      //   {
+      //     headerName: "Warehouse Name",
+      //     field: "warehouseId.warehouseName",
+      //     filter: true,
+      //     sortable: true,
+
+      //     editable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.warehouseId?.warehouseName}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+
+      //   {
+      //     headerName: "Address",
+      //     field: "warehouseId.address",
+      //     filter: true,
+      //     sortable: true,
+      //     width: 360,
+      //     editable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.warehouseId?.address}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Number",
+      //     field: "warehouseId.mobileNo",
+      //     filter: true,
+      //     sortable: true,
+      //     width: 140,
+      //     editable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.warehouseId?.mobileNo}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "LandLine Number",
+      //     field: "warehouseId.landlineNumber",
+      //     filter: true,
+      //     width: 170,
+      //     sortable: true,
+      //     editable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.warehouseId?.landlineNumber}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Product HSN Code",
+      //     field: "productId.HSN_Code",
+      //     filter: true,
+      //     width: 185,
+      //     sortable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.productId?.HSN_Code}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Products",
+      //     field: "productId.Product_Title",
+      //     filter: true,
+      //     sortable: true,
+      //     width: 260,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.productId?.Product_Title}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Price",
+      //     field: "productId.Product_MRP",
+      //     filter: true,
+      //     width: 140,
+      //     sortable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>
+      //               {params?.data?.productId?.Product_MRP?.toFixed(2)}
+      //             </span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Current Stock",
+      //     field: "currentStock",
+      //     filter: true,
+      //     sortable: true,
+      //     width: 140,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             {params?.data?.currentStock}
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      //   {
+      //     headerName: "Unit Type",
+      //     field: "productId?.secondaryUnit",
+      //     filter: true,
+
+      //     sortable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             {params?.data?.productId?.secondaryUnit}
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+
+      //   {
+      //     headerName: "Created At",
+      //     field: "createdAt",
+      //     filter: true,
+      //     width: 140,
+      //     sortable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <span>{params?.data?.createdAt?.split("T")[0]}</span>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+
+      //   {
+      //     headerName: "Updated date",
+      //     field: "updatedAt",
+      //     filter: true,
+      //     width: 140,
+      //     sortable: true,
+      //     cellRendererFramework: (params) => {
+      //       return (
+      //         <>
+      //           <div className="actions cursor-pointer text-center">
+      //             <div className="actions cursor-pointer">
+      //               <span>{params?.data?.updatedAt?.split("T")[0]}</span>
+      //             </div>
+      //           </div>
+      //         </>
+      //       );
+      //     },
+      //   },
+      // ],
     };
   }
 
@@ -459,10 +640,14 @@ class ClosingStockReport extends React.Component {
         let closing = value?.filter((ele) => ele?.closingStatus == "closing");
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
-            return { ...ele, ...val };
+            let OpeningTax =
+              (val.currentStock * val?.price * val?.productId?.GSTRate*0.01).toFixed(2);
+            let OpeningTotal =
+              (val.currentStock * val?.price * (100+val?.productId?.GSTRate)*0.01).toFixed(2);
+            return { ...ele, ...val, OpeningTax, OpeningTotal };
           });
         });
-        console.log(alldata);
+        // console.log(alldata);
         if (alldata?.length) {
           this.setState({
             rowData: alldata?.reverse(),
@@ -602,14 +787,14 @@ class ClosingStockReport extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("ClosingStockReport", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("ClosingStockReport.pdf");
   }
 
   exportToPDF = async () => {
@@ -653,7 +838,7 @@ class ClosingStockReport extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "ClosingStockReport.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -677,7 +862,7 @@ class ClosingStockReport extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `ClosingStockReport.${excelType}`);
       },
     });
   };

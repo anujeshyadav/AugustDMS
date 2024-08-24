@@ -86,14 +86,6 @@ class OpeningStock extends React.Component {
       },
 
       columnDefs: [
-        {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          // checkboxSelection: true,
-          width: 80,
-          filter: true,
-        },
         // {
         //   headerName: "Created At",
         //   field: "createdAt",
@@ -167,24 +159,24 @@ class OpeningStock extends React.Component {
           },
         },
 
-        {
-          headerName: "Price",
-          field: "productId.Product_MRP",
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>
-                    {params?.data?.productId?.Product_MRP &&
-                      params?.data?.productId?.Product_MRP?.toFixed(2)}
-                  </span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Price",
+        //   field: "productId.Product_MRP",
+        //   filter: true,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer">
+        //           <span>
+        //             {params?.data?.productId?.Product_MRP &&
+        //               params?.data?.productId?.Product_MRP?.toFixed(2)}
+        //           </span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Quantity",
           field: "currentStock",
@@ -262,22 +254,22 @@ class OpeningStock extends React.Component {
           },
         },
 
-        {
-          headerName: "unit Type",
-          field: "productId.secondaryUnit",
-          filter: true,
-          sortable: true,
+        // {
+        //   headerName: "unit Type",
+        //   field: "productId.secondaryUnit",
+        //   filter: true,
+        //   sortable: true,
 
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  {params?.data?.productId?.secondaryUnit}
-                </div>
-              </>
-            );
-          },
-        },
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer">
+        //           {params?.data?.productId?.secondaryUnit}
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Warehouse Name",
           field: "warehouseId.warehouseName",
@@ -295,23 +287,23 @@ class OpeningStock extends React.Component {
           },
         },
 
-        {
-          headerName: "Address",
-          field: "warehouseId.address",
-          filter: true,
-          sortable: true,
-          width: 350,
-          editable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer">
-                  <span>{params?.data?.warehouseId?.address}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Address",
+        //   field: "warehouseId.address",
+        //   filter: true,
+        //   sortable: true,
+        //   width: 350,
+        //   editable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer">
+        //           <span>{params?.data?.warehouseId?.address}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Number",
           field: "warehouseId.mobileNo",

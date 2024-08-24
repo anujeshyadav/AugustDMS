@@ -223,3 +223,12 @@ label {
   top: 2px;
 
 }
+.ag-header-group-text {
+  margin-top: 8px;
+  color: black;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

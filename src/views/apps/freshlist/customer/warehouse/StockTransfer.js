@@ -225,21 +225,21 @@ class StockTransfer extends React.Component {
           },
         },
 
-        // {
-        //   headerName: "Grand Total",
-        //   field: "grandTotal",
-        //   filter: true,
-        //   sortable: true,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <>
-        //         <div className="actions cursor-pointer">
-        //           <span>{params?.data?.grandTotal}</span>
-        //         </div>
-        //       </>
-        //     );
-        //   },
-        // },
+        {
+          headerName: "Mobile no Transfer To",
+          field: "warehouseToId.mobileNo",
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.warehouseToId?.mobileNo}</span>
+                </div>
+              </>
+            );
+          },
+        },
         {
           headerName: "Created date",
           field: "createdAt",
@@ -407,10 +407,7 @@ class StockTransfer extends React.Component {
     await _Get(Stock_trx_FtoW_List, db)
       .then(async (res) => {
         let TotalTransfered = res?.Warehouse?.reverse();
-        // let TotalTransfered = res?.Warehouse?.filter(
-        //   (ele) => ele?.transferStatus == "InProcess"
-        // )?.reverse();
-        debugger;
+ 
         if (WarehouseIncharge) {
           let Url = `${Warehouse_ListBy_id + id}/${db}`;
           await _GetList(Url)
@@ -453,6 +450,7 @@ class StockTransfer extends React.Component {
           TotalTransfered?.forEach((ele) => {
             ele["ShowDropDown"] = true;
           });
+          console.log(TotalTransfered);
 
           this.setState({
             rowData: TotalTransfered,
@@ -1143,8 +1141,8 @@ class StockTransfer extends React.Component {
                             <Label>From :</Label>
                             <h5>
                               {this.state.ViewOneData?.warehouseFromId
-                                .warehouseName &&
-                                this.state.ViewOneData?.warehouseFromId.warehouseName?.toUpperCase()}
+                                ?.warehouseName &&
+                                this.state.ViewOneData?.warehouseFromId?.warehouseName?.toUpperCase()}
                             </h5>
                           </Col>
                           <Col className="mt-1" lg="12" md="12" sm="12">

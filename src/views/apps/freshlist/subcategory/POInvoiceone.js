@@ -82,7 +82,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
   let month = curentDate.getMonth() + 1;
   let year = curentDate.getFullYear();
   let currentDate = `${day}-${month}-${year}`;
-
+// fixed; 
   return (
     <>
       <Document>

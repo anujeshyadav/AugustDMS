@@ -137,7 +137,6 @@ class purchasereportamount extends React.Component {
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
-            console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.order?.invoiceId}</span>
@@ -165,7 +164,6 @@ class purchasereportamount extends React.Component {
           editable: true,
           width: 180,
           cellRendererFramework: (params) => {
-            console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.order?.ARN}</span>

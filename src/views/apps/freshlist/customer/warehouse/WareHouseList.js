@@ -381,6 +381,7 @@ class WareHouseList extends React.Component {
         } else {
           List = value?.filter((ele) => ele?.created_by?._id == id);
         }
+      
         if (List?.length) {
           this.setState({ rowData: List });
         }

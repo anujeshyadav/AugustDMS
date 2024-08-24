@@ -106,7 +106,7 @@ class CashBookReports extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 100,
+          width: 55,
           filter: true,
         },
 
@@ -115,7 +115,7 @@ class CashBookReports extends React.Component {
           field: "date",
           filter: true,
           resizable: true,
-          width: 200,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -161,7 +161,7 @@ class CashBookReports extends React.Component {
           },
           filter: true,
           resizable: true,
-          width: 280,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -177,7 +177,7 @@ class CashBookReports extends React.Component {
           field: "voucherType",
           filter: true,
           resizable: true,
-          width: 230,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -193,7 +193,7 @@ class CashBookReports extends React.Component {
           field: "voucherNo",
           filter: true,
           resizable: true,
-          width: 180,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -215,7 +215,7 @@ class CashBookReports extends React.Component {
           },
           editable: true,
           resizable: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -240,7 +240,7 @@ class CashBookReports extends React.Component {
             return null;
           },
           resizable: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -278,7 +278,7 @@ class CashBookReports extends React.Component {
           field: "cashRunning",
           filter: true,
           resizable: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -775,9 +775,9 @@ class CashBookReports extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-1 mr-1">
-            <Col style={{ marginTop: "30px" }}>
-              <h3 className="float-left " style={{ fontWeight: "600" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h3 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"30px"}}>
                 Cashbook Report
               </h3>
             </Col>
@@ -791,7 +791,7 @@ class CashBookReports extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col xl="2" lg="2" md="2" style={{ marginTop: "30px" }}>
+            <Col xl="3" lg="3" md="3" style={{ marginTop: "30px" }}>
               <div className="table-input">
                 <Input
                   placeholder="search Item here..."
@@ -800,7 +800,7 @@ class CashBookReports extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                   <div className="table-input">
@@ -837,7 +837,7 @@ class CashBookReports extends React.Component {
               </Row>
             </Col>
 
-            <Col style={{ marginTop: "30px" }}>
+            <Col lg="1" xl="1" style={{ marginTop: "30px" }}>
               {InsiderPermissions && InsiderPermissions?.View && (
                 <span className="">
                   <FaFilter
@@ -846,7 +846,7 @@ class CashBookReports extends React.Component {
                     size="35px"
                     onClick={this.LookupviewStart}
                     color="#39cccc"
-                    className="float-right mt-1"
+                    className="float-right  "
                   />
                 </span>
               )}
@@ -860,15 +860,17 @@ class CashBookReports extends React.Component {
                       style={{ cursor: "pointer" }}
                       title="Download file"
                       size="35px"
-                      className="dropdown-button mt-1"
+                      className="dropdown-button "
                       color="#39cccc"
                     />
                     {isOpen && (
                       <div
-                        style={{
-                          position: "absolute",
-                          zIndex: "1",
-                        }}
+                      style={{
+                        position: "absolute",
+                        zIndex: "1",
+                        border: "1px solid #39cccc",
+                        backgroundColor: "white",
+                      }}
                         className="dropdown-content dropdownmy">
                         <h5
                           onClick={() => this.exportToPDF()}
@@ -907,7 +909,7 @@ class CashBookReports extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">

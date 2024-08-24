@@ -193,10 +193,14 @@ class DeadPartyReport extends React.Component {
           filter: "agSetColumnFilter",
           width: 140,
           cellRendererFramework: params => {
+            let lastDay = params.data?.lastDays?.includes("T")
+            ? params.data.lastDays?.split("T")[0]
+            : params.data.lastDays;
+            
             return (
               <div className=" text-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.lastDays}</span>
+                  <span>{lastDay && lastDay}</span>
                 </div>
               </div>
             );
@@ -220,17 +224,18 @@ class DeadPartyReport extends React.Component {
         this.setState({ Loading: false });
         let rowData = res?.Parties;
         if (rowData) {
-          this.setState({ rowData });
-          this.setState({ rowAllData: rowData });
+          this.setState({
+            rowData: rowData,
+            rowAllData: rowData,
+            AllcolumnDefs: this.state.columnDefs,
+          });
         }
-        this.setState({ AllcolumnDefs: this.state.columnDefs });
 
         let userHeading = JSON.parse(
           localStorage.getItem("DeadPartiesReports")
         );
         if (userHeading?.length) {
           this.setState({ columnDefs: userHeading });
-          // this.gridApi.setColumnDefs(userHeading);
           this.setState({ SelectedcolumnDefs: userHeading });
         } else {
           this.setState({ columnDefs: this.state.columnDefs });

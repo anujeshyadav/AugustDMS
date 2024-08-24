@@ -92,7 +92,7 @@ class DebitNoteList extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -167,7 +167,7 @@ class DebitNoteList extends React.Component {
           headerName: "Name",
           field: "partyId.firstName",
           filter: true,
-          width: 220,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -181,7 +181,7 @@ class DebitNoteList extends React.Component {
           headerName: "Email",
           field: "partyId.email",
           filter: true,
-          width: 250,
+          width: 300,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -194,7 +194,7 @@ class DebitNoteList extends React.Component {
           headerName: "Mobile Number",
           field: "partyId.mobileNumber",
           filter: true,
-          width: 220,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -208,7 +208,7 @@ class DebitNoteList extends React.Component {
           headerName: "Created At",
           field: "createdAt",
           filter: true,
-          width: 210,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -221,7 +221,7 @@ class DebitNoteList extends React.Component {
           headerName: "Total Amount",
           field: "totalAmount",
           filter: true,
-          width: 190,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex justify-content-center  font-weight-500 text-center">
@@ -682,7 +682,7 @@ class DebitNoteList extends React.Component {
                       <Col className="mt-2">
                         <h1
                           className="float-left"
-                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',  }}>
+                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',  }}>
                           Debit Note List
                         </h1>
                       </Col>

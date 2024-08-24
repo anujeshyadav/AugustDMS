@@ -421,8 +421,9 @@ class PurchaseOrderViewList extends React.Component {
           let newList = res?.orderHistory?.filter((lst) => {
             return lst.status !== "Deactive";
           });
-          console.log(newList);
-          this.setState({ rowData: newList.reverse() });
+          if (newList?.length) {
+            this.setState({ rowData: newList?.reverse() });
+          } 
         }
         this.setState({ AllcolumnDefs: this.state.columnDefs });
         this.setState({ SelectedCols: this.state.columnDefs });
