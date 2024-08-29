@@ -1659,6 +1659,7 @@ body {
 button.btn.btn.btn-primary {
   padding-top: 10px !important;
   height: 35px !important;
+  font-size: 12px;
 }
 
 button.float-left.csss645sd.btn.btn-\#39cccc {
@@ -1709,6 +1710,9 @@ input#search_input {
 [dir] .card-body {
   padding: 10px !important;
   padding-top: 1.5rem !important;
+}
+button{
+  font-size: 12px !important;
 }
 
 // .ag-header-group-text {

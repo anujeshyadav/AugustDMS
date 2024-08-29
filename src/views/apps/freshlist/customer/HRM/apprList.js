@@ -75,7 +75,7 @@ class ApprList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -100,7 +100,7 @@ class ApprList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 70,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -108,7 +108,7 @@ class ApprList extends React.Component {
                   this.state.InsiderPermissions.Edit && (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -121,7 +121,7 @@ class ApprList extends React.Component {
                 {this.state.InsiderPermissions.View && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => {
                       this.runthisfunction(params.data._id);
@@ -174,7 +174,7 @@ class ApprList extends React.Component {
           headerName: "Employee Pan No",
           field: "panCard",
           filter: true,
-          width: 175,
+          width: 145,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -189,7 +189,7 @@ class ApprList extends React.Component {
           headerName: "Apply Month",
           field: "applyMonth",
           filter: true,
-          width: 130,
+          width: 110,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -204,7 +204,7 @@ class ApprList extends React.Component {
           headerName: "Increment Value",
           field: "incrementValue",
           filter: true,
-          width: 160,
+          width: 140,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -219,7 +219,7 @@ class ApprList extends React.Component {
           headerName: "Rule",
           field: ".rule.rule",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -583,20 +583,11 @@ class ApprList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Appraisal List
               </h1>
-            </Col>
-            <Col className="mt-2" lg="3">
-              <div className="table-input cssforproductlist">
-                <Input
-                  placeholder="search Item here..."
-                  onChange={e => this.updateSearchQuery(e.target.value)}
-                  value={this.state.value}
-                />
-              </div>
             </Col>
             {this.state.MasterShow && (
               <Col className="mt-2" lg="3">
@@ -606,6 +597,16 @@ class ApprList extends React.Component {
                 />
               </Col>
             )}
+            <Col className="mt-2" lg="3">
+              <div className="table-input cssforproductlist">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={e => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
+            
             <Col className="mt-2" lg="2" xs="8">
               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
@@ -625,7 +626,7 @@ class ApprList extends React.Component {
                           history.push("/app/ajgroup/HRM/TCPA/apprform")
                         }
                       >
-                        <FaPlus size={15} /> Add Appraisal
+                        <FaPlus size={13} /> Add Appraisal
                       </Button>
                     )}
                   />
@@ -715,7 +716,7 @@ class ApprList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -790,7 +791,7 @@ class ApprList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

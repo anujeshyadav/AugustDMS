@@ -108,7 +108,7 @@ class InterviewList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -116,7 +116,7 @@ class InterviewList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -129,7 +129,7 @@ class InterviewList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -154,7 +154,7 @@ class InterviewList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -175,7 +175,7 @@ class InterviewList extends React.Component {
           headerName: "Status",
           field: "Status",
           filter: true,
-          width: 100,
+          width: 90,
           cellRendererFramework: (params) => {
             return params.value == "comleted" ? (
               <div className="cursor-pointer text-center">
@@ -194,7 +194,7 @@ class InterviewList extends React.Component {
         },
 
         {
-          headerName: "FullName",
+          headerName: "Full Name",
           field: "candidateName",
           filter: true,
           width: 210,
@@ -212,7 +212,7 @@ class InterviewList extends React.Component {
           headerName: "Date Of Interview",
           field: "dateOfInterview",
           filter: true,
-          width: 175,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -608,20 +608,20 @@ class InterviewList extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Interview List
               </h1>
             </Col>
            
             {this.state.MasterShow && (
-              <Col className="mt-2" lg="2" md="2">
+              <Col className="mt-2" lg="3" md="3">
                 <SuperAdminUI
                   onDropdownChange={this.handleDropdownChange}
                   onSubmit={this.handleParentSubmit}
                 />
               </Col>
             )}
-             <Col className="mt-2" lg="2">
+             <Col className="mt-2" lg="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."

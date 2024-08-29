@@ -73,7 +73,7 @@ class RuleList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -98,15 +98,15 @@ class RuleList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions.View && (
                     <Eye
-                      className="mr-50"
-                      size="25px"
+                     
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -118,8 +118,8 @@ class RuleList extends React.Component {
                   )}
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
-                    className="mr-50"
-                    size="25px"
+                     style={{marginLeft:"2px"}}
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -131,8 +131,8 @@ class RuleList extends React.Component {
                 )}
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
-                    className="mr-50"
-                    size="25px"
+                      style={{marginLeft:"2px"}}
+                    size="20px"
                     color="red"
                     onClick={() => {
                       this.runthisfunction(params.data._id);
@@ -145,8 +145,8 @@ class RuleList extends React.Component {
                     {this.state.InsiderPermissions &&
                       this.state.InsiderPermissions.Edit && (
                         <Edit
-                          className="mr-50"
-                          size="25px"
+                           style={{marginLeft:"2px"}}
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -172,15 +172,15 @@ class RuleList extends React.Component {
             console.log(params.data);
             return params.value == "comleted" ? (
               <div className="cursor-pointer text-center ">
-                {params.data.status}
+               <span> {params.data.status}</span>
               </div>
             ) : params.value == "pending" ? (
               <div className="cursor-pointer text-center">
-                {params.data.status}
+               <span> {params.data.status}</span>
               </div>
             ) : (
               <div className="cursor-pointer text-center">
-                {params.data.status}
+               <span> {params.data.status}</span>
               </div>
             );
           },
@@ -189,7 +189,7 @@ class RuleList extends React.Component {
           headerName: "Rules",
           field: "rule",
           filter: true,
-          width: 180,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -219,7 +219,7 @@ class RuleList extends React.Component {
           headerName: "Duration Type",
           field: "period",
           filter: true,
-          width: 145,
+          width: 188,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -234,12 +234,14 @@ class RuleList extends React.Component {
           headerName: "Calculation Type",
           field: "type",
           filter: true,
-          width: 165,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <div>
+                <span>
                  {params?.data?.type} 
+                </span>
                 </div>
               </div>
             );
@@ -249,7 +251,7 @@ class RuleList extends React.Component {
           headerName: "Calculation Value",
           field: "typeValue",
           filter: true,
-          width: 175,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -706,21 +708,13 @@ class RuleList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Set Rule List
               </h1>
             </Col>
-            <Col className="mt-2" lg="3">
-              <div className="table-input cssforproductlist">
-                <Input
-                  placeholder="search Item here..."
-                  onChange={(e) => this.updateSearchQuery(e.target.value)}
-                  value={this.state.value}
-                />
-              </div>
-            </Col>
+           
             {this.state.MasterShow && (
               <Col className="mt-2" lg="3">
                 <SuperAdminUI
@@ -729,6 +723,15 @@ class RuleList extends React.Component {
                 />
               </Col>
             )}
+             <Col className="mt-2" lg="3">
+              <div className="table-input cssforproductlist">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
             <Col className="mt-2" lg="2" xs="8">
               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
@@ -750,7 +753,7 @@ class RuleList extends React.Component {
                             "/app/ajgroup/HRM/Setrules/rulesform"
                           )
                         }>
-                        <FaPlus size={15} /> Add Rules
+                        <FaPlus size={13} /> Add Rules
                       </Button>
                     )}
                   />
@@ -833,7 +836,7 @@ class RuleList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -908,7 +911,7 @@ class RuleList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                         pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

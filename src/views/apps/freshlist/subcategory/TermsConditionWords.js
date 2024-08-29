@@ -62,8 +62,8 @@ const TermsConditionWords = ({ BilData }) => {
             }
           }>
           <Text style={{ fontSize: "10px", marginTop: "15px" }}>
-            {BilData?.CompanyDetails.termsAndCondition &&
-              BilData?.CompanyDetails.termsAndCondition}
+            {BilData?.CompanyDetails?.termsAndCondition &&
+              BilData?.CompanyDetails?.termsAndCondition}
           </Text>
         </View>
       </View>

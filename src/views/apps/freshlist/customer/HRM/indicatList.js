@@ -100,7 +100,7 @@ class IndicList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width:80,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -108,7 +108,7 @@ class IndicList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -121,7 +121,7 @@ class IndicList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="blue"
                     onClick={() =>
                       this.props.history.push({
@@ -135,7 +135,7 @@ class IndicList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => {
                       this.runthisfunction(params.data._id);
@@ -149,7 +149,7 @@ class IndicList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -223,7 +223,7 @@ class IndicList extends React.Component {
           headerName: "Attendance Rating",
           field: "attendance",
           filter: true,
-          width: 190,
+          width: 155,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -238,7 +238,7 @@ class IndicList extends React.Component {
           headerName: "Collection Rating",
           field: "collectionRating",
           filter: true,
-          width: 180,
+          width: 155,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -254,7 +254,7 @@ class IndicList extends React.Component {
           field: "targetRating",
           filter: true,
 
-          width: 145,
+          width: 120,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -644,14 +644,14 @@ class IndicList extends React.Component {
             </Col>
            
             {this.state.MasterShow && (
-              <Col style={{marginTop:"25px"}} lg="2">
+              <Col style={{marginTop:"25px"}} lg="3">
                 <SuperAdminUI
                   onDropdownChange={this.handleDropdownChange}
                   onSubmit={this.handleParentSubmit}
                 />
               </Col>
             )}
-             <Col style={{marginTop:"25px"}} lg="2">
+             <Col style={{marginTop:"25px"}} lg="3">
               
               <div className="table-input cssforproductlist">
                 <Input
@@ -682,7 +682,7 @@ class IndicList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={15} /> Show Indicator
+                        <FaPlus size={13} /> Show Indicator
                       </Button>
                     )}
                   />

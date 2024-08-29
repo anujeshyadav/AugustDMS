@@ -102,14 +102,14 @@ class HolidayList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 90,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -160,7 +160,7 @@ class HolidayList extends React.Component {
           headerName: "Year",
           field: "year",
           filter: true,
-          width: 140,
+          width: 55,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -175,7 +175,7 @@ class HolidayList extends React.Component {
           headerName: "Month",
           field: "month",
           filter: true,
-          width: 140,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -190,7 +190,7 @@ class HolidayList extends React.Component {
           headerName: "Date",
           field: "day",
           filter: true,
-          width: 140,
+          width: 55,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -571,19 +571,19 @@ class HolidayList extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Holiday List
               </h1>
             </Col>
             {this.state.MasterShow && (
-              <Col lg="2" style={{marginTop:"25px"}}>
+              <Col lg="3" style={{marginTop:"25px"}}>
                 <SuperAdminUI
                   onDropdownChange={this.handleDropdownChange}
                   onSubmit={this.handleParentSubmit}
                 />
               </Col>
             )}
-            <Col lg="2" style={{marginTop:"25px"}}>
+            <Col lg="3" style={{marginTop:"25px"}}>
               <div className="table-input   cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -613,7 +613,7 @@ class HolidayList extends React.Component {
                             "/app/ajgroup/HRM/Time-sheet/holidayform"
                           )
                         }>
-                        <FaPlus size={15} /> Add Holiday
+                        <FaPlus size={13} /> Add Holiday
                       </Button>
                     )}
                   />

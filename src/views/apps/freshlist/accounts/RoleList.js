@@ -61,7 +61,7 @@ class RoleList extends React.Component {
       DepartmentName: "",
       InsiderPermissions: {},
       userData: {},
-      paginationPageSize: 30,
+      paginationPageSize: 15,
       Position: 0,
       MasterShow: false,
       DepartmentPresent: false,
@@ -86,7 +86,7 @@ class RoleList extends React.Component {
           field: "roleName",
           filter: true,
           resizable: true,
-          width: 280,
+          width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -104,7 +104,7 @@ class RoleList extends React.Component {
           editable: true,
           resizable: true,
           
-          width: 380,
+          width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -122,7 +122,7 @@ class RoleList extends React.Component {
           field: "desc",
           filter: true,
           resizable: true,
-          width: 400,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -138,7 +138,7 @@ class RoleList extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 180,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -155,14 +155,14 @@ class RoleList extends React.Component {
                                 <span
                                   style={{
                                     border: "1px solid white",
-                                    padding: "10px",
-                                    borderRadius: "30px",
+                                    padding: "5px",
+                                    borderRadius: "15px",
                                     backgroundColor: "rgb(212, 111, 16)",
                                     marginLeft: "3px",
                                   }}>
                                   <FaPencilAlt
                                     className=""
-                                    size="20px"
+                                    size="15px"
                                     color="white"
                                     onClick={() =>
                                       history.push({
@@ -186,14 +186,14 @@ class RoleList extends React.Component {
                           <span
                             style={{
                               border: "1px solid white",
-                              padding: "10px",
-                              borderRadius: "30px",
+                              padding: "5px",
+                              borderRadius: "15px",
                               backgroundColor: "rgb(212, 111, 16)",
                               marginLeft: "3px",
                             }}>
                             <FaPencilAlt
                               className=""
-                              size="20px"
+                              size="15px"
                               color="white"
                               onClick={() =>
                                 history.push({
@@ -469,18 +469,18 @@ class RoleList extends React.Component {
         <Col sm="12">
           <Card>
             <Row
-              className="mt-1  "
-              style={{ marginLeft: "5px", marginRight: "5px" }}>
-              <Col lg="1" md="2" xs="12" className="mt-1  ">
+              
+              style={{ marginLeft: "3px", marginRight: "3px" }}>
+              <Col lg="1" md="2" xs="12"  >
                 
                 <h2
                                 className="float-left "
-                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'24px' }}>
+                               style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                                  Role List
                               </h2>
               </Col>
               {this.state.MasterShow ? (
-                <Col lg="2" className="mt-1">
+                <Col lg="2" style={{marginTop:"25px"}}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -491,7 +491,7 @@ class RoleList extends React.Component {
                   <Col></Col>
                 </>
               )}
-              <Col lg="2" md="2" sm="6" xs="12" className="mt-1  ">
+              <Col lg="3" md="3" sm="6" xs="12" style={{marginTop:"25px"}}>
                 <div className="table-input  cssforproductlist">
                   <Input
                     style={{ width: "100%" }}
@@ -502,9 +502,9 @@ class RoleList extends React.Component {
                 </div>
               </Col>
 
-              <Col xl="7" lg="7" md="7">
-                <Row>
-                  <Col lg="3" md="3" sm="3" xs="7" className="mt-1  ">
+              <Col xl="6" lg="6" md="6">
+                <div style={{display:"flex", justifyContent:"space-between"}}>
+                  <div style={{marginTop:"25px"}}>
                     {this.state.InsiderPermissions &&
                       this.state.InsiderPermissions?.Download && (
                         <div>
@@ -527,60 +527,61 @@ class RoleList extends React.Component {
                           </Button.Ripple>
                         </div>
                       )}
-                  </Col>
+                  </div>
+
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.Create && (
-                      <Col lg="2" md="2" xl="2" xs="5" className="mt-1  ">
+                      <div style={{marginTop:"25px"}}>
                         <div>
                           <Route
                             render={({ history }) => (
                               <button
                                 style={{
-                                  cursor: "pointer",
-                                  backgroundColor: "rgb(8, 91, 245)",
-                                  color: "white",
-                                  fontWeight: "600",
-                                  height: "43px",
-                                  border: "none",
-                                  outline: "none",
-                                  width: "100%",
-                                  borderRadius: "10px",
-                                  textTransform:'uppercase'
-                                }}
-                                className=" float-left"
-                                // color="#39cccc"
+                              cursor: "pointer",
+                              backgroundColor: "rgb(8, 91, 245)",
+                              color: "white",
+                              fontWeight: "600",
+                              height: "35px",
+                              border: "none",
+                              outline: "none",
+                              width: "100%",
+                              borderRadius: "10px",
+                              textTransform:'uppercase'
+                            }}
+                            color="#39cccc"
                                 onClick={() =>
                                   history.push(
                                     "/app/freshlist/account/addRoleNew"
                                   )
                                 }>
-                                <FaPlus size={15} /> Role
+                                <FaPlus size={13} /> Role
                               </button>
                             )}
                           />
                         </div>
-                      </Col>
+                      </div>
                     )}
+
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.Create && (
-                      <Col lg="2" xl="2" md="2" xs="5" className="mt-1  ">
+                      <div style={{marginTop:"25px"}}>
                         <div>
                           <Route
                             render={({ history }) => (
                               <button
                                 style={{
-                                  cursor: "pointer",
-                                  backgroundColor: "rgb(8, 91, 245)",
-                                  color: "white",
-                                  fontWeight: "600",
-                                  height: "43px",
-                                  border: "none",
-                                  outline: "none",
-                                  width: "100%",
-                                  borderRadius: "10px",
-                                  textTransform:'uppercase'
-                                }}
-                                color="#39cccc"
+                              cursor: "pointer",
+                              backgroundColor: "rgb(8, 91, 245)",
+                              color: "white",
+                              fontWeight: "600",
+                              height: "35px",
+                              border: "none",
+                              outline: "none",
+                              width: "100%",
+                              borderRadius: "10px",
+                              textTransform:'uppercase'
+                            }}
+                            color="#39cccc"
                                 onClick={() => {
                                   // history.push("/app/freshlist/account/addRoleNew")
                                   this.toggleModal();
@@ -590,11 +591,12 @@ class RoleList extends React.Component {
                             )}
                           />
                         </div>
-                      </Col>
+                      </div>
                     )}
+
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.Create && (
-                      <Col lg="3" xl="3" xs="7" className="mt-1  ">
+                      <div style={{marginTop:"25px"}}>
                         <div>
                           <Route
                             render={({ history }) => (
@@ -604,7 +606,7 @@ class RoleList extends React.Component {
                                   backgroundColor: "rgb(8, 91, 245)",
                                   color: "white",
                                   fontWeight: "600",
-                                  height: "43px",
+                                  height: "35px",
                                   border: "none",
                                   outline: "none",
                                   width: "100%",
@@ -622,13 +624,14 @@ class RoleList extends React.Component {
                             )}
                           />
                         </div>
-                      </Col>
+                      </div>
                     )}
+
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.View && (
                       <>
-                        {/* {this.state.Position == 1 && ( */}
-                        <Col lg="2" sm="2" md="2" ms="12" className="mt-1  ">
+                      
+                        <div style={{marginTop:"25px"}}>
                           <Route
                             render={({ history }) => (
                               <button
@@ -637,7 +640,7 @@ class RoleList extends React.Component {
                                   backgroundColor: "rgb(8, 91, 245)",
                                   color: "white",
                                   fontWeight: "600",
-                                  height: "43px",
+                                  height: "35px",
                                   border: "none",
                                   outline: "none",
                                   width: "100%",
@@ -654,11 +657,11 @@ class RoleList extends React.Component {
                               </button>
                             )}
                           />
-                        </Col>
-                        {/* )} */}
+                        </div>
+                        
                       </>
                     )}
-                </Row>
+               </div>
               </Col>
             </Row>
             {/* <Row>
@@ -724,7 +727,7 @@ class RoleList extends React.Component {
                         justifyContent: "right",
                       }}></div>
                   </div>
-                  <div>
+                  <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-4rem"}}>
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact

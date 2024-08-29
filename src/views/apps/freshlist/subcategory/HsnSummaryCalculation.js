@@ -21,13 +21,10 @@
 
 // export default HsnSummaryCalculation;
 export const HsnSummaryCalculation = (data) => {
-  // debugger;
   let result;
-  console.log(data);
   result = Object.values(
     data?.gstDetails?.reduce((acc, curr) => {
       let item = acc[curr.hsn];
-      // debugger;
       if (item) {
         item.taxable = curr?.taxable + item?.taxable;
         item.withDiscountAmount =

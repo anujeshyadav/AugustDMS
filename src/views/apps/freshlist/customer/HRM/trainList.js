@@ -98,7 +98,7 @@ class TrainingList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -106,7 +106,7 @@ class TrainingList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -119,7 +119,7 @@ class TrainingList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -132,7 +132,7 @@ class TrainingList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -143,7 +143,7 @@ class TrainingList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -233,7 +233,7 @@ class TrainingList extends React.Component {
           headerName: "Training Type",
           field: "trainingType",
           filter: true,
-          width: 140,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -249,7 +249,7 @@ class TrainingList extends React.Component {
           headerName: "Training Cost",
           field: "trainingCost",
           filter: true,
-          width: 140,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -261,10 +261,10 @@ class TrainingList extends React.Component {
           },
         },
         {
-          headerName: "StartDate",
+          headerName: "Start Date",
           field: "startDate",
           filter: true,
-          width: 110,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -276,10 +276,10 @@ class TrainingList extends React.Component {
           },
         },
         {
-          headerName: "EndDate",
+          headerName: "End Date",
           field: "endDate",
           filter: true,
-          width: 110,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -674,7 +674,7 @@ class TrainingList extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Training List
               </h1>
             </Col>
@@ -717,7 +717,7 @@ class TrainingList extends React.Component {
                             "/app/ajgroup/HRM/RecPlace/trainingForm"
                           )
                         }>
-                        <FaPlus size={15} />
+                        <FaPlus size={13} />
                         Training
                       </Button>
                     )}

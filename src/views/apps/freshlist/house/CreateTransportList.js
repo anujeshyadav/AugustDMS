@@ -92,7 +92,7 @@ class CreateTransportList extends React.Component {
           sortable: true,
 
           editable: true,
-          width: 228,
+          width: 155,
 
           cellRendererFramework: (params) => {
             return (
@@ -109,7 +109,7 @@ class CreateTransportList extends React.Component {
           headerName: "Company Name",
           field: "companyName",
           filter: true,
-          width: 212,
+          width: 200,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -124,7 +124,7 @@ class CreateTransportList extends React.Component {
         {
           headerName: "Contact Number",
           field: "contactNumber",
-          width: 165,
+          width: 135,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -174,7 +174,7 @@ class CreateTransportList extends React.Component {
           headerName: "Pin Code",
           field: "pincode",
           filter: true,
-          width: 103,
+          width: 80,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -206,7 +206,7 @@ class CreateTransportList extends React.Component {
           headerName: "State",
           field: "state",
           filter: true,
-          width: 180,
+          width: 160,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -222,7 +222,7 @@ class CreateTransportList extends React.Component {
         {
           headerName: "Created Date",
           field: "createdAt",
-          width: 140,
+          width: 115,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -239,7 +239,7 @@ class CreateTransportList extends React.Component {
           headerName: "Updated Date",
           field: "updatedAt",
           filter: true,
-          width: 140,
+          width: 115,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -257,7 +257,7 @@ class CreateTransportList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 90,
+          width: 80,
           cellRendererFramework: (params) => {
             return params.data?.status === "Active" ? (
               <div className="text-center">{params.data?.status}</div>
@@ -319,7 +319,7 @@ class CreateTransportList extends React.Component {
           sortable: true,
 
           editable: true,
-          width: 228,
+          width: 150,
 
           cellRendererFramework: (params) => {
             // debugger;
@@ -345,7 +345,7 @@ class CreateTransportList extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 150,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -356,13 +356,13 @@ class CreateTransportList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "#39cccc",
                           }}>
                           <Eye
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() =>
                               history.push(
@@ -381,14 +381,14 @@ class CreateTransportList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(212, 111, 16)",
                             marginLeft: "3px",
                           }}>
                           <FaPencilAlt
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               history.push(
@@ -410,14 +410,14 @@ class CreateTransportList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(236, 24, 9)",
                             marginLeft: "3px",
                           }}>
                           <Trash2
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.runthisfunction(params?.data?._id);
@@ -956,7 +956,7 @@ class CreateTransportList extends React.Component {
                                             )
                                           }>
                                           <FaPlus
-                                            size={14}
+                                            size={13}
                                             style={{ marginRight: "2px" }}
                                           />
                                           Transporter
@@ -1082,7 +1082,7 @@ class CreateTransportList extends React.Component {
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                                 <ContextLayout.Consumer className="ag-theme-alpine">
                                   {(context) => (
                                     <AgGridReact

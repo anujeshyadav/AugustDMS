@@ -100,15 +100,29 @@ class IncenList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
+              {this.state.InsiderPermissions &&
+                this.state.InsiderPermissions.View && (
+                  <Eye
+                    className="mr-50"
+                    size="20px"
+                    color="green"
+                    onClick={() =>
+                      this.props.history.push({
+                        pathname: `/app/ajgroup/HRM/incentView/${params.data?._id}`,
+                        state: params.data,
+                      })
+                    }
+                  />
+                )}
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions.Edit && (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         localStorage.setItem(
@@ -124,25 +138,12 @@ class IncenList extends React.Component {
                     />
                   )}
 
-                {this.state.InsiderPermissions &&
-                  this.state.InsiderPermissions.View && (
-                    <Eye
-                      className="mr-50"
-                      size="25px"
-                      color="green"
-                      onClick={() =>
-                        this.props.history.push({
-                          pathname: `/app/ajgroup/HRM/incentView/${params.data?._id}`,
-                          state: params.data,
-                        })
-                      }
-                    />
-                  )}
+               
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions.View && (
                     <Trash2
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="red"
                       onClick={() => {
                         this.runthisfunction(params.data._id);
@@ -155,7 +156,7 @@ class IncenList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="green"
                           onClick={() =>
                             this.props.history.push({
@@ -197,7 +198,7 @@ class IncenList extends React.Component {
           headerName: "Employee Name",
           field: "DateofDelivery",
           filter: true,
-          width: 180,
+          width: 200,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -212,7 +213,7 @@ class IncenList extends React.Component {
           headerName: "Pan Card No",
           field: "DateofDelivery",
           filter: true,
-          width: 125,
+          width: 105,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -242,7 +243,7 @@ class IncenList extends React.Component {
           headerName: "Incentive Amount",
           field: "incentiveFund",
           filter: true,
-          width: 180,
+          width: 145,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -257,7 +258,7 @@ class IncenList extends React.Component {
           headerName: "Target Assign",
           field: "targetAssign",
           filter: true,
-          width: 145,
+          width: 115,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -272,7 +273,7 @@ class IncenList extends React.Component {
           headerName: "Target Achievment",
           field: "targetAchievement",
           filter: true,
-          width: 190,
+          width: 155,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -644,6 +645,14 @@ class IncenList extends React.Component {
                   Incentive List
                 </h1>
               </Col>
+                {this.state.MasterShow && (
+                <Col className="mt-2" lg="3">
+                  <SuperAdminUI
+                    onDropdownChange={this.handleDropdownChange}
+                    onSubmit={this.handleParentSubmit}
+                  />
+                </Col>
+              )}
               <Col className="mt-2" lg="3">
                 <div className="table-input cssforproductlist">
                   <Input
@@ -653,14 +662,7 @@ class IncenList extends React.Component {
                   />
                 </div>
               </Col>
-              {this.state.MasterShow && (
-                <Col className="mt-2" lg="3">
-                  <SuperAdminUI
-                    onDropdownChange={this.handleDropdownChange}
-                    onSubmit={this.handleParentSubmit}
-                  />
-                </Col>
-              )}
+            
               <Col className="mt-2" lg="2" xs="8">
                 {InsiderPermissions && InsiderPermissions.Create && (
                   <span>

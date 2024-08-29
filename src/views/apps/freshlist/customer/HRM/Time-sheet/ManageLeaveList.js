@@ -108,7 +108,7 @@ class ManageLeaveList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -116,7 +116,7 @@ class ManageLeaveList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -129,7 +129,7 @@ class ManageLeaveList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -143,7 +143,7 @@ class ManageLeaveList extends React.Component {
                   {this.state.InsiderPermissions.Delete && (
                     <Trash2
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() => {
                         this.runthisfunction(params.data?._id);
@@ -157,7 +157,7 @@ class ManageLeaveList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="green"
                           onClick={() =>
                             this.props.history.push({
@@ -214,7 +214,7 @@ class ManageLeaveList extends React.Component {
           headerName: "Leave Type",
           field: "leaveType.leaveType",
           filter: true,
-          width: 140,
+          width: 120,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -229,7 +229,7 @@ class ManageLeaveList extends React.Component {
           headerName: "Leave Reason",
           field: "leaveReason",
           filter: true,
-          width: 140,
+          width: 180,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -244,7 +244,7 @@ class ManageLeaveList extends React.Component {
           headerName: "Start Date",
           field: "startDate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -259,7 +259,7 @@ class ManageLeaveList extends React.Component {
           headerName: "End Date",
           field: "endDate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -647,7 +647,7 @@ class ManageLeaveList extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Manage Leave List
               </h1>
             </Col>
@@ -737,7 +737,7 @@ class ManageLeaveList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={15} /> Manage Leave
+                        <FaPlus size={13} /> Manage Leave
                       </Button>
                     )}
                   />

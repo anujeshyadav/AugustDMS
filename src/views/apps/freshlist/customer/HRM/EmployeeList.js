@@ -95,7 +95,7 @@ class EmployeeList extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 160,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -106,8 +106,8 @@ class EmployeeList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "#39cccc",
                           }}>
                           <Eye
@@ -131,14 +131,14 @@ class EmployeeList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(212, 111, 16)",
                             marginLeft: "3px",
                           }}>
                           <FaPencilAlt
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() =>
                               history.push(
@@ -158,14 +158,14 @@ class EmployeeList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(236, 24, 9)",
                             marginLeft: "3px",
                           }}>
                           <Trash2
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.runthisfunction(params?.data?._id);
@@ -200,7 +200,7 @@ class EmployeeList extends React.Component {
           headerName: "Delete Register",
           field: "status",
           filter: true,
-          width: 150,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -231,7 +231,7 @@ class EmployeeList extends React.Component {
           field: "image",
           filter: true,
           // sortable: true,
-          width: 100,
+          width: 90,
           editable: true,
 
           cellRendererFramework: (params) => {
@@ -274,7 +274,7 @@ class EmployeeList extends React.Component {
           field: "firstName",
           filter: true,
           sortable: true,
-          width: "140",
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -290,7 +290,7 @@ class EmployeeList extends React.Component {
           field: "lastName",
           filter: true,
           sortable: true,
-          width: "140",
+          width: "150",
           cellRendererFramework: (params) => {
             return (
               <>
@@ -306,7 +306,7 @@ class EmployeeList extends React.Component {
           field: "email",
           filter: true,
           sortable: true,
-          width: 250,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -322,7 +322,7 @@ class EmployeeList extends React.Component {
           field: "mobileNumber",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -337,7 +337,7 @@ class EmployeeList extends React.Component {
           headerName: "Pin code",
           field: "pincode",
           filter: true,
-          width: 105,
+          width: 80,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -353,7 +353,7 @@ class EmployeeList extends React.Component {
           headerName: "Aadhar No",
           field: "Aadhar_No",
           filter: true,
-          width: 140,
+          width: 100,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -369,7 +369,7 @@ class EmployeeList extends React.Component {
           headerName: "Account Name",
           field: "Account_Name",
           filter: true,
-          width: 190,
+          width: 120,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -385,7 +385,7 @@ class EmployeeList extends React.Component {
           headerName: "Account No",
           field: "Account_No",
           filter: true,
-          width: 150,
+          width: 120,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -401,7 +401,7 @@ class EmployeeList extends React.Component {
           headerName: "IFSC code",
           field: "Ifsc_code",
           filter: true,
-          width: 140,
+          width: 105,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -433,7 +433,7 @@ class EmployeeList extends React.Component {
           headerName: "State",
           field: "State",
           filter: true,
-          width: 160,
+          width: 135,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -446,10 +446,10 @@ class EmployeeList extends React.Component {
           },
         },
         {
-          headerName: "Driving license Num",
+          headerName: "Driving license No",
           field: "DL_Num",
           filter: true,
-          width: 200,
+          width: 150,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -465,7 +465,7 @@ class EmployeeList extends React.Component {
           headerName: "Date of Birth",
           field: "DOB",
           filter: true,
-          width: 140,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -481,7 +481,7 @@ class EmployeeList extends React.Component {
           headerName: "Father Name",
           field: "Father_name",
           filter: true,
-          width: 200,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -496,7 +496,7 @@ class EmployeeList extends React.Component {
         {
           headerName: "Pan No",
           field: "Pan_No",
-          width: 115,
+          width: 100,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -513,7 +513,7 @@ class EmployeeList extends React.Component {
           headerName: "Passport No",
           field: "PassportNo",
           filter: true,
-          width: 140,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -529,7 +529,7 @@ class EmployeeList extends React.Component {
         {
           headerName: "Salary",
           field: "last_job_Salary",
-          width: 140,
+          width: 100,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -546,7 +546,7 @@ class EmployeeList extends React.Component {
         {
           headerName: "Address one",
           field: "address1",
-          width: 220,
+          width: 250,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -562,7 +562,7 @@ class EmployeeList extends React.Component {
         {
           headerName: "Address two",
           field: "address2",
-          width: 220,
+          width: 250,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -580,7 +580,7 @@ class EmployeeList extends React.Component {
           headerName: "Created date",
           field: "createdAt",
           filter: true,
-          width: 140,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -596,7 +596,7 @@ class EmployeeList extends React.Component {
           headerName: "Updated date",
           field: "updatedAt",
           filter: true,
-          width: 140,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -970,13 +970,13 @@ class EmployeeList extends React.Component {
                         <Col  >
                           <h1
                             className="float-left "
-                            style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                            style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                             Employee list
                           </h1>
                         </Col>
                        
                         {this.state.MasterShow ? (
-                          <Col lg="2"   sm="12" style={{marginTop:"25px"}}>
+                          <Col lg="3"   sm="12" style={{marginTop:"25px"}}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -985,8 +985,8 @@ class EmployeeList extends React.Component {
                         ) : (
                           <Col></Col>
                         )}
-                           <Col lg="2"   sm="12" style={{marginTop:"25px"}}>
-                          <div className="d-flex justify-content-space-between">
+                           <Col lg="3"   sm="12" style={{marginTop:"25px"}}>
+                          
                              
                             <div className="table-input cssforproductlist">
                               <Input
@@ -997,7 +997,7 @@ class EmployeeList extends React.Component {
                                 value={this.state.value}
                               />
                             </div>
-                          </div>
+                          
                         </Col>
                           <Col lg="3" xl="3" style={{marginTop:"25px"}}>
                           <div>
@@ -1022,7 +1022,7 @@ class EmployeeList extends React.Component {
                                           "/app/SoftNumen/account/CreateAccount/0"
                                         )
                                       }>
-                                      <FaPlus size={15} /> Employee
+                                      <FaPlus size={13} /> Employee
                                     </Button>
                                   )}
                                 />

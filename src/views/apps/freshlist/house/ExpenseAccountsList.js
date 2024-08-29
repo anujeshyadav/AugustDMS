@@ -153,7 +153,7 @@ class ExpenseAccountsList extends React.Component {
           field: "title",
           filter: true,
           sortable: true,
-          width: "240",
+          width: "180",
           cellRendererFramework: (params) => {
             return (
               <>
@@ -172,6 +172,7 @@ class ExpenseAccountsList extends React.Component {
           headerName: "id",
           field: "id",
           filter: true,
+          width:170,
           sortable: true,
           editable: true,
           cellRendererFramework: (params) => {
@@ -189,7 +190,7 @@ class ExpenseAccountsList extends React.Component {
           field: "type",
           filter: true,
           sortable: true,
-
+          width:175,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -205,7 +206,7 @@ class ExpenseAccountsList extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 190,
+          width: 75,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -216,14 +217,14 @@ class ExpenseAccountsList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(212, 111, 16)",
                             marginLeft: "3px",
                           }}>
                           <FaPencilAlt
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.setState({
@@ -247,14 +248,14 @@ class ExpenseAccountsList extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(236, 24, 9)",
                             marginLeft: "3px",
                           }}>
                           <Trash2
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.runthisfunction(params?.data?._id);
@@ -711,35 +712,27 @@ class ExpenseAccountsList extends React.Component {
                   <Col sm="12">
                     <Card>
                       <Row
-                        style={{
-                          marginLeft: "5px",
-                          marginRight: "5px",
-                          marginTop: "10px",
-                        }}>
-                        <Col lg="4" xl="4" md="4">
+                        style={{marginLeft:'3px',marginRight:'3px'}}>
+                        <Col  >
                           <Row>
                             <Col
-                              lg="4"
-                              md="4"
-                              xl="4"
+                              lg="5"
+                              md="5"
+                              xl="5"
                               xs="12"
-                              style={{ marginTop: "10px" }}>
+                             >
                               <h2
                                 className="float-left "
-                                style={{
-                                  fontWeight: "600",
-                                  textTransform: "uppercase",
-                                  fontSize: "24px",
-                                }}>
+                               style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                                 Expense Accounts
                               </h2>
                             </Col>
                             <Col
-                              lg="8"
-                              md="8"
-                              xl="8"
+                              lg="7"
+                              md="7"
+                              xl="7"
                               xs="12"
-                              style={{ marginTop: "10px" }}>
+                              style={{ marginTop:"25px" }}>
                               {this.state.MasterShow ? (
                                 <SuperAdminUI
                                   onDropdownChange={this.handleDropdownChange}
@@ -751,62 +744,14 @@ class ExpenseAccountsList extends React.Component {
                             </Col>
                           </Row>
                         </Col>
-                        <Col></Col>
+                        
                         <Col
-                          lg="2"
+                          lg="3"
                           md="6"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop:"25px" }}>
                           <div className="">
-                            {/* 
-                            <div className="mb-1 mr-1">
                              
-                              <UncontrolledDropdown className="p-1 ag-dropdown">
-                                <DropdownToggle tag="div">
-                                  {this.gridApi
-                                    ? this.state.currenPageSize
-                                    : "" * this.state.getPageSize -
-                                      (this.state.getPageSize - 1)}{" "}
-                                  -{" "}
-                                  {this.state.rowData.length -
-                                    this.state.currenPageSize *
-                                      this.state.getPageSize >
-                                  0
-                                    ? this.state.currenPageSize *
-                                      this.state.getPageSize
-                                    : this.state.rowData.length}{" "}
-                                  of {this.state.rowData.length}
-                                  <ChevronDown className="ml-50" size={15} />
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(10)}>
-                                    10
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(20)}>
-                                    20
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(50)}>
-                                    50
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(100)}>
-                                    100
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(134)}>
-                                    134
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </UncontrolledDropdown> 
-                            </div>*/}
                             <div className="table-input cssforproductlist">
                               <Input
                                 placeholder="search Item here..."
@@ -821,7 +766,7 @@ class ExpenseAccountsList extends React.Component {
 
                         {InsiderPermissions && InsiderPermissions.Create && (
                           <>
-                            <Col lg="2" xl="2" md="5">
+                            <Col lg="2" xl="2" md="5" style={{marginTop:"25px"}}>
                               <Route
                                 render={({ history }) => (
                                   <Button
@@ -834,7 +779,7 @@ class ExpenseAccountsList extends React.Component {
                                       width: "100%",
                                       textTransform: "uppercase",
                                     }}
-                                    className="float-right mt-1"
+                                    className="float-right "
                                     color="#39cccc"
                                     onClick={() => {
                                       this.setState({
@@ -853,7 +798,7 @@ class ExpenseAccountsList extends React.Component {
                           </>
                         )}
 
-                        <Col lg="1" md="1" xl="1" style={{ marginTop: "10px" }}>
+                        <Col lg="1" md="1" xl="1" style={{ marginTop:"25px"}}>
                           {InsiderPermissions && InsiderPermissions.View && (
                             <>
                               <span className="">
@@ -964,7 +909,7 @@ class ExpenseAccountsList extends React.Component {
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100 my-1 ag-grid-table">
+                              <div className="ag-theme-material w-100  ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                                 <ContextLayout.Consumer className="ag-theme-alpine">
                                   {(context) => (
                                     <AgGridReact

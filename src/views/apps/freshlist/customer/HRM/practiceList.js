@@ -101,7 +101,7 @@ class practiceList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -109,7 +109,7 @@ class practiceList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -124,7 +124,7 @@ class practiceList extends React.Component {
                   this.state.InsiderPermissions.Edit && (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -138,7 +138,7 @@ class practiceList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -149,7 +149,7 @@ class practiceList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -208,7 +208,7 @@ class practiceList extends React.Component {
           headerName: "Option",
           field: "option",
           filter: true,
-          width: 180,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -238,7 +238,7 @@ class practiceList extends React.Component {
           headerName: "Right Answer",
           field: "rightAnswer",
           filter: true,
-          width: 250,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -621,20 +621,20 @@ class practiceList extends React.Component {
           <Card>
             <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col  >
-                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                   Practice and Skills Test List
                 </h1>
               </Col>
               
               {this.state.MasterShow && (
-                <Col className="mt-2" lg="2" md="3">
+                <Col className="mt-2" lg="3" md="3">
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
                   />
                 </Col>
               )}
-              <Col className="mt-2" lg="2" md="3">
+              <Col className="mt-2" lg="3" md="3">
                 <div className="table-input cssforproductlist">
                   <Input
                     placeholder="search Item here..."
@@ -664,7 +664,7 @@ class practiceList extends React.Component {
                               "/app/ajgroup/HRM/RecPlace/practskillform"
                             )
                           }>
-                          <FaPlus size={15} /> Practice & Skills
+                          <FaPlus size={13} /> Practice & Skills
                         </Button>
                       )}
                     />

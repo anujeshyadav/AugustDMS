@@ -98,7 +98,7 @@ class JobList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 105,
+          width: 85,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -106,7 +106,7 @@ class JobList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -119,7 +119,7 @@ class JobList extends React.Component {
                 {this.state.InsiderPermissions?.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -132,7 +132,7 @@ class JobList extends React.Component {
                 {this.state.InsiderPermissions?.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -143,7 +143,7 @@ class JobList extends React.Component {
                       this.state.InsiderPermissions?.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -164,7 +164,7 @@ class JobList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 95,
+          width: 80,
           cellRendererFramework: params => {
             console.log(params.data);
             return params.value == "completed" ? (
@@ -216,7 +216,7 @@ class JobList extends React.Component {
           headerName: "Start Date",
           field: "startDate",
           filter: true,
-          width: 115,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -231,7 +231,7 @@ class JobList extends React.Component {
           headerName: "End Date",
           field: "endDate",
           filter: true,
-          width: 115,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -246,7 +246,7 @@ class JobList extends React.Component {
           headerName: "Branch",
           field: "JobBranch",
           filter: true,
-          width: 200,
+          width: 180,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -261,7 +261,7 @@ class JobList extends React.Component {
           headerName: "Job Category",
           field: "JobCategory",
           filter: true,
-          width: 200,
+          width: 180,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -276,7 +276,7 @@ class JobList extends React.Component {
           headerName: "Postion",
           field: "numberOfPositions",
           filter: true,
-          width: 160,
+          width: 80,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -687,20 +687,20 @@ class JobList extends React.Component {
             <Card>
               <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                 <Col  >
-                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                     Job List
                   </h1>
                 </Col>
                 
                 {this.state.MasterShow && (
-                  <Col lg="2" md="6" sm="12" className="mt-2">
+                  <Col lg="3" md="6" sm="12" className="mt-2">
                     <SuperAdminUI
                       onDropdownChange={this.handleDropdownChange}
                       onSubmit={this.handleParentSubmit}
                     />
                   </Col>
                 )}
-                <Col lg="2" md="6" sm="12" className="mt-2">
+                <Col lg="3" md="6" sm="12" className="mt-2">
                   <div className="table-input cssforproductlist">
                     <Input
                       placeholder="search Item here..."

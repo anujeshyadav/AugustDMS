@@ -86,7 +86,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "First Name",
           field: "firstName",
-
+          width:280,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -123,7 +123,7 @@ class CustomerSearch extends React.Component {
           headerName: "Company name",
           field: "CompanyName",
           filter: true,
-          width: 220,
+          width: 185,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -139,7 +139,7 @@ class CustomerSearch extends React.Component {
           headerName: "Gst number",
           field: "gstNumber",
           filter: true,
-          width: 175,
+          width: 120,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -156,7 +156,7 @@ class CustomerSearch extends React.Component {
           field: "partyType",
           filter: true,
           sortable: true,
-          width: 165,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -171,7 +171,7 @@ class CustomerSearch extends React.Component {
           headerName: "Registration Id",
           field: "registrationType",
           filter: true,
-          width: 170,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -187,7 +187,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Lockin time",
           field: "lockInTime",
-          width: 145,
+          width: 105,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -204,7 +204,7 @@ class CustomerSearch extends React.Component {
           headerName: "Limit",
           field: "limit",
           filter: true,
-          width: 130,
+          width: 80,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -220,7 +220,7 @@ class CustomerSearch extends React.Component {
           headerName: "Payment Term",
           field: "paymentTerm",
           filter: true,
-          width: 150,
+          width: 120,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -235,7 +235,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Company Pan No",
           field: "comPanNo",
-          width: 170,
+          width: 140,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -252,7 +252,7 @@ class CustomerSearch extends React.Component {
           headerName: "Contact Number",
           field: "contactNumber",
           filter: true,
-          width: 165,
+          width: 142,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -268,7 +268,7 @@ class CustomerSearch extends React.Component {
           headerName: "Owner Name",
           field: "ownerName",
           filter: true,
-          width: 230,
+          width: 200,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -283,7 +283,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Mobile Number",
           field: "mobileNumber",
-          width: 152,
+          width: 128,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -299,7 +299,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Pan No",
           field: "panNo",
-          width: 140,
+          width: 100,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -315,7 +315,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Aadhar No",
           field: "aadharNo",
-          width: 140,
+          width: 110,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -332,7 +332,7 @@ class CustomerSearch extends React.Component {
           headerName: "PassPort No",
           field: "passPortNo",
           filter: true,
-          width: 150,
+          width: 120,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -348,7 +348,7 @@ class CustomerSearch extends React.Component {
           headerName: "Address",
           field: "address",
           filter: true,
-          width: 290,
+          width: 300,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -365,7 +365,7 @@ class CustomerSearch extends React.Component {
           field: "personalPincode",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -380,7 +380,7 @@ class CustomerSearch extends React.Component {
           headerName: "State",
           field: "State",
           filter: true,
-          width: 190,
+          width: 145,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -395,7 +395,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "City",
           field: "City",
-          width: 130,
+          width: 110,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -413,7 +413,7 @@ class CustomerSearch extends React.Component {
           headerName: "Transporter Details",
           field: "transporterDetail",
           filter: true,
-          width: 187,
+          width:200,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -434,7 +434,7 @@ class CustomerSearch extends React.Component {
           filter: true,
 
           sortable: true,
-          width: 130,
+          width: 175,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -449,7 +449,7 @@ class CustomerSearch extends React.Component {
           headerName: "Service Area",
           field: "serviceArea",
           filter: true,
-          width: 135,
+         
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -464,7 +464,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Due Date",
           field: "duedate",
-          width: 115,
+          width: 100,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -498,7 +498,7 @@ class CustomerSearch extends React.Component {
           headerName: "Geo tagging",
           field: "geotagging",
           filter: true,
-          width: 150,
+          width: 155,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -514,7 +514,7 @@ class CustomerSearch extends React.Component {
           headerName: "Category",
           field: "category?.groupName",
           filter: true,
-          width: 130,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -530,7 +530,7 @@ class CustomerSearch extends React.Component {
           headerName: "Shop Size",
           field: "shopSize",
           filter: true,
-          width: 155,
+          width: 105,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -546,7 +546,7 @@ class CustomerSearch extends React.Component {
           headerName: "Email",
           field: "email",
           filter: true,
-          width: 235,
+          width: 330,
           sortable: true,
           editable: true,
           cellRendererFramework: (params) => {
@@ -579,7 +579,7 @@ class CustomerSearch extends React.Component {
           headerName: "Annual Turnover",
           field: "annualTurnover",
           filter: true,
-          width: 163,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -612,7 +612,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Company Pan No",
           field: "comPanNo",
-          width: 170,
+          width: 140,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -646,7 +646,7 @@ class CustomerSearch extends React.Component {
           headerName: "Home State",
           field: "Pstate",
           filter: true,
-          width: 180,
+          width: 170,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -695,7 +695,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Party id",
           field: "partyType",
-          width: 165,
+          width: 110,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -729,7 +729,7 @@ class CustomerSearch extends React.Component {
           headerName: "Transporter Id",
           field: "transporterDetail",
           filter: true,
-          width: 150,
+          width: 135,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -746,7 +746,7 @@ class CustomerSearch extends React.Component {
           headerName: "Pin code",
           field: "pincode",
           filter: true,
-          width: 105,
+          width: 80,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -763,7 +763,7 @@ class CustomerSearch extends React.Component {
           headerName: "Created date",
           field: "createdAt",
           filter: true,
-          width: 135,
+          width: 110,
           sortable: true,
           headingFixed: top,
           cellRendererFramework: (params) => {
@@ -780,7 +780,7 @@ class CustomerSearch extends React.Component {
           headerName: "Updated date",
           field: "updatedAt",
           filter: true,
-          width: 135,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -800,7 +800,7 @@ class CustomerSearch extends React.Component {
           field: "Shopphoto",
           filter: true,
           sortable: true,
-          width: 143,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -822,7 +822,7 @@ class CustomerSearch extends React.Component {
           headerName: "Photo",
           field: "Photo",
           filter: true,
-          width: 112,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -845,7 +845,7 @@ class CustomerSearch extends React.Component {
         {
           headerName: "Created BY",
           field: "created_by.firstName",
-          width: 125,
+          width: 110,
           filter: true,
           sortable: true,
           editable: true,
@@ -865,7 +865,7 @@ class CustomerSearch extends React.Component {
           field: "rolename.id",
           filter: true,
           sortable: true,
-          width: 230,
+          width: 150,
           editable: true,
 
           cellRendererFramework: (params) => {
@@ -882,7 +882,7 @@ class CustomerSearch extends React.Component {
           headerName: "Id",
           field: "id",
           filter: true,
-          width: 243,
+          width: 180,
           sortable: true,
           editable: true,
 
@@ -900,7 +900,7 @@ class CustomerSearch extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 95,
+          width: 80,
 
           cellRendererFramework: (params) => {
             return params.data?.status === "Active" ? (
@@ -914,7 +914,7 @@ class CustomerSearch extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "Actions",
-          width: 147,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -925,13 +925,13 @@ class CustomerSearch extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "#39cccc",
                           }}>
                           <Eye
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             // onClick={() => {
                             //   this.handleChangeEdit(params.data, "readonly");
@@ -953,14 +953,14 @@ class CustomerSearch extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(212, 111, 16)",
                             marginLeft: "3px",
                           }}>
                           <FaPencilAlt
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() =>
                               history.push(
@@ -982,14 +982,14 @@ class CustomerSearch extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(236, 24, 9)",
                             marginLeft: "3px",
                           }}>
                           <Trash2
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.runthisfunction(params?.data?._id);
@@ -1430,16 +1430,12 @@ class CustomerSearch extends React.Component {
                         style={{
                           marginLeft: "3px",
                           marginRight: "3px",
-                          marginTop: "10px",
+                         
                         }}>
-                        <Col lg="2" md="2" style={{ marginTop: "10px" }}>
+                        <Col >
                           <h2
                             className="float-left"
-                            style={{
-                              fontWeight: "600",
-                              textTransform: "uppercase",
-                              fontSize: "24px",
-                            }}>
+                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                             Customer List
                             {/*
                             ({this.state.rowData.length})
@@ -1452,7 +1448,7 @@ class CustomerSearch extends React.Component {
                             lg="3"
                             md="3"
                             sm="12"
-                            style={{ marginTop: "10px" }}>
+                            style={{ marginTop:"25px" }}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -1461,61 +1457,15 @@ class CustomerSearch extends React.Component {
                         ) : (
                           <Col></Col>
                         )}
-                        <Col lg="7" xl="7" md="7">
-                          <Row>
+                       
+                          
                             <Col
-                              lg="4"
-                              md="4"
-                              xl="4"
-                              style={{ marginTop: "10px" }}>
+                              lg="3"
+                              md="3"
+                              xl="3"
+                              style={{ marginTop:"25px" }}>
                               <div className="">
-                                {/* <div className="mb-1 mr-1">
-                            <UncontrolledDropdown className="p-1 ag-dropdown">
-                              <DropdownToggle tag="div">
-                                {this.gridApi
-                                  ? this.state.currenPageSize
-                                  : "" * this.state.getPageSize -
-                                    (this.state.getPageSize - 1)}{" "}
-                                -{" "}
-                                {this.state.rowData.length -
-                                  this.state.currenPageSize *
-                                    this.state.getPageSize >
-                                0
-                                  ? this.state.currenPageSize *
-                                    this.state.getPageSize
-                                  : this.state.rowData.length}{" "}
-                                of {this.state.rowData.length}
-                                <ChevronDown className="ml-50" size={15} />
-                              </DropdownToggle>
-                              <DropdownMenu right>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(5)}>
-                                  5
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(20)}>
-                                  20
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(50)}>
-                                  50
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(100)}>
-                                  100
-                                </DropdownItem>
-                                <DropdownItem
-                                  tag="div"
-                                  onClick={() => this.filterSize(134)}>
-                                  134
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </UncontrolledDropdown>
-                          </div> */}
+                              
                                 <div className="table-input ">
                                   <Input
                                     style={{ width: "100%" }}
@@ -1529,11 +1479,11 @@ class CustomerSearch extends React.Component {
                               </div>
                             </Col>
                             <Col
-                              lg="2"
-                              xl="2"
-                              md="2"
+                              lg="1"
+                              xl="1"
+                              md="1"
                               xs="5"
-                              style={{ marginTop: "10px" }}>
+                              style={{ marginTop:"25px"}}>
                               {InsiderPermissions &&
                                 InsiderPermissions?.Download && (
                                   <span>
@@ -1561,11 +1511,11 @@ class CustomerSearch extends React.Component {
                                 )}
                             </Col>
                             <Col
-                              lg="4"
-                              xl="4"
-                              md="4"
+                              lg="2"
+                              xl="2"
+                              md="2"
                               xs="7"
-                              style={{ marginTop: "10px" }}>
+                              style={{ marginTop:"25px" }}>
                               {InsiderPermissions &&
                                 InsiderPermissions?.Create && (
                                   <span>
@@ -1588,7 +1538,7 @@ class CustomerSearch extends React.Component {
                                               `/app/SoftNumen/account/CreateCustomer/${0}`
                                             )
                                           }>
-                                          <FaPlus size={15} /> Create Customer
+                                          <FaPlus size={13} /> Create Customer
                                         </Button>
                                       )}
                                     />
@@ -1596,10 +1546,10 @@ class CustomerSearch extends React.Component {
                                 )}
                             </Col>
                             <Col
-                              lg="2"
-                              xl="2"
-                              md="2"
-                              style={{ marginTop: "10px" }}>
+                              lg="1"
+                              xl="1"
+                              md="1"
+                              style={{ marginTop:"25px" }}>
                               {InsiderPermissions &&
                                 InsiderPermissions?.View && (
                                   <>
@@ -1700,15 +1650,15 @@ class CustomerSearch extends React.Component {
                                   </span>
                                 )}
                             </Col>
-                          </Row>
-                        </Col>
+                         
+                       
                       </Row>
 
                       {InsiderPermissions && InsiderPermissions?.View && (
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                                 <div className="d-flex flex-wrap justify-content-between align-items-center"></div>
 
                                 <ContextLayout.Consumer className="ag-theme-alpine">

@@ -9,7 +9,7 @@ import { saveAs } from "file-saver";
 import {
   Label,
   Card,
-  CardBody,
+  
   Input,
   Row,
   Modal,
@@ -29,7 +29,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import { ToWords } from "to-words";
 import "jspdf-autotable";
 
-import { Eye, ChevronDown, Edit, CornerDownLeft, Trash2 } from "react-feather";
+import { Eye } from "react-feather";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
@@ -38,8 +38,7 @@ import {
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
   FaFilter,
-  FaPlus,
-  FaTruck,
+ 
 } from "react-icons/fa";
 import swal from "sweetalert";
 import { _Delete, _Get, _Post } from "../../../../ApiEndPoint/ApiCalling";
@@ -53,9 +52,9 @@ import SuperAdminUI from "../../../SuperAdminUi/SuperAdminUI";
 import {
   Delete_Sales,
   Delete_Sales_order,
+  Last_Ledger_Balance,
   Sales_OrderTo_Dispatch,
   Sales_OrderTo_DispatchList,
-  ViewOther_Charges,
   View_Customer_ById,
   view_create_order_history,
 } from "../../../../ApiEndPoint/Api";
@@ -66,10 +65,9 @@ import {
   exportDataToPDF,
 } from "../house/Downloader";
 import { AiOutlineDownload } from "react-icons/ai";
-// import Multiselect from "multiselect-react-dropdown";
-// import InvoiceGenerator from "../subcategory/InvoiceGeneratorone";
-// import { FcCancel } from "react-icons/fc";
+
 import { MdCancel } from "react-icons/md";
+import InvoiceGenerator from "../subcategory/InvoiceGeneratorone";
 
 const SelectedColums = [];
 const toWords = new ToWords({
@@ -280,49 +278,54 @@ class OrderList extends React.Component {
             ) : null;
           },
         },
-        // {
-        //   headerName: "Invoice",
-        //   field: "invoice",
-        //   filter: true,
-        //   resizable: true,
-        //   width: 93,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div className="text-center cursor-pointer">
-        //         <div>
-        //           <>
-        //             {params.data?.status == "Completed" ? (
-        //               <>
-        //                 {this.state.InsiderPermissions &&
-        //                   this.state.InsiderPermissions?.View && (
-        //                     <AiOutlineDownload
-        //                       onClick={() =>
-        //                         this.showCompletedInvoice(params.data)
-        //                       }
-        //                       fill="green"
-        //                       size="30px"
-        //                     />
-        //                   )}
-        //               </>
-        //             ) : (
-        //               <>
-        //                 {this.state.InsiderPermissions &&
-        //                   this.state.InsiderPermissions?.View && (
-        //                     <AiOutlineDownload
-        //                       onClick={() => this.MergeBillNow(params.data)}
-        //                       fill="green"
-        //                       size="30px"
-        //                     />
-        //                   )}
-        //               </>
-        //             )}
-        //           </>
-        //           <span></span>
-        //         </div>
-        //       </div>
-        //     );
-        //   },
-        // },
+        {
+          headerName: "Invoice",
+          field: "invoice",
+          filter: true,
+          resizable: true,
+          width: 93,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="text-center cursor-pointer">
+                <div>
+                  <>
+                    <AiOutlineDownload
+                      onClick={() => this.handleShowInvoice(params.data)}
+                      fill="green"
+                      size="30px"
+                    />
+                    {/* {params.data?.status == "completed" ? (
+                      <>
+                        {this.state.InsiderPermissions &&
+                          this.state.InsiderPermissions?.View && (
+                            <AiOutlineDownload
+                              onClick={() =>
+                                this.showCompletedInvoice(params.data)
+                              }
+                              fill="green"
+                              size="30px"
+                            />
+                          )}
+                      </>
+                    ) : (
+                      <>
+                        {this.state.InsiderPermissions &&
+                          this.state.InsiderPermissions?.View && (
+                            <AiOutlineDownload
+                              onClick={() => this.MergeBillNow(params.data)}
+                              fill="green"
+                              size="30px"
+                            />
+                          )}
+                      </>
+                    )} */}
+                  </>
+                  <span></span>
+                </div>
+              </div>
+            );
+          },
+        },
         {
           headerName: "Create Dispatch",
           field: "Create Dispatch",
@@ -504,7 +507,7 @@ class OrderList extends React.Component {
           headerName: "Company Pan No",
           field: "partyId.comPanNo",
           filter: true,
-          width:130,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -517,7 +520,7 @@ class OrderList extends React.Component {
         },
         {
           headerName: "Full Name",
-          field: "fullName",
+          field: "partyId.firstName",
           filter: true,
           resizable: true,
           width: 240,
@@ -525,7 +528,7 @@ class OrderList extends React.Component {
             return (
               <div className="text-center cursor-pointer">
                 <div>
-                  <span>{`${params?.data?.fullName}`}</span>
+                  <span>{`${params?.data?.partyId?.firstName}`}</span>
                 </div>
               </div>
             );
@@ -608,7 +611,7 @@ class OrderList extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-         width: 100,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -737,14 +740,39 @@ class OrderList extends React.Component {
     this.toggleModalOne();
   };
 
-  showCompletedInvoice = async (data) => {
-    let gstDetails = HsnSummaryCalculation(data);
+  handleShowInvoice = async (data) => {
+    let value = { ...data };
+    if (data?.grandTotal > 49999) {
+      this.setState({ EWayBill: true });
+      value["ChallanStatus"] = true;
+    }
+    value["salesInvoiceStatus"] = true;
+    let gstDetails = HsnSummaryCalculation(value);
 
-    data["gstDetails"] = gstDetails;
-    this.setState({ ViewBill: true });
+    value["gstDetails"] = gstDetails;
+    await _Get(Last_Ledger_Balance, value?.partyId?._id)
+      .then((res) => {
+        if (!!res?.Ledger.debit) {
+          value["lastLedgerBalance"] = res?.Ledger.debit;
+        } else {
+          value["lastLedgerBalance"] = res?.Ledger.credit;
+        }
+      })
+      .catch((err) => {
+        value["lastLedgerBalance"] = "Not Found";
+        console.log(err);
+      });
+    value["salesInvoiceStatus"] = true;
+    value["cancelInvoice"] = true;
 
-    this.setState({ PrintData: data });
-    this.setState({ PrintMainData: data });
+    this.setState({ PrintData: value });
+
+    this.setState({ ShowMyBill: true, ViewBill: true });
+    const toWords = new ToWords();
+    let words = toWords.convert(Number(data?.grandTotal), {
+      currency: true,
+    });
+    this.setState({ wordsNumber: words });
     this.toggleModalOne();
   };
 
@@ -1311,7 +1339,6 @@ class OrderList extends React.Component {
       decimalValue = Number(
         value?.grandTotal?.toFixed(2)?.toString()?.split(".")[1]
       );
-      debugger;
       if (decimalValue > 49) {
         let roundoff = 100 - decimalValue;
         value["grandTotal"] = parseFloat(value.grandTotal) + roundoff / 100;
@@ -1356,11 +1383,11 @@ class OrderList extends React.Component {
     await _Get(view_create_order_history, id, db)
       .then((res) => {
         this.setState({ Loading: false });
-        debugger;
+
         if (res?.orderHistory) {
           let newList = res?.orderHistory?.filter(
             (lst) => lst.status == "Cancel in process"
-            // (lst) => lst.status == "pending"
+            // (lst) => lst.status == "completed"
           );
 
           const newLists = newList?.reverse();
@@ -1395,7 +1422,9 @@ class OrderList extends React.Component {
     if (UserInformation?.CompanyDetails?.BillNumber) {
       this.setState({ ShowBill: false });
       this.setState({
-        BillNumber: UserInformation?.CompanyDetails?.BillNumber,
+        BillNumber: UserInformation?.CompanyDetails?.billNo
+          ? UserInformation?.CompanyDetails?.billNo
+          : 2,
       });
     }
     // if (userchoice) {
@@ -1683,16 +1712,21 @@ class OrderList extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
               <Col>
                 <h2
                   className="float-left "
-                  style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
+                  style={{
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                    fontSize: "18px",
+                    marginTop: "25px",
+                  }}>
                   Cancel Orders ({this.state.rowData.length})
                 </h2>
               </Col>
               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" style={{marginTop:"25px"}}>
+                <Col lg="3" md="4" sm="12" style={{ marginTop: "25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -1701,7 +1735,7 @@ class OrderList extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
+              <Col lg="3" md="6" sm="12" style={{ marginTop: "25px" }}>
                 <div>
                   <div className="table-input  cssforproductlist">
                     <Input
@@ -1710,7 +1744,6 @@ class OrderList extends React.Component {
                       value={this.state.value}
                     />
                   </div>
-                 
                 </div>
               </Col>
               {/* <Col lg="2" xs="8">
@@ -1739,7 +1772,7 @@ class OrderList extends React.Component {
                   </span>
                 )}
               </Col> */}
-              <Col lg="1" xs="4" style={{marginTop:"25px"}}>
+              <Col lg="1" xs="4" style={{ marginTop: "25px" }}>
                 {InsiderPermissions && InsiderPermissions?.View && (
                   <>
                     <span className="">
@@ -1817,9 +1850,7 @@ class OrderList extends React.Component {
             {InsiderPermissions && InsiderPermissions?.View && (
               <>
                 {this.state.rowData === null ? null : (
-                  <div
-                    className="ag-theme-material w-100  ag-grid-table"
-                     >
+                  <div className="ag-theme-material w-100  ag-grid-table">
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact
@@ -2031,7 +2062,7 @@ class OrderList extends React.Component {
                         <Label>UserName:</Label>
                         <h5 className="">
                           {this.state.ViewOneData &&
-                            this.state.ViewOneData?.fullName}
+                            this.state.ViewOneData?.partyId?.firstName}
                         </h5>
                       </Col>
                       <Col>
@@ -2166,7 +2197,7 @@ class OrderList extends React.Component {
                                       <th scope="row">{i + 1}</th>
                                       <td>{ele?.productId?.Product_Title}</td>
                                       <td>{ele?.productId?.HSN_Code}</td>
-                                      <td>{ele?.productId?.Product_MRP}</td>
+                                      <td>{ele?.price?.toFixed(2)}</td>
                                       {/* <td>{ele?.Size}</td> */}
                                       <td>{ele?.qty}</td>
                                       <td>{ele?.primaryUnit}</td>
@@ -2196,6 +2227,32 @@ class OrderList extends React.Component {
                 ) : null}
               </>
             )}
+          </ModalBody>
+        </Modal>
+        <Modal
+          isOpen={this.state.modalOne}
+          toggle={this.toggleModalOne}
+          className={this.props.className}
+          backdrop="false"
+          style={{ maxWidth: "1050px" }}>
+          <ModalHeader toggle={this.toggleModalOne}>
+            {this.state.ShowBill ? "Download BIll" : "Download BIll"}
+          </ModalHeader>
+          <ModalBody>
+            <div style={{ width: "100%" }} className="">
+              <InvoiceGenerator
+                EWayBill={this.state.EWayBill}
+                CompanyDetails={this.state.CompanyDetails}
+                BillNumber={this.state.BillNumber}
+                PrintData={this.state.PrintData}
+                Applied_Charges={this.state.Applied_Charges}
+                AllbillMerged={this.state.AllbillMerged}
+                wordsNumber={this.state.wordsNumber}
+                deliveryCharges={this.state.deliveryCharges}
+                otherCharges={this.state.otherCharges}
+                discount={this.state.discount}
+              />
+            </div>
           </ModalBody>
         </Modal>
       </>

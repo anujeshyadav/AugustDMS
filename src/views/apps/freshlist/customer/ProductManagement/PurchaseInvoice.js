@@ -664,6 +664,7 @@ class PurchaseInvoice extends React.Component {
 
     await PurchaseOrderList(id, db)
       .then((res) => {
+        debugger;
         this.setState({ Loading: false });
 
         const newList = res?.orderHistory?.filter((ele) =>

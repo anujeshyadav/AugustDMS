@@ -74,7 +74,7 @@ class AccounSearch extends React.Component {
       rowAllData: [],
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 12,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [
@@ -153,6 +153,7 @@ class AccounSearch extends React.Component {
           headerName: "Full Name",
           field: "firstName",
           filter: true,
+          width:300,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -212,7 +213,7 @@ class AccounSearch extends React.Component {
           headerName: "Mobile Number",
           field: "mobileNumber",
           filter: true,
-          width: 162,
+          width: 125,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -228,7 +229,7 @@ class AccounSearch extends React.Component {
           headerName: "Pin Code",
           field: "pincode",
           filter: true,
-          width: 108,
+          width: 80,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -244,7 +245,7 @@ class AccounSearch extends React.Component {
           headerName: "Aadhar No",
           field: "Aadhar_No",
           filter: true,
-          width: 130,
+          width:95,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -261,7 +262,7 @@ class AccounSearch extends React.Component {
           field: "Account_Name",
           filter: true,
           sortable: true,
-          width: 160,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -277,7 +278,7 @@ class AccounSearch extends React.Component {
           field: "Account_No",
           filter: true,
           sortable: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -293,7 +294,7 @@ class AccounSearch extends React.Component {
           field: "Ifsc_code",
           filter: true,
           sortable: true,
-          width: 120,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -308,7 +309,7 @@ class AccounSearch extends React.Component {
           headerName: "City",
           field: "City",
           filter: true,
-
+width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -324,7 +325,7 @@ class AccounSearch extends React.Component {
           headerName: "State",
           field: "State",
           filter: true,
-          width: 170,
+         width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -340,7 +341,7 @@ class AccounSearch extends React.Component {
           headerName: "DL No.",
           field: "DL_Num",
           filter: true,
-          width: 180,
+          width: 80,
           sortable: true,
 
           cellRendererFramework: (params) => {
@@ -358,7 +359,7 @@ class AccounSearch extends React.Component {
           field: "DOB",
           filter: true,
           sortable: true,
-          width: 145,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -372,7 +373,7 @@ class AccounSearch extends React.Component {
         {
           headerName: "Father Name",
           field: "Father_name",
-          width: 175,
+          width: 120,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -388,7 +389,7 @@ class AccounSearch extends React.Component {
         {
           headerName: "Pan No",
           field: "Pan_No",
-          width: 145,
+          width: 95,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -404,7 +405,7 @@ class AccounSearch extends React.Component {
         {
           headerName: "Passport No",
           field: "PassportNo",
-          width: 175,
+          width: 105,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
@@ -437,7 +438,7 @@ class AccounSearch extends React.Component {
           headerName: "Salary",
           field: "last_job_Salary",
           filter: true,
-          width: 140,
+          width: 100,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -562,6 +563,7 @@ class AccounSearch extends React.Component {
           headerName: "Role Name",
           field: "rolename.roleName",
           filter: true,
+          width: 170,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -609,7 +611,7 @@ class AccounSearch extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 190,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -620,8 +622,8 @@ class AccounSearch extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "#39cccc",
                           }}>
                           <Eye
@@ -645,14 +647,14 @@ class AccounSearch extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(212, 111, 16)",
                             marginLeft: "3px",
                           }}>
                           <FaPencilAlt
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() =>
                               history.push(
@@ -671,14 +673,14 @@ class AccounSearch extends React.Component {
                         <span
                           style={{
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(236, 24, 9)",
                             marginLeft: "3px",
                           }}>
                           <Trash2
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.runthisfunction(params?.data?._id);
@@ -1101,11 +1103,7 @@ class AccounSearch extends React.Component {
                   <Col sm="12">
                     <Card>
                       <Row
-                        style={{
-                          marginLeft: "5px",
-                          marginRight: "5px",
-                          marginTop: "10px",
-                        }}>
+                       style={{marginLeft:'3px',marginRight:'3px'}}>
                         <Col lg="4" xl="4" md="4">
                           <Row>
                             <Col
@@ -1113,14 +1111,10 @@ class AccounSearch extends React.Component {
                               md="4"
                               xl="4"
                               xs="12"
-                              style={{ marginTop: "10px" }}>
+                              >
                               <h2
                                 className="float-left "
-                                style={{
-                                  fontWeight: "600",
-                                  textTransform: "uppercase",
-                                  fontSize: "24px",
-                                }}>
+                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
                                 User list
                               </h2>
                             </Col>
@@ -1129,7 +1123,7 @@ class AccounSearch extends React.Component {
                               md="8"
                               xl="8"
                               xs="12"
-                              style={{ marginTop: "10px" }}>
+                              style={{marginTop:"25px" }}>
                               {this.state.MasterShow ? (
                                 <SuperAdminUI
                                   onDropdownChange={this.handleDropdownChange}
@@ -1146,7 +1140,7 @@ class AccounSearch extends React.Component {
                           lg="2"
                           md="6"
                           sm="12"
-                          style={{ marginTop: "10px" }}>
+                          style={{ marginTop:"25px" }}>
                           <div className="">
                             {/* 
                             <div className="mb-1 mr-1">
@@ -1218,7 +1212,7 @@ class AccounSearch extends React.Component {
                                   xl="3"
                                   md="3"
                                   xs="12"
-                                  style={{ marginTop: "10px" }}>
+                                  style={{ marginTop:"25px" }}>
                                   <span className="">
                                     <Route
                                       render={({ history }) => (
@@ -1250,7 +1244,7 @@ class AccounSearch extends React.Component {
                                   xl="4"
                                   md="4"
                                   xs="12"
-                                  style={{ marginTop: "10px" }}>
+                                  style={{ marginTop:"25px" }}>
                                   <span>
                                     <Route
                                       render={({ history }) => (
@@ -1282,7 +1276,7 @@ class AccounSearch extends React.Component {
                                   xl="5"
                                   md="5"
                                   xs="12"
-                                  style={{ marginTop: "10px" }}>
+                                  style={{ marginTop:"25px" }}>
                                   <span>
                                     <Route
                                       render={({ history }) => (
@@ -1316,7 +1310,7 @@ class AccounSearch extends React.Component {
                           </>
                         )}
 
-                        <Col lg="1" md="1" xl="1" style={{ marginTop: "10px" }}>
+                        <Col lg="1" md="1" xl="1" style={{ marginTop:"25px" }}>
                           {InsiderPermissions && InsiderPermissions.View && (
                             <>
                               <span className="">
@@ -1422,7 +1416,7 @@ class AccounSearch extends React.Component {
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100 my-1 ag-grid-table">
+                              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                                 <ContextLayout.Consumer className="ag-theme-alpine">
                                   {(context) => (
                                     <AgGridReact

@@ -42,7 +42,7 @@ const AddPurchaseOrder = (args) => {
   const [PartyList, setPartyList] = useState([]);
   const [PartyId, setPartyId] = useState("");
   const [Party, setParty] = useState({});
-  const [Charges, setCharges] = useState(100);
+  const [Charges, setCharges] = useState(0);
   const [maxGstPerct, setmaxGstPerct] = useState();
   const [UnitList, setUnitList] = useState([]);
   const [UserInfo, setUserInfo] = useState({});
@@ -73,18 +73,17 @@ const AddPurchaseOrder = (args) => {
 
   const handleRequredQty = (e, index) => {
     const { name, value } = e.target;
+    setIndex(index);
     if (Number(value != 0)) {
-      setIndex(index);
       const list = [...product];
-      list[index][name] = Number(value);
-      let amt = 0;
-      if (list?.length > 0) {
-        const x = list?.map((val) => {
-          GrandTotal[index] = val.qty * val.basicPrice;
-          list[index]["totalprice"] = val.qty * val.basicPrice;
-          return val.qty * val.basicPrice;
-        });
-        amt = x.reduce((a, b) => a + b);
+      if (name == "GrossQty") {
+        list[index]["GrossQty"] = Number(value);
+        list[index]["qty"] = Number(list[index]?.secondarySize * Number(value));
+      } else {
+        list[index][name] = Number(value);
+        list[index]["GrossQty"] = Number(
+          list[index]["qty"] / list[index]?.secondarySize
+        );
       }
 
       const gstdetails = PurchaseGstCalculation(Party, list, Context, Charges);
@@ -117,6 +116,7 @@ const AddPurchaseOrder = (args) => {
 
   // const handleSelection = async (selectedItem, selectedList, index) => {
   const handleSelection = async (selectedList, selectedItem, index) => {
+    console.log(selectedItem);
     SelectedITems.push(selectedItem);
     let costPrice = Number(
       (
@@ -137,6 +137,7 @@ const AddPurchaseOrder = (args) => {
       updatedProduct.basicPrice = costPrice;
       updatedProduct.primaryUnit = selectedItem?.primaryUnit;
       updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
+      updatedProduct.GrossQty = 1 / selectedItem?.secondarySize;
       updatedProduct.secondarySize = selectedItem?.secondarySize;
       updatedProduct.gstPercentage = selectedItem?.GSTRate;
 
@@ -153,8 +154,6 @@ const AddPurchaseOrder = (args) => {
         Charges
       );
       setGSTData(gstdetails);
-
-      //  debugger;
 
       updatedProduct["taxableAmount"] = gstdetails?.gstDetails[index]?.taxable;
       updatedProduct["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
@@ -184,7 +183,7 @@ const AddPurchaseOrder = (args) => {
         GrandTotal[index] = indextotal;
         return indextotal;
       });
-      let amt = myarr.reduce((a, b) => a + b);
+      // let amt = myarr.reduce((a, b) => a + b);
 
       const gstdetails = PurchaseGstCalculation(
         Party,
@@ -291,10 +290,9 @@ const AddPurchaseOrder = (args) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const gstdetails = PurchaseGstCalculation(Party, product, Context, Charges);
 
-    const fullname = UserInfo?.firstName + " " + UserInfo?.lastName;
+    const fullname = Party?.firstName;
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {
         return {
@@ -398,8 +396,47 @@ const AddPurchaseOrder = (args) => {
   };
 
   const onRemove1 = (selectedList, removedItem, index) => {
-    console.log(selectedList);
+    // console.log(selectedList);
   };
+
+  const handleChangePrice = (e, index) => {
+    const { name, value } = e.target;
+    if (Number(value != 0)) {
+      setIndex(index);
+      const list = [...product];
+      list[index][name] = Number(value);
+      if (typeof list[index].gstPercentage == "number") {
+        list[index]["price"] = Number(
+          (
+            Number(value) *
+            ((100 + Number(list[index].gstPercentage)) / 100)
+          ).toFixed(2)
+        );
+      } else {
+        list[index]["price"] = Number(
+          (
+            Number(value) *
+            ((100 + Number(list[index]?.gstPercentage?.split("+")[0] * 2)) /
+              100)
+          ).toFixed(2)
+        );
+      }
+
+      const gstdetails = PurchaseGstCalculation(Party, list, Context, Charges);
+      setGSTData(gstdetails);
+      list[index]["taxableAmount"] = gstdetails?.gstDetails[index]?.taxable;
+      list[index]["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
+      list[index]["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
+      list[index]["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
+      list[index]["grandTotal"] = gstdetails?.gstDetails[index]?.grandTotal;
+      list[index]["gstPercentage"] =
+        gstdetails?.gstDetails[index]?.gstPercentage;
+      list[index]["disCountPercentage"] =
+        gstdetails?.gstDetails[index]?.discountPercentage;
+      setProduct(list);
+    }
+  };
+
   return (
     <div>
       <div>
@@ -571,7 +608,7 @@ const AddPurchaseOrder = (args) => {
                         </div>
                         <div
                           className="viewspacebetween1"
-                          style={{ width: "90px" }}>
+                          style={{ width: "120px" }}>
                           <Label>HSN</Label>
                           <Input
                             readOnly
@@ -600,17 +637,14 @@ const AddPurchaseOrder = (args) => {
                           style={{ width: "90px" }}>
                           <Label>Gross Qty</Label>
                           <Input
+                            required
                             type="number"
-                            readOnly
-                            // name="qty"
-                            // min={0}
+                            // min={1}
+                            name="GrossQty"
                             placeholder="Gross Qty"
-                            // required
-                            // autocomplete="off"
-                            value={(
-                              product?.qty / product?.secondarySize
-                            )?.toFixed(2)}
-                            // onChange={(e) => handleRequredQty(e, index)}
+                          
+                            value={product?.GrossQty?.toFixed(3)}
+                            onChange={(e) => handleRequredQty(e, index)}
                           />
                         </div>
 
@@ -686,9 +720,11 @@ const AddPurchaseOrder = (args) => {
                           <Input
                             type="number"
                             name="basicPrice"
-                            readOnly
+                            min={1}
+                            step="0.01"
                             placeholder="Basic Price"
-                            value={product.basicPrice}
+                            onChange={(e) => handleChangePrice(e, index)}
+                            value={product?.basicPrice}
                           />
                         </div>
                         <div
@@ -700,7 +736,10 @@ const AddPurchaseOrder = (args) => {
                             name="taxableAmount"
                             disabled
                             placeholder="taxle Amount"
-                            value={product.taxableAmount}
+                            value={
+                              product?.taxableAmount &&
+                              product?.taxableAmount?.toFixed(2)
+                            }
                           />
                         </div>
                       </div>

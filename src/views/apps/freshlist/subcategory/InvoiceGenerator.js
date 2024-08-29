@@ -795,7 +795,7 @@ class InvoiceGenerator extends React.Component {
       .catch((err) => {
         console.log(err);
       });
-    if (data?.grandTotal > 50000) {
+    if (data?.grandTotal > 49999) {
       this.setState({ EWayBill: true });
       data["ChallanStatus"] = true;
     }
@@ -1003,7 +1003,6 @@ class InvoiceGenerator extends React.Component {
 
     this.setState({ CompanyDetails: UserInformation?.CompanyDetails });
     let pageparmission = JSON.parse(localStorage.getItem("userData"));
-    let userid = pageparmission?._id;
     if (pageparmission?.rolename?.roleName === "MASTER") {
       this.setState({ MasterShow: true });
     }
@@ -1453,11 +1452,16 @@ class InvoiceGenerator extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-                        <Col lg="3" md="4" sm="12" >
+                      <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+                        <Col lg="3" md="4" sm="12">
                           <h2
                             className="float-left"
-                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
+                            style={{
+                              fontWeight: "600",
+                              textTransform: "uppercase",
+                              fontSize: "18px",
+                              marginTop: "25px",
+                            }}>
                             Sales Invoice List
                           </h2>
                         </Col>
@@ -1849,9 +1853,11 @@ class InvoiceGenerator extends React.Component {
                         <h3>Charges</h3>
                       </div>
                       <div className="d-flex justify-content-end container ">
-
                         <h3>
-                          No of Packages: {this.state.PrintData?.NoOfPackage ? this.state.PrintData?.NoOfPackage: "Not Found"}
+                          No of Packages:{" "}
+                          {this.state.PrintData?.NoOfPackage
+                            ? this.state.PrintData?.NoOfPackage
+                            : "Not Found"}
                         </h3>
                       </div>
                       <Row className="main div heading px-3 py-3">
@@ -2277,10 +2283,11 @@ class InvoiceGenerator extends React.Component {
                         this.state.ViewOneData?.orderItems?.map((ele, i) => (
                           <>
                             <tr>
+                              {console.log(ele)}
                               <th scope="row">{i + 1}</th>
                               <td>{ele?.productId?.Product_Title}</td>
                               <td>{ele?.productId?.HSN_Code}</td>
-                              <td>{ele?.productId?.Product_MRP}</td>
+                              <td>{ele?.price.toFixed(2)}</td>
                               {/* <td>{ele?.Size}</td> */}
                               <td>{ele?.qty}</td>
                               <td>{ele?.primaryUnit}</td>

@@ -40,6 +40,7 @@ let geotagging = "";
 
 const CreateOrder = (args) => {
   const [Index, setIndex] = useState("");
+  const [borderColor, setBorderColor] = useState("black");
   const [CustomerLimit, setCustomerLimit] = useState(0);
   const [CustomerTerm, setCustomerTerm] = useState("");
   const [PartyLogin, setPartyLogin] = useState(false);
@@ -80,23 +81,29 @@ const CreateOrder = (args) => {
   const Context = useContext(UserContext);
   let History = useHistory();
 
-  const handleRequredQty = (e, index, avalaibleSize) => {
+  const handleRequredQty = (e, index, avalaibleSize, CustomerTerm) => {
+    const list = [...product];
     const { name, value } = e.target;
-    debugger;
-    if (Number(value) <= avalaibleSize) {
+    let currentvalue = Number(value);
+    currentvalue =
+      name == "GrossQty"
+        ? list[index]?.secondarySize * Number(value)
+        : (currentvalue = Number(value));
+    if (Number(currentvalue) <= avalaibleSize) {
       if (Number(value != 0)) {
         setIndex(index);
-        const list = [...product];
-        list[index][name] = Number(value);
-        let amt = 0;
-        if (list.length > 0) {
-          const x = list?.map((val) => {
-            GrandTotal[index] = val.qty * val.price;
-            list[index]["totalprice"] = val.qty * val.price;
-            return val.qty * val.price;
-          });
-          amt = x.reduce((a, b) => a + b);
+        if (name == "GrossQty") {
+          list[index]["GrossQty"] = Number(value);
+          list[index]["qty"] = Number(
+            list[index]?.secondarySize * Number(value)
+          );
+        } else {
+          list[index][name] = Number(value);
+          list[index]["GrossQty"] = Number(
+            list[index]["qty"] / list[index]?.secondarySize
+          );
         }
+
         const gstdetails = GstCalculation(Party, list, Context);
 
         setGSTData(gstdetails);
@@ -112,25 +119,11 @@ const CreateOrder = (args) => {
         if (CustomerTerm == "Cash") {
           setProduct(list);
         } else {
-          if (amt < CustomerLimit) {
-            // const gstdetails = GstCalculation(Party, list, Context);
-
-            // setGSTData(gstdetails);
-            // list[index]["taxableAmount"] =
-            //   gstdetails?.gstDetails[index]?.taxable;
-            // list[index]["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
-            // list[index]["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
-            // list[index]["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
-            // list[index]["grandTotal"] =
-            //   gstdetails?.gstDetails[index]?.grandTotal;
-            // list[index]["gstPercentage"] =
-            //   gstdetails?.gstDetails[index]?.gstPercentage;
-            // list[index]["disCountPercentage"] =
-            //   gstdetails?.gstDetails[index]?.discountPercentage;
-
+          if (gstdetails?.Tax.GrandTotal < CustomerLimit) {
+            setBorderColor("green");
             setProduct(list);
           } else {
-            swal("Error", `Your Max Limit is ${CustomerLimit}`);
+            setBorderColor("red");
           }
         }
       }
@@ -163,12 +156,23 @@ const CreateOrder = (args) => {
     let paymentTermCash = selectedItem?.paymentTerm
       .toLowerCase()
       ?.includes("cash");
-
+    debugger;
+    const gstdetails = GstCalculation(selectedItem, product, Context);
+    setGSTData(gstdetails);
     if (!paymentTermCash) {
       let URL = "order/check-party-limit/";
       await _Get(URL, selectedItem._id)
         .then((res) => {
+          debugger;
+          setCustomerTerm("");
           setCustomerLimit(Number(res?.CustomerLimit));
+          let grandTotal =
+            gstdetails?.Tax?.GrandTotal > 0 ? gstdetails?.Tax?.GrandTotal : 0;
+          if (grandTotal < Number(res?.CustomerLimit)) {
+            setBorderColor("green");
+          } else {
+            setBorderColor("red");
+          }
           // swal(`${res?.message}`);
         })
         .catch((err) => {
@@ -177,17 +181,17 @@ const CreateOrder = (args) => {
     } else {
       setCustomerLimit(0);
       setCustomerTerm("Cash");
+      if (paymentTermCash) {
+        setBorderColor("green");
+      }
     }
-    const gstdetails = GstCalculation(selectedItem, product, Context);
-    setGSTData(gstdetails);
+    // const gstdetails = GstCalculation(selectedItem, product, Context);
+    // setGSTData(gstdetails);
   };
 
   const handleSelection = async (selectedList, selectedItem, index) => {
     if (selectedItem?.Opening_Stock > 0) {
       const userdata = JSON.parse(localStorage.getItem("userData"));
-
-      let landedCost = selectedItem?.landedCost * 1.05;
-      let PurchaseRate = selectedItem?.Purchase_Rate * 1.05;
 
       SelectedITems.push(selectedItem);
       let costPrice = Number(
@@ -212,13 +216,14 @@ const CreateOrder = (args) => {
         updatedProduct.primaryUnit = selectedItem?.primaryUnit;
         updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
         updatedProduct.secondarySize = selectedItem?.secondarySize;
+        updatedProduct.GrossQty = 1 / selectedItem?.secondarySize;
 
         updatedProduct.disCountPercentage =
           Party?.category?.discount && Party?.category?.discount
             ? Party?.category?.discount
             : 0;
-        updatedProduct.availableQty = selectedItem?.Opening_Stock;
-        updatedProduct.wholeQty = selectedItem?.Opening_Stock;
+        updatedProduct.availableQty = selectedItem?.qty;
+        updatedProduct.wholeQty = selectedItem?.qty;
         // updatedProduct.availableQty = Stock?.currentStock;
         // updatedProduct.wholeQty = Stock?.currentStock;
         updatedProductList[index] = updatedProduct;
@@ -242,7 +247,6 @@ const CreateOrder = (args) => {
     } else {
       swal("Error", "Stock Not Available", "error");
     }
-    
   };
 
   const handleSelectionUnit = (selectedList, selectedItem, index) => {
@@ -408,16 +412,13 @@ const CreateOrder = (args) => {
           productId: ele?.productId,
           // productData: ele?.productData,
           discountPercentage: ele?.disCountPercentage,
-          availableQty: ele?.wholeQty - ele?.qty,
-          // availableQty: ele?.wholeQty - ele?.qty * ele?.price,
+          // availableQty: ele?.wholeQty - ele?.qty,
           qty: ele?.qty,
           price: ele?.price,
           primaryUnit: ele?.primaryUnit,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
-          // Size: ele?.Size,
-          // unitQty: ele?.Size,
-          // unitType: ele?.unitType,
+
           totalPrice: ele?.totalprice,
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
@@ -436,8 +437,7 @@ const CreateOrder = (args) => {
           productId: ele?.productId,
           // productData: ele?.productData,
           discountPercentage: ele?.disCountPercentage,
-          availableQty: ele?.wholeQty - ele?.qty,
-          // availableQty: ele?.wholeQty - ele?.qty * ele?.price,
+          // availableQty: ele?.wholeQty - ele?.qty,
 
           qty: ele?.qty,
           price: ele?.price,
@@ -673,32 +673,39 @@ const CreateOrder = (args) => {
                         />
                       </div>
                     </Col>
-                    <Col className="mb-1" lg="2" md="2" sm="12">
-                      <div className="">
-                        <Label>
-                          Balance Amount <span style={{ color: "red" }}>*</span>{" "}
-                        </Label>
-                        <Input
-                          readOnly
-                          type="text"
-                          name="CustomerLimit"
-                          placeholder="Balance Amount"
-                          value={CustomerLimit.toFixed(2)}
-                          // onChange={e => setDateofDelivery(e.target.value)}
-                        />
-                      </div>
-                    </Col>
-                    {CustomerLimit > 0 ? (
+                    {CustomerLimit > 0 && (
                       <Col className="mb-1" lg="2" md="2" sm="12">
                         <div className="">
                           <Label>
-                            Net Balance <span style={{ color: "red" }}>*</span>{" "}
+                            Balance Amount{" "}
+                            <span style={{ color: "red" }}>*</span>{" "}
                           </Label>
                           <Input
                             readOnly
                             type="text"
+                            name="CustomerLimit"
+                            placeholder="Balance Amount"
+                            value={CustomerLimit?.toFixed(2)}
+                            // onChange={e => setDateofDelivery(e.target.value)}
+                          />
+                        </div>
+                      </Col>
+                    )}
+                    {CustomerLimit > 0 ? (
+                      <Col className="mb-1" lg="2" md="2" sm="12">
+                        <div className="">
+                          <Label>
+                            <span style={{ color: borderColor }}>
+                              Net Balance *
+                            </span>{" "}
+                          </Label>
+                          <Input
+                            readOnly
+                            type="text"
+                            id="netBal"
                             name="NetBalance"
-                            placeholder=" Net Balance"
+                            placeholder="Net Balance"
+                            style={{ border: `3px solid ${borderColor}` }}
                             value={
                               !!GSTData?.Tax?.GrandTotal
                                 ? (
@@ -706,11 +713,6 @@ const CreateOrder = (args) => {
                                   ).toFixed(2)
                                 : CustomerLimit
                             }
-
-                            // {!!GSTData?.Tax?.GrandTotal
-                            //   ? (GSTData?.Tax?.GrandTotal).toFixed(2)
-                            //   : 0}
-                            // onChange={e => setDateofDelivery(e.target.value)}
                           />
                         </div>
                       </Col>
@@ -719,7 +721,7 @@ const CreateOrder = (args) => {
                         <Col className="mb-1" lg="2" md="2" sm="12">
                           <div className="">
                             <Label>
-                              Net Balance{" "}
+                              Payment Mode{" "}
                               <span style={{ color: "red" }}>*</span>{" "}
                             </Label>
                             <Input
@@ -884,7 +886,7 @@ const CreateOrder = (args) => {
                         </div>
                         <div
                           className="viewspacebetween2"
-                          style={{ width: "90px" }}>
+                          style={{ width: "120px" }}>
                           <Label>HSN Code</Label>
                           <Input
                             readOnly
@@ -916,19 +918,21 @@ const CreateOrder = (args) => {
                           <Label>Gross Qty</Label>
                           <Input
                             type="number"
-                            readOnly
-                            // name="qty"
-                            // min={0}
+                            min={0.001}
+                            step="0.001"
+                            name="GrossQty"
                             placeholder="Gross Qty"
-                            // required
-                            // autocomplete="off"
-                            value={(
-                              product?.qty / product?.secondarySize
-                            )?.toFixed(2)}
-                            // value={(
-                            //   product?.qty / product?.secondarySize
-                            // )?.toFixed(2)}
-                            // onChange={(e) => handleRequredQty(e, index)}
+                            value={
+                              product?.GrossQty && product?.GrossQty?.toFixed(3)
+                            }
+                            onChange={(e) =>
+                              handleRequredQty(
+                                e,
+                                index,
+                                product?.availableQty,
+                                CustomerTerm
+                              )
+                            }
                           />
                         </div>
                         <div
@@ -965,7 +969,12 @@ const CreateOrder = (args) => {
                             // autocomplete="true"
                             value={product?.qty}
                             onChange={(e) =>
-                              handleRequredQty(e, index, product?.availableQty)
+                              handleRequredQty(
+                                e,
+                                index,
+                                product?.availableQty,
+                                CustomerTerm
+                              )
                             }
                           />
                         </div>
@@ -1007,7 +1016,7 @@ const CreateOrder = (args) => {
                             name="price"
                             disabled
                             placeholder="Price"
-                            value={product.price}
+                            value={product?.price && product?.price?.toFixed(2)}
                           />
                         </div>
                         <div
@@ -1332,16 +1341,31 @@ const CreateOrder = (args) => {
                 <>
                   {GSTData?.Tax?.GrandTotal > 0 && (
                     <Row>
-                      <Col>
-                        <div className="d-flex justify-content-center">
-                          <Button.Ripple
-                            color="primary"
-                            type="submit"
-                            className="mt-2">
-                            Submit
-                          </Button.Ripple>
-                        </div>
-                      </Col>
+                      {borderColor == "green" ? (
+                        <Col>
+                          <div className="d-flex justify-content-center">
+                            <Button.Ripple
+                              color="primary"
+                              type="submit"
+                              className="mt-2">
+                              Submit
+                            </Button.Ripple>
+                          </div>
+                        </Col>
+                      ) : (
+                        <>
+                          <Col>
+                            <div className="d-flex justify-content-center">
+                              <Button.Ripple
+                                color="danger"
+                                disabled={true}
+                                className="mt-2">
+                                Limit Exceeded
+                              </Button.Ripple>
+                            </div>
+                          </Col>
+                        </>
+                      )}
                     </Row>
                   )}
                 </>

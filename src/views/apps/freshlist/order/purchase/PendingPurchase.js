@@ -210,39 +210,39 @@ class PendingPurchase extends React.Component {
         //     );
         //   },
         // },
-        {
-          headerName: "Update Status",
-          field: "DateofDelivery",
-          filter: true,
-          width: 150,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div className="cssforp1ending54">
-                  <CustomInput
-                    onChange={(e) => {
-                      if (e.target.value !== 0) {
-                      }
-                      let status = e.target.value;
-                      let payload = {
-                        status: status,
-                      };
+        // {
+        //   headerName: "Update Status",
+        //   field: "DateofDelivery",
+        //   filter: true,
+        //   width: 150,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div className="cssforp1ending54">
+        //           <CustomInput
+        //             onChange={(e) => {
+        //               if (e.target.value !== 0) {
+        //               }
+        //               let status = e.target.value;
+        //               let payload = {
+        //                 status: status,
+        //               };
 
-                      let data = { ...params.data };
-                      data["status"] = status;
-                      this.UpdateStatus(params, data, payload, status);
-                    }}
-                    type="select">
-                    <option value={0}>----Select----</option>
-                    {/* <option value="pending">Pending</option>
-                    <option value="cancelled">Cancelled</option> */}
-                    <option value="completed">Completed</option>
-                  </CustomInput>
-                </div>
-              </div>
-            );
-          },
-        },
+        //               let data = { ...params.data };
+        //               data["status"] = status;
+        //               this.UpdateStatus(params, data, payload, status);
+        //             }}
+        //             type="select">
+        //             <option value={0}>----Select----</option>
+        //             {/* <option value="pending">Pending</option>
+        //             <option value="cancelled">Cancelled</option> */}
+        //             <option value="completed">Completed</option>
+        //           </CustomInput>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
 
         {
           headerName: "Contact Number",
@@ -738,14 +738,21 @@ class PendingPurchase extends React.Component {
       <>
         <>
           <Card>
-            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-              <Col  >
-                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
+            <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+              <Col>
+                <h1
+                  className="float-left"
+                  style={{
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                    fontSize: "18px",
+                    marginTop: "25px",
+                  }}>
                   Pending Purchased List
                 </h1>
               </Col>
-               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" style={{marginTop:'25px'}}>
+              {this.state.MasterShow ? (
+                <Col lg="3" md="4" sm="12" style={{ marginTop: "25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -754,7 +761,7 @@ class PendingPurchase extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="3" md="6" sm="12" style={{marginTop:'25px'}}>
+              <Col lg="3" md="6" sm="12" style={{ marginTop: "25px" }}>
                 <div className="">
                   {/* <div className="mb-1 mr-1">
                     <UncontrolledDropdown className="p-1 ag-dropdown">
@@ -810,8 +817,8 @@ class PendingPurchase extends React.Component {
                   </div>
                 </div>
               </Col>
-             
-              <Col style={{marginTop:'25px'}} lg="1">
+
+              <Col style={{ marginTop: "25px" }} lg="1">
                 {InsiderPermissions && InsiderPermissions.View && (
                   <>
                     <span className="">
@@ -903,7 +910,7 @@ class PendingPurchase extends React.Component {
                           colResizeDefault={"shift"}
                           animateRows={true}
                           floatingFilter={false}
-                             pagination={true}
+                          pagination={true}
                           paginationPageSize={this.state.paginationPageSize}
                           pivotPanelShow="always"
                           enableRtl={context.state.direction === "rtl"}
@@ -1180,7 +1187,7 @@ class PendingPurchase extends React.Component {
                         ) : (
                           <>
                             <h5>
-                              status:
+                              Status:
                               <Badge className="mx-2 btn btn-warning">
                                 {this.state.ViewOneData?.status}
                               </Badge>
@@ -1244,7 +1251,7 @@ class PendingPurchase extends React.Component {
                                       <th scope="row">{i + 1}</th>
                                       <td>{ele?.productId?.Product_Title}</td>
                                       <td>{ele?.productId?.HSN_Code}</td>
-                                      <td>{ele?.productId?.Product_MRP}</td>
+                                      <td>{ele?.basicPrice}</td>
                                       <td>{ele?.qty}</td>
                                       <td>{ele?.productId?.primaryUnit}</td>
                                       {/* <td>{ele?.discountPercentage}</td> */}

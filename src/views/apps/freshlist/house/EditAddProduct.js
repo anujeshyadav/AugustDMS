@@ -932,7 +932,9 @@ const EditAddProduct = () => {
                       // min={Data.landedCost * 1.05}
                       name="Product_MRP"
                       placeholder="Product MRP"
-                      value={Data.Product_MRP}
+                      value={
+                        Data?.Product_MRP > 0 && Data.Product_MRP?.toFixed(2)
+                      }
                       // onChange={(e) => {
                       //   let value = e.target.value;
                       // }}

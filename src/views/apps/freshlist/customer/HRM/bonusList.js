@@ -77,7 +77,7 @@ class BonusList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -102,14 +102,14 @@ class BonusList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -122,7 +122,7 @@ class BonusList extends React.Component {
                 {this.state.InsiderPermissions.View && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => {
                       this.runthisfunction(params.data._id);
@@ -136,7 +136,7 @@ class BonusList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -194,7 +194,7 @@ class BonusList extends React.Component {
           headerName: "Year",
           field: "years",
           filter: true,
-          width: 80,
+          width: 55,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -209,7 +209,7 @@ class BonusList extends React.Component {
           headerName: "Month",
           field: "months",
           filter: true,
-          width: 80,
+          width: 60,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -224,7 +224,7 @@ class BonusList extends React.Component {
           headerName: "Type",
           field: "type",
           filter: true,
-          width: 80,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -239,7 +239,7 @@ class BonusList extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+          width: 70,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -602,9 +602,9 @@ class BonusList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Bonus List
               </h1>
             </Col>
@@ -643,7 +643,7 @@ class BonusList extends React.Component {
                         onClick={() =>
                           history.push("/app/ajgroup/HRM/TCPA/bonusform/0")
                         }>
-                        <FaPlus size={15} /> Check Bonus
+                        <FaPlus size={13} /> Check Bonus
                       </Button>
                     )}
                   />
@@ -726,7 +726,7 @@ class BonusList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -801,7 +801,7 @@ class BonusList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

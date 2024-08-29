@@ -22,8 +22,8 @@ axiosInstance.interceptors.request.use((config) => {
   } else if (subdomain === "admin") {
     config.baseURL = "https://node.rupioo.com";
   } else {
-    config.baseURL = "https://node.rupioo.com";
-    // config.baseURL = "https://customer-node.rupioo.com";
+    // config.baseURL = "https://node.rupioo.com";
+    config.baseURL = "https://customer-node.rupioo.com";
   }
 
   return config;

@@ -1510,8 +1510,8 @@ function List() {
     <div>
       <div className="card p-1">
         <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-          <Col  className="mb-3" >
-            <h1 className=" " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>Attendance List</h1>
+          <Col  className="mb-2" >
+            <h1 className=" " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>Attendance List</h1>
           </Col>
           {/* <Col lg="3" md="3" sm="12">
             <div className="d-flex justify-content-end">
@@ -1522,18 +1522,27 @@ function List() {
               </CustomInput>
             </div>
           </Col> */}
-          <Col lg="2" className="mb-3" style={{marginTop:"25px"}} sm="12">
+          <Col lg="2" className="mb-2" style={{marginTop:"25px"}} sm="12">
             <Input
               
               type="text"
-             className="cssforsearchattentlist"
+             className="cssforsearchattentlist table-input cssforproductlist"
+           
               placeholder="Search Name here ..."
               onChange={(e) => setSearch(e.target.value?.toLowerCase())}
             />
           </Col>
-          <Col lg="1"  className="mb-3" style={{marginTop:"25px"}}>
+          <Col lg="1"  className="mb-2" style={{marginTop:"25px"}}>
             <div className="d-flex justify-content-end">
-              <Button color="primary" className="cssforlogsbutton"  onClick={handleLogs}>
+              <Button style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="float-left "
+                          color="#39cccc"  onClick={handleLogs}>
                 Logs
               </Button>
             </div>

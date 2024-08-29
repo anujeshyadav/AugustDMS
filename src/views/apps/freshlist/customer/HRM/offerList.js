@@ -102,7 +102,7 @@ class OfferList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width:100,
+          width:80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -110,7 +110,7 @@ class OfferList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -123,7 +123,7 @@ class OfferList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -136,7 +136,7 @@ class OfferList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -147,7 +147,7 @@ class OfferList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -221,7 +221,7 @@ class OfferList extends React.Component {
           headerName: "Mobile No",
           field: "mobileNo",
           filter: true,
-          width: 110,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -604,20 +604,20 @@ class OfferList extends React.Component {
           <Card>
             <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col  >
-                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                   Offer Letter List
                 </h1>
               </Col>
               
               {this.state.MasterShow && (
-                <Col className=" mt-2" lg="2" md="2">
+                <Col className=" mt-2" lg="3" md="3">
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
                   />
                 </Col>
               )}
-              <Col className=" mt-2" lg="2" md="2">
+              <Col className=" mt-2" lg="3" md="3">
                 <div className="table-input cssforproductlist">
                   <Input
                     placeholder="search Item here..."
@@ -647,7 +647,7 @@ class OfferList extends React.Component {
                               "/app/ajgroup/HRM/RecPlace/offerletterForm"
                             )
                           }>
-                          <FaPlus size={15} /> Offer Letter
+                          <FaPlus size={13} /> Offer Letter
                         </Button>
                       )}
                     />

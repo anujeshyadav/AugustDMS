@@ -450,6 +450,7 @@ class HouseProductList extends React.Component {
   };
 
   runthisfunction(id) {
+    let selectedData = this.gridApi.getSelectedRows();
     swal("Warning", "Sure You Want to Delete it", {
       buttons: {
         cancel: "cancel",
@@ -460,7 +461,6 @@ class HouseProductList extends React.Component {
         case "delete":
           _Delete(Delete_Product, id)
             .then((res) => {
-              let selectedData = this.gridApi.getSelectedRows();
               this.gridApi.updateRowData({ remove: selectedData });
             })
             .catch((err) => {

@@ -98,7 +98,7 @@ class JobappList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -106,7 +106,7 @@ class JobappList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         this.props.history.push({
@@ -119,7 +119,7 @@ class JobappList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -132,7 +132,7 @@ class JobappList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => {
                       this.runthisfunction(params.data._id);
@@ -146,7 +146,7 @@ class JobappList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -166,7 +166,7 @@ class JobappList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 100,
+          width: 90,
 
           cellRendererFramework: (params) => {
             console.log(params.Status);
@@ -241,7 +241,7 @@ class JobappList extends React.Component {
           headerName: "Mobile No",
           field: "mobileNo",
           filter: true,
-          width: 160,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -624,7 +624,7 @@ class JobappList extends React.Component {
             <Card>
               <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                 <Col >
-                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                     Job Applied/Result List
                   </h1>
                 </Col>
@@ -637,7 +637,7 @@ class JobappList extends React.Component {
                     />
                   </Col>
                 )}
-                 <Col lg="2" md="6" sm="12" className="mt-2">
+                 <Col lg="3" md="6" sm="12" className="mt-2">
                   <div className="table-input cssforproductlist">
                     <Input
                       placeholder="search Item here..."
@@ -646,7 +646,7 @@ class JobappList extends React.Component {
                     />
                   </div>
                 </Col>
-                <Col className="mt-2" lg="2" xs="7">
+                <Col className="mt-2" lg="3" xs="7">
                   {InsiderPermissions && InsiderPermissions.Create && (
                     <span>
                       <Route

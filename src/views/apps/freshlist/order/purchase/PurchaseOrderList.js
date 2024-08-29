@@ -632,14 +632,21 @@ class PurchaseOrderViewList extends React.Component {
       <>
         <>
           <Card>
-            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-              <Col  >
-                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
+            <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+              <Col>
+                <h1
+                  className="float-left"
+                  style={{
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                    fontSize: "18px",
+                    marginTop: "25px",
+                  }}>
                   Purchased List
                 </h1>
               </Col>
               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12"  style={{ marginTop:'25px' }}>
+                <Col lg="3" md="4" sm="12" style={{ marginTop: "25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -648,14 +655,8 @@ class PurchaseOrderViewList extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col
-                lg="3"
-                md="6"
-                sm="12"
-                 
-                style={{ marginTop:'25px' }}>
+              <Col lg="3" md="6" sm="12" style={{ marginTop: "25px" }}>
                 <div className="">
-                  
                   <div
                     className="table-input cssforproductlist"
                     style={{ height: "20px" }}>
@@ -668,8 +669,8 @@ class PurchaseOrderViewList extends React.Component {
                   </div>
                 </div>
               </Col>
-              
-              <Col className=""  style={{ marginTop:'25px' }}>
+
+              <Col className="" style={{ marginTop: "25px" }}>
                 {InsiderPermissions && InsiderPermissions.View && (
                   <>
                     <span className="">
@@ -1088,7 +1089,7 @@ class PurchaseOrderViewList extends React.Component {
                                       <th scope="row">{i + 1}</th>
                                       <td>{ele?.productId?.Product_Title}</td>
                                       <td>{ele?.productId?.HSN_Code}</td>
-                                      <td>{ele?.productId?.Product_MRP}</td>
+                                      <td>{ele?.basicPrice}</td>
                                       <td>{ele?.qty}</td>
                                       <td>{ele?.productId?.primaryUnit}</td>
                                       {/* <td>{ele?.discountPercentage}</td> */}

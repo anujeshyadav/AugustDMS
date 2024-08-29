@@ -149,7 +149,7 @@ class OrderList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 105,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -331,7 +331,7 @@ class OrderList extends React.Component {
           field: "Create Dispatch",
           filter: true,
           resizable: true,
-          width:150,
+          width: 190,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -384,13 +384,12 @@ class OrderList extends React.Component {
                               color={
                                 this.state.Dispatching ? "secondary" : "primary"
                               }
-                              title=" Ready for Dispatch"
+                              title=" Forware To WareHouse"
                               onClick={() => {
                                 this.setState({ Loading: true });
                                 params.data.orderItems?.forEach((ele, i) => {
                                   (async () => {
                                     try {
-                                      // ele["Warehouses"] = [];
                                       let WarehouseList = await _Get(
                                         Find_Product_InWarehose,
                                         ele?.productId?._id
@@ -456,7 +455,7 @@ class OrderList extends React.Component {
                               size="30px">
                               {this.state.Dispatching
                                 ? "Dispatching..."
-                                : "Ready To Dispatch"}
+                                : "Forward To Warehouse"}
                             </Badge>
                             {/* <Route
                               render={({ history }) => (
