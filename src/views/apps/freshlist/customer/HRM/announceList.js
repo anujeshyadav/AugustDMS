@@ -77,7 +77,7 @@ class AnnounceList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -102,7 +102,7 @@ class AnnounceList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 90,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -110,7 +110,7 @@ class AnnounceList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -123,7 +123,7 @@ class AnnounceList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="blue"
                     onClick={() =>
                       this.props.history.push({
@@ -136,7 +136,7 @@ class AnnounceList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -188,7 +188,7 @@ class AnnounceList extends React.Component {
           headerName: "Description",
           field: "description",
           filter: true,
-          width: 320,
+          width: 300,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -203,7 +203,7 @@ class AnnounceList extends React.Component {
           headerName: "Start Date",
           field: "annoucementStartDate",
           filter: true,
-          width: 140,
+          width: 90,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -218,7 +218,7 @@ class AnnounceList extends React.Component {
           headerName: "End Date",
           field: "annoucementEndDate",
           filter: true,
-          width: 140,
+          width: 90,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -629,21 +629,13 @@ class AnnounceList extends React.Component {
         <>
           <Col sm="12">
             <Card>
-              <Row className="ml-2 mr-2">
-                <Col className=" mt-2">
-                  <h1 className="float-left" style={{ fontWeight: "500" }}>
+              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                <Col  >
+                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                     Announcements List
                   </h1>
                 </Col>
-                <Col className=" mt-2" lg="3">
-                  <div className="table-input cssforproductlist">
-                    <Input
-                      placeholder="search Item here..."
-                      onChange={e => this.updateSearchQuery(e.target.value)}
-                      value={this.state.value}
-                    />
-                  </div>
-                </Col>
+               
                 {this.state.MasterShow && (
                   <Col className=" mt-2" lg="3">
                     <SuperAdminUI
@@ -652,6 +644,15 @@ class AnnounceList extends React.Component {
                     />
                   </Col>
                 )}
+                 <Col className=" mt-2" lg="3">
+                  <div className="table-input cssforproductlist">
+                    <Input
+                      placeholder="search Item here..."
+                      onChange={e => this.updateSearchQuery(e.target.value)}
+                      value={this.state.value}
+                    />
+                  </div>
+                </Col>
                 <Col className=" mt-2" lg="2" xs="8">
                   {InsiderPermissions && InsiderPermissions.Create && (
                     <span>
@@ -674,7 +675,7 @@ class AnnounceList extends React.Component {
                               )
                             }
                           >
-                            <FaPlus size={15} /> Announcements
+                            <FaPlus size={13} /> Announcements
                           </Button>
                         )}
                       />
@@ -764,7 +765,7 @@ class AnnounceList extends React.Component {
                 </Col>
               </Row>
               {InsiderPermissions && InsiderPermissions.View && (
-                <CardBody style={{ marginTop: "0rem" }}>
+                <CardBody style={{ marginTop: "-3rem" }}>
                   {this.state.rowData === null ? null : (
                     <div className="ag-theme-material w-100 my-2 ag-grid-table">
                       {/*
@@ -841,7 +842,7 @@ class AnnounceList extends React.Component {
                             colResizeDefault={"shift"}
                             animateRows={true}
                             floatingFilter={false}
-                            // pagination={true}
+                            pagination={true}
                             paginationPageSize={this.state.paginationPageSize}
                             pivotPanelShow="always"
                             enableRtl={context.state.direction === "rtl"}

@@ -79,7 +79,7 @@ class ResignationList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -104,7 +104,7 @@ class ResignationList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -112,7 +112,7 @@ class ResignationList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -125,7 +125,7 @@ class ResignationList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="blue"
                     onClick={() =>
                       this.props.history.push({
@@ -138,7 +138,7 @@ class ResignationList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -149,7 +149,7 @@ class ResignationList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -193,7 +193,7 @@ class ResignationList extends React.Component {
           headerName: "Employee Name",
           field: "employeeName",
           filter: true,
-          width: 250,
+          width: 220,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -208,7 +208,7 @@ class ResignationList extends React.Component {
           headerName: "Resignation Date",
           field: "resignationDate",
           filter: true,
-          width: 175,
+          width: 140,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -223,7 +223,7 @@ class ResignationList extends React.Component {
           headerName: "Last Working Day",
           field: "lastWorkingDay",
           filter: true,
-          width: 175,
+          width: 145,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -619,21 +619,13 @@ class ResignationList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Resignation List
               </h1>
             </Col>
-            <Col className="mt-2" lg="3">
-              <div className="table-input cssforproductlist">
-                <Input
-                  placeholder="search Item here..."
-                  onChange={e => this.updateSearchQuery(e.target.value)}
-                  value={this.state.value}
-                />
-              </div>
-            </Col>
+           
             {this.state.MasterShow && (
               <Col className="mt-2" lg="3">
                 <SuperAdminUI
@@ -642,6 +634,15 @@ class ResignationList extends React.Component {
                 />
               </Col>
             )}
+             <Col className="mt-2" lg="3">
+              <div className="table-input cssforproductlist">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={e => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
             <Col className="mt-2" lg="2" xs="6">
               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
@@ -664,7 +665,7 @@ class ResignationList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={15} /> Resignation
+                        <FaPlus size={13} /> Resignation
                       </Button>
                     )}
                   />
@@ -754,7 +755,7 @@ class ResignationList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -829,7 +830,7 @@ class ResignationList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

@@ -76,7 +76,7 @@ class Setsalarlist extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -100,7 +100,7 @@ class Setsalarlist extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 75,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -125,7 +125,7 @@ class Setsalarlist extends React.Component {
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions.View && (
                     <Eye
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -186,7 +186,7 @@ class Setsalarlist extends React.Component {
           field: "userId",
           filter: true,
           editable: true,
-          width: 95,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -202,7 +202,7 @@ class Setsalarlist extends React.Component {
           field: "userId",
           filter: true,
           editable: true,
-          width: 260,
+          width: 220,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -217,7 +217,7 @@ class Setsalarlist extends React.Component {
           headerName: " Employee Name",
           field: "employeeName",
           filter: true,
-          width: 250,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -232,7 +232,7 @@ class Setsalarlist extends React.Component {
           headerName: " Employee Salary",
           field: "salary",
           filter: true,
-          width: 165,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -248,7 +248,7 @@ class Setsalarlist extends React.Component {
           headerName: "Created At",
           field: "createdAt",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -627,13 +627,21 @@ class Setsalarlist extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col style={{ marginTop: "34px" }}>
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"34px"}}>
                 Set Salary List
               </h1>
             </Col>
-            <Col lg="2" style={{ marginTop: "34px" }}>
+             {this.state.MasterShow && (
+              <Col style={{ marginTop: "34px" }} lg="2">
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
+              </Col>
+            )}
+            <Col lg="3" style={{ marginTop: "34px" }}>
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -642,15 +650,8 @@ class Setsalarlist extends React.Component {
                 />
               </div>
             </Col>
-            {this.state.MasterShow && (
-              <Col style={{ marginTop: "34px" }} lg="2">
-                <SuperAdminUI
-                  onDropdownChange={this.handleDropdownChange}
-                  onSubmit={this.handleParentSubmit}
-                />
-              </Col>
-            )}
-            <Col className="mt-1" lg="5">
+           
+            <Col className="mt-1" lg="4">
               <Row>
                 <Col lg="5" md="5" xl="5" xs="6">
                   <div className="table-input cssforproductlist">
@@ -769,7 +770,7 @@ class Setsalarlist extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   <ContextLayout.Consumer className="ag-theme-alpine">
@@ -785,7 +786,7 @@ class Setsalarlist extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

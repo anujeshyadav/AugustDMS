@@ -84,7 +84,7 @@ class Setpayslip extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -109,7 +109,7 @@ class Setpayslip extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 120,
+          width: 75,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
@@ -134,7 +134,7 @@ class Setpayslip extends React.Component {
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions.View && (
                     <Eye
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -210,7 +210,7 @@ class Setpayslip extends React.Component {
           headerName: "Employee Name",
           field: "employeeName",
           filter: true,
-          width: 250,
+          width: 220,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -225,7 +225,7 @@ class Setpayslip extends React.Component {
           headerName: "Pan Card",
           field: "panCard",
           filter: true,
-          width: 250,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -240,7 +240,7 @@ class Setpayslip extends React.Component {
           headerName: "Salary Month",
           field: "salaryMonth",
           filter: true,
-          width: 250,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -255,7 +255,7 @@ class Setpayslip extends React.Component {
           headerName: "Employee Salary",
           field: "totalSalary",
           filter: true,
-          width: 250,
+          width: 145,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -271,7 +271,7 @@ class Setpayslip extends React.Component {
           headerName: "Created",
           field: "updatedAt",
           filter: true,
-          width: 250,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -694,12 +694,20 @@ class Setpayslip extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col style={{ marginTop: "34px" }}>
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px'  }}>
                 Pay Slip List
               </h1>
             </Col>
+             {this.state.MasterShow && (
+              <Col lg="2" style={{ marginTop: "34px" }}>
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
+              </Col>
+            )}
             <Col lg="2" style={{ marginTop: "34px" }}>
               <div className="table-input cssforproductlist">
                 <Input
@@ -709,14 +717,7 @@ class Setpayslip extends React.Component {
                 />
               </div>
             </Col>
-            {this.state.MasterShow && (
-              <Col lg="2" style={{ marginTop: "34px" }}>
-                <SuperAdminUI
-                  onDropdownChange={this.handleDropdownChange}
-                  onSubmit={this.handleParentSubmit}
-                />
-              </Col>
-            )}
+           
             <Col lg="5" className="mt-1">
               <Row>
                 <Col lg="3" xs="6">
@@ -761,7 +762,7 @@ class Setpayslip extends React.Component {
                   </div>
                 </Col>
                 <Col>
-                  <div className="mt-2 mx-2">
+                  <div className="mt-2 ">
                     <MarkPaidSalary />
                     {/* <Button
                       type="submit"
@@ -883,7 +884,7 @@ class Setpayslip extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   <ContextLayout.Consumer className="ag-theme-alpine">
@@ -899,7 +900,7 @@ class Setpayslip extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

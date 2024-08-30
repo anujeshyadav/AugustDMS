@@ -95,7 +95,7 @@ const EditOrder = (args) => {
         } else {
           list[index][name] = Number(value);
           list[index]["GrossQty"] = Number(
-            list[index]["qty"] / list[index]?.secondarySize
+            (list[index]["qty"] / list[index]?.secondarySize).toFixed(3)
           );
         }
 
@@ -141,7 +141,6 @@ const EditOrder = (args) => {
   const handleSelectionParty = async (selectedList, selectedItem) => {
     setPartyId(selectedItem._id);
     setParty(selectedItem);
-    debugger;
     let paymentTermCash = selectedItem?.paymentTerm
       .toLowerCase()
       ?.includes("cash");
@@ -857,14 +856,9 @@ const EditOrder = (args) => {
                               <Input
                                 required
                                 type="number"
-                                min={0.001}
                                 name="GrossQty"
-                                step="0.001"
                                 placeholder="Gross Qty"
-                                value={
-                                  product?.GrossQty &&
-                                  product?.GrossQty?.toFixed(3)
-                                }
+                                value={product?.GrossQty}
                                 onChange={(e) =>
                                   handleRequredQty(
                                     e,

@@ -100,16 +100,11 @@ export default function AddRoleNew(args) {
     let userdata = JSON.parse(localStorage.getItem("userData"));
     const inputPan = Role;
     const filteredValue = inputPan.split(" ")[0];
-    // const filteredValue = inputPan.replace(/\s/g, "");
-
     let payload = {
       createdBy: userdata?._id,
       roleName: Role,
       id: filteredValue,
-      // roleId: roleId,
-      // position: 7,
       desc: Desc,
-      // rank: 7,
       rolePermission: Selected,
     };
     if (userdata?.rolename?.roleName === "MASTER") {
@@ -126,7 +121,6 @@ export default function AddRoleNew(args) {
 
       await CreateRoleByMaster(load)
         .then((res) => {
-          // console.log(res);
           history.goBack();
           swal("Created Successfully");
           var checkboxes = document.getElementsByName("check");

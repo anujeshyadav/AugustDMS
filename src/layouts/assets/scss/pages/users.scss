@@ -232,3 +232,14 @@ label {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+input.form-control {
+  height: 35px !important;
+}
+
+label {
+  text-transform: capitalize !important;
+}
+
+h2 {
+  text-transform: capitalize !important;
+}

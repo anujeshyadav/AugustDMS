@@ -100,7 +100,7 @@ const CreateOrder = (args) => {
         } else {
           list[index][name] = Number(value);
           list[index]["GrossQty"] = Number(
-            list[index]["qty"] / list[index]?.secondarySize
+            (list[index]["qty"] / list[index]?.secondarySize).toFixed(3)
           );
         }
 
@@ -216,7 +216,9 @@ const CreateOrder = (args) => {
         updatedProduct.primaryUnit = selectedItem?.primaryUnit;
         updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
         updatedProduct.secondarySize = selectedItem?.secondarySize;
-        updatedProduct.GrossQty = 1 / selectedItem?.secondarySize;
+        updatedProduct.GrossQty = Number(
+          (1 / selectedItem?.secondarySize).toFixed(3)
+        );
 
         updatedProduct.disCountPercentage =
           Party?.category?.discount && Party?.category?.discount
@@ -917,14 +919,13 @@ const CreateOrder = (args) => {
                           style={{ width: "90px" }}>
                           <Label>Gross Qty</Label>
                           <Input
+                            required
                             type="number"
-                            min={0.001}
-                            step="0.001"
+                            // min={0.001}
+                            // step="0.001"
                             name="GrossQty"
                             placeholder="Gross Qty"
-                            value={
-                              product?.GrossQty && product?.GrossQty?.toFixed(3)
-                            }
+                            value={product?.GrossQty}
                             onChange={(e) =>
                               handleRequredQty(
                                 e,
@@ -961,11 +962,11 @@ const CreateOrder = (args) => {
                             Net Qty <span style={{ color: "red" }}>*</span>
                           </Label>
                           <Input
+                            required
                             type="number"
                             name="qty"
-                            min={0}
+                            min={1}
                             placeholder="Req_Qty"
-                            required
                             // autocomplete="true"
                             value={product?.qty}
                             onChange={(e) =>

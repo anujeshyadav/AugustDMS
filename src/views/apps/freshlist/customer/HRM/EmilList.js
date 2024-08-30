@@ -84,7 +84,7 @@ class EmilList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -109,7 +109,7 @@ class EmilList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 90,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -117,7 +117,7 @@ class EmilList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -130,7 +130,7 @@ class EmilList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() =>
                       this.props.history.push({
@@ -143,7 +143,7 @@ class EmilList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="green"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -154,7 +154,7 @@ class EmilList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -198,7 +198,7 @@ class EmilList extends React.Component {
           headerName: "Employee Name",
           field: "name",
           filter: true,
-          width: 240,
+          width: 220,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -213,7 +213,7 @@ class EmilList extends React.Component {
           headerName: "Total Salary",
           field: "email",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -228,7 +228,7 @@ class EmilList extends React.Component {
           headerName: "Date",
           field: "mobileNo",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -258,7 +258,7 @@ class EmilList extends React.Component {
           headerName: "Advance Amount",
           field: "state",
           filter: true,
-          width: 180,
+          width: 140,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -631,9 +631,9 @@ class EmilList extends React.Component {
       <>
         <>
           <Card>
-            <Row className="ml-1 mr-1  ">
-              <Col xs="12" xl="3" lg="3" md="3" style={{ marginTop: "20px" }}>
-                <h1 className="float-left" style={{ fontWeight: "600" }}>
+            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+              <Col  style={{ marginTop: "20px" }}>
+                <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px'  }}>
                   EMI List
                 </h1>
               </Col>
@@ -658,7 +658,7 @@ class EmilList extends React.Component {
                   </div>
                 </div>
               </Col>
-              <Col xl="2" lg="2" md="2" xs="6" style={{ marginTop: "20px" }}>
+              <Col xl="1" lg="1" md="1" xs="6" style={{ marginTop: "20px" }}>
                 {InsiderPermissions && InsiderPermissions.Create && (
                   <span>
                     <Route
@@ -770,7 +770,7 @@ class EmilList extends React.Component {
               </Col>
             </Row>
             {InsiderPermissions && InsiderPermissions.View && (
-              <CardBody style={{ marginTop: "0rem" }}>
+              <CardBody style={{ marginTop: "-3rem" }}>
                 {this.state.rowData === null ? null : (
                   <div className="ag-theme-material w-100 my-2 ag-grid-table">
                     <ContextLayout.Consumer className="ag-theme-alpine">
@@ -786,7 +786,7 @@ class EmilList extends React.Component {
                           colResizeDefault={"shift"}
                           animateRows={true}
                           floatingFilter={false}
-                          // pagination={true}
+                          pagination={true}
                           paginationPageSize={this.state.paginationPageSize}
                           pivotPanelShow="always"
                           enableRtl={context.state.direction === "rtl"}
@@ -817,12 +817,12 @@ class EmilList extends React.Component {
               <>
                 <div className="container">
                   <div className="d-flex justify-content-center mb-2">
-                    <h3>Add EMI to Employee</h3>
+                    <h3 style={{textTransform:"uppercase  "}}>Add EMI to Employee</h3>
                   </div>
                   <Form>
                     <Row>
                       <Col className="mt-1" lg="3" md="3" sm="3" xs="3">
-                        <Label>Select Employee</Label>
+                        <Label style={{textTransform:"uppercase !important"}}>Select Employee</Label>
                         <CustomInput type="select" name="employeeName">
                           <option>--select Employee--</option>
                           {this.state.UserList?.length > 0 && (
@@ -837,7 +837,7 @@ class EmilList extends React.Component {
                         </CustomInput>
                       </Col>
                       <Col className="mt-1" lg="3" md="3" sm="3" xs="3">
-                        <Label>Employee Salary</Label>
+                        <Label >Employee Salary</Label>
                         <Input
                           readOnly
                           type="text"
@@ -892,7 +892,7 @@ class EmilList extends React.Component {
               <>
                 <Row>
                   <Col lg="4" md="4" sm="12" xl="4" xs="12">
-                    <h4>Available Columns</h4>
+                    <h4 style={{textTransform:"uppercase  "}}>Available Columns</h4>
                     <div className="mainshffling">
                       <div class="ex1">
                         {AllcolumnDefs &&

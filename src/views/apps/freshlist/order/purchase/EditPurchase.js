@@ -165,7 +165,7 @@ const EditPurchase = (args) => {
       } else {
         list[index][name] = Number(value);
         list[index]["GrossQty"] = Number(
-          list[index]["qty"] / list[index]?.secondarySize
+          (list[index]["qty"] / list[index]?.secondarySize).toFixed(3)
         );
       }
 
@@ -240,7 +240,9 @@ const EditPurchase = (args) => {
       updatedProduct.basicPrice = costPrice;
       updatedProduct.primaryUnit = selectedItem?.primaryUnit;
       updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
-      updatedProduct.GrossQty = 1 / selectedItem?.secondarySize;
+      updatedProduct.GrossQty = Number(
+        (1 / selectedItem?.secondarySize).toFixed(3)
+      );
       updatedProduct.secondarySize = selectedItem?.secondarySize;
 
       updatedProduct.disCountPercentage =
@@ -855,7 +857,6 @@ const EditPurchase = (args) => {
                               <Label>Gross Qty</Label>
                               <Input
                                 required
-                                min={1}
                                 type="number"
                                 name="GrossQty"
                                 placeholder="Gross Qty"
@@ -876,10 +877,9 @@ const EditPurchase = (args) => {
                               <Input
                                 type="number"
                                 name="qty"
-                                min={0}
+                                min={1}
                                 placeholder="Req_Qty"
                                 required
-                                autocomplete="off"
                                 value={product?.qty}
                                 onChange={(e) => handleRequredQty(e, index)}
                               />

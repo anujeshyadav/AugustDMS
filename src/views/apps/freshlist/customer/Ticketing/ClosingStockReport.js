@@ -96,7 +96,7 @@ class ClosingStockReport extends React.Component {
               field: "productId.Product_Title",
               filter: true,
               sortable: true,
-              width: 140,
+              width: 200,
               cellRendererFramework: (params) => {
                 return (
                   <>
@@ -148,7 +148,7 @@ class ClosingStockReport extends React.Component {
           children: [
             {
               headerName: "Opening qty",
-              field: "currentStock",
+              field: "productId.Opening_Stock",
               headerClass: "header-style",
               filter: true,
               sortable: true,
@@ -156,7 +156,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.currentStock}</span>
+                      <span>{params?.data?.productId?.Opening_Stock}</span>
                     </div>
                   </>
                 );
@@ -164,7 +164,7 @@ class ClosingStockReport extends React.Component {
             },
             {
               headerName: "Purchase Rate",
-              field: "price",
+              field: "productId.Purchase_Rate",
               headerClass: "header-style",
               filter: true,
               sortable: true,
@@ -172,7 +172,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.price}</span>
+                      <span>{params?.data?.productId?.Purchase_Rate}</span>
                     </div>
                   </>
                 );
@@ -354,7 +354,77 @@ class ClosingStockReport extends React.Component {
           ],
         },
         {
-          headerName: "Outward stock details",
+          headerName: "Pending stock details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Pending Stock",
+              field: "cQty",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cQty}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Pending price",
+              field: "cRate",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cRate}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax amount",
+              field: "cTaxAmount",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cTaxAmount}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Total",
+              field: "cTotal",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.cTotal}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
+        },
+        {
+          headerName: "Closing stock details",
           headerClass: "header-group-style",
           children: [
             {
@@ -640,14 +710,15 @@ class ClosingStockReport extends React.Component {
         let closing = value?.filter((ele) => ele?.closingStatus == "closing");
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
-            let OpeningTax =
-              (val.currentStock * val?.price * val?.productId?.GSTRate*0.01).toFixed(2);
-            let OpeningTotal =
-              (val.currentStock * val?.price * (100+val?.productId?.GSTRate)*0.01).toFixed(2);
+            let gstRate = Number(val?.productId?.GSTRate);
+            let Total = +(
+              val.productId?.Opening_Stock * val?.productId?.Purchase_Rate
+            ).toFixed(2);
+            let OpeningTax = +((Total / (100 + gstRate)) * gstRate).toFixed(2);
+            let OpeningTotal = +Total;
             return { ...ele, ...val, OpeningTax, OpeningTotal };
           });
         });
-        // console.log(alldata);
         if (alldata?.length) {
           this.setState({
             rowData: alldata?.reverse(),
@@ -725,8 +796,8 @@ class ClosingStockReport extends React.Component {
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    this.gridRef.current = params.api;
-
+    this.columnApi = params.columnApi;
+    this.gridRef.current = params.api; 
     this.setState({
       currenPageSize: this.gridApi.paginationGetCurrentPage() + 1,
       getPageSize: this.gridApi.paginationGetPageSize(),
@@ -1162,6 +1233,7 @@ class ClosingStockReport extends React.Component {
           <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-1 ag-grid-table">
+                {/* <div className="ag-theme-quartz"> */}
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {(context) => (
                     <AgGridReact
@@ -1172,7 +1244,7 @@ class ClosingStockReport extends React.Component {
                       columnDefs={columnDefs}
                       rowData={rowData}
                       onGridReady={this.onGridReady}
-                      colResizeDefault={"shift"}
+                      // colResizeDefault={"shift"}
                       animateRows={true}
                       floatingFilter={false}
                       pagination={true}
@@ -1352,3 +1424,4 @@ class ClosingStockReport extends React.Component {
   }
 }
 export default ClosingStockReport;
+

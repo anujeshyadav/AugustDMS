@@ -77,7 +77,7 @@ class WarningList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -102,7 +102,7 @@ class WarningList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -110,7 +110,7 @@ class WarningList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -123,7 +123,7 @@ class WarningList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="blue"
                     onClick={() =>
                       this.props.history.push({
@@ -136,7 +136,7 @@ class WarningList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -147,7 +147,7 @@ class WarningList extends React.Component {
                       this.state.InsiderPermissions.Edit && (
                         <Edit
                           className="mr-50"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() =>
                             this.props.history.push({
@@ -206,7 +206,7 @@ class WarningList extends React.Component {
           headerName: "Warning To",
           field: "warningToEmployeeName",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -614,21 +614,13 @@ class WarningList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 Warnings List
               </h1>
             </Col>
-            <Col className="mt-2" lg="3">
-              <div className="table-input cssforproductlist">
-                <Input
-                  placeholder="search Item here..."
-                  onChange={(e) => this.updateSearchQuery(e.target.value)}
-                  value={this.state.value}
-                />
-              </div>
-            </Col>
+           
             {this.state.MasterShow && (
               <Col className="mt-2" lg="3">
                 <SuperAdminUI
@@ -637,8 +629,20 @@ class WarningList extends React.Component {
                 />
               </Col>
             )}
-            <Col className="mt-2" lg="2" xs="8">
-              {InsiderPermissions && InsiderPermissions.Create && (
+             <Col className="mt-2" lg="3">
+              <div className="table-input cssforproductlist">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
+            
+            <Col className="mt-2" lg="2" xs="4">
+              <div style={{display:"flex",justifyContent:"space-between"}}>
+              <div >
+               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
                   <Route
                     render={({ history }) => (
@@ -647,10 +651,11 @@ class WarningList extends React.Component {
                           cursor: "pointer",
                           backgroundColor: "rgb(8, 91, 245)",
                           color: "white",
+                           
                           fontWeight: "600",
                           height: "43px",
                         }}
-                        className="float-left "
+                        className="float-left cssforclasswarning"
                         color="#39cccc"
                         onClick={() =>
                           history.push(
@@ -658,15 +663,17 @@ class WarningList extends React.Component {
                             "/app/ajgroup/HRM/HRMAdminForms/warningForm"
                           )
                         }>
-                        <FaPlus size={15} />
+                        <FaPlus size={12} />
                         Warning
                       </Button>
                     )}
                   />
                 </span>
               )}
-            </Col>
-            <Col className="mt-2" lg="1" xs="4">
+              </div>
+              <div >
+              
+            
               {InsiderPermissions && InsiderPermissions.View && (
                 <>
                   <span className="">
@@ -739,10 +746,12 @@ class WarningList extends React.Component {
                   </div>
                 </span>
               )}
+               </div>
+              </div>
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -817,7 +826,7 @@ class WarningList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

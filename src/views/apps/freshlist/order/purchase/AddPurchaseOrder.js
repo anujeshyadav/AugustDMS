@@ -82,7 +82,7 @@ const AddPurchaseOrder = (args) => {
       } else {
         list[index][name] = Number(value);
         list[index]["GrossQty"] = Number(
-          list[index]["qty"] / list[index]?.secondarySize
+          (list[index]["qty"] / list[index]?.secondarySize).toFixed(3)
         );
       }
 
@@ -137,7 +137,9 @@ const AddPurchaseOrder = (args) => {
       updatedProduct.basicPrice = costPrice;
       updatedProduct.primaryUnit = selectedItem?.primaryUnit;
       updatedProduct.secondaryUnit = selectedItem?.secondaryUnit;
-      updatedProduct.GrossQty = 1 / selectedItem?.secondarySize;
+      updatedProduct.GrossQty = Number(
+        (1 / selectedItem?.secondarySize).toFixed(3)
+      );
       updatedProduct.secondarySize = selectedItem?.secondarySize;
       updatedProduct.gstPercentage = selectedItem?.GSTRate;
 
@@ -637,13 +639,12 @@ const AddPurchaseOrder = (args) => {
                           style={{ width: "90px" }}>
                           <Label>Gross Qty</Label>
                           <Input
-                            required
+                            // required
+                            
                             type="number"
-                            // min={1}
                             name="GrossQty"
                             placeholder="Gross Qty"
-                          
-                            value={product?.GrossQty?.toFixed(3)}
+                            value={product?.GrossQty}
                             onChange={(e) => handleRequredQty(e, index)}
                           />
                         </div>
@@ -655,7 +656,7 @@ const AddPurchaseOrder = (args) => {
                           <Input
                             type="number"
                             name="qty"
-                            min={0}
+                            min={1}
                             placeholder="qty"
                             required
                             value={product?.qty}
