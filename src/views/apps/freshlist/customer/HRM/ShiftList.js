@@ -91,7 +91,7 @@ class HolidayList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -116,23 +116,17 @@ class HolidayList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 120,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
-                {this.state.InsiderPermissions.Delete && (
-                  <Trash2
-                    className="mr-50"
-                    size="25px"
-                    color="red"
-                    onClick={() => this.runthisfunction(params.data._id)}
-                  />
-                )}
+                
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
+                      color="green"
                       onClick={(e) => {
                         e.preventDefault();
                         this.setState({
@@ -149,7 +143,7 @@ class HolidayList extends React.Component {
                   this.state.InsiderPermissions?.Edit && (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={(e) => {
                         e.preventDefault();
@@ -161,6 +155,14 @@ class HolidayList extends React.Component {
                         });
                         this.LookupviewStart();
                       }}
+                    />
+                  )}
+                  {this.state.InsiderPermissions.Delete && (
+                    <Trash2
+                      className="mr-50"
+                      size="20px"
+                      color="red"
+                      onClick={() => this.runthisfunction(params.data._id)}
                     />
                   )}
               </div>
@@ -194,7 +196,7 @@ class HolidayList extends React.Component {
           headerName: "Shift Name",
           field: "shiftName",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -210,7 +212,7 @@ class HolidayList extends React.Component {
           field: "id",
           filter: true,
           editable: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -225,7 +227,7 @@ class HolidayList extends React.Component {
           headerName: "From Time",
           field: "fromTime",
           filter: true,
-          width: 140,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -240,7 +242,7 @@ class HolidayList extends React.Component {
           headerName: "Late By Time",
           field: "lateByTime",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -255,7 +257,7 @@ class HolidayList extends React.Component {
           headerName: "To Time",
           field: "toTime",
           filter: true,
-          width: 140,
+          width: 75,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -270,7 +272,7 @@ class HolidayList extends React.Component {
           headerName: "Short By Time",
           field: "shortByTime",
           filter: true,
-          width: 140,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -285,7 +287,7 @@ class HolidayList extends React.Component {
           headerName: "Total Working Hours",
           field: "totalHours",
           filter: true,
-          width: 140,
+          width: 185,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -745,21 +747,13 @@ class HolidayList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
-            <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  className="mt-2">
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' }}>
                 Shift List
               </h1>
             </Col>
-            <Col lg="3" className="mt-2">
-              <div className="table-input mr-1 cssforproductlist">
-                <Input
-                  placeholder="search Item here..."
-                  onChange={(e) => this.updateSearchQuery(e.target.value)}
-                  value={this.state.value}
-                />
-              </div>
-            </Col>
+            
             {this.state.MasterShow && (
               <Col lg="3" className="mt-2">
                 <SuperAdminUI
@@ -768,6 +762,15 @@ class HolidayList extends React.Component {
                 />
               </Col>
             )}
+            <Col lg="3" className="mt-2">
+              <div className="table-input   cssforproductlist">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
             <Col lg="2" xs="8" className="mt-2">
               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
@@ -794,7 +797,7 @@ class HolidayList extends React.Component {
                           });
                           this.LookupviewStart();
                         }}>
-                        <FaPlus size={15} /> Add Shift
+                        <FaPlus size={13} /> Add Shift
                       </Button>
                     )}
                   />
@@ -885,7 +888,7 @@ class HolidayList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -961,7 +964,7 @@ class HolidayList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                        pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

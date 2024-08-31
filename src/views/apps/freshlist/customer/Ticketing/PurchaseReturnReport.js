@@ -100,7 +100,7 @@ class PurchaseReturnReport extends React.Component {
           field: "order.partyId.gstNumber",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
@@ -114,7 +114,7 @@ class PurchaseReturnReport extends React.Component {
           field: "order.partyId.ownerName",
           filter: true,
           width: 210,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
@@ -128,7 +128,7 @@ class PurchaseReturnReport extends React.Component {
           field: "order.partyId.partyType",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
@@ -141,8 +141,8 @@ class PurchaseReturnReport extends React.Component {
           headerName: "Invoice Id",
           field: "order.orderId.invoiceId",
           filter: true,
-          width:160,
-          cellRendererFramework: params => {
+          width: 160,
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
@@ -153,14 +153,14 @@ class PurchaseReturnReport extends React.Component {
         },
         {
           headerName: "Purchase Date",
-          field: "order.orderId?.DateofDelivery",
+          field: "order?.createdAt",
           filter: true,
           width: 160,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.orderId?.DateofDelivery}</span>
+                <span>{params?.data?.order?.createdAt.split("T")[0]}</span>
               </div>
             );
           },
@@ -170,7 +170,7 @@ class PurchaseReturnReport extends React.Component {
           field: "order.ARN",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.order?.ARN}</span>
@@ -183,7 +183,7 @@ class PurchaseReturnReport extends React.Component {
           field: "productId.Product_Title",
           filter: true,
           width: 200,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.productId?.Product_Title}</span>
@@ -196,7 +196,7 @@ class PurchaseReturnReport extends React.Component {
           field: "productId.HSN_Code",
           filter: true,
           width: 110,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.productId?.HSN_Code}</span>
@@ -209,7 +209,7 @@ class PurchaseReturnReport extends React.Component {
           field: "qtyReturn",
           filter: true,
           width: 110,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.qtyReturn}</span>
@@ -222,7 +222,7 @@ class PurchaseReturnReport extends React.Component {
           field: "order.orderId.discount",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.order?.orderId?.discount}</span>
@@ -264,7 +264,7 @@ class PurchaseReturnReport extends React.Component {
           field: "taxableAmount",
           filter: true,
           width: 150,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.taxableAmount}</span>
@@ -278,7 +278,7 @@ class PurchaseReturnReport extends React.Component {
           field: "igstRate",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.igstRate}</span>
@@ -291,7 +291,7 @@ class PurchaseReturnReport extends React.Component {
           field: "sgstRate",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.sgstRate}</span>
@@ -304,7 +304,7 @@ class PurchaseReturnReport extends React.Component {
           field: "cgstRate",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.cgstRate}</span>
@@ -317,7 +317,7 @@ class PurchaseReturnReport extends React.Component {
           field: "grandTotal",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.grandTotal}</span>

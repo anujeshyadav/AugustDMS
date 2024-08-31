@@ -784,15 +784,20 @@ class PurchaseReturn extends React.Component {
               ) : (
                 <>
                   <Card>
-                    <Row  style={{marginLeft:'3px',marginRight:'3px'}}>
-                      <Col  >
+                    <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+                      <Col>
                         <h1
                           className="float-left"
-                          style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
+                          style={{
+                            fontWeight: "600",
+                            textTransform: "uppercase",
+                            fontSize: "18px",
+                            marginTop: "25px",
+                          }}>
                           Purchase Return List
                         </h1>
                       </Col>
-                       {this.state.MasterShow && (
+                      {this.state.MasterShow && (
                         <Col lg="3" md="4" sm="12" className="mt-2">
                           <SuperAdminUI
                             onDropdownChange={this.handleDropdownChange}
@@ -811,7 +816,6 @@ class PurchaseReturn extends React.Component {
                           />
                         </div>
                       </Col>
-                     
 
                       <Col className="mt-2" lg="1">
                         {InsiderPermissions && InsiderPermissions?.View && (
@@ -1304,7 +1308,7 @@ class PurchaseReturn extends React.Component {
                               <th scope="row">{i + 1}</th>
                               <td>{ele?.productId?.Product_Title}</td>
                               <td>{ele?.productId?.HSN_Code}</td>
-                              <td>{ele?.productId?.Product_MRP}</td>
+                              <td>{ele?.price?.toFixed(2)}</td>
                               {/* <td>{ele?.Size}</td> */}
                               <td>{ele?.qtyReturn}</td>
                               {/* <td>{ele?.unitType}</td> */}

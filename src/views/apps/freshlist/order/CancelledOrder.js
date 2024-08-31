@@ -258,7 +258,7 @@ class OrderList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 130,
+          width: 160,
           cellRendererFramework: (params) => {
             return params.data?.status?.toLowerCase()?.includes("completed") ? (
               <div className="text-center">{params.data?.status}</div>

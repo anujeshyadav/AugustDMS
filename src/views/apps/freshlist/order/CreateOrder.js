@@ -156,14 +156,12 @@ const CreateOrder = (args) => {
     let paymentTermCash = selectedItem?.paymentTerm
       .toLowerCase()
       ?.includes("cash");
-    debugger;
     const gstdetails = GstCalculation(selectedItem, product, Context);
     setGSTData(gstdetails);
     if (!paymentTermCash) {
       let URL = "order/check-party-limit/";
       await _Get(URL, selectedItem._id)
         .then((res) => {
-          debugger;
           setCustomerTerm("");
           setCustomerLimit(Number(res?.CustomerLimit));
           let grandTotal =
@@ -406,7 +404,6 @@ const CreateOrder = (args) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // debugger;
     const gstdetails = GstCalculation(Party, product, Context);
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {
@@ -467,11 +464,12 @@ const CreateOrder = (args) => {
     }
     const fullname = Party?.firstName;
     const payload = {
+      userId: Party?.created_by?._id,
+      partyId: PartyId,
       database: UserInfo?.database,
       ARN: "",
       // ARN: Party?.rolename + 11544341546556,
       ARNStatus: arnStatus,
-      partyId: PartyId,
       discountPercentage: Party?.category ? Party?.category?.discount : 0,
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,

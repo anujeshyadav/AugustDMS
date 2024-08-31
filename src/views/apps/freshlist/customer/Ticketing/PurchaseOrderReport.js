@@ -243,8 +243,8 @@ class PurchaseOrderReport extends React.Component {
 
         this.setState({ rowData: Alldata });
 
+        this.setState({ Loading: false });
         if (Alldata?.length > 0) {
-          this.setState({ Loading: false });
           this.setState({ rowData: Alldata });
           this.setState({ rowAllData: Alldata });
         }

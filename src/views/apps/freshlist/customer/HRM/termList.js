@@ -75,7 +75,7 @@ class TermList extends React.Component {
 
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       // columnDefs: [],
@@ -100,7 +100,7 @@ class TermList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 100,
+          width: 90,
           cellRendererFramework: params => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -108,7 +108,7 @@ class TermList extends React.Component {
                   this.state.InsiderPermissions.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       onClick={() =>
                         this.props.history.push({
@@ -121,7 +121,7 @@ class TermList extends React.Component {
                 {this.state.InsiderPermissions.Edit && (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="blue"
                     onClick={() =>
                       this.props.history.push({
@@ -134,7 +134,7 @@ class TermList extends React.Component {
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -170,7 +170,7 @@ class TermList extends React.Component {
           headerName: "Employee Name",
           field: "employeeName",
           filter: true,
-          width: 250,
+          width: 220,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -185,7 +185,7 @@ class TermList extends React.Component {
           headerName: "Termination Type",
           field: "terminationType",
           filter: true,
-          width: 180,
+          width: 140,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -198,7 +198,7 @@ class TermList extends React.Component {
           headerName: "Notice Date",
           field: "noticeDate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -213,7 +213,7 @@ class TermList extends React.Component {
           headerName: "Termination Date",
           field: "terminationDate",
           filter: true,
-          width: 175,
+          width: 145,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -593,12 +593,20 @@ class TermList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px'  }}>
                 Termination List
               </h1>
             </Col>
+             {this.state.MasterShow && (
+              <Col className="mt-2" lg="3">
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
+              </Col>
+            )}
             <Col lg="3" className="mt-2">
               <div className="table-input cssforproductlist">
                 <Input
@@ -608,14 +616,7 @@ class TermList extends React.Component {
                 />
               </div>
             </Col>
-            {this.state.MasterShow && (
-              <Col className="mt-2" lg="3">
-                <SuperAdminUI
-                  onDropdownChange={this.handleDropdownChange}
-                  onSubmit={this.handleParentSubmit}
-                />
-              </Col>
-            )}
+           
             <Col className="mt-2" lg="2" xs="8">
               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
@@ -637,7 +638,7 @@ class TermList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={15} /> Termination
+                        <FaPlus size={13} /> Termination
                       </Button>
                     )}
                   />
@@ -727,7 +728,7 @@ class TermList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*
@@ -802,7 +803,7 @@ class TermList extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                         pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

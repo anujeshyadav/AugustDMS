@@ -639,9 +639,7 @@ const AddPurchaseOrder = (args) => {
                           style={{ width: "90px" }}>
                           <Label>Gross Qty</Label>
                           <Input
-                            // required
-                            
-                            type="number"
+                            xtype="number"
                             name="GrossQty"
                             placeholder="Gross Qty"
                             value={product?.GrossQty}

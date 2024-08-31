@@ -122,19 +122,19 @@ class purchasereportamount extends React.Component {
             );
           },
         },
-        {
-          headerName: "last Name",
-          field: "lastName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div>
-                <span>{params?.data?.lastName}</span>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "last Name",
+        //   field: "lastName",
+        //   filter: true,
+        //   width: 200,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div>
+        //         <span>{params?.data?.lastName}</span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "email",
           field: "email",

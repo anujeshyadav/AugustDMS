@@ -777,12 +777,18 @@ class SalesOrderReport extends React.Component {
                 value={this.state.changeStatus}
                 onChange={this.handleDropdownChangeStatus}
                 type="select">
-                <option value="0">--Select--</option>
-                <option value="sales order">Sales Order</option>
+                <option value={null}>--Select--</option>
+                {/* <option value="sales order">Sales Order</option> */}
                 <option value="pending">Pending</option>
+                <option value="Billing">Billing Order</option>
+                <option value="Dispatch">Dispatch Order</option>
+                <option value="Pending for Delivery">
+                  Pending for Delivery
+                </option>
                 <option value="completed">Completed</option>
+                <option value="Cancel in process">Cancel in process</option>
                 <option value="cancelled">Cancelled</option>
-                <option value="delivery">Delivery</option>
+                {/* <option value="delivery">Delivery</option> */}
               </CustomInput>
             </Col>
             <Col style={{ marginTop: "30px" }} xl="2" lg="2" md="2">

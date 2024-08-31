@@ -514,7 +514,8 @@ const EditOrder = (args) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const gstdetails = GstCalculation(Party, product, Context);
-    const fullname = UserInfo?.firstName;
+    debugger;
+    const fullname = Party?.firstName;
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {
         return {
@@ -568,9 +569,9 @@ const EditOrder = (args) => {
     });
 
     const payload = {
-      userId: UserInfo?._id,
+      userId: Party?.created_by?._id,
       database: UserInfo?.database,
-      partyId: PartyId,
+      
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,
       address: UserInfo?.address,
