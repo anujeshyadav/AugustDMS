@@ -7,6 +7,7 @@ import Spinner from "./components/@vuexy/spinner/Loading-spinner";
 
 import { ContextLayout } from "./utility/context/Layout";
 import AddPurchaseOrder from "./views/apps/freshlist/order/purchase/AddPurchaseOrder";
+import LowStockPurchase from "./views/apps/freshlist/order/purchase/LowStockPurchase";
 
 const MainDash = lazy(() => import("./views/dashboard/analytics/MainDash"));
 
@@ -832,6 +833,9 @@ const LowStockReports = lazy(() =>
 );
 const ClosingStockReport = lazy(() =>
   import("./views/apps/freshlist/customer/Ticketing/ClosingStockReport")
+);
+const AvailableStock = lazy(() =>
+  import("./views/apps/freshlist/customer/Ticketing/AvailableStock")
 );
 const WareHouseOverDueStock = lazy(() =>
   import("./views/apps/freshlist/customer/Ticketing/WareHouseOverDueStock")
@@ -1813,6 +1817,10 @@ class AppRouter extends React.Component {
             component={AddPurchaseOrder}
           />
           <AppRoute
+            path="/app/AJgroup/order/AddOrder/:partyid/:productId"
+            component={LowStockPurchase}
+          />
+          <AppRoute
             path="/app/AJgroup/order/editPurchase/:id"
             component={EditPurchase}
           />
@@ -1995,6 +2003,10 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/rupioo/report/ClosingStockReport"
             component={ClosingStockReport}
+          />
+          <AppRoute
+            path="/app/rupioo/report/AvailableStock"
+            component={AvailableStock}
           />
           <AppRoute
             path="/app/rupioo/report/WareHouseOverDueStock"

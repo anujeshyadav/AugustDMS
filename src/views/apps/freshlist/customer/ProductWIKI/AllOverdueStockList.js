@@ -130,8 +130,8 @@ class OverDueStock extends React.Component {
           },
         },
         {
-          headerName: "Product MRP",
-          field: "product.Product_MRP",
+          headerName: "Tax Rate",
+          field: "product.GSTRate",
           filter: true,
           sortable: true,
           width: 140,
@@ -140,32 +140,49 @@ class OverDueStock extends React.Component {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.product?.Product_MRP}</span>
+                  <span>{params?.data?.product?.GSTRate}</span>
                 </div>
               </>
             );
           },
         },
-        // {
-        //   headerName: "LAST SALE DAYS",
-        //   field: "product.salesDate",
-        //   filter: true,
-        //   sortable: true,
-        //   width: 280,
-        //   editable: true,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <>
-        //         <div className="actions cursor-pointer">
-        //           <span>{params?.data?.product?.salesDate}</span>
-        //         </div>
-        //       </>
-        //     );
-        //   },
-        // },
+        {
+          headerName: "Purchase Rate",
+          field: "product.Purchase_Rate",
+          filter: true,
+          sortable: true,
+          width: 140,
+          editable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.product?.Purchase_Rate}</span>
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "OverDue Date",
+          field: "product.salesDate",
+          filter: true,
+          sortable: true,
+          width: 280,
+          editable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.product?.salesDate}</span>
+                </div>
+              </>
+            );
+          },
+        },
         {
           headerName: "SUPPLIER NAME",
-          field: "product.partyId?.ownerName",
+          field: "product?.partyId?.ownerName",
           filter: true,
           sortable: true,
 
@@ -185,7 +202,7 @@ class OverDueStock extends React.Component {
           },
         },
         {
-          headerName: "PURCHASE DATE",
+          headerName: "WareHouse",
           field: "product.purchaseDate",
           filter: true,
           sortable: true,
@@ -196,6 +213,23 @@ class OverDueStock extends React.Component {
               <>
                 <div className="actions cursor-pointer">
                   <span>{params?.data?.product?.purchaseDate}</span>
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          headerName: "PURCHASE DATE",
+          field: "product.purchaseDate",
+          filter: true,
+          sortable: true,
+          width: 150,
+          editable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer">
+                  <span>{params?.data?.product?.purchaseDate?.split("T")[0]}</span>
                 </div>
               </>
             );

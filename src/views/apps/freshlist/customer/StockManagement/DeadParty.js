@@ -108,60 +108,15 @@ class DeadPartyReport extends React.Component {
           },
         },
         {
-          headerName: "Sales Person",
-          field: "party[0].firstName",
+          headerName: "GSTIN",
+          field: "id.gstNumber",
           filter: "agSetColumnFilter",
-            width: 150,
+          width: 240,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.party[0]?.firstName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "Team Leader",
-          field: "party[1].firstName",
-          filter: "agSetColumnFilter",
-           width: 150,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="d-flex align-items-center cursor-pointer">
-                <div className="">
-                  <span>{params?.data?.party[1]?.firstName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "STL",
-          field: "party[2].firstName",
-          filter: "agSetColumnFilter",
-            width: 150,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="d-flex align-items-center cursor-pointer">
-                <div className="">
-                  <span>{params?.data?.party[2]?.firstName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "SM",
-          field: "party[3].firstName",
-          filter: "agSetColumnFilter",
-          width: 150,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="d-flex align-items-center cursor-pointer">
-                <div className="">
-                  <span>{params?.data?.party[3]?.firstName}</span>
+                  <span>{params?.data?.id?.gstNumber}</span>
                 </div>
               </div>
             );
@@ -184,9 +139,114 @@ class DeadPartyReport extends React.Component {
             );
           },
         },
+        {
+          headerName: "PinCode",
+          field: "id.pincode",
+          filter: "agSetColumnFilter",
+          width: 240,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div className="">
+                  <span>{params?.data?.id?.pincode}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Grade",
+          field: "id.ownerName",
+          filter: "agSetColumnFilter",
+          width: 240,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div className="">
+                  <span>{params?.data?.id?.ownerName}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Phone Number",
+          field: "id.contactNumber",
+          filter: "agSetColumnFilter",
+          width: 240,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div className="">
+                  <span>{params?.data?.id?.contactNumber}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Sales Person",
+          field: "party[0].firstName",
+          filter: "agSetColumnFilter",
+          width: 150,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div className="">
+                  <span>{params?.data?.party[0]?.firstName}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        // {
+        //   headerName: "Team Leader",
+        //   field: "party[1].firstName",
+        //   filter: "agSetColumnFilter",
+        //   width: 150,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="d-flex align-items-center cursor-pointer">
+        //         <div className="">
+        //           <span>{params?.data?.party[1]?.firstName}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "STL",
+        //   field: "party[2].firstName",
+        //   filter: "agSetColumnFilter",
+        //   width: 150,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="d-flex align-items-center cursor-pointer">
+        //         <div className="">
+        //           <span>{params?.data?.party[2]?.firstName}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "SM",
+        //   field: "party[3].firstName",
+        //   filter: "agSetColumnFilter",
+        //   width: 150,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="d-flex align-items-center cursor-pointer">
+        //         <div className="">
+        //           <span>{params?.data?.party[3]?.firstName}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
 
         {
-          headerName: "Last Bill Days",
+          headerName: "Last Purchase Date",
           field: "lastDays",
           filter: "agSetColumnFilter",
           width: 220,
@@ -217,9 +277,9 @@ class DeadPartyReport extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let rowData = res?.Parties;
-        if (rowData) {
-          this.setState({ rowData });
-          this.setState({ rowAllData: rowData });
+        console.log(rowData);
+        if (rowData?.length) {
+          this.setState({ rowData: rowData, rowAllData: rowData });
         }
         this.setState({ AllcolumnDefs: this.state.columnDefs });
 

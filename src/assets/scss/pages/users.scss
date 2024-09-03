@@ -1714,7 +1714,6 @@ input#search_input {
 button{
   font-size: 12px !important;
 }
-
 // .ag-header-group-text {
 //   margin-top: 8px;
 //   color: black;
@@ -1724,3 +1723,8 @@ button{
 //   text-overflow: ellipsis;
 //   white-space: nowrap;
 // }
+[dir=ltr] .horizontal-layout .header-navbar .navbar-container {
+  padding-left: 0.5rem !important;
+  // padding-right: calc(2.2rem - 1rem);
+  padding-right: 0.2rem !important;
+}

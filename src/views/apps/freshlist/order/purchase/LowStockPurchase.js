@@ -33,7 +33,7 @@ let SelectedITems = [];
 let SelectedSize = [];
 let OtherGSTCharges = 0;
 
-const AddPurchaseOrder = (args) => {
+const LowStockPurchase = (args) => {
   const [Index, setIndex] = useState("");
   const [PartyLogin, setPartyLogin] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -43,8 +43,6 @@ const AddPurchaseOrder = (args) => {
   const [PartyId, setPartyId] = useState("");
   const [Party, setParty] = useState({});
   const [Charges, setCharges] = useState(0);
-  const [maxGstPerct, setmaxGstPerct] = useState();
-  const [UnitList, setUnitList] = useState([]);
   const [UserInfo, setUserInfo] = useState({});
   const [dateofDelivery, setDateofDelivery] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
@@ -117,7 +115,6 @@ const AddPurchaseOrder = (args) => {
 
   // const handleSelection = async (selectedItem, selectedList, index) => {
   const handleSelection = async (selectedList, selectedItem, index) => {
-    console.log(selectedItem);
     SelectedITems.push(selectedItem);
     let costPrice = Number(
       (
@@ -223,6 +220,11 @@ const AddPurchaseOrder = (args) => {
           ele["value"] = ele?._id;
           ele["label"] = ele?.Product_Title;
         });
+        let selectedProduct = res?.Product?.filter(
+          (ele) => ele?._id === productId
+        );
+        setSelectedOption(selectedProduct);
+        handleSelection([], selectedProduct[0], 0);
         setProductList(res?.Product);
       })
       .catch((err) => {
@@ -234,6 +236,8 @@ const AddPurchaseOrder = (args) => {
         if (value?.length) {
           setPartyList(value);
         }
+        let SelectedParty = value?.filter((ele) => ele?._id == partyid);
+        handleSelectionParty([], SelectedParty[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -306,24 +310,23 @@ const AddPurchaseOrder = (args) => {
           availableQty: ele?.availableQty,
           qty: ele?.qty,
           price: ele?.price,
-          totalPrice: ele?.qty * ele?.price,
           primaryUnit: ele?.primaryUnit,
           basicPrice: ele?.basicPrice,
 
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
+          totalPrice: ele?.totalprice,
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
           gstPercentage: ele?.gstPercentage,
           igstRate: ele?.igstRate,
           grandTotal: ele?.grandTotal,
           taxableAmount: ele?.taxableAmount,
-          totalPriceWithDiscount: ele?.grandTotal,
-          // totalPriceWithDiscount: Number(
-          //   ((ele?.totalprice * (100 - ele?.disCountPercentage)) / 100).toFixed(
-          //     2
-          //   )
-          // ),
+          totalPriceWithDiscount: Number(
+            ((ele?.totalprice * (100 - ele?.disCountPercentage)) / 100).toFixed(
+              2
+            )
+          ),
         };
       } else {
         return {
@@ -336,7 +339,7 @@ const AddPurchaseOrder = (args) => {
           // Size: ele?.Size,
           basicPrice: ele?.basicPrice,
 
-          totalPrice: ele?.qty * ele?.price,
+          totalPrice: ele?.totalprice,
           primaryUnit: ele?.primaryUnit,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
@@ -348,8 +351,7 @@ const AddPurchaseOrder = (args) => {
           igstRate: ele?.igstRate,
           grandTotal: ele?.grandTotal,
           taxableAmount: ele?.taxableAmount,
-          // totalPriceWithDiscount: ele?.totalprice,
-          totalPriceWithDiscount: ele?.grandTotal,
+          totalPriceWithDiscount: ele?.totalprice,
           igstTaxType: gstdetails?.Tax?.IgstTaxType,
         };
       }
@@ -386,7 +388,6 @@ const AddPurchaseOrder = (args) => {
       tax: OtherGSTCharges,
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
     };
-
     await SavePurchaseOrder(payload)
       .then((res) => {
         setLoading(false);
@@ -450,7 +451,7 @@ const AddPurchaseOrder = (args) => {
           <Row className="m-1">
             <Col className="">
               <div>
-                <h1 className="">Create Purchase Order</h1>
+                <h1 className="">Purchase Order</h1>
               </div>
             </Col>
             <Col>
@@ -481,6 +482,7 @@ const AddPurchaseOrder = (args) => {
                         <Multiselect
                           required
                           selectionLimit={1}
+                          selectedValues={[Party]}
                           isObject="false"
                           options={PartyList}
                           onSelect={(selectedList, selectedItem) =>
@@ -588,6 +590,7 @@ const AddPurchaseOrder = (args) => {
                             className="choseeproduct"
                             required
                             selectionLimit={1}
+                            selectedValues={selectedOption}
                             isObject="false"
                             options={ProductList}
                             onSelect={(selectedList, selectedItem) =>
@@ -970,4 +973,4 @@ const AddPurchaseOrder = (args) => {
     </div>
   );
 };
-export default AddPurchaseOrder;
+export default LowStockPurchase;

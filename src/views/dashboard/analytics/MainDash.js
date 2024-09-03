@@ -49,7 +49,8 @@ class MainDash extends React.Component {
       } else {
         // Session expired, clear localStorage
         localStorage.clear();
-        this.props.history.push("/");
+        // this.props.history.push("/");
+        window.location.replace("/");
       }
     }
     // axiosConfig

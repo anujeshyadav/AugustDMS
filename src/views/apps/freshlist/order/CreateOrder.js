@@ -418,18 +418,14 @@ const CreateOrder = (args) => {
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
 
-          totalPrice: ele?.totalprice,
+          totalPrice: ele?.qty * ele?.price,
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
           gstPercentage: ele?.gstPercentage,
           igstRate: ele?.igstRate,
           grandTotal: ele?.grandTotal,
           taxableAmount: ele?.taxableAmount,
-          totalPriceWithDiscount: Number(
-            ((ele?.totalprice * (100 - ele?.disCountPercentage)) / 100).toFixed(
-              2
-            )
-          ),
+          totalPriceWithDiscount: ele?.grandTotal,
         };
       } else {
         return {
@@ -444,7 +440,7 @@ const CreateOrder = (args) => {
           primaryUnit: ele?.primaryUnit,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
-          totalPrice: ele?.totalprice,
+          totalPrice: ele?.qty * ele?.price,
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
           gstPercentage: ele?.gstPercentage,
@@ -453,7 +449,7 @@ const CreateOrder = (args) => {
           taxableAmount: ele?.taxableAmount,
           // unitQty: ele?.Size,
           // unitType: ele?.unitType,
-          totalPriceWithDiscount: ele?.totalprice,
+          totalPriceWithDiscount: ele?.grandTotal,
         };
       }
     });
@@ -508,98 +504,6 @@ const CreateOrder = (args) => {
         });
     } else {
       if (GSTData?.Tax?.GrandTotal < CustomerLimit) {
-        // const gstdetails = GstCalculation(Party, product, Context);
-        // let Product = product?.map((ele) => {
-        //   if (ele?.disCountPercentage > 1) {
-        //     return {
-        //       productId: ele?.productId,
-        //       productData: ele?.productData,
-        //       discountPercentage: ele?.disCountPercentage,
-        //       availableQty: ele?.wholeQty - ele?.qty,
-        //       // availableQty: ele?.wholeQty - ele?.qty * ele?.price,
-        //       qty: ele?.qty,
-        //       price: ele?.price,
-        //       primaryUnit: ele?.primaryUnit,
-        //       secondaryUnit: ele?.secondaryUnit,
-        //       secondarySize: ele?.secondarySize,
-        //       // Size: ele?.Size,
-        //       // unitQty: ele?.Size,
-        //       // unitType: ele?.unitType,
-        //       totalPrice: ele?.totalprice,
-        //       sgstRate: ele?.sgstRate,
-        //       cgstRate: ele?.cgstRate,
-        //       gstPercentage: ele?.gstPercentage,
-        //       igstRate: ele?.igstRate,
-        //       grandTotal: ele?.grandTotal,
-        //       taxableAmount: ele?.taxableAmount,
-        //       totalPriceWithDiscount: Number(
-        //         (
-        //           (ele?.totalprice * (100 - ele?.disCountPercentage)) /
-        //           100
-        //         ).toFixed(2)
-        //       ),
-        //     };
-        //   } else {
-        //     return {
-        //       productId: ele?.productId,
-        //       productData: ele?.productData,
-        //       discountPercentage: ele?.disCountPercentage,
-        //       availableQty: ele?.wholeQty - ele?.qty,
-        //       // availableQty: ele?.wholeQty - ele?.qty * ele?.price,
-
-        //       qty: ele?.qty,
-        //       price: ele?.price,
-        //       // Size: ele?.Size,
-        //       primaryUnit: ele?.primaryUnit,
-        //       secondaryUnit: ele?.secondaryUnit,
-        //       secondarySize: ele?.secondarySize,
-        //       totalPrice: ele?.totalprice,
-        //       sgstRate: ele?.sgstRate,
-        //       cgstRate: ele?.cgstRate,
-        //       gstPercentage: ele?.gstPercentage,
-        //       igstRate: ele?.igstRate,
-        //       grandTotal: ele?.grandTotal,
-        //       taxableAmount: ele?.taxableAmount,
-        //       // unitQty: ele?.Size,
-        //       // unitType: ele?.unitType,
-        //       totalPriceWithDiscount: ele?.totalprice,
-        //     };
-        //   }
-        // });
-        // let arnStatus = false;
-        // let arnNumber = Number((gstdetails?.Tax?.GrandTotal).toFixed(2));
-        // if (arnNumber > 49999) {
-        //   arnStatus = true;
-        // }
-        // const fullname = Party?.firstName + " " + Party?.lastName;
-        // const payload = {
-        //   database: UserInfo?.database,
-        //   ARN: Party?.rolename + 11544341546556,
-        //   ARNStatus: arnStatus,
-        //   partyId: PartyId,
-        //   discountPercentage: Party?.category ? Party?.category?.discount : 0,
-        //   SuperAdmin: Context?.CompanyDetails?.created_by,
-        //   fullName: fullname,
-        //   address: `${Party?.address1} ${Party?.address2}`,
-        //   grandTotal: Number((gstdetails?.Tax?.GrandTotal).toFixed(2)),
-        //   roundOff: Number(
-        //     (gstdetails?.Tax?.GrandTotal - gstdetails?.Tax?.RoundOff).toFixed(2)
-        //   ),
-        //   amount: Number((gstdetails?.Tax?.Amount).toFixed(2)),
-        //   sgstTotal: gstdetails?.Tax?.CgstTotal,
-        //   igstTaxType: gstdetails?.Tax?.IgstTaxType,
-        //   cgstTotal: gstdetails?.Tax?.CgstTotal,
-        //   igstTotal: gstdetails?.Tax?.IgstTotal,
-        //   gstDetails: gstdetails?.gstDetails,
-        //   MobileNo: Party?.contactNumber,
-        //   pincode: Party?.pincode,
-        //   state: Party?.State,
-        //   city: Party?.City,
-        //   orderItems: Product,
-        //   DateofDelivery: dateofDelivery,
-        //   geotagging: geotagging,
-        // };
-        // console.log(payload);
         await SaveOrder(payload)
           .then((res) => {
             setLoading(false);

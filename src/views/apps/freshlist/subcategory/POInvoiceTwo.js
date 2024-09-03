@@ -17,12 +17,23 @@ import GstCalculation from "./GstCalculation";
 import TermsConditionWords from "./TermsConditionWords";
 import TransporterDetails from "./TransporterDetails";
 import SalesProductList from "./SalesProductList";
+import cancelimage from "../../../../assets/img/cancelledOrder.jpg";
 
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
     padding: 30,
     backgroundColor: "#e2f9ff4a",
+  },
+  watermark: {
+    position: "absolute",
+    top: "30%",
+    left: "25%",
+    transform: "translate(-30%, -30%) rotate(-18deg)",
+    opacity: 0.3, // Set opacity to make it a watermark
+    zIndex: -1, // Ensure it's behind the content
+    width: "400px", // Set width based on your requirement
+    height: "380px", // Adjust the height as needed
   },
   header: {
     fontSize: "8px",
@@ -84,6 +95,10 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
     <>
       <Document>
         <Page size="A4" style={styles.page}>
+          {BilData?.PrintData?.canceledInvoice && (
+            <Image src={cancelimage} style={styles.watermark} />
+          )}
+
           {BilData?.EWayBill && (
             <>
               <Text

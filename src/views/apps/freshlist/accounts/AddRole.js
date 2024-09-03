@@ -589,6 +589,10 @@ export const Roles = [
         permission: ["View", "Create", "Edit", "Delete", "Download", "NA"],
       },
       {
+        title: "Available Stock",
+        permission: ["View", "Create", "Edit", "Delete", "Download", "NA"],
+      },
+      {
         title: "Closing Stock",
         permission: ["View", "Create", "Edit", "Delete", "Download", "NA"],
       },
@@ -1368,6 +1372,10 @@ export const NormalRoles = [
       },
       {
         title: "Outward Stock",
+        permission: ["View", "Create", "Edit", "Delete"],
+      },
+      {
+        title: "Available Stock",
         permission: ["View", "Create", "Edit", "Delete"],
       },
       {

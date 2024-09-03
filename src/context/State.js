@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import UserContext from "./Context";
 import {
+  _Get,
   CreateAccountView,
   CurrencyConvertor,
   ViewCompanyDetails,
 } from "../ApiEndPoint/ApiCalling";
+import { View_CustomerGroup } from "../ApiEndPoint/Api";
 
 const State = (props) => {
   const [crateUserXmlView, setcreateUserXmlView] = useState({});
@@ -41,6 +43,14 @@ const State = (props) => {
 
   useEffect(() => {
     const isLoggedInBefore = localStorage.getItem("userData");
+    _Get(View_CustomerGroup, isLoggedInBefore?.database)
+      .then((res) => {
+        debugger;
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     const lastLoginTime = localStorage.getItem("loginTime");
     if (isLoggedInBefore) {
       const TWO_HOURS_MS = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
@@ -49,6 +59,7 @@ const State = (props) => {
       if (elapsedTime < TWO_HOURS_MS) {
       } else {
         localStorage.clear();
+         window.location.replace("/");
       }
     }
   }, []);

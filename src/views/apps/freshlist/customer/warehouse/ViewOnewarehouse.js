@@ -243,7 +243,7 @@ class ViewOnewarehouse extends React.Component {
         },
         {
           headerName: "Pending Stock",
-          field: "pendingStock",
+          field: "productId?.pendingQty",
           filter: true,
           sortable: true,
           width: 150,
@@ -251,7 +251,7 @@ class ViewOnewarehouse extends React.Component {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.pendingStock}</span>
+                  <span>{params?.data?.productId?.pendingQty}</span>
                 </div>
               </>
             );

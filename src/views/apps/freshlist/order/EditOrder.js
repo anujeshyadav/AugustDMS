@@ -536,12 +536,7 @@ const EditOrder = (args) => {
           igstRate: ele?.igstRate,
           grandTotal: ele?.grandTotal,
           taxableAmount: ele?.taxableAmount,
-          totalPriceWithDiscount: Number(
-            (
-              (ele?.qty * ele?.price * (100 - ele?.disCountPercentage)) /
-              100
-            ).toFixed(2)
-          ),
+          totalPriceWithDiscount: ele?.grandTotal,
         };
       } else {
         return {
@@ -562,7 +557,7 @@ const EditOrder = (args) => {
           igstRate: ele?.igstRate,
           grandTotal: ele?.grandTotal,
           taxableAmount: ele?.taxableAmount,
-          totalPriceWithDiscount: ele?.qty * ele?.price,
+          totalPriceWithDiscount: ele?.grandTotal,
           igstTaxType: gstdetails?.Tax?.IgstTaxType,
         };
       }
@@ -571,7 +566,7 @@ const EditOrder = (args) => {
     const payload = {
       userId: Party?.created_by?._id,
       database: UserInfo?.database,
-      
+
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,
       address: UserInfo?.address,
@@ -591,6 +586,7 @@ const EditOrder = (args) => {
       orderItems: Product,
       // DateofDelivery: dateofDelivery,
     };
+    console.log(payload);
     if (CustomerTerm == "Cash") {
       await _Put(Sales_Edit_Order, Params.id, payload)
         .then((res) => {

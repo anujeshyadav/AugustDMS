@@ -763,7 +763,7 @@ class OrderList extends React.Component {
         console.log(err);
       });
     value["salesInvoiceStatus"] = true;
-    value["cancelInvoice"] = true;
+    value["canceledInvoice"] = true;
 
     this.setState({ PrintData: value });
 

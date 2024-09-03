@@ -1,16 +1,11 @@
-// Guwahati open api EndPoints
-
-// dashboard api
-export let Image_URL = "https://node.rupioo.com";
+export let Image_URL = "https://customer-node.rupioo.com";
 const subdomain = window.location.hostname.split(".")[0];
-// Check subdomain and set base URL accordingly
 if (subdomain === "customer") {
   Image_URL = "https://customer-node.rupioo.com";
 } else if (subdomain === "admin") {
   Image_URL = "https://node.rupioo.com";
 } else {
-  Image_URL = "https://node.rupioo.com";
-  // Image_URL = "https://customer-node.rupioo.com";
+  Image_URL = "https://customer-node.rupioo.com";
 }
 
 export const Pan_Verification_key = "5649422e1a7c37dadb607c7cc5882693";
@@ -675,7 +670,6 @@ export const Create_Debit_Note = "/debit-note/save-debit-note";
 export const Last_Ledger_Balance = "/ledger/view-last-ledger/";
 
 //end last Ledger Balance
-
 
 // find product at warehouse
 export const Find_Product_InWarehose = "/good-dispatch/product-warehouse/";

@@ -48,11 +48,14 @@ import UserContext from "../../../../../context/Context";
 import { CheckPermission } from "../../house/CheckPermission";
 import SuperAdminUI from "../../../../SuperAdminUi/SuperAdminUI";
 import { ImDownload } from "react-icons/im";
-import { WareHouse_Closing_Stock } from "../../../../../ApiEndPoint/Api";
+import {
+  Create_Warehouse_List,
+  WareHouse_Closing_Stock,
+} from "../../../../../ApiEndPoint/Api";
 
 const SelectedColums = [];
 
-class ClosingStockReport extends React.Component {
+class AvailableStock extends React.Component {
   static contextType = UserContext;
   constructor(props) {
     super(props);
@@ -88,7 +91,7 @@ class ClosingStockReport extends React.Component {
 
       columnDefs: [
         {
-          headerName: "Product Details",
+          headerName: "Product Details ",
           headerClass: "header-group-style",
           children: [
             {
@@ -172,9 +175,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>
-                        {params?.data?.oRate && params?.data?.oRate?.toFixed(2)}
-                      </span>
+                      <span>{params?.data?.oRate}</span>
                     </div>
                   </>
                 );
@@ -267,9 +268,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>
-                        {params?.data?.pRate && params?.data?.pRate?.toFixed(2)}
-                      </span>
+                      <span>{params?.data?.pRate}</span>
                     </div>
                   </>
                 );
@@ -285,10 +284,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>
-                        {params?.data?.pTaxRate &&
-                          params?.data?.pTaxRate?.toFixed(2)}
-                      </span>
+                      <span>{params?.data?.pTaxRate}</span>
                     </div>
                   </>
                 );
@@ -323,6 +319,82 @@ class ClosingStockReport extends React.Component {
                       <span>
                         {params?.data?.pTotal &&
                           params?.data?.pTotal?.toFixed(2)}
+                      </span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
+        },
+        {
+          headerName: "Pending stock details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Pending Stock",
+              field: "productId.pendingQty",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.productId?.pendingQty}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Price",
+              field: "productId.SalesRate",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>
+                        {params?.data?.productId?.SalesRate &&
+                          params?.data?.productId?.SalesRate?.toFixed(2)}
+                      </span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax Rate",
+              field: "productId.GSTRate",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.productId?.GSTRate}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Total",
+              field: "PendingTotal",
+              headerClass: "header-style",
+              filter: true,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>
+                        {params?.data?.PendingTotal &&
+                          params?.data?.PendingTotal?.toFixed(2)}
                       </span>
                     </div>
                   </>
@@ -385,22 +457,6 @@ class ClosingStockReport extends React.Component {
                 );
               },
             },
-            // {
-            //   headerName: "Tax amount",
-            //   field: "sTaxAmount",
-            //   filter: true,
-            //   sortable: true,
-            //   headerClass: "header-style",
-            //   cellRendererFramework: (params) => {
-            //     return (
-            //       <>
-            //         <div className="actions cursor-pointer text-center">
-            //           <span>{params?.data?.sTaxAmount}</span>
-            //         </div>
-            //       </>
-            //     );
-            //   },
-            // },
             {
               headerName: "Total",
               filter: true,
@@ -424,11 +480,11 @@ class ClosingStockReport extends React.Component {
         },
 
         {
-          headerName: "Closing stock details",
+          headerName: "Available stock details",
           headerClass: "header-group-style",
           children: [
             {
-              headerName: "Closing Stock",
+              headerName: "Available Stock",
               field: "currentStock",
               headerClass: "header-style",
               filter: true,
@@ -453,16 +509,14 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>
-                        {params?.data?.price && params?.data?.price?.toFixed(2)}
-                      </span>
+                      <span>{params?.data?.price}</span>
                     </div>
                   </>
                 );
               },
             },
             {
-              headerName: "GST Percentage",
+              headerName: "Tax Rate",
               field: "gstPercentage",
               headerClass: "header-style",
               filter: true,
@@ -477,22 +531,6 @@ class ClosingStockReport extends React.Component {
                 );
               },
             },
-            // {
-            //   headerName: "Tax amount",
-            //   field: "cTaxAmount",
-            //   headerClass: "header-style",
-            //   filter: true,
-            //   sortable: true,
-            //   cellRendererFramework: (params) => {
-            //     return (
-            //       <>
-            //         <div className="actions cursor-pointer text-center">
-            //           <span>{params?.data?.cTaxAmount}</span>
-            //         </div>
-            //       </>
-            //     );
-            //   },
-            // },
             {
               headerName: "Total",
               field: "totalPrice",
@@ -512,22 +550,6 @@ class ClosingStockReport extends React.Component {
                 );
               },
             },
-            // {
-            //   headerName: "Total",
-            //   field: "cTotal",
-            //   headerClass: "header-style",
-            //   filter: true,
-            //   sortable: true,
-            //   cellRendererFramework: (params) => {
-            //     return (
-            //       <>
-            //         <div className="actions cursor-pointer text-center">
-            //           <span>{params?.data?.cTotal}</span>
-            //         </div>
-            //       </>
-            //     );
-            //   },
-            // },
           ],
         },
       ],
@@ -542,22 +564,26 @@ class ClosingStockReport extends React.Component {
 
   async Apicalling(id, db) {
     this.setState({ Loading: true });
-    await _Get(WareHouse_Closing_Stock, db)
+    // await _Get(WareHouse_Closing_Stock, db)
+    await _Get(Create_Warehouse_List, db)
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Warehouse;
-        let closing = value?.filter((ele) => ele?.closingStatus == "closing");
-        let alldata = closing?.flatMap((ele) => {
+        let alldata = value?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
-            let gstRate = Number(val?.productId?.GSTRate);
+            let gstRate = Number(val?.gstPercentage);
             let Total = +(
-              val.productId?.Opening_Stock * val?.productId?.Purchase_Rate
+              val.currentStock * val?.productId?.Purchase_Rate
             ).toFixed(2);
             let OpeningTax = +((Total / (100 + gstRate)) * gstRate).toFixed(2);
             let OpeningTotal = +Total;
-            return { ...ele, ...val, OpeningTax, OpeningTotal };
+            let PendingTotal =
+              val?.productId.pendingQty * val?.productId.SalesRate;
+            return { ...ele, ...val, OpeningTax, OpeningTotal, PendingTotal };
           });
         });
+        console.log(alldata);
+        debugger;
         if (alldata?.length) {
           this.setState({
             rowData: alldata?.reverse(),
@@ -567,7 +593,7 @@ class ClosingStockReport extends React.Component {
           });
         }
         let userHeading = JSON.parse(
-          localStorage.getItem("closingStockReport")
+          localStorage.getItem("AvailableStockReport")
         );
         if (userHeading?.length) {
           this.setState({ columnDefs: userHeading });
@@ -591,7 +617,7 @@ class ClosingStockReport extends React.Component {
     if (userInfo?.rolename?.roleName === "MASTER") {
       this.setState({ MasterShow: true });
     }
-    const InsidePermissions = CheckPermission("Closing Stock Report");
+    const InsidePermissions = CheckPermission("Available Stock");
     this.setState({ InsiderPermissions: InsidePermissions });
     await this.Apicalling(userInfo?._id, userInfo?.database);
   }
@@ -636,7 +662,7 @@ class ClosingStockReport extends React.Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.columnApi = params.columnApi;
-    this.gridRef.current = params.api; 
+    this.gridRef.current = params.api;
     this.setState({
       currenPageSize: this.gridApi.paginationGetCurrentPage() + 1,
       getPageSize: this.gridApi.paginationGetPageSize(),
@@ -697,14 +723,14 @@ class ClosingStockReport extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("ClosingStockReport", 14, 51);
+    doc.text("AvailableStockReport", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("ClosingStockReport.pdf");
+    doc.save("AvailableStockReport.pdf");
   }
 
   exportToPDF = async () => {
@@ -748,7 +774,7 @@ class ClosingStockReport extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "ClosingStockReport.xlsx";
+    a.download = "AvailableStockReport.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -758,17 +784,16 @@ class ClosingStockReport extends React.Component {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
-      Papa.parse(CsvData, {
-        complete: (result) => {
-          const ws = XLSX.utils.json_to_sheet(result.data);
-          
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-          const excelType = "xlsx";
-          XLSX.writeFile(wb, `ClosingStockReport.${excelType}`);
-        },
-      });
-    // debugger
+    Papa.parse(CsvData, {
+      complete: (result) => {
+        const ws = XLSX.utils.json_to_sheet(result.data);
+
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        const excelType = "xlsx";
+        XLSX.writeFile(wb, `ClosingStockReport.${excelType}`);
+      },
+    });
     // const blob = await this.convertCsvToExcel(CsvData);
     // this.downloadExcelFile(blob);
   };
@@ -783,7 +808,7 @@ class ClosingStockReport extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `ClosingStockReport.${excelType}`);
+        XLSX.writeFile(wb, `AvailableStockReport.${excelType}`);
       },
     });
   };
@@ -858,7 +883,7 @@ class ClosingStockReport extends React.Component {
     this.setState({ SelectedcolumnDefs: this.state.SelectedcolumnDefs });
     this.setState({ rowData: this.state.rowData });
     localStorage.setItem(
-      "closingStockReport",
+      "AvailableStockReport",
       JSON.stringify(this.state.SelectedcolumnDefs)
     );
     this.LookupviewStart();
@@ -939,7 +964,7 @@ class ClosingStockReport extends React.Component {
                   textTransform: "uppercase",
                   fontSize: "24px",
                 }}>
-                Closing Stock Report
+                Available Stock
               </h3>
             </Col>
             {this.state.MasterShow && this.state.MasterShow ? (
@@ -1272,5 +1297,4 @@ class ClosingStockReport extends React.Component {
     );
   }
 }
-export default ClosingStockReport;
-
+export default AvailableStock;

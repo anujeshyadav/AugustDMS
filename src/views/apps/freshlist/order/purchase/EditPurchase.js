@@ -492,7 +492,10 @@ const EditPurchase = (args) => {
               .then((res) => {
                 debugger;
                 // if (status == "completed") {
-                _Post(Purchase_Invoice_Create, Data?._id, payload)
+                _Post(Purchase_Invoice_Create, Data?._id, {
+                  ...payload,
+                  status: "completed",
+                })
                   .then((res) => {
                     // setEditted(false);
                     debugger;
@@ -501,9 +504,13 @@ const EditPurchase = (args) => {
                     setLoading(false);
                   })
                   .catch((err) => {
-                    debugger;
+                    // debugger;
+                    _Post(Purchase_Invoice_Create, Data?._id, {
+                      ...payload,
+                      status: "completed",
+                    });
                     History.goBack();
-                    setLoading(true);
+                    setLoading(false);
                     console.log(err);
                     console.log(err.response);
                   });
@@ -647,9 +654,6 @@ const EditPurchase = (args) => {
       fullName: fullname,
       address: UserInfo?.address,
       grandTotal: Number((gstdetails?.Tax?.GrandTotal).toFixed(2)),
-      //  roundOff: Number(
-      //    ( gstdetails?.Tax?.RoundOff).toFixed(2)
-      //  ),
       roundOff: gstdetails?.Tax?.RoundOff,
       amount: Number((gstdetails?.Tax?.Amount).toFixed(2)),
       sgstTotal: gstdetails?.Tax?.CgstTotal,
@@ -668,16 +672,15 @@ const EditPurchase = (args) => {
       miscellaneousCost: LandedPrice?.MiscellanousCost,
       tax: LandedPrice?.landedTax,
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
+      status: "completed",
       // DateofDelivery: dateofDelivery,
     };
     // setfinalPayload(payload);
     await _Put(Purchase_Edit_Order, Params.id, payload)
       .then((res) => {
-        debugger;
-
         // swal("success", "Order Updated Successfully", "success");
         setModal(!modal);
-        UpdateStatus(payload);
+        (async () => await UpdateStatus(payload))();
       })
       .catch((err) => {
         setLoading(false);

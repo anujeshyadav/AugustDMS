@@ -20,6 +20,7 @@ const App = (props) => {
       } else {
         // Session expired, clear localStorage
         localStorage.clear();
+        window.location.replace("/")
       }
     }
   }, []);

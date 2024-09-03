@@ -1,7 +1,7 @@
 
 import React, { useRef } from "react";
 import { ImDownload } from "react-icons/im";
-
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -35,7 +35,6 @@ import { Eye, Trash2, ChevronDown, Edit } from "react-feather";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import "../../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../../assets/scss/pages/users.scss";
-
 
 import {
   FaArrowAltCircleLeft,
@@ -80,13 +79,13 @@ class LowStockAlert extends React.Component {
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [
-        {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          width: 80,
-          filter: true,
-        },
+        // {
+        //   headerName: "UID",
+        //   valueGetter: "node.rowIndex + 1",
+        //   field: "node.rowIndex + 1",
+        //   width: 80,
+        //   filter: true,
+        // },
         // {
         //   headerName: "Actions",
         //   field: "sortorder",
@@ -239,16 +238,16 @@ class LowStockAlert extends React.Component {
           },
         },
         {
-          headerName: "Current Stock",
+          headerName: "Available Qty",
           field: "currentStock",
           filter: true,
-           width:140,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  {params?.data?.currentStock} 
+                  {params?.data?.currentStock}
                 </div>
               </>
             );
@@ -258,7 +257,7 @@ class LowStockAlert extends React.Component {
           headerName: "Min stock",
           field: "MIN_stockalert",
           filter: true,
-           width:140,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -271,37 +270,41 @@ class LowStockAlert extends React.Component {
           },
         },
         {
-          headerName: "Product MRP",
-          field: "Product_MRP",
+          headerName: "PartyName",
+          field: "SupplierName",
           filter: true,
-           width:140,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.Product_MRP}</span>
+                  <span>{params?.data?.SupplierName}</span>
                 </div>
               </>
             );
           },
         },
         {
-          headerName: "Address",
-          field: "warehosueAddress",
+          headerName: "Product MRP",
+          field: "Product_MRP",
           filter: true,
-           width:340,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.warehosueAddress}</span>
+                  <span>
+                    {params?.data?.Product_MRP &&
+                      params?.data?.Product_MRP?.toFixed(2)}
+                  </span>
                 </div>
               </>
             );
           },
         },
+
         // {
         //   headerName: "Created At",
         //   field: "createdAt",
@@ -318,18 +321,53 @@ class LowStockAlert extends React.Component {
         //   },
         // },
 
+        // {
+        //   headerName: "Updated date",
+        //   field: "updatedAt",
+        //   filter: true,
+        //   width: 140,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer">
+        //           <div className="actions cursor-pointer">
+        //             <span>{params?.data?.updatedAt?.split("T")[0]}</span>
+        //           </div>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
-          headerName: "Updated date",
+          headerName: "Action",
           field: "updatedAt",
           filter: true,
-          width:140,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
                   <div className="actions cursor-pointer">
-                    <span>{params?.data?.updatedAt?.split("T")[0]}</span>
+                    {/* <span>{params?.data?.updatedAt?.split("T")[0]}</span> */}
+                    {/* <Link
+                    
+                      to={`/app/AJgroup/order/AddOrder/${params.data?.partyId?._id}/${params.data?.productId}`}>
+                    
+                      <strong>
+
+                      Order-Now
+                      </strong>
+                     
+                    </Link>{" "} */}
+                    <Badge
+                      onClick={(e) => {
+                        this.handlePlaceOrder(e, params);
+                      }}
+                      color="primary">
+                      Order-Now
+                    </Badge>{" "}
                   </div>
                 </div>
               </>
@@ -434,6 +472,13 @@ class LowStockAlert extends React.Component {
     });
   }
 
+  handlePlaceOrder = (e, params) => {
+    e.preventDefault();
+ 
+    this.props.history.push(
+      `/app/AJgroup/order/AddOrder/${params.data?.partyId?._id}/${params.data?.productId}`
+    );
+  };
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -772,32 +817,48 @@ class LowStockAlert extends React.Component {
                   <Col sm="12">
                     <Card>
                       <Row className="  ml-2 mr-2">
-                        <Col lg="3" md="3" sm="12" style={{marginTop:'30px'}}>
-                          <h2 className="float-left"  style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' }}>LowStock List</h2>
+                        <Col
+                          lg="3"
+                          md="3"
+                          sm="12"
+                          style={{ marginTop: "30px" }}>
+                          <h2
+                            className="float-left"
+                            style={{
+                              fontWeight: "600",
+                              textTransform: "uppercase",
+                              fontSize: "22px",
+                            }}>
+                            LowStock List
+                          </h2>
                         </Col>
 
                         {this.state.MasterShow && this.state.MasterShow ? (
-                  <Col lg="2" md="2" sm="6" style={{marginTop:'30px'}}>
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
-                    />
-                  </Col>
-                ) : (
-                  <Col></Col>
-                )}
-                          <Col xl="2" lg="2" style={{marginTop:'30px'}}>
-                           <div className="table-input  ">
-                                    <Input
-                                      placeholder="search Item here..."
-                                      onChange={(e) =>
-                                        this.updateSearchQuery(e.target.value)
-                                      }
-                                      value={this.state.value}
-                                    />
-                                  </div>
+                          <Col
+                            lg="2"
+                            md="2"
+                            sm="6"
+                            style={{ marginTop: "30px" }}>
+                            <SuperAdminUI
+                              onDropdownChange={this.handleDropdownChange}
+                              onSubmit={this.handleParentSubmit}
+                            />
                           </Col>
-                        <Col xl="1" lg="1" style={{marginTop:'30px'}}>
+                        ) : (
+                          <Col></Col>
+                        )}
+                        <Col xl="2" lg="2" style={{ marginTop: "30px" }}>
+                          <div className="table-input  ">
+                            <Input
+                              placeholder="search Item here..."
+                              onChange={(e) =>
+                                this.updateSearchQuery(e.target.value)
+                              }
+                              value={this.state.value}
+                            />
+                          </div>
+                        </Col>
+                        <Col xl="1" lg="1" style={{ marginTop: "30px" }}>
                           {InsiderPermissions && InsiderPermissions.View && (
                             <>
                               <span className=" ">
@@ -883,7 +944,6 @@ class LowStockAlert extends React.Component {
                               </>
                             )}
 
-                        
                           {/* {InsiderPermissions && InsiderPermissions.Create && (
                             <span>
                               <Route
@@ -916,10 +976,7 @@ class LowStockAlert extends React.Component {
                           {this.state.rowData === null ? null : (
                             <div className="ag-theme-material w-100 my-2 ag-grid-table">
                               <div className="d-flex flex-wrap justify-content-between align-items-center">
-                                
-                                <div className="d-flex flex-wrap justify-content-end mb-1">
-                                 
-                                </div>
+                                <div className="d-flex flex-wrap justify-content-end mb-1"></div>
                               </div>
                               <ContextLayout.Consumer className="ag-theme-alpine">
                                 {(context) => (
