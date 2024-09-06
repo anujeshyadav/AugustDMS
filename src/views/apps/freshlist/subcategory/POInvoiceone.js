@@ -492,7 +492,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                                 fontSize: "13px",
                                 fontWeight: "bold",
                               }}>
-                              {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
+                              {`Name: ${BilData?.PrintData?.partyId?.CompanyName}`}
                             </Text>{" "}
                             <Text
                               style={{
@@ -532,7 +532,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                                 fontSize: "13px",
                                 fontWeight: "bold",
                               }}>
-                              {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
+                              {`Name: ${BilData?.PrintData?.partyId?.CompanyName}`}
                             </Text>{" "}
                             <Text
                               style={{
@@ -540,8 +540,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                                 width: "95%",
                                 fontWeight: "bold",
                               }}>
-                              {`Address: ${BilData?.PrintData?.partyId?.address1}
-                           ${BilData?.PrintData?.partyId?.address2}
+                              {`Address: ${BilData?.PrintData?.partyId?.address}
                         Mobile No.: ${BilData?.PrintData?.partyId?.contactNumber}
                        State.: ${BilData?.PrintData?.partyId?.State}
                         City.: ${BilData?.PrintData?.partyId?.City}`}
@@ -555,7 +554,6 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                                 }}>
                                 ARN : {invoiceData?.ARN}
                               </Text>
-                             
                             </>
                           )}
                         </>
@@ -626,7 +624,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                                 fontSize: "13px",
                                 fontWeight: "bold",
                               }}>
-                              {`${BilData?.PrintData?.partyId?.ownerName}`}
+                              {`${BilData?.PrintData?.partyId?.CompanyName}`}
                             </Text>{" "}
                             <Text
                               style={{
@@ -634,8 +632,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                                 width: "95%",
                                 fontWeight: "bold",
                               }}>
-                              {`${BilData?.PrintData?.partyId?.address1}
-                      ${BilData?.PrintData?.partyId?.address2}
+                              {`${BilData?.PrintData?.partyId?.address}
                        ${BilData?.PrintData?.partyId?.contactNumber}
                       ${BilData?.PrintData?.partyId?.State}
                       ${BilData?.PrintData?.partyId?.City}`}
@@ -651,7 +648,6 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                             }}>
                             ARN : {invoiceData?.ARN}
                           </Text>
-                          
                         </>
                       )}
                     </>

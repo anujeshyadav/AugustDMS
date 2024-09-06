@@ -83,7 +83,6 @@ function AddNote({ type, onSubmit }) {
             <Multiselect
               required
               selectionLimit={1}
-              // selectedValues={SeletedMainProduct}
               isObject="false"
               options={PartyList}
               onSelect={(selectedList, selectedItem) =>
@@ -92,7 +91,7 @@ function AddNote({ type, onSubmit }) {
               onRemove={(selectedList, selectedItem) =>
                 onRemove1(selectedList, selectedItem)
               }
-              displayValue="fullName"
+              displayValue="CompanyName"
             />
           </Col>
           <Col lg="4" md="4" sm="12">

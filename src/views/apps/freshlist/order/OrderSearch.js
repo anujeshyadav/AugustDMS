@@ -97,14 +97,14 @@ class OrderSearch extends React.Component {
         //   },
         // },
         {
-          headerName: "First Name",
-          field: "firstName",
+          headerName: "Party Name",
+          field: "CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.firstName}</span>
+                <span>{params?.data?.CompanyName}</span>
               </div>
             );
           },
@@ -150,15 +150,13 @@ class OrderSearch extends React.Component {
         },
         {
           headerName: "Address",
-          field: "address1",
+          field: "address",
           filter: true,
           width: 250,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>
-                  {params?.data?.address1} {params?.data?.address2}
-                </span>
+                <span>{params?.data?.address}</span>
               </div>
             );
           },
@@ -178,13 +176,13 @@ class OrderSearch extends React.Component {
         },
         {
           headerName: "Pan No",
-          field: "panNo",
+          field: "comPanNo",
           filter: true,
           width: 105,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.panNo}</span>
+                <span>{params?.data?.comPanNo}</span>
               </div>
             );
           },
@@ -195,11 +193,7 @@ class OrderSearch extends React.Component {
           filter: true,
           width: 115,
           cellRendererFramework: (params) => {
-            return (
-              <div>
-                {params?.data?.autoBillingStatus} 
-              </div>
-            );
+            return <div>{params?.data?.autoBillingStatus}</div>;
           },
         },
         {
@@ -208,11 +202,7 @@ class OrderSearch extends React.Component {
           filter: true,
           width: 120,
           cellRendererFramework: (params) => {
-            return (
-              <div>
-                {params?.data?.autoBillingStatus} 
-              </div>
-            );
+            return <div>{params?.data?.autoBillingStatus}</div>;
           },
         },
       ],

@@ -62,8 +62,7 @@ const SalesReturnView = ({ ViewOneData }) => {
   }, [formData]);
 
   useEffect(() => {
-    console.log(product);
-    console.log(ViewOneData);
+   
     setProduct(ViewOneData);
     // console.log(GrandTotal);
   }, [product]);
@@ -71,7 +70,6 @@ const SalesReturnView = ({ ViewOneData }) => {
   useEffect(() => {
     setProduct(ViewOneData);
     setFormData(ViewOneData);
-    console.log(ViewOneData);
   }, []);
   const handleProductChangeProduct = (e, index) => {
     // product.price * product?.qty

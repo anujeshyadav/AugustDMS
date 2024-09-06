@@ -71,9 +71,7 @@ const CreateCustomer = () => {
   let history = useHistory();
   let Params = useParams();
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+
 
   const handleInputChange = (e, type, i) => {
     const { name, value, checked } = e.target;
@@ -108,7 +106,6 @@ const CreateCustomer = () => {
             ...formData,
             [name]: value,
           });
-          // console.log(value);
           setError("");
         } else {
           setFormData({
@@ -222,7 +219,6 @@ const CreateCustomer = () => {
     };
     await _PostSave(Pan_Verification_API, payload)
       .then((res) => {
-        console.log(res);
         if (res?.flag) {
           setFormData({
             ...formData,
@@ -236,7 +232,7 @@ const CreateCustomer = () => {
             ["comPanNo"]: inputPan,
             ["IsValid_comPanNo"]: false,
           });
-          swal("Error", "Pan Card notVerified with GST");
+          // swal("Error", "Pan Card notVerified with GST");
         }
       })
       .catch((err) => {
@@ -250,16 +246,11 @@ const CreateCustomer = () => {
     setLoader(true);
 
     let formdata = new FormData();
-    debugger;
-    // if(formData?.id){
-
-    // }
     if (formData?.assignTransporter) {
       delete formData?.assignTransporter;
     }
-
-    if (formData?.shopPhoto) {
-      delete formData?.shopPhoto;
+    if (formData?.shopPhotos) {
+      delete formData?.shopPhotos;
     }
 
     if (BulkImport !== null || BulkImport != undefined) {
@@ -297,16 +288,17 @@ const CreateCustomer = () => {
       }
     } else {
       let userdata = JSON.parse(localStorage.getItem("userData"));
+
+      formData["id"] = formData?.comPanNo
+        ? formData?.comPanNo
+        : formData?.aadharNo;
+
       for (const [key, value] of Object.entries(formData)) {
         if (!!value) {
           formdata.append(`${key}`, `${value}`);
-          console.log(key, value);
         }
       }
-      debugger;
-      // if (formData?.firstName) {
-      //   formdata.append(`id`, formData?.firstName);
-      // }
+
       if (Image !== null) {
         formdata.append("file", Image);
       }
@@ -340,7 +332,6 @@ const CreateCustomer = () => {
             .catch((err) => {
               setLoader(false);
 
-              console.log(err.response);
               swal("something Went Wrong");
             });
         } else {
@@ -377,16 +368,10 @@ const CreateCustomer = () => {
 
   const onSelect1 = (selectedList, selectedItem) => {
     setSelectedtransporter(selectedList);
-    // console.log(selectedList);
   };
   const onRemove1 = (selectedList, selectedItem) => {
-    // console.log(selectedList);
     setSelectedtransporter(selectedList);
   };
-
-  useEffect(() => {
-    // console.log(formData);
-  }, [formData]);
 
   return (
     <div>
@@ -600,7 +585,6 @@ const CreateCustomer = () => {
                             type="file"
                             name="file"
                             onChange={(e) => {
-                              console.log(e.target.files[0]);
                               setBulkImport(e.target.files[0]);
                             }}
                           />
@@ -653,7 +637,6 @@ const CreateCustomer = () => {
                                             inputPan.replace(/\s/g, "");
                                           setFormData({
                                             ...formData,
-                                            // ["id"]: filteredValue,
                                             ["firstName"]: filteredValue,
                                           });
                                         }}
@@ -867,7 +850,6 @@ const CreateCustomer = () => {
                                               setFormData({
                                                 ...formData,
                                                 ["Aadhar_No"]: inputPan,
-                                                // ["id"]: inputPan,
                                                 ["IsValid_Aadhar_No"]:
                                                   panRegex.test(inputPan),
                                               });
@@ -923,7 +905,6 @@ const CreateCustomer = () => {
                                               setFormData({
                                                 ...formData,
                                                 ["Aadhar_No"]: inputPan,
-                                                // ["id"]: inputPan,
                                                 ["IsValid_Aadhar_No"]:
                                                   panRegex.test(inputPan),
                                               });
@@ -978,7 +959,6 @@ const CreateCustomer = () => {
                                               setFormData({
                                                 ...formData,
                                                 ["Pan_No"]: inputPan,
-                                                ["id"]: inputPan,
                                                 ["IsValid_Pan_No"]:
                                                   panRegex.test(inputPan),
                                               });
@@ -1031,7 +1011,6 @@ const CreateCustomer = () => {
                                               setFormData({
                                                 ...formData,
                                                 ["Pan_No"]: inputPan,
-                                                ["id"]: inputPan,
 
                                                 ["IsValid_Pan_No"]:
                                                   panRegex.test(inputPan),
@@ -2101,7 +2080,7 @@ const CreateCustomer = () => {
               <>
                 <Form className="m-1" onSubmit={submitHandler}>
                   <Row>
-                    <Col lg="6" md="6" sm="12">
+                    {/* <Col lg="6" md="6" sm="12">
                       <Row>
                         <Col className="mb-2" lg="12" md="12" sm="12">
                           <CardBody className="userRegiBody">
@@ -2112,7 +2091,7 @@ const CreateCustomer = () => {
                               <Col lg="6" md="6" sm="12">
                                 <FormGroup>
                                   <Label>
-                                    First Name{" "}
+                                    Full Name{" "}
                                     <span style={{ color: "red" }}>*</span>
                                   </Label>
                                   <Input
@@ -2129,11 +2108,11 @@ const CreateCustomer = () => {
                                       );
                                       setFormData({
                                         ...formData,
-                                        // ["id"]: filteredValue,
-                                        ["firstName"]: filteredValue,
+                                        
+                                        ["firstName"]: inputPan,
                                       });
                                     }}
-                                    // onChange={handleInputChange}
+                                    
                                   />
                                 </FormGroup>
                               </Col>
@@ -2185,7 +2164,7 @@ const CreateCustomer = () => {
                                     value={JSON.stringify(
                                       formData?.mobileNumber
                                     )}
-                                    // value={formData.mobileNumber}
+                                   
                                     onChange={(phone) => {
                                       setFormData({
                                         ...formData,
@@ -2231,7 +2210,6 @@ const CreateCustomer = () => {
                                       setFormData({
                                         ...formData,
                                         ["aadharNo"]: Number(inputPan),
-                                        ["id"]: inputPan,
                                         ["IsValid_Aadhar_No"]:
                                           panRegex.test(inputPan),
                                       });
@@ -2280,7 +2258,6 @@ const CreateCustomer = () => {
                                       setFormData({
                                         ...formData,
                                         ["panNo"]: inputPan,
-                                        ["id"]: inputPan,
                                         ["IsValid_Pan_No"]:
                                           panRegex.test(inputPan),
                                       });
@@ -2329,7 +2306,7 @@ const CreateCustomer = () => {
                                           (ele) =>
                                             ele?.Pincode == e.target.value
                                         );
-                                      // console.log(SelectedCity);
+                                      
                                       if (SelectedCity?.length) {
                                         setFormData({
                                           ...formData,
@@ -2362,7 +2339,7 @@ const CreateCustomer = () => {
                                     type="text"
                                     name="Pcity"
                                     value={formData?.Pcity}
-                                    // onChange={handleInputChange}
+                                   
                                   />
                                 </FormGroup>
                               </Col>
@@ -2375,7 +2352,7 @@ const CreateCustomer = () => {
                                     type="text"
                                     name="Pstate"
                                     value={formData?.Pstate}
-                                    // onChange={handleInputChange}
+                                   
                                   />
                                 </FormGroup>
                               </Col>
@@ -2424,7 +2401,7 @@ const CreateCustomer = () => {
                                             let myfile = e.target.files[0];
                                             if (myfile) {
                                               const sizeInMB =
-                                                myfile.size / (1024 * 1024); // Convert bytes to MB
+                                                myfile.size / (1024 * 1024); 
                                               if (sizeInMB > 1) {
                                                 swal(
                                                   "Error",
@@ -2450,7 +2427,6 @@ const CreateCustomer = () => {
                                         />
                                       </div>
                                     </div>
-                                  </Col>
                                   {formData?.PhotoUrl && (
                                     <Col lg="6" md="6" sm="12">
                                       <img
@@ -2478,19 +2454,169 @@ const CreateCustomer = () => {
                                       />
                                     </Col>
                                   )}
+                                  </Col>
                                 </Row>
                               </Col>
                             </Row>
                           </CardBody>
                         </Col>
                       </Row>
-                    </Col>
+                    </Col> */}
                     <Col lg="6" md="6" sm="12">
                       <CardBody className="userRegiBody">
                         <div className="d-flex justify-content-center">
-                          <h1>Company Information</h1>
+                          <h1> Company Information</h1>
                         </div>
                         <Row>
+                          <Col lg="6" md="6" sm="12">
+                            <FormGroup>
+                              <Label>
+                                Full Name{" "}
+                                <span style={{ color: "red" }}>*</span>
+                              </Label>
+                              <Input
+                                required
+                                placeholder="Enter First Name"
+                                type="text"
+                                name="ownerName"
+                                value={formData?.ownerName}
+                                onChange={(e) => {
+                                  const inputPan =
+                                    e.target.value?.toUpperCase();
+                                  const filteredValue = inputPan.replace(
+                                    /\s/g,
+                                    ""
+                                  );
+                                  setFormData({
+                                    ...formData,
+                                    ["ownerName"]: inputPan,
+                                  });
+                                }}
+                                // onChange={handleInputChange}
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6" md="6" sm="12">
+                            <FormGroup>
+                              <Label>
+                                Mobile Number{" "}
+                                <span style={{ color: "red" }}>*</span>{" "}
+                              </Label>
+                              <PhoneInput
+                                required
+                                inputClass="myphoneinput"
+                                country={"in"}
+                                onKeyDown={(e) => {
+                                  ["e", "E", "+", "-"].includes(e.key) &&
+                                    e.preventDefault();
+                                }}
+                                countryCodeEditable={false}
+                                name="mobileNumber"
+                                value={JSON.stringify(formData?.mobileNumber)}
+                                // value={formData.mobileNumber}
+                                onChange={(phone) => {
+                                  setFormData({
+                                    ...formData,
+                                    ["mobileNumber"]: Number(phone),
+                                  });
+                                }}
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6" md="6" sm="12">
+                            <FormGroup>
+                              <Label>
+                                Aadhar Number{" "}
+                                <span style={{ color: "red" }}>*</span>
+                              </Label>
+                              <Input
+                                required
+                                minLength={12}
+                                maxLength={12}
+                                pattern="[0-9]*"
+                                placeholder="Enter Addhar Number"
+                                type="number"
+                                name="aadharNo"
+                                value={formData?.aadharNo}
+                                onChange={(e) => {
+                                  const inputPan = e.target.value;
+                                  const panRegex = /^\d{12}$/;
+
+                                  setFormData({
+                                    ...formData,
+                                    ["aadharNo"]: Number(inputPan),
+                                    ["IsValid_Aadhar_No"]:
+                                      panRegex.test(inputPan),
+                                  });
+                                }}
+                              />
+                              <span>
+                                {formData?.IsValid_Aadhar_No &&
+                                formData?.IsValid_Aadhar_No ? (
+                                  <>
+                                    <span style={{ color: "green" }}>
+                                      Correct
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    {formData?.aadharNo?.length > 16 ||
+                                      (formData?.aadharNo?.length < 15 && (
+                                        <span style={{ color: "red" }}>
+                                          Enter Correct AadharNo
+                                        </span>
+                                      ))}
+                                  </>
+                                )}
+                              </span>
+                            </FormGroup>
+                          </Col>
+                          {/* <Col lg="6" md="6" sm="12">
+                            <FormGroup>
+                              <Label>
+                                Personal Pan Number{" "}
+                                <span style={{ color: "red" }}>*</span>
+                              </Label>
+                              <Input
+                                required
+                                minLength={10}
+                                maxLength={10}
+                                placeholder="Enter Pan Number"
+                                type="text"
+                                name="panNo"
+                                value={formData?.panNo}
+                                onChange={(e) => {
+                                  const inputPan =
+                                    e.target.value?.toUpperCase();
+                                  const panRegex = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+                                  setFormData({
+                                    ...formData,
+                                    ["panNo"]: inputPan,
+                                    ["IsValid_Pan_No"]: panRegex.test(inputPan),
+                                  });
+                                }}
+                              />
+                              <span>
+                                {formData?.IsValid_Pan_No &&
+                                formData?.IsValid_Pan_No ? (
+                                  <>
+                                    <span style={{ color: "green" }}>
+                                      Correct
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    {formData?.panNo?.length > 9 && (
+                                      <span style={{ color: "red" }}>
+                                        Enter Correct PAN Number
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </span>
+                            </FormGroup>
+                          </Col> */}
+
                           <Col lg="6" md="6" sm="12">
                             <FormGroup>
                               <Label className="">Party Type </Label>
@@ -2550,7 +2676,7 @@ const CreateCustomer = () => {
                                     placeholder=" Enter Correct GST Number"
                                     value={formData?.gstNumber}
                                     onChange={(e) => {
-                                      let value = e.target.value;
+                                      let value = e.target.value?.toUpperCase();
 
                                       if (value?.length == 15) {
                                         setLoader(true);
@@ -2560,7 +2686,6 @@ const CreateCustomer = () => {
                                             value
                                           )
                                             .then((res) => {
-                                              // console.log(res);
                                               const parts =
                                                 res?.data?.pradr?.adr.split(
                                                   ","
@@ -2580,7 +2705,6 @@ const CreateCustomer = () => {
                                                   ["address1"]: part1,
                                                   ["address2"]: part2,
                                                   ["gstNumber"]: value,
-                                                  ["id"]: value?.slice(2, 12),
                                                 });
                                                 setLoader(false);
                                               } else {
@@ -2590,21 +2714,19 @@ const CreateCustomer = () => {
                                                   ["address1"]: "",
                                                   ["address2"]: "",
                                                   ["gstNumber"]: value,
-                                                  ["id"]: value?.slice(2, 12),
                                                 });
                                               }
                                             })
                                             .catch((err) => {
-                                              swal(
-                                                "error",
-                                                "somthing went Wrong"
-                                              );
+                                              // swal(
+                                              //   "error",
+                                              //   "somthing went Wrong"
+                                              // );
 
                                               if (value?.length == 15) {
                                                 setFormData({
                                                   ...formData,
                                                   ["gstNumber"]: value,
-                                                  ["id"]: value?.slice(2, 12),
                                                   ["comPanNo"]: value?.slice(
                                                     2,
                                                     12
@@ -2657,10 +2779,8 @@ const CreateCustomer = () => {
                                       setFormData({
                                         ...formData,
                                         ["comPanNo"]: inputPan,
-                                        // ["id"]: inputPan,
-                                        ["id"]: formData?.Pan_No
-                                          ? formData?.Pan_No
-                                          : inputPan,
+                                        //   ? formData?.comPanNo
+                                        //   : inputPan,
 
                                         // ["IsValid_comPanNo"]: panRegex.test(inputPan),
                                       });
@@ -2692,7 +2812,7 @@ const CreateCustomer = () => {
                             </>
                           )}
 
-                          <Col lg="6" md="6" sm="12">
+                          {/* <Col lg="6" md="6" sm="12">
                             <FormGroup>
                               <Label>
                                 Email Id <span style={{ color: "red" }}>*</span>
@@ -2706,7 +2826,7 @@ const CreateCustomer = () => {
                                 onChange={handleInputChange}
                               />
                             </FormGroup>
-                          </Col>
+                          </Col> */}
                           {/* <Col lg="6" md="6" sm="12">
                             <FormGroup>
                               <Label>Id</Label>
@@ -2766,7 +2886,7 @@ const CreateCustomer = () => {
                               <Col lg="6" md="6" sm="12">
                                 <FormGroup>
                                   <Label>
-                                    Address 1st{" "}
+                                    Address
                                     <span style={{ color: "red" }}>*</span>
                                   </Label>
                                   <Input
@@ -2774,13 +2894,13 @@ const CreateCustomer = () => {
                                     className="form-control"
                                     placeholder="address name"
                                     type="text"
-                                    name="address1"
-                                    value={formData?.address1}
+                                    name="address"
+                                    value={formData?.address}
                                     onChange={handleInputChange}
                                   />
                                 </FormGroup>
                               </Col>
-                              <Col lg="6" md="6" sm="12">
+                              {/* <Col lg="6" md="6" sm="12">
                                 <FormGroup>
                                   <Label>
                                     Address 2nd
@@ -2796,7 +2916,7 @@ const CreateCustomer = () => {
                                     onChange={handleInputChange}
                                   />
                                 </FormGroup>
-                              </Col>
+                              </Col> */}
                             </>
                           ) : (
                             <>
@@ -2807,7 +2927,7 @@ const CreateCustomer = () => {
                                     <span style={{ color: "red" }}>*</span>
                                   </Label>
                                   <Input
-                                    readOnly
+                                    // readOnly
                                     className="form-control"
                                     placeholder="Company Name"
                                     type="text"
@@ -2820,22 +2940,22 @@ const CreateCustomer = () => {
                               <Col lg="6" md="6" sm="12">
                                 <FormGroup>
                                   <Label>
-                                    Address 1st{" "}
+                                    Address
                                     <span style={{ color: "red" }}> *</span>
                                   </Label>
                                   <Input
-                                    readOnly
+                                    // readOnly
                                     required
                                     className="form-control"
                                     placeholder="address name"
                                     type="text"
-                                    name="address1"
-                                    value={formData?.address1}
+                                    name="address"
+                                    value={formData?.address}
                                     onChange={handleInputChange}
                                   />
                                 </FormGroup>
                               </Col>
-                              <Col lg="6" md="6" sm="12">
+                              {/* <Col lg="6" md="6" sm="12">
                                 <FormGroup>
                                   <Label>
                                     Address 2nd
@@ -2852,13 +2972,13 @@ const CreateCustomer = () => {
                                     onChange={handleInputChange}
                                   />
                                 </FormGroup>
-                              </Col>
+                              </Col> */}
                             </>
                           )}
                           <Col lg="6" md="6" sm="12">
                             <FormGroup>
                               <Label>
-                                Contact Number{" "}
+                                Owner Number{" "}
                                 <span style={{ color: "red" }}>*</span>
                               </Label>
                               <Input
@@ -2896,7 +3016,6 @@ const CreateCustomer = () => {
                                   let SelectedCity = Country_State_city?.filter(
                                     (ele) => ele?.Pincode == e.target.value
                                   );
-                                  // console.log(SelectedCity);
                                   if (SelectedCity?.length) {
                                     setFormData({
                                       ...formData,
@@ -2960,7 +3079,86 @@ const CreateCustomer = () => {
 
                           <Col className="mt-2 mb-2" lg="12" md="12" sm="12">
                             <Row>
-                              <Col lg="12" md="12" sm="12" xs="12">
+                              <Col>
+                                <div className="d-flex justify-content-center">
+                                  <Label>Image</Label>
+                                </div>
+
+                                <div className="parent">
+                                  <div className="file-upload">
+                                    <FaUpload color="green" size={35} />
+
+                                    <p
+                                      style={{
+                                        fontWeight: "800",
+                                        fontSize: "14px",
+                                        color: "gray",
+                                      }}>
+                                      Mandatory Document Pancard
+                                    </p>
+
+                                    <input
+                                      type="file"
+                                      name="Photo"
+                                      onChange={(e) => {
+                                        let myfile = e.target.files[0];
+                                        if (myfile) {
+                                          const sizeInMB =
+                                            myfile.size / (1024 * 1024); // Convert bytes to MB
+                                          if (sizeInMB > 1) {
+                                            swal(
+                                              "Error",
+                                              "The file is larger than 1 MB.",
+                                              "error"
+                                            );
+                                          }
+                                        }
+                                        const fiels = e.target.files[0];
+
+                                        setImage(fiels);
+                                        if (fiels) {
+                                          const reader = new FileReader();
+                                          reader.onload = (e) => {
+                                            setFormData({
+                                              ...formData,
+                                              ["PhotoUrl"]: e.target.result,
+                                            });
+                                          };
+                                          reader.readAsDataURL(fiels);
+                                        }
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                                {formData?.PhotoUrl && (
+                                  <Col lg="6" md="6" sm="12">
+                                    <img
+                                      style={{ borderRadius: "8px" }}
+                                      src={formData?.PhotoUrl}
+                                      height={100}
+                                      width={120}
+                                      alt="image"
+                                    />
+                                  </Col>
+                                )}
+
+                                {formData?.Photo && formData?.Photo && (
+                                  <Col
+                                    lg="6"
+                                    md="6"
+                                    sm="12"
+                                    style={{ paddingBottom: "-1rem" }}>
+                                    <img
+                                      style={{ borderRadius: "8px" }}
+                                      src={`${Image_URL}/Images/${formData?.Photo}`}
+                                      height={100}
+                                      width={120}
+                                      alt="image"
+                                    />
+                                  </Col>
+                                )}
+                              </Col>
+                              <Col>
                                 <div className="d-flex justify-content-center">
                                   <Label>Shop Photo</Label>
                                 </div>
@@ -3018,72 +3216,87 @@ const CreateCustomer = () => {
                                     />
                                   </div>
                                 </div>
-                              </Col>
-                              {imageUri &&
-                                imageUri?.map((ele, i) => {
-                                  return (
-                                    <>
-                                      <Col key={i} lg="4" md="4" sm="6">
-                                        <span
-                                          onClick={() => {
-                                            let uri = [...imageUri];
-                                            uri.splice(i, 1);
-                                            setImageUris(uri);
-                                          }}>
+                                {imageUri &&
+                                  imageUri?.map((ele, i) => {
+                                    return (
+                                      <>
+                                        <Col key={i} lg="6" md="6" sm="6">
                                           <span
-                                            style={{
-                                              cursor: "pointer",
-                                              position: "absolute",
-                                              right: 40,
-                                              color: "red",
+                                            onClick={() => {
+                                              let uri = [...imageUri];
+                                              uri.splice(i, 1);
+                                              setImageUris(uri);
                                             }}>
-                                            <MdCancel color="red" size="30" />
+                                            <span
+                                              style={{
+                                                cursor: "pointer",
+                                                position: "absolute",
+                                                right: 40,
+                                                color: "red",
+                                              }}>
+                                              <MdCancel color="red" size="30" />
+                                            </span>
                                           </span>
-                                        </span>
-                                        <img
-                                          style={{ borderRadius: "8px" }}
-                                          src={ele}
-                                          className="p-2"
-                                          height={140}
-                                          width="90%"
-                                          alt="image"
-                                        />
-                                      </Col>
-                                    </>
-                                  );
-                                })}
+                                          <img
+                                            style={{ borderRadius: "8px" }}
+                                            src={ele}
+                                            className="p-2"
+                                            height={140}
+                                            width="90%"
+                                            alt="image"
+                                          />
+                                        </Col>
+                                      </>
+                                    );
+                                  })}
 
-                              {formData?.shopPhoto &&
-                                formData?.shopPhoto?.map((ele, i) => (
-                                  <Col
-                                    key={i}
-                                    className="mt-1 mb-1"
-                                    lg="4"
-                                    md="4"
-                                    sm="6">
-                                    <img
-                                      style={{ borderRadius: "8px" }}
-                                      src={`${Image_URL}/Images/${ele}`}
-                                      height={100}
-                                      width={120}
-                                      alt="image"
-                                    />
-                                  </Col>
-                                ))}
+                                {formData?.shopPhoto &&
+                                  formData?.shopPhoto?.map((ele, i) => (
+                                    <Col
+                                      key={i}
+                                      className="mt-1 mb-1"
+                                      lg="4"
+                                      md="4"
+                                      sm="6">
+                                      <img
+                                        style={{ borderRadius: "8px" }}
+                                        src={`${Image_URL}/Images/${ele}`}
+                                        height={100}
+                                        width={120}
+                                        alt="image"
+                                      />
+                                    </Col>
+                                  ))}
+                              </Col>
                             </Row>
                           </Col>
                         </Row>
                       </CardBody>
                     </Col>
-                  </Row>
-                  <Row className="mt-1">
-                    <Col lg="12" md="12" sm="12">
+                    {/* </Row>
+                  <Row className="mt-1"> */}
+                    <Col lg="6" md="6" sm="6">
                       <CardBody className="userRegiBody">
                         <div className="d-flex justify-content-center">
                           <h1>Other information</h1>
                         </div>
                         <Row>
-                          <Col lg="3" md="3" xl="3">
+                          <Col lg="6" md="6" sm="12">
+                            <FormGroup className="cssforproductlist">
+                              <Label>
+                                Email <span style={{ color: "red" }}>*</span>{" "}
+                              </Label>
+                              <Input
+                                required
+                                placeholder="Enter Email id here"
+                                type="email"
+                                name="email"
+                                value={formData?.email}
+                                onChange={handleInputChange}
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6" md="6" xl="6">
                             <FormGroup>
                               <Label>
                                 Password <span style={{ color: "red" }}>*</span>
@@ -3098,7 +3311,7 @@ const CreateCustomer = () => {
                               />
                             </FormGroup>
                           </Col>
-                          <Col lg="3" md="3" xl="3">
+                          <Col lg="6" md="6" xl="6">
                             <FormGroup>
                               <Label>Geotagging</Label>
                               <Input
@@ -3111,7 +3324,7 @@ const CreateCustomer = () => {
                               />
                             </FormGroup>
                           </Col>
-                          <Col lg="3" md="3" xl="3">
+                          <Col lg="6" md="6" xl="6">
                             <FormGroup>
                               <Label className="">
                                 Category <span style={{ color: "red" }}>*</span>
@@ -3160,7 +3373,7 @@ const CreateCustomer = () => {
                               />
                             </FormGroup>
                           </Col> */}
-                          <Col lg="3" md="3" xl="3">
+                          <Col lg="6" md="6" xl="6">
                             <FormGroup>
                               <Label>
                                 Payment Term{" "}
@@ -3188,7 +3401,7 @@ const CreateCustomer = () => {
 
                           {formData.paymentTerm == "credit" && (
                             <>
-                              <Col lg="3" md="3" xl="3">
+                              <Col lg="6" md="6" xl="6">
                                 <FormGroup>
                                   <Label>
                                     Due Date{" "}
@@ -3196,6 +3409,8 @@ const CreateCustomer = () => {
                                   </Label>
                                   <Input
                                     required
+                                    min={1}
+                                    max={30}
                                     className="form-control"
                                     placeholder="Due Date"
                                     type="number"
@@ -3210,7 +3425,7 @@ const CreateCustomer = () => {
                                   />
                                 </FormGroup>
                               </Col>
-                              <Col lg="3" md="3" xl="3">
+                              <Col lg="6" md="6" xl="6">
                                 <FormGroup>
                                   <Label>
                                     Credit Period{" "}
@@ -3232,7 +3447,7 @@ const CreateCustomer = () => {
                                   />
                                 </FormGroup>
                               </Col>
-                              <Col lg="3" md="3" xl="3">
+                              <Col lg="6" md="6" xl="6">
                                 <FormGroup>
                                   <Label>
                                     Amount Limit{" "}
@@ -3257,7 +3472,7 @@ const CreateCustomer = () => {
                             </>
                           )}
 
-                          <Col lg="3" md="3" xl="3">
+                          <Col lg="6" md="6" xl="6">
                             <FormGroup>
                               <Label className="">Assigned Transport</Label>
                               <CustomInput
@@ -3290,7 +3505,7 @@ const CreateCustomer = () => {
                           {formData?.transporterDetail == 1 &&
                           formData?.transporterDetail == 1 ? (
                             <>
-                              <Col lg="3" md="3" xl="3" xs="12">
+                              <Col lg="6" md="6" xl="6" xs="12">
                                 <FormGroup>
                                   <Label className="mb-1">
                                     Transporter List

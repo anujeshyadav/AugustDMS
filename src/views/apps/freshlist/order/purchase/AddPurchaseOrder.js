@@ -295,7 +295,7 @@ const AddPurchaseOrder = (args) => {
     setLoading(true);
     const gstdetails = PurchaseGstCalculation(Party, product, Context, Charges);
 
-    const fullname = Party?.firstName;
+    const fullname = Party?.CompanyName;
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {
         return {
@@ -487,7 +487,7 @@ const AddPurchaseOrder = (args) => {
                             handleSelectionParty(selectedList, selectedItem)
                           }
                           onRemove={onRemove1}
-                          displayValue="firstName"
+                          displayValue="CompanyName"
                         />
                       </div>
                     </Col>

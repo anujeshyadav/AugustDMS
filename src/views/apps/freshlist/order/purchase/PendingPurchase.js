@@ -289,36 +289,36 @@ class PendingPurchase extends React.Component {
             );
           },
         },
-        {
-          headerName: "First Name",
-          field: "partyId.firstName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>
-                  <span>{params.data?.partyId?.firstName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "last Name",
-          field: "partyId.lastName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>
-                  <span>{params.data?.partyId?.lastName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "First Name",
+        //   field: "partyId.firstName",
+        //   filter: true,
+        //   width: 200,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>
+        //           <span>{params.data?.partyId?.firstName}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "last Name",
+        //   field: "partyId.lastName",
+        //   filter: true,
+        //   width: 200,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>
+        //           <span>{params.data?.partyId?.lastName}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Email",
           field: "partyId.email",
@@ -335,21 +335,21 @@ class PendingPurchase extends React.Component {
             );
           },
         },
-        {
-          headerName: "User Name",
-          field: "partyId.userName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>
-                  <span>{params.data?.partyId?.userName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "User Name",
+        //   field: "partyId.userName",
+        //   filter: true,
+        //   width: 200,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>
+        //           <span>{params.data?.partyId?.userName}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "IGST  ",
           field: "igstTotal",
@@ -1104,10 +1104,10 @@ class PendingPurchase extends React.Component {
                   <>
                     <Row>
                       <Col>
-                        <Label>Party Name:</Label>
+                        <Label>Company Name:</Label>
                         <h5 className="">
                           {this.state.ViewOneData &&
-                            this.state.ViewOneData?.partyId?.ownerName}
+                            this.state.ViewOneData?.partyId?.CompanyName}
                         </h5>
                       </Col>
                       {/* <Col>

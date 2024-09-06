@@ -219,14 +219,14 @@ class PurchaseOrderViewList extends React.Component {
         // },
         {
           headerName: "Supplier Name",
-          field: "partyId.ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <div>
-                  <span>{params.data?.partyId?.ownerName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -983,10 +983,10 @@ class PurchaseOrderViewList extends React.Component {
                   <>
                     <Row>
                       <Col>
-                        <Label>Party Name:</Label>
+                        <Label>Company Name:</Label>
                         <h5 className="">
                           {this.state.ViewOneData &&
-                            this.state.ViewOneData?.partyId?.ownerName}
+                            this.state.ViewOneData?.partyId?.CompanyName}
                         </h5>
                       </Col>
                       <Col>

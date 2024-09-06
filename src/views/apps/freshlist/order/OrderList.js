@@ -526,14 +526,14 @@ class OrderList extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "partyId.ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
-                  <span>{params.data?.partyId?.ownerName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -1762,16 +1762,21 @@ class OrderList extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
               <Col>
                 <h2
                   className="float-left "
-                 style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
+                  style={{
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                    fontSize: "18px",
+                    marginTop: "25px",
+                  }}>
                   Sales Order List ({this.state.rowData.length})
                 </h2>
               </Col>
               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" style={{marginTop:"25px"}}>
+                <Col lg="3" md="4" sm="12" style={{ marginTop: "25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -1780,7 +1785,7 @@ class OrderList extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
+              <Col lg="3" md="6" sm="12" style={{ marginTop: "25px" }}>
                 <div>
                   <div className="table-input  cssforproductlist">
                     <Input
@@ -1789,138 +1794,144 @@ class OrderList extends React.Component {
                       value={this.state.value}
                     />
                   </div>
-                   
                 </div>
               </Col>
-              <Col lg="3" xs="8" style={{marginTop:"25px"}}>
-              <div style={{display:"flex", justifyContent:"space-between"}}>
-               <div>
-                {InsiderPermissions && InsiderPermissions?.Create && (
-                  <span>
-                    <Route
-                      render={({ history }) => (
-                        <Button
-                          style={{
-                            cursor: "pointer",
-                            backgroundColor: "rgb(8, 91, 245)",
-                            color: "white",
-                            fontWeight: "500",
-                            height: "43px",
-                            textTransform: "uppercase",
-                          }}
-                          className="float-left"
-                          color="#39cccc"
-                          onClick={() =>
-                            history.push("/app/softnumen/order/createorder")
-                          }>
-                          <FaPlus size={15} /> Order
-                        </Button>
-                      )}
-                    />
-                  </span>
-                )}
-               </div><div>
-                {InsiderPermissions && InsiderPermissions?.Create && (
-                  <span>
-                    <Route
-                      render={({ history }) => (
-                        <Button
-                          style={{
-                            cursor: "pointer",
-                            backgroundColor: "rgb(8, 91, 245)",
-                            color: "white",
-                            fontWeight: "500",
-                            height: "43px",
-                            textTransform: "uppercase",
-                          }}
-                          className="float-right"
-                          color="#39cccc"
-                          onClick={() =>
-                            history.push("/app/jupitech/order/CreateChallan")
-                          }>
-                          <FaPlus size={15} /> challan
-                        </Button>
-                      )}
-                    />
-                  </span>
-                )}
-               </div><div>
-               {InsiderPermissions && InsiderPermissions?.Download && (
-                  <span
-                    onMouseEnter={this.toggleDropdown}
-                    onMouseLeave={this.toggleDropdown}
-                    className="">
-                    <div className="dropdown-container float-right">
-                      <ImDownload
-                        style={{ cursor: "pointer" }}
-                        title="download file"
-                        size="35px"
-                        className="dropdown-button "
-                        color="rgb(8, 91, 245)"
-                        onClick={this.toggleDropdown}
-                      />
-                      {isOpen && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            zIndex: "1",
-                            border: "1px solid rgb(8, 91, 245)",
-                            backgroundColor: "white",
-                          }}
-                          className="dropdown-content dropdownmy">
-                          <h5
-                            onClick={() => this.exportToPDF()}
+              <Col lg="3" xs="8" style={{ marginTop: "25px" }}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}>
+                  <div>
+                    {InsiderPermissions && InsiderPermissions?.Create && (
+                      <span>
+                        <Route
+                          render={({ history }) => (
+                            <Button
+                              style={{
+                                cursor: "pointer",
+                                backgroundColor: "rgb(8, 91, 245)",
+                                color: "white",
+                                fontWeight: "500",
+                                height: "43px",
+                                textTransform: "uppercase",
+                              }}
+                              className="float-left"
+                              color="#39cccc"
+                              onClick={() =>
+                                history.push("/app/softnumen/order/createorder")
+                              }>
+                              <FaPlus size={15} /> Order
+                            </Button>
+                          )}
+                        />
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    {InsiderPermissions && InsiderPermissions?.Create && (
+                      <span>
+                        <Route
+                          render={({ history }) => (
+                            <Button
+                              style={{
+                                cursor: "pointer",
+                                backgroundColor: "rgb(8, 91, 245)",
+                                color: "white",
+                                fontWeight: "500",
+                                height: "43px",
+                                textTransform: "uppercase",
+                              }}
+                              className="float-right"
+                              color="#39cccc"
+                              onClick={() =>
+                                history.push(
+                                  "/app/jupitech/order/CreateChallan"
+                                )
+                              }>
+                              <FaPlus size={15} /> challan
+                            </Button>
+                          )}
+                        />
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    {InsiderPermissions && InsiderPermissions?.Download && (
+                      <span
+                        onMouseEnter={this.toggleDropdown}
+                        onMouseLeave={this.toggleDropdown}
+                        className="">
+                        <div className="dropdown-container float-right">
+                          <ImDownload
                             style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive mt-1">
-                            .PDF
-                          </h5>
-                          <h5
-                            onClick={() => this.gridApi.exportDataAsCsv()}
-                            style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive">
-                            .CSV
-                          </h5>
-                          <h5
-                            onClick={() => this.convertCSVtoExcel("OrderList")}
-                            style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive">
-                            .XLS
-                          </h5>
-                          <h5
-                            onClick={() => this.exportToExcel("OrderList")}
-                            style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive">
-                            .XLSX
-                          </h5>
-                          <h5
-                            onClick={() => this.convertCsvToXml()}
-                            style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive">
-                            .XML
-                          </h5>
+                            title="download file"
+                            size="35px"
+                            className="dropdown-button "
+                            color="rgb(8, 91, 245)"
+                            onClick={this.toggleDropdown}
+                          />
+                          {isOpen && (
+                            <div
+                              style={{
+                                position: "absolute",
+                                zIndex: "1",
+                                border: "1px solid rgb(8, 91, 245)",
+                                backgroundColor: "white",
+                              }}
+                              className="dropdown-content dropdownmy">
+                              <h5
+                                onClick={() => this.exportToPDF()}
+                                style={{ cursor: "pointer" }}
+                                className=" mx-1 myactive mt-1">
+                                .PDF
+                              </h5>
+                              <h5
+                                onClick={() => this.gridApi.exportDataAsCsv()}
+                                style={{ cursor: "pointer" }}
+                                className=" mx-1 myactive">
+                                .CSV
+                              </h5>
+                              <h5
+                                onClick={() =>
+                                  this.convertCSVtoExcel("OrderList")
+                                }
+                                style={{ cursor: "pointer" }}
+                                className=" mx-1 myactive">
+                                .XLS
+                              </h5>
+                              <h5
+                                onClick={() => this.exportToExcel("OrderList")}
+                                style={{ cursor: "pointer" }}
+                                className=" mx-1 myactive">
+                                .XLSX
+                              </h5>
+                              <h5
+                                onClick={() => this.convertCsvToXml()}
+                                style={{ cursor: "pointer" }}
+                                className=" mx-1 myactive">
+                                .XML
+                              </h5>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </span>
-                )}
- </div><div>
-                
-                   {InsiderPermissions && InsiderPermissions?.View && (
-                  <>
-                    <span className="">
-                      <FaFilter
-                        style={{ cursor: "pointer" }}
-                        title="filter coloumn"
-                        size="35px"
-                        onClick={this.LookupviewStart}
-                        color="rgb(8, 91, 245)"
-                        className="float-right"
-                      />
-                    </span>
-                  </>
-                )}
+                      </span>
+                    )}
                   </div>
+                  <div>
+                    {InsiderPermissions && InsiderPermissions?.View && (
+                      <>
+                        <span className="">
+                          <FaFilter
+                            style={{ cursor: "pointer" }}
+                            title="filter coloumn"
+                            size="35px"
+                            onClick={this.LookupviewStart}
+                            color="rgb(8, 91, 245)"
+                            className="float-right"
+                          />
+                        </span>
+                      </>
+                    )}
                   </div>
+                </div>
               </Col>
             </Row>
             {InsiderPermissions && InsiderPermissions?.View && (
@@ -2140,7 +2151,7 @@ class OrderList extends React.Component {
                         <Label>UserName:</Label>
                         <h5 className="">
                           {this.state.ViewOneData &&
-                            this.state.ViewOneData?.fullName}
+                            this.state.ViewOneData?.partyId?.CompanyName}
                         </h5>
                       </Col>
                       <Col>

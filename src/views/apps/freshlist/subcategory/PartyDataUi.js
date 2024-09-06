@@ -96,12 +96,10 @@ const PartyDataUi = ({ invoiceData, BilData }) => {
                     marginBottom: "2px",
                     width: "55%",
                   }}>
-                  {BilData?.PrintData?.partyId?.address1 && (
+                  {BilData?.PrintData?.partyId?.address && (
                     <>
-                      {BilData?.PrintData?.partyId?.address1 &&
-                        BilData?.PrintData?.partyId?.address1}{" "}
-                      {BilData?.PrintData?.partyId?.address2 &&
-                        BilData?.PrintData?.partyId?.address2}
+                      {BilData?.PrintData?.partyId?.address &&
+                        BilData?.PrintData?.partyId?.address}
                     </>
                   )}
                 </Text>

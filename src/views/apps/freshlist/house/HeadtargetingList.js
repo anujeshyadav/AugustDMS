@@ -342,17 +342,13 @@ class HeadtargetingList extends React.Component {
 
     await _Get(Heirarchy_Created_Target_List, id)
       .then((res) => {
-        debugger;
         let checkpartyStatus = !!res?.Target[0]?.partyId;
 
         if (checkpartyStatus) {
           this.setState({ ViewOneData: res?.Target?.reverse() });
           this.setState({ Loading: false });
           this.setState({ PartyShow: true });
-          //   this.setState({ EditOneUserView: false });
           this.setState({ ViewOneUserView: true });
-          // this.setState({ rowData: res?.Target });
-          //   this.props.history.push("/app/rupioo/TargetCreationList/0");
         } else {
           this.setState({ PartyShow: false });
           let total = [];

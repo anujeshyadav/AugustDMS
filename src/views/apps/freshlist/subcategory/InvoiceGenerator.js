@@ -447,7 +447,7 @@ class InvoiceGenerator extends React.Component {
         },
         {
           headerName: "Full Name",
-          field: "firstName",
+          field: "ownerName",
           filter: true,
           resizable: true,
           width: 200,
@@ -455,7 +455,7 @@ class InvoiceGenerator extends React.Component {
             return (
               <div className="cursor-pointer text-center">
                 <div>
-                  <span>{`${params?.data?.partyId?.firstName} ${params?.data?.partyId?.lastName}`}</span>
+                  <span>{`${params?.data?.partyId?.ownerName} ${params?.data?.partyId?.lastName}`}</span>
                 </div>
               </div>
             );
@@ -697,7 +697,7 @@ class InvoiceGenerator extends React.Component {
   handleSubmitOtherCharges = async (e) => {
     const UserInformation = this.context;
     e.preventDefault();
-  
+
     this.state.AssignDeliveryBoy
       ? this.setState({ DeliveryBoyErr: false })
       : this.setState({ DeliveryBoyErr: true });
@@ -714,41 +714,45 @@ class InvoiceGenerator extends React.Component {
         value["lastLedgerBalance"] = "Not Found";
         console.log(err);
       });
-      debugger;
-      this.state.PrintData?.partyId?.assignTransporter?.length > 0
-        ? (value["DeliveryType"] = "OutStation")
-        : (value["DeliveryType"] = "Local");
-     
-        value["status"] = "Pending for Delivery";
+    // debugger;
+    this.state.PrintData?.partyId?.assignTransporter?.length > 0
+      ? (value["DeliveryType"] = "OutStation")
+      : (value["DeliveryType"] = "Local");
+
+    value["status"] = "Pending for Delivery";
     value["salesInvoiceStatus"] = true;
     value["chargesDetails"] = Number(this.state.Charges);
     value["AssignDeliveryBoy"] = this.state.AssignDeliveryBoy;
-    this.setState({ ButtonText: this.state.AssignDeliveryBoy ?  "Submitting..": "Submit" });
+    this.setState({
+      ButtonText: this.state.AssignDeliveryBoy ? "Submitting.." : "Submit",
+    });
     this.setState({ PrintData: value });
+    debugger;
+    // testing
 
-// testing
+    // this.setState({ ButtonText: "Submit" });
+    // this.setState({ ShowMyBill: true, ViewBill: true });
+    // const toWords = new ToWords();
+    // let words = toWords.convert(Number(this.state.PrintData?.grandTotal), {
+    //   currency: true,
+    // });
+    // this.setState({ wordsNumber: words });
+    //testing
 
-  // this.setState({ ButtonText: "Submit" });
-  // this.setState({ ShowMyBill: true, ViewBill: true });
-  // const toWords = new ToWords();
-  // let words = toWords.convert(Number(this.state.PrintData?.grandTotal), {
-  //   currency: true,
-  // });
-  // this.setState({ wordsNumber: words });
-//testing
-
-
-    if(this.state.AssignDeliveryBoy?.length > 0){
-
+    if (this.state.AssignDeliveryBoy?.length > 0) {
       if (UserInformation?.CompanyDetails?.BillNumber) {
         let words = toWords.convert(Number(this.state.PrintData?.grandTotal), {
           currency: true,
         });
         this.setState({ wordsNumber: words });
-        await _Post(Sales_OrderTo_DispatchList, this.state.PrintData?._id, value)
+        await _Post(
+          Sales_OrderTo_DispatchList,
+          this.state.PrintData?._id,
+          value
+        )
           .then((res) => {
             this.setState({ ButtonText: "Submit" });
-              this.setState({ ShowMyBill: true, ViewBill: true });
+            this.setState({ ShowMyBill: true, ViewBill: true });
             const toWords = new ToWords();
             let words = toWords.convert(
               Number(this.state.PrintData?.grandTotal),
@@ -757,7 +761,7 @@ class InvoiceGenerator extends React.Component {
               }
             );
             this.setState({ wordsNumber: words });
-           
+
             this.componentDidMount();
           })
           .catch((err) => {
@@ -767,7 +771,6 @@ class InvoiceGenerator extends React.Component {
           });
       } else {
         swal("Select Bill Template from setting Tab");
-       
       }
     }
   };
@@ -1337,6 +1340,7 @@ class InvoiceGenerator extends React.Component {
       value["igstTotal"] = gstCalculation;
     }
     value["grandTotal"] = Number((Sum + gstCalculation)?.toFixed(2));
+    value["maxGst"] = maxGst?.gstPercentage;
     let decimalValue;
     const containsDecimal = /\./.test(Number(value?.grandTotal?.toFixed(2)));
     // let DecimalStatus = value?.grandTotal.includes(".");

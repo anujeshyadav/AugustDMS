@@ -10,19 +10,39 @@ import { View_CustomerGroup } from "../ApiEndPoint/Api";
 
 const State = (props) => {
   const [crateUserXmlView, setcreateUserXmlView] = useState({});
-  const [CompanyDetails, setCompanyDetails] = useState({});
-  const [Mode, setMode] = useState("semi-dark");
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [CompanyDetails, setCompanyDetails] = useState({});
+    const [Mode, setMode] = useState("semi-dark");
 
-  const [PartsCatalougueCart, setPartsCatalougueCart] = useState([]);
-  const [UserInformatio, setUserInformatio] = useState({});
-  const [PartsCatloguelength, setPartsCatloguelength] = useState(0);
-  const [Currencyconvert, setCurrencyconvert] = useState("");
-  const [myCustomColor, SetmyCustomColor] = useState("");
-  const [PresentCurrency, setPresentCurrency] = useState("USD_$");
-  const [Userlanguage, setUserlanguage] = useState(navigator.language);
+    const [PartsCatalougueCart, setPartsCatalougueCart] = useState([]);
+    const [UserInformatio, setUserInformatio] = useState({});
+    const [PartsCatloguelength, setPartsCatloguelength] = useState(0);
+    const [Currencyconvert, setCurrencyconvert] = useState("");
+    const [myCustomColor, SetmyCustomColor] = useState("");
+    const [PresentCurrency, setPresentCurrency] = useState("USD_$");
+    const [Userlanguage, setUserlanguage] = useState(navigator.language);
 
-  let user = JSON.parse(localStorage.getItem("userData"));
+    let user = JSON.parse(localStorage.getItem("userData"));
+    useEffect(() => {
+      const handleOnline = () => {
+        setIsOnline(true);
+      };
 
+      const handleOffline = () => {
+        swal("Error", "You Lost Internet connectivity", "error");
+        setIsOnline(false);
+      };
+
+      // Add event listeners for detecting network changes
+      window.addEventListener("online", handleOnline);
+      window.addEventListener("offline", handleOffline);
+
+      // Cleanup event listeners on unmount
+      return () => {
+        window.removeEventListener("online", handleOnline);
+        window.removeEventListener("offline", handleOffline);
+      };
+    }, []);
   useEffect(() => {
     let myCustomColor = localStorage.getItem("UserDefinedcoler");
     SetmyCustomColor(myCustomColor);

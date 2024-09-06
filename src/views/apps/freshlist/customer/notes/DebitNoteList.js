@@ -165,13 +165,13 @@ class DebitNoteList extends React.Component {
 
         {
           headerName: "Name",
-          field: "partyId.firstName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params.data?.partyId?.firstName}</span>
+                <span>{params.data?.partyId?.CompanyName}</span>
               </div>
             );
           },

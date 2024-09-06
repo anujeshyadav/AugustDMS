@@ -199,8 +199,8 @@ class CustomerTarget extends React.Component {
           },
         },
         {
-          headerName: "First Name",
-          field: "partyId.firstName",
+          headerName: "Party Name",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
@@ -208,32 +208,15 @@ class CustomerTarget extends React.Component {
               <div className="cursor-pointer text-center">
                 <div className="">
                   <span>
-                    {params?.data?.partyId?.firstName &&
-                      params?.data?.partyId?.firstName}{" "}
+                    {params?.data?.partyId?.CompanyName &&
+                      params?.data?.partyId?.CompanyName}{" "}
                   </span>
                 </div>
               </div>
             );
           },
         },
-        {
-          headerName: "Last Name",
-          field: "partyId.lastName",
-          filter: true,
-          width: 140,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div className="">
-                  <span>
-                    {params?.data?.partyId?.lastName &&
-                      params?.data?.partyId?.lastName}{" "}
-                  </span>
-                </div>
-              </div>
-            );
-          },
-        },
+
         {
           headerName: "Email",
           field: "partyId.email",
@@ -347,26 +330,7 @@ class CustomerTarget extends React.Component {
 
     await _Get(View_CustomerTarget_List, db)
       .then((res) => {
-        // let checkpartyStatus = !!res?.TargetCreation[0]?.partyId;
 
-        // if (checkpartyStatus) {
-        //   this.setState({ ViewOneData: res?.TargetCreation?.reverse() });
-        //   this.setState({ Loading: false });
-        //   this.setState({ PartyShow: true });
-        //   //   this.setState({ EditOneUserView: false });
-        //   this.setState({ ViewOneUserView: true });
-        // } else {
-        //   this.setState({ PartyShow: false });
-        //   let total = [];
-        //   res?.TargetCreation?.map((ele) => {
-        //     if (ele?.grandTotal) {
-        //       total.push(ele?.grandTotal);
-        //     }
-        //   });
-        //   let sum = total?.reduce((a, b) => a + b, 0);
-        //   if (sum) {
-        //     this.setState({ Sum: sum });
-        //   }
         this.setState({ rowData: res?.TargetCreation });
         this.setState({ Loading: false });
         this.setState({ AllcolumnDefs: this.state.columnDefs });
@@ -375,7 +339,6 @@ class CustomerTarget extends React.Component {
         let userHeading = JSON.parse(localStorage.getItem("TargetList"));
         if (userHeading?.length) {
           this.setState({ columnDefs: userHeading });
-          // this.gridApi.setColumnDefs(userHeading);
           this.setState({ SelectedcolumnDefs: userHeading });
         } else {
           this.setState({ columnDefs: this.state.columnDefs });

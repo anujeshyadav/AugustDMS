@@ -347,36 +347,7 @@ class PurchaseInvoice extends React.Component {
             );
           },
         },
-        {
-          headerName: "First Name",
-          field: "partyId.firstName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>
-                  <span>{params.data?.partyId?.firstName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "Last Name",
-          field: "partyId.lastName",
-          filter: true,
-          width: 160,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>
-                  <span>{params.data?.partyId?.lastName}</span>
-                </div>
-              </div>
-            );
-          },
-        },
+
         {
           headerName: "Email",
           field: "partyId.email",
@@ -425,7 +396,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "SGST  ",
           field: "sgstTotal",
           filter: true,
-           width: 100,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -464,7 +435,7 @@ class PurchaseInvoice extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-           width: 100,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -492,7 +463,7 @@ class PurchaseInvoice extends React.Component {
           field: "params?.data?.orderItems?.length",
           filter: true,
           resizable: true,
-           width: 125,
+          width: 125,
           cellRendererFramework: (params) => {
             // console.log(params.data);
             return (
@@ -558,7 +529,6 @@ class PurchaseInvoice extends React.Component {
     let decimalValue;
     let value = data;
     value["purchaseStatus"] = true;
-    debugger;
     const containsDecimal = /\./.test(Number(value?.grandTotal?.toFixed(2)));
     if (containsDecimal) {
       decimalValue = Number(
@@ -568,13 +538,11 @@ class PurchaseInvoice extends React.Component {
         let roundoff = 100 - decimalValue;
         value["grandTotal"] = parseFloat(value.grandTotal) + roundoff / 100;
         value["roundOff"] = `+ ${roundoff / 100}`;
-        // value["roundOff"] = +roundoff / 100;
       } else {
         let roundoff = -decimalValue;
         value["grandTotal"] =
           parseFloat(value?.grandTotal) - decimalValue / 100;
         value["roundOff"] = `${roundoff / 100}`;
-        // value.roundOff = -roundoff / 100;
       }
     } else {
       value["grandTotal"] = Number((value?.grandTotal).toFixed(2));
@@ -586,7 +554,6 @@ class PurchaseInvoice extends React.Component {
     if (UserInformation?.CompanyDetails?.BillNumber) {
       data["gstDetails"] = gstDetails;
       this.setState({ ShowBill: false });
-      // debugger;
       this.setState({ PrintData: value });
 
       const sumWithInitial = gstDetails.reduce((accumulator, ele) => {
@@ -664,7 +631,6 @@ class PurchaseInvoice extends React.Component {
 
     await PurchaseOrderList(id, db)
       .then((res) => {
-        debugger;
         this.setState({ Loading: false });
 
         const newList = res?.orderHistory?.filter((ele) =>

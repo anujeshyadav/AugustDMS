@@ -230,7 +230,7 @@ class CompleteOrder extends React.Component {
 
         {
           headerName: "Invoice",
-          field: "partyId.firstName",
+          // field: "partyId.ownerName",
           filter: true,
           resizable: true,
           width: 240,
@@ -250,8 +250,8 @@ class CompleteOrder extends React.Component {
           },
         },
         {
-          headerName: "Full Name",
-          field: "partyId.firstName",
+          headerName: "Party Name",
+          field: "partyId.CompanyName",
           filter: true,
           resizable: true,
           width: 240,
@@ -259,7 +259,7 @@ class CompleteOrder extends React.Component {
             return (
               <div className="cursor-pointer text-center">
                 <div>
-                  <span>{params?.data?.partyId?.firstName}</span>
+                  <span>{params?.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -1141,7 +1141,7 @@ class CompleteOrder extends React.Component {
                         Name-{" "}
                         <strong>
                           {this.state.ViewOneData &&
-                            this.state.ViewOneData?.partyId?.firstName}
+                            this.state.ViewOneData?.partyId?.CompanyName}
                         </strong>
                       </div>
                     </Col>

@@ -564,7 +564,7 @@ const EditPurchase = (args) => {
     e.preventDefault();
     setLoading(true);
     const gstdetails = PurchaseGstCalculation(Party, product, Context, Charges);
-    const fullname = UserInfo?.firstName + " " + UserInfo?.lastName;
+    const fullname = Party?.CompanyName;
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {
         return {
@@ -633,13 +633,11 @@ const EditPurchase = (args) => {
         gstdetails["Tax"]["GrandTotal"] =
           parseFloat(gstdetails?.Tax?.GrandTotal) + roundoff / 100;
         gstdetails["Tax"]["RoundOff"] = `+ ${roundoff / 100}`;
-        // value["roundOff"] = +roundoff / 100;
       } else {
         let roundoff = -decimalValue;
         gstdetails["Tax"]["GrandTotal"] =
           parseFloat(gstdetails?.Tax?.GrandTotal) - decimalValue / 100;
         gstdetails["Tax"]["RoundOff"] = `${roundoff / 100}`;
-        // value.roundOff = -roundoff / 100;
       }
     } else {
       gstdetails["Tax"]["GrandTotal"] = Number(
@@ -673,12 +671,9 @@ const EditPurchase = (args) => {
       tax: LandedPrice?.landedTax,
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
       status: "completed",
-      // DateofDelivery: dateofDelivery,
     };
-    // setfinalPayload(payload);
     await _Put(Purchase_Edit_Order, Params.id, payload)
       .then((res) => {
-        // swal("success", "Order Updated Successfully", "success");
         setModal(!modal);
         (async () => await UpdateStatus(payload))();
       })
@@ -752,7 +747,7 @@ const EditPurchase = (args) => {
                                 handleSelectionParty(selectedList, selectedItem)
                               }
                               onRemove={onRemove1}
-                              displayValue="firstName"
+                              displayValue="CompanyName"
                             />
                           </div>
                         </Col>

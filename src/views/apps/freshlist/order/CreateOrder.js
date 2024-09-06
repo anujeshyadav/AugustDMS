@@ -343,8 +343,10 @@ const CreateOrder = (args) => {
         if (value?.length) {
           const formattedData = value?.map((item) => ({
             ...item,
-            displayLabel: `${item.firstName} (Grade: ${
-              item?.category?.grade ? item?.category?.grade : "NA"
+            displayLabel: `${item.CompanyName} (Grade: ${
+              item?.category?.grade
+                ? item?.category?.grade?.toUpperCase()
+                : "NA"
             })`,
           }));
           setPartyList(formattedData);
@@ -458,7 +460,7 @@ const CreateOrder = (args) => {
     if (arnNumber > 49999) {
       arnStatus = true;
     }
-    const fullname = Party?.firstName;
+    const fullname = Party?.CompanyName;
     const payload = {
       userId: Party?.created_by?._id,
       partyId: PartyId,

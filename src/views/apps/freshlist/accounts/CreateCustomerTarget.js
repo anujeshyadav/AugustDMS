@@ -298,7 +298,7 @@ const CreateCustomerTarget = (args) => {
                       options={UserList}
                       onSelect={onSelect1}
                       onRemove={onRemove1}
-                      displayValue="firstName"
+                      displayValue="CompanyName"
                     />
                   </div>
                 </Col>

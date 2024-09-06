@@ -1642,6 +1642,7 @@ class SalesLead extends React.Component {
                               this.onRemove1(selectedList, selectedItem);
                             }}
                             displayValue="ownerName"
+                            // displayValue="ownerName"
                           />
                         </Col>
                       </Row>

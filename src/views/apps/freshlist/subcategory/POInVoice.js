@@ -498,7 +498,7 @@ const POInVoice = ({ invoiceData, BilData }) => {
                           fontSize: "10px",
                           fontWeight: "bold",
                         }}>
-                        {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
+                        {`Name: ${BilData?.PrintData?.partyId?.CompanyName}`}
                       </Text>{" "}
                       <Text
                         style={{
@@ -506,8 +506,7 @@ const POInVoice = ({ invoiceData, BilData }) => {
                           width: "99%",
                           fontWeight: "bold",
                         }}>
-                        {`Address: ${BilData?.PrintData?.partyId?.address1}
-                        Address: ${BilData?.PrintData?.partyId?.address2}
+                        {`Address: ${BilData?.PrintData?.partyId?.address}
                         Mobile No.: ${BilData?.PrintData?.partyId?.contactNumber}
                         State.: ${BilData?.PrintData?.partyId?.State}
                         City.: ${BilData?.PrintData?.partyId?.City}`}
@@ -568,7 +567,7 @@ const POInVoice = ({ invoiceData, BilData }) => {
                           fontSize: "11px",
                           fontWeight: "bold",
                         }}>
-                        {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
+                        {`Name: ${BilData?.PrintData?.partyId?.CompanyName}`}
                       </Text>{" "}
                       <Text
                         style={{
@@ -576,8 +575,7 @@ const POInVoice = ({ invoiceData, BilData }) => {
                           width: "98%",
                           fontWeight: "bold",
                         }}>
-                        {`Address: ${BilData?.PrintData?.partyId?.address1}
-                       Address: ${BilData?.PrintData?.partyId?.address2}
+                        {`Address: ${BilData?.PrintData?.partyId?.address}
                        Mobile No.: ${BilData?.PrintData?.partyId?.contactNumber}
                       State.: ${BilData?.PrintData?.partyId?.State}
                        City.: ${BilData?.PrintData?.partyId?.City}`}

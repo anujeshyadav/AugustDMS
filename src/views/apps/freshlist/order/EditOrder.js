@@ -198,7 +198,9 @@ const EditOrder = (args) => {
         updatedProduct.wholeQty = selectedItem?.qty;
         updatedProduct.HSN_Code = selectedItem?.HSN_Code;
         updatedProduct.basicPrice = costPrice;
-
+        updatedProduct.GrossQty = Number(
+          (1 / selectedItem?.secondarySize).toFixed(3)
+        );
         updatedProduct["discountPercentage"] =
           Party?.category?.discount && Party?.category?.discount
             ? Party?.category?.discount
@@ -313,12 +315,14 @@ const EditOrder = (args) => {
           if (value?.length) {
             const formattedData = value?.map((item) => ({
               ...item,
-              displayLabel: `${item.firstName} (Grade: ${
-                item?.category?.grade ? item?.category?.grade : "NA"
+              displayLabel: `${item?.CompanyName} (Grade: ${
+                item?.category?.grade
+                  ? item?.category?.grade?.toUpperCase()
+                  : "NA"
               })`,
             }));
             setPartyList(formattedData);
-            PartyListdata = value;
+            PartyListdata = formattedData;
           }
         })
         .catch((err) => {
@@ -514,8 +518,7 @@ const EditOrder = (args) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const gstdetails = GstCalculation(Party, product, Context);
-    debugger;
-    const fullname = Party?.firstName;
+    const fullname = Party?.CompanyName;
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {
         return {
@@ -676,7 +679,7 @@ const EditOrder = (args) => {
                                 handleSelectionParty(selectedList, selectedItem)
                               }
                               onRemove={onRemove1}
-                              displayValue="firstName"
+                              displayValue="displayLabel"
                             />
                           </div>
                         </Col>

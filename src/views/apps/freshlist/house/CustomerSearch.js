@@ -104,8 +104,8 @@ class CustomerSearch extends React.Component {
           },
         },
         {
-          headerName: "First Name",
-          field: "firstName",
+          headerName: "Full Name",
+          field: "ownerName",
           width: 280,
           filter: true,
           sortable: true,
@@ -113,9 +113,10 @@ class CustomerSearch extends React.Component {
             return (
               <>
                 <Link
+                style={{color:"black"}}
                   title="click to Edit"
                   to={`/app/SoftNumen/account/CreateCustomer/${params?.data?._id}`}>
-                  {params?.data?.firstName}
+                  {params?.data?.ownerName}
                 </Link>
                 {/* <Route
                   render={({ history }) => (
@@ -298,22 +299,22 @@ class CustomerSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "Owner Name",
-          field: "ownerName",
-          filter: true,
-          width: 200,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.ownerName}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Owner Name",
+        //   field: "ownerName",
+        //   filter: true,
+        //   width: 200,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.ownerName}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Mobile Number",
           field: "mobileNumber",
@@ -330,22 +331,22 @@ class CustomerSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "Pan No",
-          field: "panNo",
-          width: 100,
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.panNo}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Pan No",
+        //   field: "panNo",
+        //   width: 100,
+        //   filter: true,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.panNo}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Aadhar No",
           field: "aadharNo",
@@ -362,22 +363,22 @@ class CustomerSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "PassPort No",
-          field: "passPortNo",
-          filter: true,
-          width: 120,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.passPortNo}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "PassPort No",
+        //   field: "passPortNo",
+        //   filter: true,
+        //   width: 120,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.passPortNo}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Address",
           field: "address",
@@ -394,22 +395,22 @@ class CustomerSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "Pin code",
-          field: "personalPincode",
-          filter: true,
-          sortable: true,
-          width: 80,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.personalPincode}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Pin code",
+        //   field: "personalPincode",
+        //   filter: true,
+        //   sortable: true,
+        //   width: 80,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.personalPincode}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "State",
           field: "State",
@@ -626,22 +627,22 @@ class CustomerSearch extends React.Component {
           },
         },
 
-        {
-          headerName: "User Name",
-          field: "userName",
-          filter: true,
-          width: 200,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.userName}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "User Name",
+        //   field: "userName",
+        //   filter: true,
+        //   width: 200,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.userName}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
 
         {
           headerName: "Company Pan No",
@@ -660,71 +661,71 @@ class CustomerSearch extends React.Component {
           },
         },
 
-        {
-          headerName: "Home city",
-          field: "Pcity",
-          width: 120,
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.Pcity}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Home State",
-          field: "Pstate",
-          filter: true,
-          width: 170,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.Pstate}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Home city",
+        //   field: "Pcity",
+        //   width: 120,
+        //   filter: true,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.Pcity}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "Home State",
+        //   field: "Pstate",
+        //   filter: true,
+        //   width: 170,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.Pstate}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
 
-        {
-          headerName: "Address First",
-          field: "address1",
-          filter: true,
-          width: 250,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.address1}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Address Second",
-          field: "address2",
-          filter: true,
-          width: 250,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.address2}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Address First",
+        //   field: "address1",
+        //   filter: true,
+        //   width: 250,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.address1}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "Address Second",
+        //   field: "address2",
+        //   filter: true,
+        //   width: 250,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.address2}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
 
         {
           headerName: "Party id",
@@ -759,22 +760,22 @@ class CustomerSearch extends React.Component {
         //   },
         // },
 
-        {
-          headerName: "Transporter Id",
-          field: "transporterDetail",
-          filter: true,
-          width: 135,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.transporterDetail}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Transporter Id",
+        //   field: "transporterDetail",
+        //   filter: true,
+        //   width: 135,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.transporterDetail}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
 
         {
           headerName: "Pin code",
@@ -952,7 +953,7 @@ class CustomerSearch extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
-                {this.state.InsiderPermissions &&
+                {/* {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.View && (
                     <Route
                       render={({ history }) => (
@@ -979,7 +980,7 @@ class CustomerSearch extends React.Component {
                         </span>
                       )}
                     />
-                  )}
+                  )} */}
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.Edit && (
                     <Route
@@ -1148,14 +1149,10 @@ class CustomerSearch extends React.Component {
           let payload = {
             customer: selectedParty,
           };
-          debugger;
-          // DeleteCustomerList(id)
+          
           _Post(Create_Customer_BulkDelete, database, payload)
             .then((res) => {
               this.setState({ Loading: false });
-
-              // let selectedData = this.gridApi.getSelectedRows();
-              // this.gridApi.updateRowData({ remove: selectedData });
               this.componentDidMount();
             })
             .catch((err) => {
@@ -1244,28 +1241,28 @@ class CustomerSearch extends React.Component {
     const transformedData = this.state.rowAllData?.map((item) => ({
       CompanyName: item.CompanyName,
       gstNumber: item.gstNumber,
-      partyType: item.partyType,
-      registrationType: item.registrationType,
-      lockInTime: item.lockInTime,
-      limit: item.limit,
-      paymentTerm: item.paymentTerm,
-      comPanNo: item.comPanNo,
       contactNumber: item.contactNumber,
-      ownerName: item.ownerName,
+      partyType: item.partyType,
+      limit: item.limit,
+      lockInTime: item.lockInTime,
+      paymentTerm: item.paymentTerm,
+      address: item.address,
+      State: item.State,
+      City: item.City,
+      pincode: item.pincode,
+      SalesPerson: item.created_by.firstName,
+      registrationType: item.registrationType,
+      comPanNo: item.comPanNo,
       mobileNumber: item.mobileNumber,
       panNo: item.panNo,
       aadharNo: item.aadharNo,
-      passPortNo: item.passPortNo,
-      address: item.address,
-      personalPincode: item.personalPincode,
-      State: item.State,
-      City: item.City,
+      // ownerName: item.ownerName,
+      // passPortNo: item.passPortNo,
+      // personalPincode: item.personalPincode,
       // transporterDetail: item.transporterDetail,
       // assignTransporter: item.assignTransporter,
       serviceArea: item.serviceArea,
       duedate: item.duedate,
-      lockInTime: item.lockInTime,
-      limit: item.limit,
       category: item.category?.id ? item.category?.id : null,
       shopSize: item.shopSize,
       geotagging: item.geotagging,
@@ -1273,14 +1270,6 @@ class CustomerSearch extends React.Component {
       dealsInProducts: item.dealsInProducts,
       annualTurnover: item.annualTurnover,
       firstName: item.firstName,
-      lastName: item.lastName,
-      userName: item.userName,
-      comPanNo: item.comPanNo,
-      Pcity: item.Pcity,
-      Pstate: item.Pstate,
-      address1: item.address1,
-      address2: item.address2,
-      partyType: item.partyType,
       rolename: item?.rolename?.id ? item?.rolename?.id : null,
       id: item.id,
     }));

@@ -490,14 +490,14 @@ class OrderList extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "partyId.ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 220,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
-                  <span>{params.data?.partyId?.ownerName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -520,7 +520,7 @@ class OrderList extends React.Component {
         },
         {
           headerName: "Full Name",
-          field: "partyId.firstName",
+          field: "partyId.ownerName",
           filter: true,
           resizable: true,
           width: 240,
@@ -528,7 +528,7 @@ class OrderList extends React.Component {
             return (
               <div className="text-center cursor-pointer">
                 <div>
-                  <span>{`${params?.data?.partyId?.firstName}`}</span>
+                  <span>{`${params?.data?.partyId?.ownerName}`}</span>
                 </div>
               </div>
             );
@@ -2062,7 +2062,7 @@ class OrderList extends React.Component {
                         <Label>UserName:</Label>
                         <h5 className="">
                           {this.state.ViewOneData &&
-                            this.state.ViewOneData?.partyId?.firstName}
+                            this.state.ViewOneData?.partyId?.CompanyName}
                         </h5>
                       </Col>
                       <Col>
