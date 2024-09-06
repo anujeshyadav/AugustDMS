@@ -135,7 +135,7 @@ class HouseProductList extends React.Component {
           headerName: "Product MRP",
           field: "Product_MRP",
           filter: true,
-          width: 155,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="">
@@ -167,7 +167,7 @@ class HouseProductList extends React.Component {
           headerName: "MIN Stockalert",
           field: "MIN_stockalert",
           filter: true,
-          width: 180,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -182,7 +182,7 @@ class HouseProductList extends React.Component {
           headerName: "Opening Stock",
           field: "Opening_Stock",
           filter: true,
-          width: 180,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -232,7 +232,7 @@ class HouseProductList extends React.Component {
           },
         },
         {
-          headerName: "SubCategory",
+          headerName: "Sub Category",
           field: "SubCategory",
           filter: true,
           width: 160,
@@ -278,10 +278,10 @@ class HouseProductList extends React.Component {
         //   },
         // },
         {
-          headerName: "HSN_Code",
+          headerName: "HSN Code",
           field: "HSN_Code",
           filter: true,
-          width: 150,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -293,10 +293,10 @@ class HouseProductList extends React.Component {
           },
         },
         {
-          headerName: "GSTRate",
+          headerName: "GST Rate",
           field: "GSTRate",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -334,7 +334,7 @@ class HouseProductList extends React.Component {
         {
           headerName: "Actions",
           field: "sortorder",
-          width: 90,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer">
@@ -344,7 +344,7 @@ class HouseProductList extends React.Component {
                       render={({ history }) => (
                         <Edit
                           // className="mr-10"
-                          size="25px"
+                          size="20px"
                           color="blue"
                           onClick={() => {
                             history.push(
@@ -362,7 +362,7 @@ class HouseProductList extends React.Component {
                       render={() => (
                         <Trash2
                           // className="mr-10"
-                          size="25px"
+                          size="20px"
                           color="red"
                           onClick={() => {
                             this.runthisfunction(params?.data?._id);
@@ -881,20 +881,20 @@ class HouseProductList extends React.Component {
             <Card>
               <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                 <Col  >
-                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
+                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
                     Product List
                   </h1>
                 </Col>
              
                 {this.state.MasterShow && (
-                  <Col  xl="2" lg="2" style={{marginTop:"25px"}}>
+                  <Col  xl="3" lg="3" style={{marginTop:"25px"}}>
                     <SuperAdminUI
                       onDropdownChange={this.handleDropdownChange}
                       onSubmit={this.handleParentSubmit}
                     />
                   </Col>
                 )}
-                <Col  xl="2" lg="2" style={{marginTop:"25px"}}>
+                <Col  xl="3" lg="3" style={{marginTop:"25px"}}>
                 
                   <div className="table-input ">
                     <Input
@@ -905,33 +905,36 @@ class HouseProductList extends React.Component {
                   </div>
                
               </Col>
-              <Col xl="2" lg="2" style={{marginTop:"25px"}}>
-              {InsiderPermissions && InsiderPermissions.Create && (
-                <span className=" ">
-                  <Route
-                    render={({ history }) => (
-                      <Button
-                        color="rgb(8, 91, 245)"
-                        style={{
-                          cursor: "pointer",
-                           backgroundColor: "rgb(8, 91, 245) !important",
-                          color: "white",
-                          fontWeight: "600",
-                          height:"35px"
-                        }}
-                    className="float-right categorysbutton45"
-                     
-                        onClick={() =>
-                          history.push("/app/freshlist/house/AddProduct")
-                        }>
-                        Add Product
-                      </Button>
-                    )}
-                  />
-                </span>
-              )}
-              </Col>
-                <Col xl="1" lg="1" style={{marginTop:"25px"}}>
+              
+                <Col xl="2" lg="2" style={{marginTop:"25px"}}>
+                <div style={{display:'flex', justifyContent:"space-between"}}>
+                <div>
+                {InsiderPermissions && InsiderPermissions.Create && (
+                  <span className=" ">
+                    <Route
+                      render={({ history }) => (
+                        <Button
+                          color="rgb(8, 91, 245)"
+                          style={{
+                            cursor: "pointer",
+                             backgroundColor: "rgb(8, 91, 245) !important",
+                            color: "white",
+                            fontWeight: "600",
+                            height:"35px"
+                          }}
+                      className="float-right categorysbutton45"
+                       
+                          onClick={() =>
+                            history.push("/app/freshlist/house/AddProduct")
+                          }>
+                          Add Product
+                        </Button>
+                      )}
+                    />
+                  </span>
+                )}
+                </div>
+                <div>
                 {InsiderPermissions && InsiderPermissions.View && (
                   <span className=" ">
                     <FaFilter
@@ -1017,13 +1020,16 @@ class HouseProductList extends React.Component {
                     </div>
                   )}
                   
+                </div>
+                </div>
+              
                  
                 </Col>
               </Row>
 
               <>
                 {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100   ag-grid-table">
+                  <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                     
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (

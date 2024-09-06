@@ -85,23 +85,15 @@ class DeadPartyReport extends React.Component {
       },
       columnDefs: [
         {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          width: 80,
-          filter: true,
-        },
-
-        {
           headerName: "Party Name",
-          field: "id.ownerName",
+          field: "Party.ownerName",
           filter: "agSetColumnFilter",
           width: 240,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.id?.ownerName}</span>
+                  <span>{params?.data?.Party?.ownerName}</span>
                 </div>
               </div>
             );
@@ -109,14 +101,14 @@ class DeadPartyReport extends React.Component {
         },
         {
           headerName: "GSTIN",
-          field: "id.gstNumber",
+          field: "Party.gstNumber",
           filter: "agSetColumnFilter",
-          width: 240,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.id?.gstNumber}</span>
+                  <span>{params?.data?.Party?.gstNumber}</span>
                 </div>
               </div>
             );
@@ -124,15 +116,16 @@ class DeadPartyReport extends React.Component {
         },
         {
           headerName: "AREA",
-          field: "id.address1",
+          field: "Party.address1",
           filter: "agSetColumnFilter",
-          width: 420,
+          width: 400,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
                   <span>
-                    {params?.data?.id?.address1} {params?.data?.id?.address2}
+                    {params?.data?.Party?.address1}{" "}
+                    {params?.data?.Party?.address2}
                   </span>
                 </div>
               </div>
@@ -140,15 +133,18 @@ class DeadPartyReport extends React.Component {
           },
         },
         {
-          headerName: "PinCode",
-          field: "id.pincode",
+          headerName: "Pin Code",
+          field: "Party.pincode",
           filter: "agSetColumnFilter",
-          width: 240,
+          width: 85,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.id?.pincode}</span>
+                  <span>
+                    {params?.data?.Party?.pincode &&
+                      params?.data?.Party?.pincode}
+                  </span>
                 </div>
               </div>
             );
@@ -156,14 +152,17 @@ class DeadPartyReport extends React.Component {
         },
         {
           headerName: "Grade",
-          field: "id.ownerName",
+          field: "Party.category.grade",
           filter: "agSetColumnFilter",
-          width: 240,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.id?.ownerName}</span>
+                  <span>
+                    {params?.data?.Party?.category?.grade &&
+                      params?.data?.Party?.category?.grade}
+                  </span>
                 </div>
               </div>
             );
@@ -171,14 +170,17 @@ class DeadPartyReport extends React.Component {
         },
         {
           headerName: "Phone Number",
-          field: "id.contactNumber",
+          field: "Party.contactNumber",
           filter: "agSetColumnFilter",
-          width: 240,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.id?.contactNumber}</span>
+                  <span>
+                    {params?.data?.Party?.contactNumber &&
+                      params?.data?.Party?.contactNumber}
+                  </span>
                 </div>
               </div>
             );
@@ -186,14 +188,17 @@ class DeadPartyReport extends React.Component {
         },
         {
           headerName: "Sales Person",
-          field: "party[0].firstName",
+          field: "Party.created_by.firstName",
           filter: "agSetColumnFilter",
-          width: 150,
+         
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.party[0]?.firstName}</span>
+                  <span>
+                    {params?.data?.Party?.created_by?.firstName &&
+                      params?.data?.Party?.created_by?.firstName}
+                  </span>
                 </div>
               </div>
             );
@@ -249,7 +254,7 @@ class DeadPartyReport extends React.Component {
           headerName: "Last Purchase Date",
           field: "lastDays",
           filter: "agSetColumnFilter",
-          width: 220,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -278,6 +283,7 @@ class DeadPartyReport extends React.Component {
         this.setState({ Loading: false });
         let rowData = res?.Parties;
         console.log(rowData);
+        debugger;
         if (rowData?.length) {
           this.setState({ rowData: rowData, rowAllData: rowData });
         }
@@ -405,14 +411,14 @@ class DeadPartyReport extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("DeadPartyList", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("DeadParty.pdf");
   }
 
   exportToPDF = async () => {
@@ -456,7 +462,7 @@ class DeadPartyReport extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "DeadParty.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -480,7 +486,7 @@ class DeadPartyReport extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `DeadParty.${excelType}`);
       },
     });
   };
@@ -630,13 +636,13 @@ class DeadPartyReport extends React.Component {
             <Card>
               <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                 <Col lg="2" md="2" sm="12">
-                  <h3 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'30px' }}
+                  <h3 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}
                   >
                     Dead Party
                   </h3>
                 </Col>
                 {this.state.MasterShow && this.state.MasterShow ? (
-                  <Col lg="2" md="2" sm="6" style={{marginTop:'30px'}}>
+                  <Col lg="3" md="3" sm="6" style={{marginTop:'30px'}}>
                     <SuperAdminUI
                       onDropdownChange={this.handleDropdownChange}
                       onSubmit={this.handleParentSubmit}
@@ -645,7 +651,7 @@ class DeadPartyReport extends React.Component {
                 ) : (
                   <Col></Col>
                 )}
-               <Col xl="2" lg="2" style={{marginTop:'30px'}}>
+               <Col xl="3" lg="3" style={{marginTop:'30px'}}>
                <div className="table-input  ">
                <Input
                  

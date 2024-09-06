@@ -135,7 +135,7 @@ class DamagedStock extends React.Component {
           headerName: "Number",
           field: "mobileNo",
           filter: true,
-           width:130,
+           width:90,
           sortable: true,
           editable: true,
           cellRendererFramework: (params) => {
@@ -149,10 +149,10 @@ class DamagedStock extends React.Component {
           },
         },
         {
-          headerName: "LandLine No.",
+          headerName: "Land Line No.",
           field: "landlineNumber",
           filter: true,
-           width:140,
+           width:108,
           sortable: true,
           editable: true,
           cellRendererFramework: (params) => {
@@ -166,9 +166,10 @@ class DamagedStock extends React.Component {
           },
         },
         {
-          headerName: "Product HSN_Code",
+          headerName: "Product HSN Code",
           field: "damage.productId.HSN_Code",
           filter: true,
+          width:155,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -199,6 +200,7 @@ class DamagedStock extends React.Component {
           headerName: "Products",
           field: "damage.productId.Product_Title",
           filter: true,
+          
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -214,7 +216,7 @@ class DamagedStock extends React.Component {
           headerName: "Price",
           field: "damage.price",
           filter: true,
-           width:130,
+           width:100,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -248,7 +250,7 @@ class DamagedStock extends React.Component {
           headerName: "Qty",
           field: "damage?.damageItem?.transferQty",
           filter: true,
-           width:130,
+        width:100,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -266,7 +268,7 @@ class DamagedStock extends React.Component {
           headerName: "type Status",
           field: "damage?.damageItem?.typeStatus",
           filter: true,
-           width:140,
+           width:120,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -284,7 +286,7 @@ class DamagedStock extends React.Component {
           headerName: "Damage %",
           field: "damage.damageItem.damagePercentage",
           filter: true,
-          width:130,
+         width:100,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -735,16 +737,16 @@ class DamagedStock extends React.Component {
         {/* <ExcelReader /> */}
         
             <Card>
-              <Row className="  ml-2 mr-2">
+              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                 <Col  style={{marginTop:'30px'}}> 
                  
                   <h2
                                 className="float-left "
-                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' }}>
+                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' }}>
                                 Damaged Stock
                               </h2>
                 </Col>
-                <Col xl="2" lg="2" style={{marginTop:'30px'}}>
+                <Col xl="3" lg="3" style={{marginTop:'30px'}}>
                 <div className="table-input ">
                           <Input
                             placeholder="search Item here..."
@@ -755,90 +757,96 @@ class DamagedStock extends React.Component {
                           />
                         </div>
                 </Col>
-                <Col xl="2" lg="2" style={{marginTop:'30px'}}>
-                <span>
-                <Route
-                  render={({ history }) => (
-                    <Button
-                      style={{ cursor: "pointer" }}
-                      className="float-right mr-1"
-                      color="primary"
-                      onClick={() =>
-                        history.push("/app/Jupitech/warehouse/AddDamage")
-                      }>
-                      + Damage
-                    </Button>
-                  )}
-                />
-              </span>
-                </Col>
+                 
                 {InsiderPermissions && InsiderPermissions?.View && (
-                  <Col xl="1" lg="1" style={{marginTop:'30px'}}>
-                    <span className=" ">
-                      <FaFilter
-                        style={{ cursor: "pointer" }}
-                        title="filter coloumn"
-                        size="35px"
-                        onClick={this.LookupviewStart}
-                        color="#39cccc"
-                        className="float-right"
-                      />
-                    </span>
-                    <span  onMouseEnter={this.toggleDropdown}
-                    onMouseLeave={this.toggleDropdown}>
-                      <div className="dropdown-container float-right">
-                        <ImDownload
-                          style={{ cursor: "pointer" }}
-                          title="download file"
-                          size="35px"
-                          className="dropdown-button "
-                          color="#39cccc"
-                          onClick={this.toggleDropdown}
-                        />
-                        {isOpen && (
-                          <div
-                            style={{
-                              position: "absolute",
-                              zIndex: "1",
-                              border: "1px solid #39cccc",
-                              backgroundColor: "white",
-                            }}
-                            className="dropdown-content dropdownmy">
-                            <h5
-                              onClick={() => this.exportToPDF()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive mt-1">
-                              .PDF
-                            </h5>
-                            <h5
-                              onClick={() => this.gridApi.exportDataAsCsv()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .CSV
-                            </h5>
-                            <h5
-                              onClick={this.convertCSVtoExcel}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XLS
-                            </h5>
-                            <h5
-                              onClick={this.exportToExcel}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XLSX
-                            </h5>
-                            <h5
-                              onClick={() => this.convertCsvToXml()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XML
-                            </h5>
-                          </div>
-                        )}
-                      </div>
-                    </span>
+                  <Col xl="2" lg="2" style={{marginTop:'30px'}}>
                    
+                   <div style={{display:'flex', justifyContent:"space-between"}}>
+                   <div>
+                   <span>
+                   <Route
+                     render={({ history }) => (
+                       <Button
+                         style={{ cursor: "pointer" , fontWeight:"600"}}
+                         className="float-right "
+                         color="primary"
+                         onClick={() =>
+                           history.push("/app/Jupitech/warehouse/AddDamage")
+                         }>
+                         + Damage
+                       </Button>
+                     )}
+                   />
+                 </span>
+                   </div>
+                   <div>
+                   <span className=" ">
+                   <FaFilter
+                     style={{ cursor: "pointer" }}
+                     title="filter coloumn"
+                     size="35px"
+                     onClick={this.LookupviewStart}
+                     color="#39cccc"
+                     className="float-right"
+                   />
+                 </span>
+                 <span  onMouseEnter={this.toggleDropdown}
+                 onMouseLeave={this.toggleDropdown}>
+                   <div className="dropdown-container float-right">
+                     <ImDownload
+                       style={{ cursor: "pointer" }}
+                       title="download file"
+                       size="35px"
+                       className="dropdown-button "
+                       color="#39cccc"
+                       onClick={this.toggleDropdown}
+                     />
+                     {isOpen && (
+                       <div
+                         style={{
+                           position: "absolute",
+                           zIndex: "1",
+                           border: "1px solid #39cccc",
+                           backgroundColor: "white",
+                         }}
+                         className="dropdown-content dropdownmy">
+                         <h5
+                           onClick={() => this.exportToPDF()}
+                           style={{ cursor: "pointer" }}
+                           className=" mx-1 myactive mt-1">
+                           .PDF
+                         </h5>
+                         <h5
+                           onClick={() => this.gridApi.exportDataAsCsv()}
+                           style={{ cursor: "pointer" }}
+                           className=" mx-1 myactive">
+                           .CSV
+                         </h5>
+                         <h5
+                           onClick={this.convertCSVtoExcel}
+                           style={{ cursor: "pointer" }}
+                           className=" mx-1 myactive">
+                           .XLS
+                         </h5>
+                         <h5
+                           onClick={this.exportToExcel}
+                           style={{ cursor: "pointer" }}
+                           className=" mx-1 myactive">
+                           .XLSX
+                         </h5>
+                         <h5
+                           onClick={() => this.convertCsvToXml()}
+                           style={{ cursor: "pointer" }}
+                           className=" mx-1 myactive">
+                           .XML
+                         </h5>
+                       </div>
+                     )}
+                   </div>
+                 </span>
+                   </div>
+
+                   </div>
                   </Col>
                 )}
               </Row>

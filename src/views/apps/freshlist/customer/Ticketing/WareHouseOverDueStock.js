@@ -49,6 +49,7 @@ import { CheckPermission } from "../../house/CheckPermission";
 import SuperAdminUI from "../../../../SuperAdminUi/SuperAdminUI";
 import { ImDownload } from "react-icons/im";
 import { WareHouse_DeadStock_Stock } from "../../../../../ApiEndPoint/Api";
+import moment from "moment";
 
 const SelectedColums = [];
 
@@ -88,20 +89,13 @@ class WareHouseOverDueStock extends React.Component {
 
       columnDefs: [
         {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          width: 100,
-          filter: true,
-        },
-        {
           headerName: "Product",
           field: "product.Product_Title",
           filter: true,
           sortable: true,
           width: 220,
           editable: true,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
@@ -119,7 +113,7 @@ class WareHouseOverDueStock extends React.Component {
           sortable: true,
           width: 110,
           editable: true,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
@@ -131,16 +125,16 @@ class WareHouseOverDueStock extends React.Component {
         },
         {
           headerName: "LAST SALE DAYS",
-          field: "product.salesDate",
+          field: "salesDate",
           filter: true,
           sortable: true,
           width: 165,
           editable: true,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.product?.salesDate}</span>
+                  <span>{params?.data?.salesDate}</span>
                 </div>
               </>
             );
@@ -153,7 +147,7 @@ class WareHouseOverDueStock extends React.Component {
           sortable: true,
           width: 170,
           editable: true,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
@@ -169,17 +163,16 @@ class WareHouseOverDueStock extends React.Component {
         },
         {
           headerName: "DATE OF PURCHASE",
-          field: "product.purchaseDate",
+          field: "purchaseDate",
           filter: true,
           sortable: true,
           width: 200,
           editable: true,
-          cellRendererFramework: params => {
-            
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
-                  <span>{ params?.data?.product?.purchaseDate}</span>
+                  <span>{params?.data?.purchaseDate}</span>
                 </div>
               </>
             );
@@ -187,16 +180,16 @@ class WareHouseOverDueStock extends React.Component {
         },
         {
           headerName: "QNTY",
-          field: "Qty",
+          field: "product.qty",
           filter: true,
           sortable: true,
-          width:140,
+          width: 140,
           editable: true,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.Qty}</span>
+                  <span>{params?.data?.product?.qty}</span>
                 </div>
               </>
             );
@@ -207,7 +200,7 @@ class WareHouseOverDueStock extends React.Component {
   }
 
   LookupviewStart = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       modal: !prevState.modal,
     }));
   };
@@ -215,12 +208,20 @@ class WareHouseOverDueStock extends React.Component {
   async Apicalling(id, db) {
     this.setState({ Loading: true });
     await _Get(WareHouse_DeadStock_Stock, db)
-      .then(res => {
+      .then((res) => {
         this.setState({ Loading: false });
         let value = res?.allProduct;
+        debugger;
+        value.forEach((element) => {
+          element["salesDate"] = moment(element?.product?.salesDate).format(
+            "DD-MM-YYYY"
+          );
+          element["purchaseDate"] = moment(
+            element?.product?.purchaseDate
+          ).format("DD-MM-YYYY");
+        });
         if (value?.length > 0) {
-          this.setState({ rowData: value });
-          this.setState({ rowAllData: value });
+          this.setState({ rowData: value, rowAllData: value });
 
           this.setState({ AllcolumnDefs: this.state.columnDefs });
           this.setState({ SelectedCols: this.state.columnDefs });
@@ -240,7 +241,7 @@ class WareHouseOverDueStock extends React.Component {
         }
         this.setState({ SelectedCols: this.state.columnDefs });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ Loading: false });
         console.log(err);
         this.setState({ rowData: [] });
@@ -258,7 +259,7 @@ class WareHouseOverDueStock extends React.Component {
   }
 
   togglemodal = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       modalone: !prevState.modalone,
     }));
     this.setState({ ShowBill: false });
@@ -267,7 +268,7 @@ class WareHouseOverDueStock extends React.Component {
     this.setState({ ShowBill: true });
   };
   toggleDropdown = () => {
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
   runthisfunction(id) {
@@ -276,15 +277,15 @@ class WareHouseOverDueStock extends React.Component {
         cancel: "cancel",
         catch: { text: "Delete ", value: "delete" },
       },
-    }).then(value => {
+    }).then((value) => {
       switch (value) {
         case "delete":
           Delete_targetINlist(id)
-            .then(res => {
+            .then((res) => {
               let selectedData = this.gridApi.getSelectedRows();
               this.gridApi.updateRowData({ remove: selectedData });
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
           break;
@@ -293,7 +294,7 @@ class WareHouseOverDueStock extends React.Component {
     });
   }
 
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.gridRef.current = params.api;
@@ -305,11 +306,11 @@ class WareHouseOverDueStock extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -324,7 +325,7 @@ class WareHouseOverDueStock extends React.Component {
       SelectedColums?.push(value);
     } else {
       const delindex = SelectedColums?.findIndex(
-        ele => ele?.headerName === value?.headerName
+        (ele) => ele?.headerName === value?.headerName
       );
 
       SelectedColums?.splice(delindex, 1);
@@ -335,14 +336,14 @@ class WareHouseOverDueStock extends React.Component {
       Papa.parse(csvData, {
         header: true,
         skipEmptyLines: true,
-        complete: result => {
+        complete: (result) => {
           if (result.data && result.data.length > 0) {
             resolve(result.data);
           } else {
             reject(new Error("No data found in the CSV"));
           }
         },
-        error: error => {
+        error: (error) => {
           reject(error);
         },
       });
@@ -354,7 +355,7 @@ class WareHouseOverDueStock extends React.Component {
 
     const doc = new jsPDF("landscape", "mm", size, false);
     doc.setTextColor(5, 87, 97);
-    const tableData = parsedData.map(row => Object.values(row));
+    const tableData = parsedData.map((row) => Object.values(row));
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
@@ -379,12 +380,12 @@ class WareHouseOverDueStock extends React.Component {
       console.error("Error parsing CSV:", error);
     }
   };
-  processCell = params => {
+  processCell = (params) => {
     return params.value;
   };
 
   convertCsvToExcel(csvData) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       Papa.parse(csvData, {
         header: true,
         dynamicTyping: true,
@@ -415,7 +416,7 @@ class WareHouseOverDueStock extends React.Component {
     window.URL.revokeObjectURL(url);
   }
 
-  exportToExcel = async e => {
+  exportToExcel = async (e) => {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
@@ -428,7 +429,7 @@ class WareHouseOverDueStock extends React.Component {
       processCellCallback: this.processCell,
     });
     Papa.parse(CsvData, {
-      complete: result => {
+      complete: (result) => {
         const ws = XLSX.utils.json_to_sheet(result.data);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
@@ -459,14 +460,14 @@ class WareHouseOverDueStock extends React.Component {
       this.setState({ SelectedcolumnDefs: myArrayCopy });
     }
   };
-  handleDate = e => {
+  handleDate = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
   handleSubmitDate = () => {
     debugger;
-    const filteredItems = this.state.rowAllData.filter(item => {
+    const filteredItems = this.state.rowAllData.filter((item) => {
       const dateList = new Date(item?.updatedAt);
       const onlyDate = dateList.toISOString().split("T")[0];
       return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
@@ -478,12 +479,12 @@ class WareHouseOverDueStock extends React.Component {
       processCellCallback: this.processCell,
     });
     Papa.parse(CsvData, {
-      complete: result => {
+      complete: (result) => {
         const rows = result.data;
 
         let xmlString = "<root>\n";
 
-        rows.forEach(row => {
+        rows.forEach((row) => {
           xmlString += "  <row>\n";
           row.forEach((cell, index) => {
             xmlString += `    <field${index + 1}>${cell}</field${index + 1}>\n`;
@@ -501,7 +502,7 @@ class WareHouseOverDueStock extends React.Component {
     });
   };
 
-  HandleSetVisibleField = e => {
+  HandleSetVisibleField = (e) => {
     e.preventDefault();
 
     this.gridApi.setColumnDefs(this.state.SelectedcolumnDefs);
@@ -518,10 +519,10 @@ class WareHouseOverDueStock extends React.Component {
   HeadingRightShift = () => {
     const updatedSelectedColumnDefs = [
       ...new Set([
-        ...this.state.SelectedcolumnDefs.map(item => JSON.stringify(item)),
-        ...SelectedColums.map(item => JSON.stringify(item)),
+        ...this.state.SelectedcolumnDefs.map((item) => JSON.stringify(item)),
+        ...SelectedColums.map((item) => JSON.stringify(item)),
       ]),
-    ].map(item => JSON.parse(item));
+    ].map((item) => JSON.parse(item));
     this.setState({
       SelectedcolumnDefs: [...new Set(updatedSelectedColumnDefs)], // Update the state with the combined array
     });
@@ -538,14 +539,14 @@ class WareHouseOverDueStock extends React.Component {
       });
     }
   };
-  handleParentSubmit = e => {
+  handleParentSubmit = (e) => {
     e.preventDefault();
     let SuperAdmin = JSON.parse(localStorage.getItem("SuperadminIdByMaster"));
     let id = SuperAdmin.split(" ")[0];
     let db = SuperAdmin.split(" ")[1];
     this.Apicalling(id, db);
   };
-  handleDropdownChange = selectedValue => {
+  handleDropdownChange = (selectedValue) => {
     localStorage.setItem("SuperadminIdByMaster", JSON.stringify(selectedValue));
   };
   render() {
@@ -556,15 +557,13 @@ class WareHouseOverDueStock extends React.Component {
             display: "flex",
             justifyContent: "center",
             marginTop: "20rem",
-          }}
-        >
+          }}>
           <Spinner
             style={{
               height: "4rem",
               width: "4rem",
             }}
-            color="primary"
-          >
+            color="primary">
             Loading...
           </Spinner>
         </div>

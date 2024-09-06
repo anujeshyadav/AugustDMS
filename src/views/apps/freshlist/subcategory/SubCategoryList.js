@@ -54,7 +54,7 @@ class SubCategoryList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 80,
+        width: 55,
         filter: true,
       },
       // {
@@ -82,7 +82,7 @@ class SubCategoryList extends React.Component {
         headerName: "Category Name",
         field: "name",
         filter: true,
-        width: 240,
+       
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center">
@@ -95,7 +95,7 @@ class SubCategoryList extends React.Component {
         headerName: "SubCategory Name",
         field: "subcategory.name",
         filter: true,
-        width: 240,
+       
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center">
@@ -162,7 +162,7 @@ class SubCategoryList extends React.Component {
         headerName: "Status",
         field: "status",
         filter: true,
-        width: 140,
+        width:80,
         cellRendererFramework: (params) => {
           return params.data?.status === "Active" ? (
             <div className=" ">
@@ -195,7 +195,7 @@ class SubCategoryList extends React.Component {
                   render={({ history }) => (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={() =>
                         history.push(
@@ -211,7 +211,7 @@ class SubCategoryList extends React.Component {
                 render={({ history }) => (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => {
                       this.runthisfunction(params.data);
@@ -353,12 +353,12 @@ class SubCategoryList extends React.Component {
           <Card>
             <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col  >
-                <h4   className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'30px' }}>
+                <h4   className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                   SubCategory List
                 </h4>
               </Col>
               {this.state.MasterShow && this.state.MasterShow ? (
-                <Col lg="2" md="2" sm="2" style={{marginTop:"25px"}}>
+                <Col lg="3" md="3" sm="2" style={{marginTop:"25px"}}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -387,7 +387,7 @@ class SubCategoryList extends React.Component {
                   ))}
                 </CustomInput>
               </Col> */}
-              <Col lg="2" md="2" sm="2" style={{marginTop:"25px"}}>
+              <Col lg="3" md="3" sm="2" style={{marginTop:"25px"}}>
                <div className="table-input ">
                           <Input
                             placeholder="search..."
@@ -446,7 +446,7 @@ class SubCategoryList extends React.Component {
             <>
               <>
                 {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100  ag-grid-table">
+                  <div className="ag-theme-material w-100  ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                      
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (

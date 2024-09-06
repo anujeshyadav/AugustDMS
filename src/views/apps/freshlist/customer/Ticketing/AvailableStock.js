@@ -115,7 +115,7 @@ class AvailableStock extends React.Component {
               field: "productId.HSN_Code",
               filter: true,
               sortable: true,
-              width: 140,
+              width: 100,
               cellRendererFramework: (params) => {
                 return (
                   <>
@@ -154,6 +154,7 @@ class AvailableStock extends React.Component {
               field: "oQty",
               headerClass: "header-style",
               filter: true,
+              width: 110,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -170,12 +171,15 @@ class AvailableStock extends React.Component {
               field: "oRate",
               headerClass: "header-style",
               filter: true,
+              width: 124,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.oRate}</span>
+                      <span>
+                        {params?.data?.oQty > 0 && params?.data?.oRate}
+                      </span>
                     </div>
                   </>
                 );
@@ -186,12 +190,14 @@ class AvailableStock extends React.Component {
               field: "oTaxRate",
               filter: true,
               sortable: true,
-              width: 140,
+              width: 95,
               cellRendererFramework: (params) => {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.oTaxRate}</span>
+                      <span>
+                        {params?.data?.oQty > 0 && params?.data?.oTaxRate}
+                      </span>
                     </div>
                   </>
                 );
@@ -202,7 +208,7 @@ class AvailableStock extends React.Component {
               field: "OpeningTax",
               filter: true,
               sortable: true,
-              width: 140,
+              width: 95,
 
               cellRendererFramework: (params) => {
                 return (
@@ -219,8 +225,9 @@ class AvailableStock extends React.Component {
             },
             {
               headerName: "Total",
-              field: "OpeningTotal",
+              field: "oTotal",
               filter: true,
+              width: 100,
               sortable: true,
               headerClass: "header-style",
               cellRendererFramework: (params) => {
@@ -228,8 +235,8 @@ class AvailableStock extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.OpeningTotal &&
-                          params?.data?.OpeningTotal?.toFixed(2)}
+                        {params?.data?.oTotal &&
+                          params?.data?.oTotal?.toFixed(2)}
                       </span>
                     </div>
                   </>
@@ -247,6 +254,7 @@ class AvailableStock extends React.Component {
               field: "pQty",
               headerClass: "header-style",
               filter: true,
+              width: 105,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -262,13 +270,16 @@ class AvailableStock extends React.Component {
               headerName: "Purchase Rate",
               field: "pRate",
               filter: true,
+              width: 125,
               sortable: true,
               headerClass: "header-style",
               cellRendererFramework: (params) => {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.pRate}</span>
+                      <span>
+                        {params?.data?.pQty > 0 && params?.data?.pRate}
+                      </span>
                     </div>
                   </>
                 );
@@ -279,12 +290,15 @@ class AvailableStock extends React.Component {
               field: "pTaxRate",
               headerClass: "header-style",
               filter: true,
+              width: 90,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.pTaxRate}</span>
+                      <span>
+                        {params?.data?.pQty > 0 && params?.data?.pTaxRate}
+                      </span>
                     </div>
                   </>
                 );
@@ -311,6 +325,7 @@ class AvailableStock extends React.Component {
               field: "pTotal",
               headerClass: "header-style",
               filter: true,
+              width: 100,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -336,6 +351,7 @@ class AvailableStock extends React.Component {
               field: "productId.pendingQty",
               headerClass: "header-style",
               filter: true,
+              width: 120,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -352,13 +368,15 @@ class AvailableStock extends React.Component {
               field: "productId.SalesRate",
               headerClass: "header-style",
               filter: true,
+              width: 100,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.productId?.SalesRate &&
+                        {params?.data?.productId?.pendingQty > 0 &&
+                          params?.data?.productId?.SalesRate &&
                           params?.data?.productId?.SalesRate?.toFixed(2)}
                       </span>
                     </div>
@@ -371,12 +389,16 @@ class AvailableStock extends React.Component {
               field: "productId.GSTRate",
               headerClass: "header-style",
               filter: true,
+              width: 90,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.productId?.GSTRate}</span>
+                      <span>
+                        {params?.data?.productId?.pendingQty > 0 &&
+                          params?.data?.productId?.GSTRate}
+                      </span>
                     </div>
                   </>
                 );
@@ -387,6 +409,7 @@ class AvailableStock extends React.Component {
               field: "PendingTotal",
               headerClass: "header-style",
               filter: true,
+              width: 100,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -412,6 +435,7 @@ class AvailableStock extends React.Component {
               field: "sQty",
               headerClass: "header-style",
               filter: true,
+              width: 90,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -427,6 +451,7 @@ class AvailableStock extends React.Component {
               headerName: "Sale Rate",
               field: "sRate",
               filter: true,
+              width: 100,
               sortable: true,
               headerClass: "header-style",
               cellRendererFramework: (params) => {
@@ -434,7 +459,9 @@ class AvailableStock extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.sRate && params?.data?.sRate?.toFixed(2)}
+                        {params?.data?.sQty &&
+                          params?.data?.sRate &&
+                          params?.data?.sRate?.toFixed(2)}
                       </span>
                     </div>
                   </>
@@ -445,13 +472,16 @@ class AvailableStock extends React.Component {
               headerName: "Tax Rate",
               field: "sTaxRate",
               filter: true,
+              width: 90,
               sortable: true,
               headerClass: "header-style",
               cellRendererFramework: (params) => {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.sTaxRate}</span>
+                      <span>
+                        {params?.data?.sQty > 0 && params?.data?.sTaxRate}
+                      </span>
                     </div>
                   </>
                 );
@@ -460,6 +490,7 @@ class AvailableStock extends React.Component {
             {
               headerName: "Total",
               filter: true,
+              width: 100,
               sortable: true,
               field: "sTotal",
               headerClass: "header-style",
@@ -488,6 +519,7 @@ class AvailableStock extends React.Component {
               field: "currentStock",
               headerClass: "header-style",
               filter: true,
+              width: 135,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -504,6 +536,7 @@ class AvailableStock extends React.Component {
               field: "price",
               headerClass: "header-style",
               filter: true,
+              width: 100,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -520,6 +553,7 @@ class AvailableStock extends React.Component {
               field: "gstPercentage",
               headerClass: "header-style",
               filter: true,
+              width: 90,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -536,6 +570,7 @@ class AvailableStock extends React.Component {
               field: "totalPrice",
               headerClass: "header-style",
               filter: true,
+              width: 100,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -962,7 +997,7 @@ class AvailableStock extends React.Component {
                 style={{
                   fontWeight: "600",
                   textTransform: "uppercase",
-                  fontSize: "24px",
+                  fontSize: "18px",
                 }}>
                 Available Stock
               </h3>
@@ -977,7 +1012,7 @@ class AvailableStock extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="2">
               {" "}
               <div className="table-input cssforproductlist">
                 <Input
@@ -987,7 +1022,7 @@ class AvailableStock extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="5">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   {" "}
@@ -1104,7 +1139,7 @@ class AvailableStock extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "-3rem" }}>
+          <CardBody style={{ marginTop: "-2rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-1 ag-grid-table">
                 {/* <div className="ag-theme-quartz"> */}

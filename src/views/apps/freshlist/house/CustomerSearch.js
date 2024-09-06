@@ -35,6 +35,8 @@ import {
 } from "react-icons/fa";
 import swal from "sweetalert";
 import {
+  _Delete,
+  _Post,
   CreateCustomerList,
   DeleteCustomerList,
 } from "../../../../ApiEndPoint/ApiCalling";
@@ -45,7 +47,10 @@ import {
 import UserContext from "../../../../context/Context";
 import { CheckPermission } from "./CheckPermission";
 import SuperAdminUI from "../../../SuperAdminUi/SuperAdminUI";
-import { Image_URL } from "../../../../ApiEndPoint/Api";
+import {
+  Create_Customer_BulkDelete,
+  Image_URL,
+} from "../../../../ApiEndPoint/Api";
 import Papa from "papaparse";
 import {
   convertDataCSVtoExcel,
@@ -55,6 +60,7 @@ import {
 } from "./Downloader";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { Link } from "react-router-dom";
 const SelectedColums = [];
 
 class CustomerSearch extends React.Component {
@@ -67,6 +73,7 @@ class CustomerSearch extends React.Component {
       isOpen: false,
       MasterShow: false,
       Arrindex: "",
+      MultiDelete: [],
       rowData: [],
       rowAllData: [],
       InsiderPermissions: {},
@@ -76,27 +83,54 @@ class CustomerSearch extends React.Component {
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [
-        // {
-        //   headerName: "UID",
-        //   valueGetter: "node.rowIndex + 1",
-        //   field: "node.rowIndex + 1",
-        //   width: 80,
-        //   filter: true,
-        // },
+        {
+          headerName: "Action",
+          // valueGetter: "node.rowIndex + 1",
+          // field: "node.rowIndex + 1",
+          width: 80,
+
+          filter: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer text-center">
+                  <Input
+                    onClick={(e) => this.handleClickCheckbox(e, params.data)}
+                    type="checkbox"
+                  />
+                </div>
+              </>
+            );
+          },
+        },
         {
           headerName: "First Name",
           field: "firstName",
-          width:280,
+          width: 280,
           filter: true,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
               <>
-                <div className="actions cursor-pointer text-center">
-                  <span>
-                    {params?.data?.firstName} {params?.data?.lastName}
-                  </span>
-                </div>
+                <Link
+                  title="click to Edit"
+                  to={`/app/SoftNumen/account/CreateCustomer/${params?.data?._id}`}>
+                  {params?.data?.firstName}
+                </Link>
+                {/* <Route
+                  render={({ history }) => (
+                    <span style={{ cursor: "pointer" }}>
+                      <span
+                        onClick={() =>
+                          history.push(
+                            `/app/SoftNumen/account/CreateCustomer/${params?.data?._id}`
+                          )
+                        }>
+                        {params?.data?.firstName}
+                      </span>
+                    </span>
+                  )}
+                /> */}
               </>
             );
           },
@@ -413,7 +447,7 @@ class CustomerSearch extends React.Component {
           headerName: "Transporter Details",
           field: "transporterDetail",
           filter: true,
-          width:200,
+          width: 200,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -449,7 +483,7 @@ class CustomerSearch extends React.Component {
           headerName: "Service Area",
           field: "serviceArea",
           filter: true,
-         
+
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -1015,6 +1049,20 @@ class CustomerSearch extends React.Component {
       },
     };
   }
+  handleClickCheckbox = (e, data) => {
+    let value = e.target.checked;
+
+    if (value) {
+      this.setState({
+        MultiDelete: [...this.state.MultiDelete, data],
+      });
+    } else {
+      this.state.MultiDelete.splice(this.state.MultiDelete.indexOf(data), 1);
+      this.setState({
+        MultiDelete: this.state.MultiDelete,
+      });
+    }
+  };
 
   LookupviewStart = () => {
     this.setState((prevState) => ({
@@ -1083,6 +1131,43 @@ class CustomerSearch extends React.Component {
     this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
+  RunBulkDeleteFunction(id) {
+    swal("danger", "Sure You Want to Delete Selected", {
+      buttons: {
+        Cancel: "Cancel",
+        catch: { text: "Delete ", value: "delete" },
+      },
+    }).then((value) => {
+      switch (value) {
+        case "delete":
+          this.setState({ Loading: true });
+          let database = this.state.MultiDelete[0].database;
+          let selectedParty = this.state.MultiDelete?.map((ele) => {
+            return { id: ele?._id };
+          });
+          let payload = {
+            customer: selectedParty,
+          };
+          debugger;
+          // DeleteCustomerList(id)
+          _Post(Create_Customer_BulkDelete, database, payload)
+            .then((res) => {
+              this.setState({ Loading: false });
+
+              // let selectedData = this.gridApi.getSelectedRows();
+              // this.gridApi.updateRowData({ remove: selectedData });
+              this.componentDidMount();
+            })
+            .catch((err) => {
+              this.setState({ Loading: false });
+
+              console.log(err);
+            });
+          break;
+        default:
+      }
+    });
+  }
   runthisfunction(id) {
     swal("Warning", "Sure You Want to Delete it", {
       buttons: {
@@ -1155,8 +1240,10 @@ class CustomerSearch extends React.Component {
   };
 
   exportToExcel = async (fileName, e) => {
+    debugger;
     const transformedData = this.state.rowAllData?.map((item) => ({
       CompanyName: item.CompanyName,
+      gstNumber: item.gstNumber,
       partyType: item.partyType,
       registrationType: item.registrationType,
       lockInTime: item.lockInTime,
@@ -1430,16 +1517,29 @@ class CustomerSearch extends React.Component {
                         style={{
                           marginLeft: "3px",
                           marginRight: "3px",
-                         
                         }}>
-                        <Col >
+                        <Col>
                           <h2
                             className="float-left"
-                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
+                            style={{
+                              fontWeight: "600",
+                              textTransform: "uppercase",
+                              fontSize: "18px",
+                              marginTop: "25px",
+                            }}>
                             Customer List
-                            {/*
-                            ({this.state.rowData.length})
-                            */}
+                            {this.state.MultiDelete?.length > 0 && (
+                              <Trash2
+                                className="mx-1"
+                                title="Bulk Delete Data"
+                                size="25px"
+                                style={{ cursor: "pointer" }}
+                                color="red"
+                                onClick={() => {
+                                  this.RunBulkDeleteFunction();
+                                }}
+                              />
+                            )}
                           </h2>
                         </Col>
 
@@ -1448,7 +1548,7 @@ class CustomerSearch extends React.Component {
                             lg="3"
                             md="3"
                             sm="12"
-                            style={{ marginTop:"25px" }}>
+                            style={{ marginTop: "25px" }}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
@@ -1457,145 +1557,133 @@ class CustomerSearch extends React.Component {
                         ) : (
                           <Col></Col>
                         )}
-                       
-                          
-                            <Col
-                              lg="3"
-                              md="3"
-                              xl="3"
-                              style={{ marginTop:"25px" }}>
-                              <div className="">
-                              
-                                <div className="table-input ">
-                                  <Input
-                                    style={{ width: "100%" }}
-                                    placeholder="search Item here..."
-                                    onChange={(e) =>
-                                      this.updateSearchQuery(e.target.value)
-                                    }
-                                    value={this.state.value}
+
+                        <Col lg="3" md="3" xl="3" style={{ marginTop: "25px" }}>
+                          <div className="">
+                            <div className="table-input ">
+                              <Input
+                                style={{ width: "100%" }}
+                                placeholder="search Item here..."
+                                onChange={(e) =>
+                                  this.updateSearchQuery(e.target.value)
+                                }
+                                value={this.state.value}
+                              />
+                            </div>
+                          </div>
+                        </Col>
+                        <Col
+                          lg="1"
+                          xl="1"
+                          md="1"
+                          xs="5"
+                          style={{ marginTop: "25px" }}>
+                          {InsiderPermissions &&
+                            InsiderPermissions?.Download && (
+                              <span>
+                                <a
+                                  title="Create User Format Download here"
+                                  target="_blank"
+                                  href={UserForm}
+                                  download={UserForm}>
+                                  <Button
+                                    style={{
+                                      cursor: "pointer",
+                                      backgroundColor: "rgb(8, 91, 245)",
+                                      color: "white",
+                                      fontWeight: "500",
+                                      height: "43px",
+                                      textTransform: "uppercase",
+                                      fontSize: "14px",
+                                    }}
+                                    className="float-right"
+                                    color="#39cccc">
+                                    Format
+                                  </Button>
+                                </a>
+                              </span>
+                            )}
+                        </Col>
+                        <Col
+                          lg="2"
+                          xl="2"
+                          md="2"
+                          xs="7"
+                          style={{ marginTop: "25px" }}>
+                          {InsiderPermissions && InsiderPermissions?.Create && (
+                            <span>
+                              <Route
+                                render={({ history }) => (
+                                  <Button
+                                    style={{
+                                      cursor: "pointer",
+                                      backgroundColor: "rgb(8, 91, 245)",
+                                      color: "white",
+                                      fontWeight: "500",
+                                      height: "43px",
+                                      textTransform: "uppercase",
+                                      fontSize: "14px",
+                                    }}
+                                    className="float-left"
+                                    color="#39cccc"
+                                    onClick={() =>
+                                      history.push(
+                                        `/app/SoftNumen/account/CreateCustomer/${0}`
+                                      )
+                                    }>
+                                    <FaPlus size={13} /> Create Customer
+                                  </Button>
+                                )}
+                              />
+                            </span>
+                          )}
+                        </Col>
+                        <Col lg="1" xl="1" md="1" style={{ marginTop: "25px" }}>
+                          {InsiderPermissions && InsiderPermissions?.View && (
+                            <>
+                              <span className="">
+                                <FaFilter
+                                  style={{ cursor: "pointer" }}
+                                  title="filter coloumn"
+                                  size="35px"
+                                  onClick={this.LookupviewStart}
+                                  color="rgb(8, 91, 245)"
+                                  className="float-right "
+                                />
+                              </span>
+                            </>
+                          )}
+                          {InsiderPermissions &&
+                            InsiderPermissions?.Download && (
+                              <span
+                                onMouseEnter={this.toggleDropdown}
+                                onMouseLeave={this.toggleDropdown}
+                                className="">
+                                <div className="dropdown-container float-right">
+                                  <ImDownload
+                                    style={{ cursor: "pointer" }}
+                                    title="download file"
+                                    size="35px"
+                                    className="dropdown-button "
+                                    color="rgb(8, 91, 245)"
                                   />
-                                </div>
-                              </div>
-                            </Col>
-                            <Col
-                              lg="1"
-                              xl="1"
-                              md="1"
-                              xs="5"
-                              style={{ marginTop:"25px"}}>
-                              {InsiderPermissions &&
-                                InsiderPermissions?.Download && (
-                                  <span>
-                                    <a
-                                      title="Create User Format Download here"
-                                      target="_blank"
-                                      href={UserForm}
-                                      download={UserForm}>
-                                      <Button
-                                        style={{
-                                          cursor: "pointer",
-                                          backgroundColor: "rgb(8, 91, 245)",
-                                          color: "white",
-                                          fontWeight: "500",
-                                          height: "43px",
-                                          textTransform: "uppercase",
-                                          fontSize: "14px",
-                                        }}
-                                        className="float-right"
-                                        color="#39cccc">
-                                        Format
-                                      </Button>
-                                    </a>
-                                  </span>
-                                )}
-                            </Col>
-                            <Col
-                              lg="2"
-                              xl="2"
-                              md="2"
-                              xs="7"
-                              style={{ marginTop:"25px" }}>
-                              {InsiderPermissions &&
-                                InsiderPermissions?.Create && (
-                                  <span>
-                                    <Route
-                                      render={({ history }) => (
-                                        <Button
-                                          style={{
-                                            cursor: "pointer",
-                                            backgroundColor: "rgb(8, 91, 245)",
-                                            color: "white",
-                                            fontWeight: "500",
-                                            height: "43px",
-                                            textTransform: "uppercase",
-                                            fontSize: "14px",
-                                          }}
-                                          className="float-left"
-                                          color="#39cccc"
-                                          onClick={() =>
-                                            history.push(
-                                              `/app/SoftNumen/account/CreateCustomer/${0}`
-                                            )
-                                          }>
-                                          <FaPlus size={13} /> Create Customer
-                                        </Button>
-                                      )}
-                                    />
-                                  </span>
-                                )}
-                            </Col>
-                            <Col
-                              lg="1"
-                              xl="1"
-                              md="1"
-                              style={{ marginTop:"25px" }}>
-                              {InsiderPermissions &&
-                                InsiderPermissions?.View && (
-                                  <>
-                                    <span className="">
-                                      <FaFilter
+                                  {isOpen && (
+                                    <div
+                                      style={{
+                                        position: "absolute",
+                                        zIndex: "1",
+                                        border: "1px solid rgb(8, 91, 245)",
+                                        backgroundColor: "white",
+                                        fontWeight: "500",
+                                      }}
+                                      className="dropdown-content dropdownmy">
+                                      <h5
+                                        onClick={() => this.exportToPDF()}
                                         style={{ cursor: "pointer" }}
-                                        title="filter coloumn"
-                                        size="35px"
-                                        onClick={this.LookupviewStart}
-                                        color="rgb(8, 91, 245)"
-                                        className="float-right "
-                                      />
-                                    </span>
-                                  </>
-                                )}
-                              {InsiderPermissions &&
-                                InsiderPermissions?.Download && (
-                                  <span
-                                    onMouseEnter={this.toggleDropdown}
-                                    onMouseLeave={this.toggleDropdown}
-                                    className="">
-                                    <div className="dropdown-container float-right">
-                                      <ImDownload
-                                        style={{ cursor: "pointer" }}
-                                        title="download file"
-                                        size="35px"
-                                        className="dropdown-button "
-                                        color="rgb(8, 91, 245)"
-                                      />
-                                      {isOpen && (
-                                        <div
-                                          style={{
-                                            position: "absolute",
-                                            zIndex: "1",
-                                            border: "1px solid rgb(8, 91, 245)",
-                                            backgroundColor: "white",
-                                            fontWeight: "500",
-                                          }}
-                                          className="dropdown-content dropdownmy">
-                                          <h5
-                                            onClick={() => this.exportToPDF()}
-                                            style={{ cursor: "pointer" }}
-                                            className=" mx-1 myactive mt-1">
-                                            . PDF
-                                          </h5>
-                                          {/* <h5
+                                        className=" mx-1 myactive mt-1">
+                                        . PDF
+                                      </h5>
+                                      {/* <h5
                                             onClick={() =>
                                               this.gridApi.exportDataAsCsv()
                                             }
@@ -1603,7 +1691,7 @@ class CustomerSearch extends React.Component {
                                             className=" mx-1 myactive">
                                             . CSV
                                           </h5> */}
-                                          {/* <h5
+                                      {/* <h5
                                             onClick={() =>
                                               this.convertCSVtoExcel(
                                                 "CustomerList"
@@ -1613,15 +1701,15 @@ class CustomerSearch extends React.Component {
                                             className=" mx-1 myactive">
                                             . XLS
                                           </h5> */}
-                                          <h5
-                                            onClick={(e) =>
-                                              this.exportToExcel("CustomerList")
-                                            }
-                                            style={{ cursor: "pointer" }}
-                                            className=" mx-1 myactive">
-                                            . XLSX
-                                          </h5>
-                                          {/* <h5
+                                      <h5
+                                        onClick={(e) =>
+                                          this.exportToExcel("CustomerList")
+                                        }
+                                        style={{ cursor: "pointer" }}
+                                        className=" mx-1 myactive">
+                                        . XLSX
+                                      </h5>
+                                      {/* <h5
                                             onClick={() =>
                                               this.convertCsvToXml()
                                             }
@@ -1629,36 +1717,36 @@ class CustomerSearch extends React.Component {
                                             className=" mx-1 myactive">
                                             . XML
                                           </h5> */}
-                                          {InsiderPermissions &&
-                                            InsiderPermissions?.BulkUpload && (
-                                              <h5>
-                                                <a
-                                                  style={{
-                                                    cursor: "pointer",
-                                                    color: "black",
-                                                  }}
-                                                  className=" mx-1 myactive"
-                                                  href={CreateCustomerSample}
-                                                  download>
-                                                  . Format
-                                                </a>
-                                              </h5>
-                                            )}
-                                        </div>
-                                      )}
+                                      {InsiderPermissions &&
+                                        InsiderPermissions?.BulkUpload && (
+                                          <h5>
+                                            <a
+                                              style={{
+                                                cursor: "pointer",
+                                                color: "black",
+                                              }}
+                                              className=" mx-1 myactive"
+                                              href={CreateCustomerSample}
+                                              download>
+                                              . Format
+                                            </a>
+                                          </h5>
+                                        )}
                                     </div>
-                                  </span>
-                                )}
-                            </Col>
-                         
-                       
+                                  )}
+                                </div>
+                              </span>
+                            )}
+                        </Col>
                       </Row>
 
                       {InsiderPermissions && InsiderPermissions?.View && (
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
+                              <div
+                                className="ag-theme-material w-100   ag-grid-table card-body"
+                                style={{ marginTop: "-1rem" }}>
                                 <div className="d-flex flex-wrap justify-content-between align-items-center"></div>
 
                                 <ContextLayout.Consumer className="ag-theme-alpine">

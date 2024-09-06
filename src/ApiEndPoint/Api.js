@@ -313,6 +313,7 @@ export const Create_Target_save = "/target-creation/save-target-creation";
 export const Create_CustomerTarget_save = "/target-creation/customer-target";
 export const View_CustomerTarget_List =
   "target-creation//view-customer-target/";
+export const Create_Customer_BulkDelete = "/customer/delete-bulk-customer/";
 export const Create_Customer_save = "/customer/save-customer";
 export const View_Customer_ById = "/customer/view-customer-by-id/";
 export const Create_Customer_Update = "/customer/update-customer/";

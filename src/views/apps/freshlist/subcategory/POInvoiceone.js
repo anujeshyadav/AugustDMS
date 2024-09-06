@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 });
 
 const POInvoiceone = ({ invoiceData, BilData }) => {
-  // console.log(BilData);
+
   const curentDate = new Date();
   console.log(curentDate.toTimeString().split(" ")[0]);
   let day = curentDate.getDate();
@@ -101,14 +101,13 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
           {BilData?.PrintData?.canceledInvoice && (
             <Image src={cancelimage} style={styles.watermark} />
           )}
-          {BilData?.EWayBill && (
+          {invoiceData?.ARNStatus && (
             <>
               <Text
                 style={{
                   fontSize: "8px",
                 }}>
-                ARN : 3682529292433b713720982c2d09b8aab5705fd4aa440c1de14 Ack
-                No. : 182314174528668 Ack Date : 14-Aug-23
+                ARN : {invoiceData?.ARN}
               </Text>
               {/* <Text
                 style={{
@@ -548,6 +547,17 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                         City.: ${BilData?.PrintData?.partyId?.City}`}
                             </Text>{" "}
                           </View>
+                          {invoiceData?.ARNStatus && (
+                            <>
+                              <Text
+                                style={{
+                                  fontSize: "10px",
+                                }}>
+                                ARN : {invoiceData?.ARN}
+                              </Text>
+                             
+                            </>
+                          )}
                         </>
                       )}
                     </>
@@ -633,6 +643,17 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                           </View>
                         </>
                       )}
+                      {invoiceData?.ARNStatus && (
+                        <>
+                          <Text
+                            style={{
+                              fontSize: "10px",
+                            }}>
+                            ARN : {invoiceData?.ARN}
+                          </Text>
+                          
+                        </>
+                      )}
                     </>
                   )}
                   {/* {!!BilData?.PrintData?.purchaseStatus &&
@@ -656,8 +677,33 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                         fontSize: "10px",
                         fontWeight: "bold",
                       }}>
-                      Invoice No:{" "}
-                      {invoiceData?.invoiceId && invoiceData?.invoiceId}
+                      {invoiceData.DeliveryType == "Local" ? (
+                        <>
+                          <Text style={styles.header}>
+                            Challan No:{" "}
+                            {invoiceData?.orderNo && invoiceData?.orderNo}
+                          </Text>
+                        </>
+                      ) : (
+                        <>
+                          {invoiceData?.status == "completed" ? (
+                            <>
+                              <Text style={styles.header}>
+                                Invoice No:{" "}
+                                {invoiceData?.invoiceId &&
+                                  invoiceData?.invoiceId}
+                              </Text>
+                            </>
+                          ) : (
+                            <>
+                              <Text style={styles.header}>
+                                Challan No:{" "}
+                                {invoiceData?.orderNo && invoiceData?.orderNo}
+                              </Text>
+                            </>
+                          )}
+                        </>
+                      )}
                     </Text>
                     <Text
                       style={{
@@ -669,10 +715,10 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                       {invoiceData?.partyId?.paymentTerm &&
                         invoiceData?.partyId?.paymentTerm}
                     </Text>
-                    <Text style={styles.header}>
+                    {/* <Text style={styles.header}>
                       order No:
                       {invoiceData?._id && invoiceData?._id}
-                    </Text>
+                    </Text> */}
                     <Text style={styles.header}>
                       Ledger Balance :
                       {BilData?.PrintData?.lastLedgerBalance &&

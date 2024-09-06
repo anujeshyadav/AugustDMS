@@ -90,19 +90,19 @@ class StockTransfer extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
         {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 100,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
                 <Eye
-                  size="25px"
+                  size="20px"
                   color="green"
                   onClick={(e) => {
                     this.togglemodal();
@@ -144,7 +144,7 @@ class StockTransfer extends React.Component {
           headerName: "Status",
           field: "transferStatus",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return params.data?.transferStatus === "Completed" ? (
               <div className=" ">{params.data?.transferStatus}</div>
@@ -161,7 +161,7 @@ class StockTransfer extends React.Component {
           headerName: "Trx Date",
           field: "stockTransferDate",
           filter: true,
-          width: 180,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -174,7 +174,7 @@ class StockTransfer extends React.Component {
           headerName: "Request Id",
           field: "warehouseNo",
           filter: true,
-          width: 140,
+          width: 170,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -200,7 +200,7 @@ class StockTransfer extends React.Component {
           headerName: "Transferred From",
           field: "warehouseFromId.warehouseName",
           filter: true,
-          width: 200,
+         
           cellRendererFramework: (params) => {
             console.log(params.data);
             return (
@@ -214,7 +214,7 @@ class StockTransfer extends React.Component {
           headerName: "Transferred To",
           field: "warehouseToId.warehouseName",
           filter: true,
-          width: 200,
+           
           cellRendererFramework: (params) => {
             console.log(params.data);
             return (
@@ -229,6 +229,7 @@ class StockTransfer extends React.Component {
           headerName: "Mobile no Transfer To",
           field: "warehouseToId.mobileNo",
           filter: true,
+          width:180,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -244,7 +245,7 @@ class StockTransfer extends React.Component {
           headerName: "Created date",
           field: "createdAt",
           filter: true,
-          width: 140,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -260,7 +261,7 @@ class StockTransfer extends React.Component {
           headerName: "updated At",
           field: "updatedAt",
           filter: true,
-          width: 140,
+          width: 95,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -795,13 +796,13 @@ class StockTransfer extends React.Component {
                 style={{
                   fontWeight: "600",
                   textTransform: "uppercase",
-                  fontSize: "22px",
+                  fontSize: "18px",
                   marginTop: "25px",
                 }}>
                 Stock Trx Request list
               </h1>
             </Col>
-            <Col style={{ marginTop: "25px" }} lg="2" xl="2">
+            <Col style={{ marginTop: "25px" }} lg="3" xl="3">
               <div className="table-input ">
                 <Input
                   placeholder="search Item here..."
@@ -810,7 +811,7 @@ class StockTransfer extends React.Component {
                 />
               </div>
             </Col>
-            <Col style={{ marginTop: "25px" }} lg="2" xl="2">
+            <Col style={{ marginTop: "25px" }} lg="1" xl="1">
               <span>
                 <Route
                   render={({ history }) => (
@@ -823,11 +824,11 @@ class StockTransfer extends React.Component {
                         color: "white",
                         fontWeight: "600",
                       }}
-                      className="float-right categorysbutton45 ml-3"
+                      className="float-right categorysbutton45  "
                       onClick={() =>
                         history.push("/app/ajgroup/account/CreateStockTrx")
                       }>
-                      <FaPlus size={15} /> Create
+                      <FaPlus size={13} /> Create
                     </Button>
                   )}
                 />
@@ -904,7 +905,7 @@ class StockTransfer extends React.Component {
           </Row>
           <>
             {this.state.rowData === null ? null : (
-              <div className="ag-theme-material w-100  ag-grid-table">
+              <div className="ag-theme-material w-100  ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {(context) => (
                     <AgGridReact

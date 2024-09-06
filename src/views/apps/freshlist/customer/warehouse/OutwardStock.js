@@ -96,7 +96,7 @@ class StockTransfer extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
         // {
@@ -194,7 +194,7 @@ class StockTransfer extends React.Component {
           headerName: "HSN",
           field: "productId.HSN_Code",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -207,7 +207,7 @@ class StockTransfer extends React.Component {
           headerName: "Quantity",
           field: "qty",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -220,7 +220,7 @@ class StockTransfer extends React.Component {
           headerName: "SALES RATE",
           field: "Purchase_Rate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -235,7 +235,7 @@ class StockTransfer extends React.Component {
           headerName: "Tax Rate",
           field: "productId.GSTRate",
           filter: true,
-          width: 140,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -264,7 +264,7 @@ class StockTransfer extends React.Component {
           headerName: "Total",
           field: "Total",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -357,7 +357,6 @@ class StockTransfer extends React.Component {
         let Completed = res?.orderHistory?.filter((ele) =>
           ele?.status?.toLowerCase()?.includes("dispatch")
         );
-        debugger
         let Alldata = Completed?.flatMap((element, index) => {
           return element?.orderItems?.map((val, i) => {
             let PurchaseRate = Number((val?.taxableAmount / val?.qty).toFixed(2));
@@ -440,11 +439,16 @@ class StockTransfer extends React.Component {
               });
               AllData = [...AllData, ...Alldata];
               this.setState({
-                rowData: AllData,
+                rowData: AllData
+              });
+              this.setState({
                 Loading: false,
               });
             })
             .catch((err) => {
+               this.setState({
+                 Loading: false,
+               });
               console.log(err);
             });
         } else {
@@ -469,12 +473,17 @@ class StockTransfer extends React.Component {
           });
           AllData = [...AllData, ...Alldata];
           this.setState({
-            rowData: AllData,
-            Loading: false,
+            rowData: AllData
           });
+           this.setState({
+             Loading: false,
+           });
         }
       })
       .catch((err) => {
+         this.setState({
+           Loading: false,
+         });
         console.log(err);
       });
   }
@@ -847,19 +856,15 @@ class StockTransfer extends React.Component {
         <Row className="app-user-list">
           <Col sm="12">
             <Card>
-              <Row className="mt-2 ml-2 mr-2">
+              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                 <Col lg="5" md="5" xl="5">
                   <h2
                     className="float-left "
-                    style={{
-                      fontWeight: "600",
-                      textTransform: "uppercase",
-                      fontSize: "24px",
-                    }}>
+                    style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
                     Outward Stock
                   </h2>
                 </Col>
-                <Col xl="3" lg="3">
+                <Col xl="3" lg="3" style={{marginTop:'25px'}}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -869,7 +874,7 @@ class StockTransfer extends React.Component {
                 {this.state.MasterShow && (
                  
                 )}*/}
-                <Col xl="3" lg="3" xs="8">
+                <Col xl="3" lg="3" xs="8" style={{marginTop:'25px'}}>
                   <div className="table-input  ">
                     <Input
                       placeholder="search Item here..."
@@ -931,7 +936,7 @@ class StockTransfer extends React.Component {
                  </div>
                </div>*/}
                 </Col>
-                <Col xl="1" lg="1" xs="4">
+                <Col xl="1" lg="1" xs="4" style={{marginTop:'25px'}}>
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.View && (
                       <>

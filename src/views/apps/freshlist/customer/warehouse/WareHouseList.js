@@ -81,7 +81,7 @@ class WareHouseList extends React.Component {
           headerName: "Actions",
           field: "sortorder",
           field: "transactions",
-          width: 190,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
@@ -93,13 +93,13 @@ class WareHouseList extends React.Component {
                           style={{
                             cursor: "pointer",
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "#39cccc",
                           }}>
                           <FaStoreAlt
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.props.history.push(
@@ -120,13 +120,13 @@ class WareHouseList extends React.Component {
                             cursor: "pointer",
 
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "#39cccc",
                           }}>
                           <Eye
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.props.history.push(
@@ -147,14 +147,14 @@ class WareHouseList extends React.Component {
                             cursor: "pointer",
 
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(212, 111, 16)",
                             marginLeft: "3px",
                           }}>
                           <FaPencilAlt
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.props.history.push(
@@ -175,14 +175,14 @@ class WareHouseList extends React.Component {
                             cursor: "pointer",
 
                             border: "1px solid white",
-                            padding: "10px",
-                            borderRadius: "30px",
+                            padding: "5px",
+                            borderRadius: "15px",
                             backgroundColor: "rgb(236, 24, 9)",
                             marginLeft: "3px",
                           }}>
                           <Trash2
                             className=""
-                            size="20px"
+                            size="15px"
                             color="white"
                             onClick={() => {
                               this.runthisfunction(params?.data?._id);
@@ -200,7 +200,7 @@ class WareHouseList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 100,
+          width: 90,
           cellRendererFramework: (params) => {
             return params.data?.status === "Active" ? (
               <div className=" ">
@@ -252,7 +252,7 @@ class WareHouseList extends React.Component {
           field: "mobileNo",
           filter: true,
           sortable: true,
-          width: 120,
+          width: 95,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -264,10 +264,10 @@ class WareHouseList extends React.Component {
           },
         },
         {
-          headerName: "Landline Number",
+          headerName: "Landline No",
           field: "landlineNumber",
           filter: true,
-          width: 170,
+          width: 110,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -284,7 +284,7 @@ class WareHouseList extends React.Component {
           field: "address",
           filter: true,
           sortable: true,
-          width: 400,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -299,7 +299,7 @@ class WareHouseList extends React.Component {
           headerName: "Created At",
           field: "createdAt",
           filter: true,
-          width: 120,
+          width: 95,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -316,7 +316,7 @@ class WareHouseList extends React.Component {
           headerName: "Updated date",
           field: "updatedAt",
           filter: true,
-          width: 135,
+          width: 115,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -789,18 +789,18 @@ class WareHouseList extends React.Component {
                       <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                         <Col  >
                           <h2 className="float-left "
-                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}} >Warehouse List</h2>
+                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}} >Warehouse List</h2>
                         </Col>
 
                         {this.state.MasterShow && (
-                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                          <Col style={{marginTop:"25px"}} lg="3" xl="3">
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
                             />
                           </Col>
                         )}
-                           <Col style={{marginTop:"25px"}} lg="2" xl="2">
+                           <Col style={{marginTop:"25px"}} lg="3" xl="3">
                           <div className="table-input ">
                                     <Input
                                       placeholder="search Item here..."
@@ -811,8 +811,11 @@ class WareHouseList extends React.Component {
                                     />
                                   </div>
                           </Col>
-                          <Col style={{marginTop:"25px"}} lg="2" xl="2">
-                           {InsiderPermissions && InsiderPermissions.Create && (
+                          
+                        <Col lg="2" style={{marginTop:"25px"}}>
+                        <div style={{display:"flex",justifyContent:"space-between"}}>
+                        <div >
+                        {InsiderPermissions && InsiderPermissions.Create && (
                             <span>
                               <Route
                                 render={({ history }) => (
@@ -825,7 +828,7 @@ class WareHouseList extends React.Component {
                               color: "white",
                               fontWeight: "600",
                             }}
-                             className="float-right categorysbutton45 ml-3"
+                             className="float-right categorysbutton45  "
                                     onClick={() =>
                                       history.push(
                                         "/app/softNumen/warehouse/CreateWareHouse/0"
@@ -837,8 +840,10 @@ class WareHouseList extends React.Component {
                               />
                             </span>
                           )}
-                          </Col>
-                        <Col lg="1" style={{marginTop:"25px"}}>
+                        </div>
+                        <div>
+                        
+                       
                          {InsiderPermissions && InsiderPermissions.View && (
                             <>
                               <span className=" ">
@@ -925,7 +930,8 @@ class WareHouseList extends React.Component {
                                 </span>
                               </>
                             )}
-
+ </div>
+                        </div>
                          
                          
                         </Col>

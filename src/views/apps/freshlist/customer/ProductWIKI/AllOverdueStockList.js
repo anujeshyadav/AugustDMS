@@ -99,7 +99,7 @@ class OverDueStock extends React.Component {
           field: "product.Product_Title",
           filter: true,
           sortable: true,
-
+          width:280,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -117,7 +117,7 @@ class OverDueStock extends React.Component {
           field: "product.HSN_Code",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 120,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -134,7 +134,7 @@ class OverDueStock extends React.Component {
           field: "product.GSTRate",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 100,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -151,7 +151,7 @@ class OverDueStock extends React.Component {
           field: "product.Purchase_Rate",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 122,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -164,17 +164,17 @@ class OverDueStock extends React.Component {
           },
         },
         {
-          headerName: "OverDue Date",
-          field: "product.salesDate",
+          headerName: "Over Due Date",
+          field: "overDue",
           filter: true,
           sortable: true,
-          width: 280,
+          width: 115,
           editable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.product?.salesDate}</span>
+                  <span>{params?.data?.overDue}</span>
                 </div>
               </>
             );
@@ -203,16 +203,16 @@ class OverDueStock extends React.Component {
         },
         {
           headerName: "WareHouse",
-          field: "product.purchaseDate",
+          field: "product.warehouse.warehouseName",
           filter: true,
           sortable: true,
-          width: 150,
+          width: 200,
           editable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.product?.purchaseDate}</span>
+                  <span>{params?.data?.product?.warehouse?.warehouseName}</span>
                 </div>
               </>
             );
@@ -223,13 +223,19 @@ class OverDueStock extends React.Component {
           field: "product.purchaseDate",
           filter: true,
           sortable: true,
-          width: 150,
+          width: 130,
           editable: true,
           cellRendererFramework: (params) => {
+            let date = "Not Purchased";
+            if (params?.data?.product?.purchaseDate) {
+              date = new Date(params?.data?.product?.purchaseDate)
+                ?.toLocaleString()
+                .split(",")[0];
+            }
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.product?.purchaseDate?.split("T")[0]}</span>
+                  <span>{date}</span>
                 </div>
               </>
             );
@@ -237,16 +243,16 @@ class OverDueStock extends React.Component {
         },
         {
           headerName: "QNTY",
-          field: "Qty",
+          field: "product.qty",
           filter: true,
           sortable: true,
-          width: 130,
+          width: 100,
           editable: true,
           cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.Qty}</span>
+                  <span>{params?.data?.product?.qty}</span>
                 </div>
               </>
             );
@@ -268,7 +274,6 @@ class OverDueStock extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.allProduct;
-        console.log(value);
         if (value?.length > 0) {
           this.setState({ rowData: value });
           this.setState({ rowAllData: value });
@@ -406,14 +411,14 @@ class OverDueStock extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("OverDueStock", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("overDueStock.pdf");
   }
 
   exportToPDF = async () => {
@@ -457,7 +462,7 @@ class OverDueStock extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "overDueStock.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -481,7 +486,7 @@ class OverDueStock extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `overDueStock.${excelType}`);
       },
     });
   };
@@ -513,7 +518,6 @@ class OverDueStock extends React.Component {
   };
 
   handleSubmitDate = () => {
-    debugger;
     const filteredItems = this.state.rowAllData.filter((item) => {
       const dateList = new Date(item?.updatedAt);
       const onlyDate = dateList.toISOString().split("T")[0];
@@ -631,13 +635,13 @@ class OverDueStock extends React.Component {
          
             <Card>
               <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-                <Col lg="2" md="2" sm="12">
-                  <h3 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'30px' }}>
+                <Col  >
+                  <h1 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                     Over Due Stock
-                  </h3>
+                  </h1>
                 </Col>
                 {this.state.MasterShow && this.state.MasterShow ? (
-                  <Col lg="2" md="2" sm="6" style={{marginTop:'30px'}}>
+                  <Col lg="3" md="3" sm="6" style={{marginTop:'30px'}}>
                     <SuperAdminUI
                       onDropdownChange={this.handleDropdownChange}
                       onSubmit={this.handleParentSubmit}
@@ -646,7 +650,7 @@ class OverDueStock extends React.Component {
                 ) : (
                   <Col></Col>
                 )}
-                <Col xl="2" lg="2" style={{marginTop:'10px'}}>          
+                {/* <Col xl="2" lg="2" style={{marginTop:'10px'}}>          
 
                 <div className="table-input ">
                   <Label>Start Date</Label>
@@ -657,8 +661,8 @@ class OverDueStock extends React.Component {
                     onChange={this.handleDate}
                   />
                 </div>
-                </Col>
-                <Col xl="2" lg="2" style={{marginTop:'10px'}}>
+                </Col> */}
+                {/* <Col xl="2" lg="2" style={{marginTop:'10px'}}>
                 <div className="table-input ">
                   <Label>End Date</Label>
                   <Input
@@ -668,8 +672,8 @@ class OverDueStock extends React.Component {
                     onChange={this.handleDate}
                   />
                 </div>
-                </Col>
-                <Col xl="1" lg="1" style={{marginTop:'30px'}}>
+                </Col> */}
+                {/* <Col xl="1" lg="1" style={{marginTop:'30px'}}>
                 <div className="table-input  ">
                   <Button
                     type="submit"
@@ -679,8 +683,8 @@ class OverDueStock extends React.Component {
                     Submit
                   </Button>
                 </div>
-                </Col>
-                <Col xl="2" lg="2" style={{marginTop:'30px'}}>
+                </Col> */}
+                <Col xl="3" lg="3" style={{marginTop:'30px'}}>
                 <div className="table-input ">
                   <Input
                     className=" "
@@ -765,7 +769,7 @@ class OverDueStock extends React.Component {
                   )}
                 </Col>
               </Row>
-              <CardBody style={{ marginTop: "-3rem" }}>
+              <CardBody style={{ marginTop: "-2rem" }}>
                 {this.state.rowData === null ? null : (
                   <div className="ag-theme-material w-100 my-1 ag-grid-table">
                     <div className="d-flex flex-wrap justify-content-between align-items-center">

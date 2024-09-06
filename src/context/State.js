@@ -43,14 +43,7 @@ const State = (props) => {
 
   useEffect(() => {
     const isLoggedInBefore = localStorage.getItem("userData");
-    _Get(View_CustomerGroup, isLoggedInBefore?.database)
-      .then((res) => {
-        debugger;
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  
     const lastLoginTime = localStorage.getItem("loginTime");
     if (isLoggedInBefore) {
       const TWO_HOURS_MS = 2 * 60 * 60 * 1000; // 2 hours in milliseconds

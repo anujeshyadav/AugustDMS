@@ -54,7 +54,7 @@ class CategoryList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 80,
+        width: 55,
         filter: true,
       },
       // {
@@ -155,7 +155,7 @@ class CategoryList extends React.Component {
         headerName: "Status",
         field: "status",
         filter: true,
-        width: 140,
+        width: 90,
         cellRendererFramework: (params) => {
           return params.data.status === "Active" ? (
             <div className=" ">
@@ -172,7 +172,7 @@ class CategoryList extends React.Component {
         headerName: "Actions",
         field: "sortorder",
         field: "transactions",
-        width: 140,
+        width: 80,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -203,7 +203,7 @@ class CategoryList extends React.Component {
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="blue"
                     onClick={() =>
                       history.push(
@@ -219,7 +219,7 @@ class CategoryList extends React.Component {
                 render={({ history }) => (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => {
                       // let selectedData = this.gridApi.getSelectedRows();
@@ -352,7 +352,7 @@ class CategoryList extends React.Component {
           <Card>
             <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col  >
-                <h1 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'25px' }}>
+                <h1 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
                   Category List
                 </h1>
               </Col>
@@ -365,7 +365,7 @@ class CategoryList extends React.Component {
                   />
                 </Col>
               )}*/}
-              <Col xl="2" lg="2" style={{marginTop:'25px'}}>
+              <Col xl="3" lg="3" style={{marginTop:'25px'}}>
                 <div className=" ">
                   <div className="table-input ">
                     <Input
@@ -379,8 +379,10 @@ class CategoryList extends React.Component {
 
             
               
-              <Col xl="2" lg="2" style={{marginTop:'25px'}}>
-                <div className="">
+             
+              <Col xl="3" lg="3" style={{marginTop:'25px'}}>
+              <div style={{display:"flex", justifyContent:"space-between"}}>
+<div className="">
                   <Button
                     color="rgb(8, 91, 245)"
                     className="float-right categorysbutton45"
@@ -389,8 +391,6 @@ class CategoryList extends React.Component {
                     <span style={{ color: "white" }}> Export as CSV</span>
                   </Button>
                 </div>
-              </Col>
-              <Col xl="2" lg="2" style={{marginTop:'25px'}}>
               <div>
                 <Button
                     style={{ backgroundColor: "rgb(8, 91, 245)" , height:"35px",color:"white"}}
@@ -404,6 +404,7 @@ class CategoryList extends React.Component {
                    <span style={{ color: "white" }}>  + Add Category</span>
                  
                 </Button>
+                </div>
                 </div>
               </Col>
               {/* <Col>
@@ -426,7 +427,7 @@ class CategoryList extends React.Component {
             </Row>
             <>
               {this.state.rowData === null ? null : (
-                <div className="ag-theme-material w-100   ag-grid-table">
+                <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                   <ContextLayout.Consumer className="ag-theme-alpine">
                     {(context) => (
                       <AgGridReact

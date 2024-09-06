@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 });
 
 const POInVoice = ({ invoiceData, BilData }) => {
-  console.log(BilData);
+  
 
   const curentDate = new Date();
   let day = curentDate.getDate();
@@ -102,14 +102,13 @@ const POInVoice = ({ invoiceData, BilData }) => {
             <Image src={cancelimage} style={styles.watermark} />
           )}
 
-          {BilData?.EWayBill && (
+          {invoiceData?.ARNStatus && (
             <>
               <Text
                 style={{
                   fontSize: "8px",
                 }}>
-                ARN : 3682529292433b713720982c2d09b8aab5705fd4aa440c1de14 Ack
-                No. : 182314174528668 Ack Date : 14-Aug-23
+                ARN : {invoiceData?.ARN}
               </Text>
               {/* <Text
                 style={{
@@ -288,8 +287,33 @@ const POInVoice = ({ invoiceData, BilData }) => {
                         fontSize: "10px",
                         fontWeight: "bold",
                       }}>
-                      Invoice No:{" "}
-                      {invoiceData?.invoiceId && invoiceData?.invoiceId}
+                      {invoiceData.DeliveryType == "Local" ? (
+                        <>
+                          <Text style={styles.header}>
+                            Challan No:{" "}
+                            {invoiceData?.orderNo && invoiceData?.orderNo}
+                          </Text>
+                        </>
+                      ) : (
+                        <>
+                          {invoiceData?.status == "completed" ? (
+                            <>
+                              <Text style={styles.header}>
+                                Invoice No:{" "}
+                                {invoiceData?.invoiceId &&
+                                  invoiceData?.invoiceId}
+                              </Text>
+                            </>
+                          ) : (
+                            <>
+                              <Text style={styles.header}>
+                                Challan No:{" "}
+                                {invoiceData?.orderNo && invoiceData?.orderNo}
+                              </Text>
+                            </>
+                          )}
+                        </>
+                      )}
                     </Text>
                     <Text
                       style={{
@@ -467,27 +491,39 @@ const POInVoice = ({ invoiceData, BilData }) => {
                   </View>
                 )}
                 {BilData?.CompanyDetails?.shipto == "Left" && (
-                  <View style={{ flexDirection: "", paddingBottom: "3px" }}>
-                    <Text
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}>
-                      {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
-                    </Text>{" "}
-                    <Text
-                      style={{
-                        fontSize: "10px",
-                        width: "99%",
-                        fontWeight: "bold",
-                      }}>
-                      {`Address: ${BilData?.PrintData?.partyId?.address1}
+                  <>
+                    <View style={{ flexDirection: "", paddingBottom: "1px" }}>
+                      <Text
+                        style={{
+                          fontSize: "10px",
+                          fontWeight: "bold",
+                        }}>
+                        {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
+                      </Text>{" "}
+                      <Text
+                        style={{
+                          fontSize: "10px",
+                          width: "99%",
+                          fontWeight: "bold",
+                        }}>
+                        {`Address: ${BilData?.PrintData?.partyId?.address1}
                         Address: ${BilData?.PrintData?.partyId?.address2}
                         Mobile No.: ${BilData?.PrintData?.partyId?.contactNumber}
                         State.: ${BilData?.PrintData?.partyId?.State}
                         City.: ${BilData?.PrintData?.partyId?.City}`}
-                    </Text>{" "}
-                  </View>
+                      </Text>{" "}
+                    </View>
+                    {invoiceData?.ARNStatus && (
+                      <>
+                        <Text
+                          style={{
+                            fontSize: "10px",
+                          }}>
+                          ARN : {invoiceData?.ARN}
+                        </Text>
+                      </>
+                    )}
+                  </>
                 )}
               </View>
 
@@ -525,27 +561,39 @@ const POInVoice = ({ invoiceData, BilData }) => {
                   </View>
                 )}
                 {BilData?.CompanyDetails?.shipto == "right" && (
-                  <View style={{ flexDirection: "", paddingBottom: "3px" }}>
-                    <Text
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                      }}>
-                      {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
-                    </Text>{" "}
-                    <Text
-                      style={{
-                        fontSize: "10px",
-                        width: "98%",
-                        fontWeight: "bold",
-                      }}>
-                      {`Address: ${BilData?.PrintData?.partyId?.address1}
+                  <>
+                    <View style={{ flexDirection: "", paddingBottom: "2px" }}>
+                      <Text
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: "bold",
+                        }}>
+                        {`Name: ${BilData?.PrintData?.partyId?.ownerName}`}
+                      </Text>{" "}
+                      <Text
+                        style={{
+                          fontSize: "8px",
+                          width: "98%",
+                          fontWeight: "bold",
+                        }}>
+                        {`Address: ${BilData?.PrintData?.partyId?.address1}
                        Address: ${BilData?.PrintData?.partyId?.address2}
                        Mobile No.: ${BilData?.PrintData?.partyId?.contactNumber}
                       State.: ${BilData?.PrintData?.partyId?.State}
                        City.: ${BilData?.PrintData?.partyId?.City}`}
-                    </Text>{" "}
-                  </View>
+                      </Text>{" "}
+                    </View>
+                    {invoiceData?.ARNStatus && (
+                      <>
+                        <Text
+                          style={{
+                            fontSize: "9px",
+                          }}>
+                          ARN : {invoiceData?.ARN}
+                        </Text>
+                      </>
+                    )}
+                  </>
                 )}
               </View>
             </View>

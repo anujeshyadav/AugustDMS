@@ -126,6 +126,24 @@ class SalesOrderReport extends React.Component {
         // },
         {
           headerName: "Order Number",
+          field: "order.orderNo",
+          filter: true,
+          width: 150,
+          cellRendererFramework: (params) => {
+            console.log(params?.data);
+            return (
+              <div className="  text-center cursor-pointer">
+                <div>
+                  <span>
+                    {params.data?.order?.orderNo && params.data?.order?.orderNo}
+                  </span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Invoice Number",
           field: "order.invoiceId",
           filter: true,
           width: 150,
@@ -134,23 +152,10 @@ class SalesOrderReport extends React.Component {
             return (
               <div className="  text-center cursor-pointer">
                 <div>
-                  <span>{params.data?.order?.invoiceId}</span>
-                </div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "Invoice Number",
-          field: "invoiceId",
-          filter: true,
-          width: 150,
-          cellRendererFramework: (params) => {
-            console.log(params?.data);
-            return (
-              <div className="  text-center cursor-pointer">
-                <div>
-                  <span>{params.data?.invoiceId}</span>
+                  <span>
+                    {params.data?.order?.invoiceId &&
+                      params.data?.order?.invoiceId}
+                  </span>
                 </div>
               </div>
             );
@@ -332,22 +337,25 @@ class SalesOrderReport extends React.Component {
           filter: true,
           width: 100,
           cellRendererFramework: (params) => {
-            return params.data?.status?.toLowerCase()?.includes("completed") ? (
+            console.log(params.data?.order?.status);
+            return params.data?.order?.status
+              ?.toLowerCase()
+              ?.includes("completed") ? (
               <div className="text-center cursor-pointer">
-                {params.data?.status}
+                {params.data?.order?.status}
               </div>
-            ) : params.data.status == "InProcess" ? (
+            ) : params.data.order?.status == "InProcess" ? (
               <div className="text-center cursor-pointer">
-                {params.data?.status}
+                {params.data?.order?.status}
               </div>
-            ) : params.data?.status == "pending" ? (
+            ) : params.data?.order?.status == "pending" ? (
               <div className="text-center cursor-pointer">Pending</div>
-            ) : params.data?.status == "Cancelled" ? (
+            ) : params.data?.order?.status == "Cancelled" ? (
               <div className="text-center cursor-pointer">
-                {params.data?.status}
+                {params.data?.order?.status}
               </div>
             ) : (
-              params.data?.status
+              params.data?.order?.status
             );
           },
         },
@@ -379,8 +387,7 @@ class SalesOrderReport extends React.Component {
             return { ...val, order: element };
           });
         });
-        console.log(res?.orderHistory);
-        console.log(Alldata);
+        
         this.setState({
           rowData: Alldata,
           rowAllData: Alldata,
@@ -697,13 +704,15 @@ class SalesOrderReport extends React.Component {
     }
   };
   handleDropdownChangeStatus = (e) => {
+    debugger
     this.setState({ changeStatus: e.target.value });
     const updatedList = this.state.rowAllData?.filter(
-      (ele) => ele?.status.toLowerCase() == e.target.value.toLowerCase()
+      (ele) => ele?.order?.status.toLowerCase() == e.target.value.toLowerCase()
     );
     if (e.target.value != 0) {
       this.setState({ rowData: updatedList });
-    } else if (e.target.value == "sales order") {
+    } 
+    if (e.target.value == "sales order") {
       this.setState({ rowData: this.state.rowAllData });
     }
   };
@@ -778,7 +787,7 @@ class SalesOrderReport extends React.Component {
                 onChange={this.handleDropdownChangeStatus}
                 type="select">
                 <option value={null}>--Select--</option>
-                {/* <option value="sales order">Sales Order</option> */}
+                <option value="sales order">All Order</option>
                 <option value="pending">Pending</option>
                 <option value="Billing">Billing Order</option>
                 <option value="Dispatch">Dispatch Order</option>

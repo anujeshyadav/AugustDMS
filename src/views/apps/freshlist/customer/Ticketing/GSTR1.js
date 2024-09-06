@@ -802,13 +802,7 @@ class GSTR1 extends React.Component {
         },
       ],
       B2B: [
-        {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          width: 80,
-          filter: true,
-        },
+      
         {
           headerName: "GSTIN",
           field: "order.partyId.gstNumber",
@@ -823,7 +817,7 @@ class GSTR1 extends React.Component {
           },
         },
         {
-          headerName: "Party Name",
+          headerName: "Receiver Name",
           field: "order.partyId.ownerName",
           filter: true,
           resizable: true,
@@ -832,6 +826,23 @@ class GSTR1 extends React.Component {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.order?.partyId?.ownerName}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Invoice No.",
+          field: "order.updatedAt",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">
+                <span>
+                  {moment(params?.data?.order?.updatedAt?.split("T")[0]).format(
+                    "DD-MMM-YYYY"
+                  )}
+                </span>
               </div>
             );
           },

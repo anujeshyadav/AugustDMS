@@ -333,7 +333,6 @@ const EditOrder = (args) => {
             (ele) => ele?._id == value?.partyId?._id
           );
           let updatedProduct = value?.orderItems;
-          debugger;
           let checkCashMode = res?.orderHistory?.partyId?.paymentTerm
             ?.toLowerCase()
             ?.includes("cash");
@@ -363,7 +362,6 @@ const EditOrder = (args) => {
                   reject(err);
                 });
             });
-            console.log(Bal);
             // (async () => {
             //   await _Get(URL, res?.orderHistory?.partyId?._id)
             //     .then((response) => {
@@ -399,12 +397,14 @@ const EditOrder = (args) => {
                   ((100 + Number(element?.productId?.GSTRate)) / 100))
               ).toFixed(2)
             );
+            console.log(element?.qty);
+            console.log(element?.secondarySize);
             SelectedITems.push(element?.productId);
             updatedProduct[index]["price"] = element?.productId?.Product_MRP; // Update the price of the copied product
             updatedProduct[index]["basicPrice"] = costPrice; // Update the price of the copied product
             updatedProduct[index]["availableQty"] = element?.productId?.qty;
             updatedProduct[index]["GrossQty"] =
-              element?.qty / element?.secondarySize; // Update the price of the copied product
+              element?.qty / element?.productId?.secondarySize;
             updatedProduct[index]["discount"] =
               selectedParty[0]?.category?.discount;
             updatedProduct[index]["HSN_Code"] = element?.productId?.HSN_Code;

@@ -1162,7 +1162,8 @@ const horizontalMenuConfig = [
             type: "item",
             icon: <GiCash size={22} />,
             permissions: ["admin", "editor"],
-            navLink: "/app/rupioo/report/DeadPartyReport",
+            navLink: "/app/softNumen/report/DeadParty",
+            // navLink: "/app/rupioo/report/DeadPartyReport", // Previous working tab need some correction
           },
           {
             id: "PARTY WISE AND PRODUCT WISE SALE REPORT",

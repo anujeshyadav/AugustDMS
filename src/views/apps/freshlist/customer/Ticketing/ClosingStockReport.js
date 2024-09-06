@@ -218,7 +218,7 @@ class ClosingStockReport extends React.Component {
             },
             {
               headerName: "Total",
-              field: "OpeningTotal",
+              field: "oTotal",
               filter: true,
               sortable: true,
               headerClass: "header-style",
@@ -227,8 +227,8 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.OpeningTotal &&
-                          params?.data?.OpeningTotal?.toFixed(2)}
+                        {params?.data?.oTotal &&
+                          params?.data?.oTotal?.toFixed(2)}
                       </span>
                     </div>
                   </>
@@ -558,6 +558,7 @@ class ClosingStockReport extends React.Component {
             return { ...ele, ...val, OpeningTax, OpeningTotal };
           });
         });
+        
         if (alldata?.length) {
           this.setState({
             rowData: alldata?.reverse(),
@@ -812,11 +813,11 @@ class ClosingStockReport extends React.Component {
   handleDate = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  };
+  };  
 
   handleSubmitDate = () => {
     const filteredItems = this.state.rowAllData.filter((item) => {
-      const dateList = new Date(item?.updatedAt);
+      const dateList = new Date(item?.createdAt);
       const onlyDate = dateList.toISOString().split("T")[0];
       return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
     });

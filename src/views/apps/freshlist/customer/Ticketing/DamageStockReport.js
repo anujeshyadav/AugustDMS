@@ -94,7 +94,7 @@ class DamageStockReport extends React.Component {
           field: "damage.productId.Product_Title",
           filter: true,
           sortable: true,
-          width: 200,
+           
           cellRendererFramework: params => {
             return (
               <>
@@ -110,7 +110,7 @@ class DamageStockReport extends React.Component {
           field: "damage.productId.HSN_Code",
           filter: true,
           sortable: true,
-          width:110,
+          width:130,
           cellRendererFramework: params => {
             return (
               <>
@@ -125,7 +125,7 @@ class DamageStockReport extends React.Component {
           headerName: "Taxable Amount",
           field: "damage.productId.Product_MRP",
           filter: true,
-          width:165,
+          width:135,
           sortable: true,
           cellRendererFramework: params => {
             return (
@@ -142,7 +142,7 @@ class DamageStockReport extends React.Component {
           field: "damage.productId.Product_MRP",
           filter: true,
           sortable: true,
-          width:140,
+          width:110,
           cellRendererFramework: params => {
             let Amount =
               params?.data?.damage?.productId?.Product_MRP *
@@ -179,7 +179,7 @@ class DamageStockReport extends React.Component {
           headerName: "Date Reported",
           field: "createdAt",
           filter: true,
-          width:155,
+          width:120,
           sortable: true,
           cellRendererFramework: params => {
             return (
@@ -551,7 +551,7 @@ class DamageStockReport extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h3 className="float-left "style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'30px' }}>
+              <h3 className="float-left "style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                 Damage Stock Report
               </h3>
             </Col>
@@ -565,7 +565,7 @@ class DamageStockReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="2">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -574,7 +574,7 @@ class DamageStockReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="5">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   <div className="table-input cssforproductlist">
@@ -692,7 +692,7 @@ class DamageStockReport extends React.Component {
           </Row>
           <>
             {this.state.rowData === null ? null : (
-              <div className="ag-theme-material w-100   ag-grid-table" style={{marginTop:"-1rem"}}>
+              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1.5rem"}}>
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {(context) => (
                     <AgGridReact

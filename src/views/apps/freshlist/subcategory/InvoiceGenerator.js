@@ -105,6 +105,8 @@ class InvoiceGenerator extends React.Component {
     this.gridRef = React.createRef();
     this.gridApi = null;
     this.state = {
+      AssignDeliveryBoy: "",
+      DeliveryBoyErr: false,
       isOpen: false,
       ShowMyBill: true,
       MasterShow: false,
@@ -695,6 +697,10 @@ class InvoiceGenerator extends React.Component {
   handleSubmitOtherCharges = async (e) => {
     const UserInformation = this.context;
     e.preventDefault();
+  
+    this.state.AssignDeliveryBoy
+      ? this.setState({ DeliveryBoyErr: false })
+      : this.setState({ DeliveryBoyErr: true });
     let value = { ...this.state.PrintData };
     await _Get(Last_Ledger_Balance, value?.partyId?._id)
       .then((res) => {
@@ -708,48 +714,61 @@ class InvoiceGenerator extends React.Component {
         value["lastLedgerBalance"] = "Not Found";
         console.log(err);
       });
-    value["status"] = "Pending for Delivery";
+      debugger;
+      this.state.PrintData?.partyId?.assignTransporter?.length > 0
+        ? (value["DeliveryType"] = "OutStation")
+        : (value["DeliveryType"] = "Local");
+     
+        value["status"] = "Pending for Delivery";
     value["salesInvoiceStatus"] = true;
-
     value["chargesDetails"] = Number(this.state.Charges);
     value["AssignDeliveryBoy"] = this.state.AssignDeliveryBoy;
-    this.setState({ ButtonText: "Submitting.." });
+    this.setState({ ButtonText: this.state.AssignDeliveryBoy ?  "Submitting..": "Submit" });
     this.setState({ PrintData: value });
-    if (UserInformation?.CompanyDetails?.BillNumber) {
-      let words = toWords.convert(Number(this.state.PrintData?.grandTotal), {
-        currency: true,
-      });
-      this.setState({ wordsNumber: words });
 
-      // let payload=[]
-      debugger;
-      await _Post(Sales_OrderTo_DispatchList, this.state.PrintData?._id, value)
-        .then((res) => {
-          this.setState({ ButtonText: "Submit" });
+// testing
 
-          this.setState({ ShowMyBill: true, ViewBill: true });
-          const toWords = new ToWords();
-          let words = toWords.convert(
-            Number(this.state.PrintData?.grandTotal),
-            {
-              currency: true,
-            }
-          );
+  // this.setState({ ButtonText: "Submit" });
+  // this.setState({ ShowMyBill: true, ViewBill: true });
+  // const toWords = new ToWords();
+  // let words = toWords.convert(Number(this.state.PrintData?.grandTotal), {
+  //   currency: true,
+  // });
+  // this.setState({ wordsNumber: words });
+//testing
 
-          this.setState({ wordsNumber: words });
 
-          console.log(res);
-          this.componentDidMount();
-        })
-        .catch((err) => {
-          this.setState({ ButtonText: "Submit" });
-          swal("Error", `${err?.response?.data?.error}`);
-          console.log(err);
+    if(this.state.AssignDeliveryBoy?.length > 0){
+
+      if (UserInformation?.CompanyDetails?.BillNumber) {
+        let words = toWords.convert(Number(this.state.PrintData?.grandTotal), {
+          currency: true,
         });
-    } else {
-      swal("Select Bill Template from setting Tab");
-      // this.setState({ ShowBill: true });
-      // this.toggleModalOne();
+        this.setState({ wordsNumber: words });
+        await _Post(Sales_OrderTo_DispatchList, this.state.PrintData?._id, value)
+          .then((res) => {
+            this.setState({ ButtonText: "Submit" });
+              this.setState({ ShowMyBill: true, ViewBill: true });
+            const toWords = new ToWords();
+            let words = toWords.convert(
+              Number(this.state.PrintData?.grandTotal),
+              {
+                currency: true,
+              }
+            );
+            this.setState({ wordsNumber: words });
+           
+            this.componentDidMount();
+          })
+          .catch((err) => {
+            this.setState({ ButtonText: "Submit" });
+            swal("Error", `${err?.response?.data?.error}`);
+            console.log(err);
+          });
+      } else {
+        swal("Select Bill Template from setting Tab");
+       
+      }
     }
   };
   handleShowInvoice = async (data) => {
@@ -801,7 +820,6 @@ class InvoiceGenerator extends React.Component {
     }
     data["salesInvoiceStatus"] = true;
     let gstDetails = HsnSummaryCalculation(data);
-    debugger;
 
     data["gstDetails"] = gstDetails;
     this.setState({ ViewOneData: data });
@@ -1929,7 +1947,6 @@ class InvoiceGenerator extends React.Component {
                         <Col lg="6">
                           <Label className="mt-1"> Add Discounts</Label>
                           <Multiselect
-                            required
                             options={this.state.OtherDiscount} // Options to display in the dropdown
                             isObject="false"
                             selectedValues={this.state.Discount}
@@ -1984,15 +2001,30 @@ class InvoiceGenerator extends React.Component {
                           </>
                         ) : null}
                         <Col lg="6" md="6" sm="12">
-                          <Label className="mt-1">Assign Delivery Boy *</Label>
+                          <Label
+                            style={{
+                              color: this.state.DeliveryBoyErr
+                                ? "red"
+                                : "black",
+                            }}
+                            className="mt-1">
+                            Assign Delivery Boy *
+                          </Label>
                           <CustomInput
                             // required
                             type="select"
+                            style={{
+                              border: this.state.DeliveryBoyErr
+                                ? "2px solid red"
+                                : "",
+                            }}
                             name="AssignDeliveryBoy"
                             value={this.state?.AssignDeliveryBoy}
                             onChange={(e) => {
                               this.setState({
                                 AssignDeliveryBoy: e.target.value,
+                                DeliveryBoyErr:
+                                  e.target.value?.length > 1 ? false : true,
                               });
                             }}>
                             <option value="">--Delivery Boy--</option>
@@ -2013,7 +2045,7 @@ class InvoiceGenerator extends React.Component {
                         </Col>
                         {this.state.PrintData?.grandTotal > 49999 && (
                           <Col lg="6">
-                            <Label className="mb-1 mt-1">
+                            <Label className="mt-1">
                               Add ARN Number *
                             </Label>
                             <Input
@@ -2046,27 +2078,8 @@ class InvoiceGenerator extends React.Component {
                                 this.state.Discount,
                                 Number(e.target.value)
                               );
-                              // if (e.target.value > 0) {
-                              // }
                             }}
                           />
-                          {/* <Multiselect
-                            required
-                            options={this.state.OtherCharges} // Options to display in the dropdown
-                            isObject="false"
-                            selectionLimit={1}
-                            selectedValues={this.state.Charges}
-                            // options={this.state.AssignTransporter}
-                            // selectedValues={selectedValue}   // Preselected value to persist in dropdown
-                            onSelect={(selectedList, selectedItem) => {
-                              this.HandleSelect(selectedList, selectedItem);
-                            }} // Function will trigger on select event
-                            onRemove={(selectedList, selectedItem) => {
-                              this.HandleRemove(selectedList, selectedItem);
-                            }} // Function will trigger on remove event
-                            displayValue="title"
-                            showCheckbox // Property name to display in the dropdown options
-                          /> */}
                         </Col>
 
                         {this.state.PrintData?.transporter?.name && (
@@ -2086,33 +2099,6 @@ class InvoiceGenerator extends React.Component {
                               }}></Input>
                           </Col>
                         )}
-                        {/* <Col lg="6">
-                            <Label className="mb-1 mt-1">Cash Discount</Label>
-                            <Input
-                              type="number"
-                              name="cashDiscount"
-                              placeholder="Cash Discount"
-                              value={this.state.PrintData?.cashDiscount}
-                              onChange={this.changeHandler}></Input>
-                          </Col>
-                          <Col lg="6">
-                            <Label className="mb-1 mt-1">TurnOver Discount</Label>
-                            <Input
-                              type="number"
-                              name="cashDiscount"
-                              placeholder="TurnOver Discount"
-                              value={this.state.PrintData?.cashDiscount}
-                              onChange={this.changeHandler}></Input>
-                          </Col>
-                          <Col lg="6">
-                            <Label className="mb-1 mt-1">Target Discount</Label>
-                            <Input
-                              type="number"
-                              name="targetDiscount"
-                              placeholder="Target Discount"
-                              value={this.state.PrintData?.targetDiscount}
-                              onChange={this.changeHandler}></Input>
-                          </Col> */}
                       </Row>
                       <Row>
                         <Col lg="12" className="mt-2 mb-2">
