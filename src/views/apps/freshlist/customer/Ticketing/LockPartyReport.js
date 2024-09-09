@@ -97,7 +97,7 @@ class purchasereportamount extends React.Component {
         },
 
         {
-          headerName: "user Name",
+          headerName: "Party Name",
           field: "CompanyName",
           filter: true,
           width: 200,

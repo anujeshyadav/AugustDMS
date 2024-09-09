@@ -90,15 +90,15 @@ class OverdueReport extends React.Component {
         },
         {
           headerName: "PartyName",
-          field: "partyId.ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div>
                 <span>
-                  {params?.data?.partyId?.ownerName}
-                  {params?.data?.partyId?.ownerName}
+                  {params?.data?.partyId?.CompanyName}
+                  {params?.data?.partyId?.CompanyName}
                 </span>
               </div>
             );

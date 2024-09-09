@@ -111,7 +111,7 @@ class PartyLedgerReport extends React.Component {
         },
         {
           headerName: "PARTICULARS",
-          field: "partyId.ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           resizable: true,
           width: 230,
@@ -119,7 +119,7 @@ class PartyLedgerReport extends React.Component {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <span>{params.data?.partyId?.ownerName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
