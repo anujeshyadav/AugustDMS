@@ -711,19 +711,18 @@ class ExpenseAccountsList extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row
-                        style={{marginLeft:'3px',marginRight:'3px'}}>
-                        <Col  >
+                      <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+                        <Col>
                           <Row>
-                            <Col
-                              lg="5"
-                              md="5"
-                              xl="5"
-                              xs="12"
-                             >
+                            <Col lg="5" md="5" xl="5" xs="12">
                               <h2
                                 className="float-left "
-                               style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
+                                style={{
+                                  fontWeight: "600",
+                                  textTransform: "uppercase",
+                                  fontSize: "18px",
+                                  marginTop: "25px",
+                                }}>
                                 Expense Accounts
                               </h2>
                             </Col>
@@ -732,7 +731,7 @@ class ExpenseAccountsList extends React.Component {
                               md="7"
                               xl="7"
                               xs="12"
-                              style={{ marginTop:"25px" }}>
+                              style={{ marginTop: "25px" }}>
                               {this.state.MasterShow ? (
                                 <SuperAdminUI
                                   onDropdownChange={this.handleDropdownChange}
@@ -744,14 +743,13 @@ class ExpenseAccountsList extends React.Component {
                             </Col>
                           </Row>
                         </Col>
-                        
+
                         <Col
                           lg="3"
                           md="6"
                           sm="12"
-                          style={{ marginTop:"25px" }}>
+                          style={{ marginTop: "25px" }}>
                           <div className="">
-                             
                             <div className="table-input cssforproductlist">
                               <Input
                                 placeholder="search Item here..."
@@ -766,7 +764,11 @@ class ExpenseAccountsList extends React.Component {
 
                         {InsiderPermissions && InsiderPermissions.Create && (
                           <>
-                            <Col lg="2" xl="2" md="5" style={{marginTop:"25px"}}>
+                            <Col
+                              lg="2"
+                              xl="2"
+                              md="5"
+                              style={{ marginTop: "25px" }}>
                               <Route
                                 render={({ history }) => (
                                   <Button
@@ -798,7 +800,7 @@ class ExpenseAccountsList extends React.Component {
                           </>
                         )}
 
-                        <Col lg="1" md="1" xl="1" style={{ marginTop:"25px"}}>
+                        <Col lg="1" md="1" xl="1" style={{ marginTop: "25px" }}>
                           {InsiderPermissions && InsiderPermissions.View && (
                             <>
                               <span className="">
@@ -882,7 +884,7 @@ class ExpenseAccountsList extends React.Component {
                                           .XML
                                         </h5> */}
 
-                                        {InsiderPermissions &&
+                                        {/* {InsiderPermissions &&
                                           InsiderPermissions?.BulkUpload && (
                                             <h5>
                                               <a
@@ -896,7 +898,7 @@ class ExpenseAccountsList extends React.Component {
                                                 . Format
                                               </a>
                                             </h5>
-                                          )}
+                                          )} */}
                                       </div>
                                     )}
                                   </div>
@@ -909,7 +911,9 @@ class ExpenseAccountsList extends React.Component {
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100  ag-grid-table card-body" style={{marginTop:"-1rem"}}>
+                              <div
+                                className="ag-theme-material w-100  ag-grid-table card-body"
+                                style={{ marginTop: "-1rem" }}>
                                 <ContextLayout.Consumer className="ag-theme-alpine">
                                   {(context) => (
                                     <AgGridReact

@@ -186,13 +186,13 @@ class PartyWiseledgerReport extends React.Component {
         },
         {
           headerName: "PARTICULARS",
-          field: "partyId.firstName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.partyId?.firstName}</span>
+                <span>{params?.data?.partyId?.CompanyName}</span>
               </div>
             );
           },

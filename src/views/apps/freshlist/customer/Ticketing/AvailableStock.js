@@ -160,7 +160,7 @@ class AvailableStock extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.oQty}</span>
+                      <span>{params?.data?.oQty && params?.data?.oQty?.toFixed(2)}</span>
                     </div>
                   </>
                 );
@@ -278,7 +278,7 @@ class AvailableStock extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.pQty > 0 && params?.data?.pRate}
+                        {params?.data?.pQty > 0 && params?.data?.pRate?.toFixed(2)}
                       </span>
                     </div>
                   </>
@@ -542,7 +542,9 @@ class AvailableStock extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.price}</span>
+                      <span>
+                        {params?.data?.price && params?.data?.price?.toFixed(2)}
+                      </span>
                     </div>
                   </>
                 );
@@ -599,7 +601,6 @@ class AvailableStock extends React.Component {
 
   async Apicalling(id, db) {
     this.setState({ Loading: true });
-    // await _Get(WareHouse_Closing_Stock, db)
     await _Get(Create_Warehouse_List, db)
       .then((res) => {
         this.setState({ Loading: false });

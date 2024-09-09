@@ -181,7 +181,7 @@ class Leavereport extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "partyId.firstName",
+          field: "partyId.CompanyName",
           filter: true,
           resizable: true,
           width: 210,
@@ -189,7 +189,7 @@ class Leavereport extends React.Component {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <span>{params.data?.partyId?.firstName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );

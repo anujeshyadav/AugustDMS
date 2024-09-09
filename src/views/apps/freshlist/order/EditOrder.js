@@ -824,7 +824,7 @@ const EditOrder = (args) => {
 
                             <div
                               className="viewspacebetween3"
-                              style={{ width: "84px" }}>
+                              style={{ width: "110px" }}>
                               <Label>HSN</Label>
                               <Input
                                 readOnly

@@ -98,6 +98,19 @@ class purchasereportamount extends React.Component {
 
         {
           headerName: "user Name",
+          field: "CompanyName",
+          filter: true,
+          width: 200,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.CompanyName}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Full Name",
           field: "ownerName",
           filter: true,
           width: 200,
@@ -105,19 +118,6 @@ class purchasereportamount extends React.Component {
             return (
               <div>
                 <span>{params?.data?.ownerName}</span>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "first Name",
-          field: "firstName",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div>
-                <span>{params?.data?.firstName}</span>
               </div>
             );
           },

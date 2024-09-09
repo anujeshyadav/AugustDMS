@@ -159,7 +159,7 @@ class Salesreport extends React.Component {
           field: "warehouseId.warehouseName",
           filter: true,
           width: 215,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
@@ -173,7 +173,7 @@ class Salesreport extends React.Component {
           field: "orderId.invoiceId",
           filter: true,
           width: 175,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.orderId?.invoiceId}</span>
@@ -186,7 +186,7 @@ class Salesreport extends React.Component {
           field: "orderId.updatedAt",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.orderId?.updatedAt?.split("T")[0]}</span>
@@ -199,7 +199,7 @@ class Salesreport extends React.Component {
           field: "orderId.partyId",
           filter: true,
           width: 240,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.orderId?.partyId}</span>
@@ -209,13 +209,13 @@ class Salesreport extends React.Component {
         },
         {
           headerName: "Customer Name",
-          field: "partyId.firstName",
+          field: "partyId.ownerName",
           filter: true,
           width: 220,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
-                <span>{params?.data?.partyId?.firstName}</span>
+                <span>{params?.data?.partyId?.ownerName}</span>
               </div>
             );
           },
@@ -225,7 +225,7 @@ class Salesreport extends React.Component {
           field: "orderId.grandTotal",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 {params?.data?.orderId?.grandTotal}
@@ -238,7 +238,7 @@ class Salesreport extends React.Component {
           field: "orderId.paymentMode",
           filter: true,
           width: 162,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.orderId?.paymentMode}</span>

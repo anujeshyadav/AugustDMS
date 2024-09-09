@@ -329,8 +329,8 @@ class GoodDispatchList extends React.Component {
           },
         },
         {
-          headerName: "First Name",
-          field: "partyId.firstName",
+          headerName: "Full Name",
+          field: "partyId.ownerName",
           filter: true,
           resizable: true,
           width: 214,
@@ -338,7 +338,7 @@ class GoodDispatchList extends React.Component {
             return (
               <div className="text-center cursor-pointer">
                 <div>
-                  <span>{params?.data?.partyId?.firstName}</span>
+                  <span>{params?.data?.partyId?.ownerName}</span>
                 </div>
               </div>
             );
@@ -1311,7 +1311,7 @@ class GoodDispatchList extends React.Component {
                   <Label>Party Name :</Label>
                   <h5 className="mx-1">
                     {this.state.ViewOneData &&
-                      this.state.ViewOneData?.partyId?.ownerName}
+                      this.state.ViewOneData?.partyId?.CompanyName}
                   </h5>
                 </Col>
                 <Col lg="2" md="2" sm="2">

@@ -458,7 +458,7 @@ const CreateOrder = (args) => {
                             handleSelectionParty(selectedList, selectedItem)
                           }
                           onRemove={onRemove1}
-                          displayValue="firstName"
+                          displayValue="CompanyName"
                         />
                       </div>
                     </Col>

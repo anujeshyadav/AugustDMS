@@ -79,134 +79,6 @@ class LowStockAlert extends React.Component {
       currenPageSize: "",
       getPageSize: "",
       columnDefs: [
-        // {
-        //   headerName: "UID",
-        //   valueGetter: "node.rowIndex + 1",
-        //   field: "node.rowIndex + 1",
-        //   width: 80,
-        //   filter: true,
-        // },
-        // {
-        //   headerName: "Actions",
-        //   field: "sortorder",
-        //   field: "transactions",
-        //   width: 190,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div className="actions cursor-pointer">
-        //         {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions.View && (
-        //             <Route
-        //               render={({ history }) => (
-        //                 <span
-        //                   style={{
-        //                     border: "1px solid white",
-        //                     padding: "10px",
-        //                     borderRadius: "30px",
-        //                     backgroundColor: "#39cccc",
-        //                   }}>
-        //                   <Eye
-        //                     className=""
-        //                     size="20px"
-        //                     color="white"
-        //                     onClick={() => {
-        //                       this.props.history.push(
-        //                         `/app/softNumen/warehouse/CreateWareHouse/${params?.data?._id}`
-        //                       );
-        //                     }}
-        //                   />
-        //                 </span>
-        //               )}
-        //             />
-        //           )}
-        //         {/* {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions.Edit && (
-        //             <Route
-        //               render={({ history }) => (
-        //                 <span
-        //                   style={{
-        //                     border: "1px solid white",
-        //                     padding: "10px",
-        //                     borderRadius: "30px",
-        //                     backgroundColor: "rgb(212, 111, 16)",
-        //                     marginLeft: "3px",
-        //                   }}>
-        //                   <FaPencilAlt
-        //                     className=""
-        //                     size="20px"
-        //                     color="white"
-        //                     onClick={() => {
-        //                       this.props.history.push(
-        //                         `/app/softNumen/warehouse/CreateWareHouse/${params?.data?._id}`
-        //                       );
-        //                     }}
-        //                   />
-        //                 </span>
-        //               )}
-        //             />
-        //           )} */}
-        //         {/* {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions.Delete && (
-        //             <Route
-        //               render={() => (
-        //                 <span
-        //                   style={{
-        //                     border: "1px solid white",
-        //                     padding: "10px",
-        //                     borderRadius: "30px",
-        //                     backgroundColor: "rgb(236, 24, 9)",
-        //                     marginLeft: "3px",
-        //                   }}>
-        //                   <Trash2
-        //                     className=""
-        //                     size="20px"
-        //                     color="white"
-        //                     onClick={() => {
-        //                       this.runthisfunction(params?.data?._id);
-        //                     }}
-        //                   />
-        //                 </span>
-        //               )}
-        //             />
-        //           )} */}
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "Status",
-        //   field: "status",
-        //   filter: true,
-        //   width: 150,
-        //   cellRendererFramework: (params) => {
-        //     return params.data?.status === "Active" ? (
-        //       <div className="badge badge-pill badge-success">
-        //         {params.data?.status}
-        //       </div>
-        //     ) : params.data?.status === "Deactive" ? (
-        //       <div className="badge badge-pill badge-warning">
-        //         {params.data?.status}
-        //       </div>
-        //     ) : null;
-        //   },
-        // },
-
-        // {
-        //   headerName: "Warehouse Id",
-        //   field: "_id",
-        //   filter: true,
-        //   sortable: true,
-        //   editable: true,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <>
-        //         <div className="actions cursor-pointer">
-        //           <span>{params?.data?._id}</span>
-        //         </div>
-        //       </>
-        //     );
-        //   },
-        // },
         {
           headerName: "Warehouse Name",
           field: "warehouseName",
@@ -227,7 +99,7 @@ class LowStockAlert extends React.Component {
           field: "Product_Title",
           filter: true,
           sortable: true,
-          width:280,
+          width: 280,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -274,7 +146,7 @@ class LowStockAlert extends React.Component {
           headerName: "Party Name",
           field: "SupplierName",
           filter: true,
-          
+
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -306,40 +178,6 @@ class LowStockAlert extends React.Component {
           },
         },
 
-        // {
-        //   headerName: "Created At",
-        //   field: "createdAt",
-        //   filter: true,
-        //   sortable: true,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <>
-        //         <div className="actions cursor-pointer">
-        //           <span>{params?.data?.createdAt?.split("T")[0]}</span>
-        //         </div>
-        //       </>
-        //     );
-        //   },
-        // },
-
-        // {
-        //   headerName: "Updated date",
-        //   field: "updatedAt",
-        //   filter: true,
-        //   width: 140,
-        //   sortable: true,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <>
-        //         <div className="actions cursor-pointer">
-        //           <div className="actions cursor-pointer">
-        //             <span>{params?.data?.updatedAt?.split("T")[0]}</span>
-        //           </div>
-        //         </div>
-        //       </>
-        //     );
-        //   },
-        // },
         {
           headerName: "Action",
           field: "updatedAt",
@@ -351,17 +189,6 @@ class LowStockAlert extends React.Component {
               <>
                 <div className="actions cursor-pointer">
                   <div className="actions cursor-pointer">
-                    {/* <span>{params?.data?.updatedAt?.split("T")[0]}</span> */}
-                    {/* <Link
-                    
-                      to={`/app/AJgroup/order/AddOrder/${params.data?.partyId?._id}/${params.data?.productId}`}>
-                    
-                      <strong>
-
-                      Order-Now
-                      </strong>
-                     
-                    </Link>{" "} */}
                     <Badge
                       onClick={(e) => {
                         this.handlePlaceOrder(e, params);
@@ -416,7 +243,6 @@ class LowStockAlert extends React.Component {
         let userHeading = JSON.parse(localStorage.getItem("LowStockAlert"));
         if (userHeading?.length) {
           this.setState({ columnDefs: userHeading });
-          // this.gridApi.setColumnDefs(userHeading);
           this.setState({ SelectedcolumnDefs: userHeading });
           this.setState({ AllcolumnDefs: userHeading });
           this.setState({ columnDefs: userHeading });

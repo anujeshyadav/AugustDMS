@@ -979,7 +979,7 @@ class PurchaseCompleted extends React.Component {
                         <Label>Party Name:</Label>
                         <h5 className="">
                           {this.state.ViewOneData &&
-                            this.state.ViewOneData?.partyId?.ownerName}
+                            this.state.ViewOneData?.partyId?.CompanyName}
                         </h5>
                       </Col>
                       <Col>

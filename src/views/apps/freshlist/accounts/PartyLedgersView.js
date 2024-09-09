@@ -152,7 +152,7 @@ const PartyLedgersView = () => {
         if (CustomeData?.value?.Customer?.length > 0) {
           CustomeData?.value?.Customer?.forEach((element) => {
             element["party"] = true;
-            element["fullName"] = element?.firstName;
+            element["fullName"] = element?.CompanyName;
           });
         }
         if (UserData?.value?.adminDetails?.length > 0) {
@@ -167,6 +167,7 @@ const PartyLedgersView = () => {
             element["fullName"] = `${element?.title} ${element?.type}`;
           });
         }
+
         let customer = CustomeData?.value?.Customer
           ? CustomeData?.value?.Customer
           : [];
@@ -540,7 +541,7 @@ const PartyLedgersView = () => {
                                         style={{ fontWeight: "bold" }}
                                         className="d-flex justify-content-center"
                                       >
-                                        <div>{ele?.partyId?.firstName}</div>
+                                        <div>{ele?.partyId?.ownerName}</div>
                                       </div>
                                     </td> */}
                                     {/* <td>

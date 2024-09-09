@@ -264,14 +264,14 @@ class PendingOrder extends React.Component {
 
         {
           headerName: "Party Name",
-          field: "partyId?.firstName",
+          field: "partyId?.CompanyName",
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <span>{params.data?.partyId?.firstName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );

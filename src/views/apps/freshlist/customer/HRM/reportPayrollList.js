@@ -158,7 +158,7 @@ class Payrollreport extends React.Component {
           field: "invoiceId",
           filter: true,
           width: 200,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div>
                 <span>{params?.data?.invoiceId}</span>
@@ -171,7 +171,7 @@ class Payrollreport extends React.Component {
           field: "mobileNo",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div>
                 <span>{params?.data?.updatedAt?.split("T")[0]}</span>
@@ -181,15 +181,15 @@ class Payrollreport extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "partyId.firstName",
+          field: "partyId.CompanyName",
           filter: true,
           resizable: true,
           width: 210,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <span>{params.data?.partyId?.firstName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -200,7 +200,7 @@ class Payrollreport extends React.Component {
           field: "address",
           filter: true,
           width: 250,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div>
                 <span>{params?.data?.partyId?.Gstnumber}</span>
@@ -243,7 +243,7 @@ class Payrollreport extends React.Component {
           field: "updatedAt",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
@@ -260,7 +260,7 @@ class Payrollreport extends React.Component {
           field: "updatedAt",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
@@ -277,7 +277,7 @@ class Payrollreport extends React.Component {
           field: "updatedAt",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
@@ -294,7 +294,7 @@ class Payrollreport extends React.Component {
           field: "amount",
           filter: true,
           width: 150,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
@@ -311,7 +311,7 @@ class Payrollreport extends React.Component {
           field: "roundOff",
           filter: true,
           width: 150,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
@@ -326,7 +326,7 @@ class Payrollreport extends React.Component {
           field: "grandTotal",
           filter: true,
           width: 150,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>

@@ -175,14 +175,14 @@ class Cashbook extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "partyId.ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 220,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <div>
-                  <span>{params.data?.partyId?.ownerName}</span>
+                  <span>{params.data?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );

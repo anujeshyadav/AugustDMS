@@ -117,7 +117,7 @@ class TargetCreation extends React.Component {
                       size="25px"
                       color="green"
                       onClick={() => {
-                        debugger
+                        debugger;
                         this.setState({ ViewData: params?.data });
                         this.toggleModal();
                       }}
@@ -176,17 +176,16 @@ class TargetCreation extends React.Component {
         },
         {
           headerName: "FullName",
-          field: "partyId.firstName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
-      
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
                   <span>
-                    {params.data?.partyId?.firstName &&
-                      params.data?.partyId?.firstName}
+                    {params.data?.partyId?.CompanyName &&
+                      params.data?.partyId?.CompanyName}
                   </span>
                 </div>
               </div>

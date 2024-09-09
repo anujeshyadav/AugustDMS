@@ -126,7 +126,7 @@ class SalesOrderReport extends React.Component {
           field: "order.invoiceId",
           filter: true,
           width: 200,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
@@ -142,7 +142,7 @@ class SalesOrderReport extends React.Component {
           field: "order.userId.firstName",
           filter: true,
           width: 220,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -154,14 +154,14 @@ class SalesOrderReport extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "order.partyId.ownerName",
+          field: "order.partyId.CompanyName",
           filter: true,
           width: 220,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
-                  <span>{params.data?.order?.partyId?.ownerName}</span>
+                  <span>{params.data?.order?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -172,7 +172,7 @@ class SalesOrderReport extends React.Component {
           field: "productId.Product_Title",
           filter: true,
           width: 240,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -187,7 +187,7 @@ class SalesOrderReport extends React.Component {
           field: "qty",
           filter: true,
           width: 110,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -202,7 +202,7 @@ class SalesOrderReport extends React.Component {
           field: "taxableAmount",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -218,7 +218,7 @@ class SalesOrderReport extends React.Component {
           field: "igstTotal",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -237,7 +237,7 @@ class SalesOrderReport extends React.Component {
           field: "grandTotal",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>{params.data?.grandTotal && params.data?.grandTotal}</div>
@@ -250,7 +250,7 @@ class SalesOrderReport extends React.Component {
           field: "order.createdAt",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
@@ -267,7 +267,7 @@ class SalesOrderReport extends React.Component {
           field: "order.status",
           filter: true,
           width: 100,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return params.data?.order.status
               ?.toLowerCase()
               ?.includes("completed") ? (

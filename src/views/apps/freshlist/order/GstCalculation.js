@@ -42,7 +42,6 @@ export const GstCalculation = (Party, product, Context) => {
       partyGst = Party?.gstNumber?.slice(0, 2);
     }
   }
-  // if (SuperGst == "23") {
   if (SuperGst == partyGst) {
     IgstTaxType = false;
     gstDetails = product?.map((ele, i) => {

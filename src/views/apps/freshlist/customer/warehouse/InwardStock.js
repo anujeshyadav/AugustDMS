@@ -355,7 +355,7 @@ class StockTransfer extends React.Component {
             return {
               ...val,
               order: element,
-              PartyName: element?.partyId?.firstName,
+              PartyName: element?.partyId?.CompanyName,
               qty: val?.qty,
               Purchase_Rate: val?.productId?.Purchase_Rate,
               Total: val?.qty * val?.productId?.Purchase_Rate,

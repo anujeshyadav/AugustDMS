@@ -259,7 +259,8 @@ class Receipt extends React.Component {
           // field: "particular",
           valueGetter: (params) => {
             if (params?.data?.expenseId) return params?.data?.expenseId?.title;
-            if (params?.data?.partyId) return params?.data?.partyId?.firstName;
+            if (params?.data?.partyId)
+              return params?.data?.partyId?.CompanyName;
             if (params?.data?.userId) return params?.data?.userId?.firstName;
             return null;
           },

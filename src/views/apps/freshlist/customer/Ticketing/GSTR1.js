@@ -161,7 +161,9 @@ class GSTR1 extends React.Component {
           width: 230,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">{/* <span>{params?.data?.gstPercentage}</span> */}</div>
+              <div className="cursor-pointer text-center">
+                {/* <span>{params?.data?.gstPercentage}</span> */}
+              </div>
             );
           },
         },
@@ -344,7 +346,9 @@ class GSTR1 extends React.Component {
           width: 230,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">{/* <span>{params?.data?.gstPercentage}</span> */}</div>
+              <div className="cursor-pointer text-center">
+                {/* <span>{params?.data?.gstPercentage}</span> */}
+              </div>
             );
           },
         },
@@ -365,7 +369,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width:150,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -802,7 +806,6 @@ class GSTR1 extends React.Component {
         },
       ],
       B2B: [
-      
         {
           headerName: "GSTIN",
           field: "order.partyId.gstNumber",
@@ -942,9 +945,7 @@ class GSTR1 extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.partyId?.partyType}
-                </span>
+                <span>{params?.data?.order?.partyId?.partyType}</span>
               </div>
             );
           },
@@ -979,7 +980,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width:140,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1066,14 +1067,14 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "order.partyId.ownerName",
+          field: "order.partyId.CompanyName",
           filter: true,
           resizable: true,
           width: 220,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.partyId?.ownerName}</span>
+                <span>{params?.data?.order?.partyId?.CompanyName}</span>
               </div>
             );
           },
@@ -1147,9 +1148,7 @@ class GSTR1 extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.partyId?.partyType}
-                </span>
+                <span>{params?.data?.order?.partyId?.partyType}</span>
               </div>
             );
           },

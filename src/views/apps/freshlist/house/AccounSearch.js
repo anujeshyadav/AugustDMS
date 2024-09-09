@@ -153,7 +153,7 @@ class AccounSearch extends React.Component {
           headerName: "Full Name",
           field: "firstName",
           filter: true,
-          width:300,
+          width: 300,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -245,7 +245,7 @@ class AccounSearch extends React.Component {
           headerName: "Aadhar No",
           field: "Aadhar_No",
           filter: true,
-          width:95,
+          width: 95,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -309,7 +309,7 @@ class AccounSearch extends React.Component {
           headerName: "City",
           field: "City",
           filter: true,
-width: 140,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (
@@ -325,7 +325,7 @@ width: 140,
           headerName: "State",
           field: "State",
           filter: true,
-         width: 140,
+          width: 140,
           sortable: true,
           cellRendererFramework: (params) => {
             return (

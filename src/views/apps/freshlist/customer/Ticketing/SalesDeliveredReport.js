@@ -154,14 +154,14 @@ class SalesDeliveredReport extends React.Component {
 
         {
           headerName: "Party Name",
-          field: "order.partyId.ownerName",
+          field: "order.partyId.CompanyName",
           filter: true,
           width: 220,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <div>
-                  <span>{params.data?.order?.partyId?.ownerName}</span>
+                  <span>{params.data?.order?.partyId?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -256,7 +256,7 @@ class SalesDeliveredReport extends React.Component {
           headerName: "Total QNTY",
           field: "qty",
           filter: true,
-          width:125,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -312,11 +312,7 @@ class SalesDeliveredReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
-                <div>
-                   
-                    {params.data?.grandTotal && params.data?.grandTotal}
-                  
-                </div>
+                <div>{params.data?.grandTotal && params.data?.grandTotal}</div>
               </div>
             );
           },

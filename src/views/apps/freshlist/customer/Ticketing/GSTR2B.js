@@ -135,13 +135,13 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Supplier Name",
-          field: "partyId.firstName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 220,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
-                <span>{params?.data?.partyId?.firstName}</span>
+                <span>{params?.data?.partyId?.CompanyName}</span>
               </div>
             );
           },

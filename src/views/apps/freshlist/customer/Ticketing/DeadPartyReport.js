@@ -96,14 +96,14 @@ class DeadPartyReport extends React.Component {
 
         {
           headerName: "Party Name",
-          field: "id.ownerName",
+          field: "id.CompanyName",
           filter: "agSetColumnFilter",
           width: 220,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="  text-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.id?.ownerName}</span>
+                  <span>{params?.data?.id?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -114,7 +114,7 @@ class DeadPartyReport extends React.Component {
           field: "party[0].firstName",
           filter: "agSetColumnFilter",
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className=" text-center cursor-pointer">
                 <div className="">
@@ -129,7 +129,7 @@ class DeadPartyReport extends React.Component {
           field: "party[1].firstName",
           filter: "agSetColumnFilter",
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="  text-center cursor-pointer">
                 <div className="">
@@ -144,7 +144,7 @@ class DeadPartyReport extends React.Component {
           field: "party[2].firstName",
           filter: "agSetColumnFilter",
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="  text-center cursor-pointer">
                 <div className="">
@@ -159,7 +159,7 @@ class DeadPartyReport extends React.Component {
           field: "party[3].firstName",
           filter: "agSetColumnFilter",
           width: 160,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="  text-center cursor-pointer">
                 <div className="">
@@ -174,7 +174,7 @@ class DeadPartyReport extends React.Component {
           field: "id.address1",
           filter: "agSetColumnFilter",
           width: 400,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className=" text-center cursor-pointer">
                 <div className="">
@@ -192,11 +192,11 @@ class DeadPartyReport extends React.Component {
           field: "lastDays",
           filter: "agSetColumnFilter",
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             let lastDay = params.data?.lastDays?.includes("T")
-            ? params.data.lastDays?.split("T")[0]
-            : params.data.lastDays;
-            
+              ? params.data.lastDays?.split("T")[0]
+              : params.data.lastDays;
+
             return (
               <div className=" text-center cursor-pointer">
                 <div className="">

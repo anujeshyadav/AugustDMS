@@ -86,14 +86,14 @@ class DeadPartyReport extends React.Component {
       columnDefs: [
         {
           headerName: "Party Name",
-          field: "Party.ownerName",
+          field: "Party.CompanyName",
           filter: "agSetColumnFilter",
           width: 240,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.Party?.ownerName}</span>
+                  <span>{params?.data?.Party?.CompanyName}</span>
                 </div>
               </div>
             );
@@ -190,7 +190,7 @@ class DeadPartyReport extends React.Component {
           headerName: "Sales Person",
           field: "Party.created_by.firstName",
           filter: "agSetColumnFilter",
-         
+
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -282,8 +282,7 @@ class DeadPartyReport extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let rowData = res?.Parties;
-        console.log(rowData);
-        debugger;
+       
         if (rowData?.length) {
           this.setState({ rowData: rowData, rowAllData: rowData });
         }

@@ -1269,7 +1269,7 @@ class CustomerSearch extends React.Component {
       email: item.email,
       dealsInProducts: item.dealsInProducts,
       annualTurnover: item.annualTurnover,
-      firstName: item.firstName,
+      ownerName: item.ownerName,
       rolename: item?.rolename?.id ? item?.rolename?.id : null,
       id: item.id,
     }));

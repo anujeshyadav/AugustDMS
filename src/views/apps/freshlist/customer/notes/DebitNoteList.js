@@ -225,7 +225,8 @@ class DebitNoteList extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex justify-content-center  font-weight-500 text-center">
-                {params.data?.totalAmount}
+                {params.data?.totalAmount &&
+                  params.data?.totalAmount?.toFixed(2)}
               </div>
             );
           },

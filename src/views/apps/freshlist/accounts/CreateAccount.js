@@ -587,7 +587,6 @@ const CreateAccount = () => {
   const onSelect1 = (selectedList, selectedItem) => {
     console.log(selectedList);
     setSelectedRoleToAssign(selectedList);
-    // setProductList(selectedList[0].productItems);
   };
   const onRemove1 = (selectedList, removedItem) => {
     console.log(selectedList);
@@ -733,20 +732,6 @@ const CreateAccount = () => {
                     />
                   </div>
                 </div>
-                {/* <Col lg="4" md="4" sm="12">
-                  <FormGroup>
-                    <Label>Bulk Import</Label>
-
-                    <Input
-                      type="file"
-                      placeholder=""
-                      name="BulkImport"
-                      onChange={(e) => {
-                        setBulkImport(e.target.files[0]);
-                      }}
-                    />
-                  </FormGroup>
-                </Col> */}
               </>
             ) : (
               <>

@@ -111,14 +111,14 @@ class PurchaseReturnReport extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "order.partyId.ownerName",
+          field: "order.partyId.CompanyName",
           filter: true,
           width: 210,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.partyId?.ownerName}</span>
+                <span>{params?.data?.order?.partyId?.CompanyName}</span>
               </div>
             );
           },

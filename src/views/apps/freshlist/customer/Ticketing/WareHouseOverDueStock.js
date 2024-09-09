@@ -142,7 +142,7 @@ class WareHouseOverDueStock extends React.Component {
         },
         {
           headerName: "SUPPLIER NAME",
-          field: "product?.partyId.ownerName",
+          field: "product?.partyId.CompanyName",
           filter: true,
           sortable: true,
           width: 170,
@@ -152,9 +152,9 @@ class WareHouseOverDueStock extends React.Component {
               <>
                 <div className="actions cursor-pointer text-center">
                   <span>
-                    {params?.data?.product?.partyId?.ownerName
-                      ? params?.data?.product?.partyId?.ownerName
-                      : params?.data?.product?.partyId?.firstName}
+                    {params?.data?.product?.partyId?.CompanyName
+                      ? params?.data?.product?.partyId?.CompanyName
+                      : params?.data?.product?.partyId?.CompanyName}
                   </span>
                 </div>
               </>

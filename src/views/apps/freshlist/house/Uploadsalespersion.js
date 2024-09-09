@@ -274,7 +274,7 @@ class Uploadsalespersion extends React.Component {
           },
         },
         {
-          headerName: "Party Name",
+          headerName: "Status",
           field: "status",
           filter: true,
           resizable: true,
@@ -400,7 +400,7 @@ class Uploadsalespersion extends React.Component {
         },
         {
           headerName: "Owner Number",
-          field: "partyId.firstName",
+          field: "partyId.ownerName",
           filter: true,
           resizable: true,
           width: 150,
@@ -408,7 +408,7 @@ class Uploadsalespersion extends React.Component {
             return (
               <div className="d-flex align-items-center justify-content-center cursor-pointer">
                 <div>
-                  <span>{`${params?.data?.partyId?.firstName} ${params?.data?.partyId?.lastName}`}</span>
+                  <span>{params?.data?.partyId?.ownerName}</span>
                 </div>
               </div>
             );

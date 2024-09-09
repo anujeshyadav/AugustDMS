@@ -317,7 +317,6 @@ const AssignTeamMember = () => {
 
                         const name = selected.slice(2).join(" ");
                         let child = [];
-                        debugger;
                         if (name == "Sales Person") {
                           child = AllUsersList?.filter(
                             (ele) => ele?.rolename?.roleName == "Customer"
@@ -754,7 +753,7 @@ const AssignTeamMember = () => {
                                 {ele?.rolename?.roleName == "Customer" ? (
                                   <>
                                     <td>
-                                      {`${ele?.ownerName}`}
+                                      {`${ele?.CompanyName}`}
                                       {/* (
                                       {ele?.rolename?.roleName}) */}
                                     </td>
@@ -771,11 +770,13 @@ const AssignTeamMember = () => {
                                 {ele?.rolename?.roleName == "Customer" ? (
                                   <>
                                     <td>
-                                      {ele?.address1 && ele?.address1}
-                                      {ele?.address2 && ele?.address2}
-                                      {ele?.address1 && ele?.address2
-                                        ? " "
-                                        : ele?.address && ele?.address}
+                                      {ele?.address && ele?.address ? (
+                                        <>
+                                          {`${ele?.address && ele?.address},
+                                          State:-${ele?.State && ele?.State},
+                                          City:-${ele?.City && ele?.City}`}
+                                        </>
+                                      ) : null}
                                     </td>
                                   </>
                                 ) : (

@@ -99,7 +99,7 @@ class SalesReturnReport extends React.Component {
           field: "order.partyId.gstNumber",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
@@ -110,14 +110,14 @@ class SalesReturnReport extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "order.partyId.ownerName",
+          field: "order.partyId.CompanyName",
           filter: true,
           width: 220,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
-                <span>{params?.data?.order?.partyId?.ownerName}</span>
+                <span>{params?.data?.order?.partyId?.CompanyName}</span>
               </div>
             );
           },
@@ -127,7 +127,7 @@ class SalesReturnReport extends React.Component {
           field: "order.partyId.partyType",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
@@ -141,7 +141,7 @@ class SalesReturnReport extends React.Component {
           field: "order.orderId.invoiceId",
           filter: true,
           width: 180,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
@@ -155,7 +155,7 @@ class SalesReturnReport extends React.Component {
           field: "order.createdAt",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
@@ -169,7 +169,7 @@ class SalesReturnReport extends React.Component {
           field: "order.ARN",
           filter: true,
           width: 160,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.order?.ARN}</span>
@@ -182,7 +182,7 @@ class SalesReturnReport extends React.Component {
           field: "productId.Product_Title",
           filter: true,
           width: 220,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.productId?.Product_Title}</span>
@@ -195,7 +195,7 @@ class SalesReturnReport extends React.Component {
           field: "productId.HSN_Code",
           filter: true,
           width: 110,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.productId?.HSN_Code}</span>
@@ -208,7 +208,7 @@ class SalesReturnReport extends React.Component {
           field: "qtyReturn",
           filter: true,
           width: 110,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.qtyReturn}</span>
@@ -221,7 +221,7 @@ class SalesReturnReport extends React.Component {
           field: "discountPercentage",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.discountPercentage}</span>
@@ -263,7 +263,7 @@ class SalesReturnReport extends React.Component {
           field: "taxableAmount",
           filter: true,
           width: 165,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.taxableAmount}</span>
@@ -277,7 +277,7 @@ class SalesReturnReport extends React.Component {
           field: "igstRate",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.igstRate}</span>
@@ -290,7 +290,7 @@ class SalesReturnReport extends React.Component {
           field: "sgstRate",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.sgstRate}</span>
@@ -303,7 +303,7 @@ class SalesReturnReport extends React.Component {
           field: "cgstRate",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.cgstRate}</span>
@@ -316,7 +316,7 @@ class SalesReturnReport extends React.Component {
           field: "grandTotal",
           filter: true,
           width: 140,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
                 <span>{params?.data?.grandTotal}</span>

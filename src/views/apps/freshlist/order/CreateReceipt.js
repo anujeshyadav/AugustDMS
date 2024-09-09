@@ -143,7 +143,7 @@ const CreateReceipt = (args) => {
         if (CustomeData?.value?.Customer?.length > 0) {
           CustomeData?.value?.Customer?.forEach((element) => {
             element["party"] = true;
-            element["fullName"] = element?.firstName;
+            element["fullName"] = element?.CompanyName;
           });
         }
         if (UserData?.value?.adminDetails?.length > 0) {

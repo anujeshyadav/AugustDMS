@@ -447,7 +447,7 @@ class InvoiceGenerator extends React.Component {
         },
         {
           headerName: "Full Name",
-          field: "ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           resizable: true,
           width: 200,
@@ -455,7 +455,7 @@ class InvoiceGenerator extends React.Component {
             return (
               <div className="cursor-pointer text-center">
                 <div>
-                  <span>{`${params?.data?.partyId?.ownerName} ${params?.data?.partyId?.lastName}`}</span>
+                  <span>{params?.data?.partyId?.CompanyName} </span>
                 </div>
               </div>
             );
@@ -640,7 +640,7 @@ class InvoiceGenerator extends React.Component {
 
         {
           headerName: "Total Product",
-          field: "params?.data?.orderItems?.length",
+          field: "params.data.orderItems.length",
           filter: true,
           resizable: true,
           width: 125,
@@ -697,7 +697,7 @@ class InvoiceGenerator extends React.Component {
   handleSubmitOtherCharges = async (e) => {
     const UserInformation = this.context;
     e.preventDefault();
-
+debugger;
     this.state.AssignDeliveryBoy
       ? this.setState({ DeliveryBoyErr: false })
       : this.setState({ DeliveryBoyErr: true });

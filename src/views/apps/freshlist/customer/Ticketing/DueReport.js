@@ -149,13 +149,13 @@ class DueReport extends React.Component {
 
         {
           headerName: "Party name",
-          field: "partyId.ownerName",
+          field: "partyId.CompanyName",
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.partyId?.ownerName}</span>
+                <span>{params?.data?.partyId?.CompanyName}</span>
               </div>
             );
           },

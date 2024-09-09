@@ -21,7 +21,7 @@ export const B2B = [
   },
   {
     headerName: "Party Name",
-    field: "partyId.firstName",
+    field: "partyId.CompanyName",
     filter: true,
     resizable: true,
     width: 210,
