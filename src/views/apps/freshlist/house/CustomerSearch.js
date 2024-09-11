@@ -103,39 +103,6 @@ class CustomerSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "Full Name",
-          field: "ownerName",
-          width: 280,
-          filter: true,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <Link
-                style={{color:"black"}}
-                  title="click to Edit"
-                  to={`/app/SoftNumen/account/CreateCustomer/${params?.data?._id}`}>
-                  {params?.data?.ownerName}
-                </Link>
-                {/* <Route
-                  render={({ history }) => (
-                    <span style={{ cursor: "pointer" }}>
-                      <span
-                        onClick={() =>
-                          history.push(
-                            `/app/SoftNumen/account/CreateCustomer/${params?.data?._id}`
-                          )
-                        }>
-                        {params?.data?.firstName}
-                      </span>
-                    </span>
-                  )}
-                /> */}
-              </>
-            );
-          },
-        },
 
         // {
         //   headerName: "Last Name",
@@ -164,7 +131,12 @@ class CustomerSearch extends React.Component {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.CompanyName}</span>
+                  <Link
+                    style={{ color: "black" }}
+                    title="click to Edit"
+                    to={`/app/SoftNumen/account/CreateCustomer/${params?.data?._id}`}>
+                    <span>{params?.data?.CompanyName}</span>
+                  </Link>
                 </div>
               </>
             );
@@ -299,6 +271,26 @@ class CustomerSearch extends React.Component {
             );
           },
         },
+        {
+          headerName: "Full Name",
+          field: "ownerName",
+          width: 280,
+          filter: true,
+          sortable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <Link
+                  style={{ color: "black" }}
+                  title="click to Edit"
+                  to={`/app/SoftNumen/account/CreateCustomer/${params?.data?._id}`}>
+                  {params?.data?.ownerName}
+                </Link>
+              </>
+            );
+          },
+        },
+
         // {
         //   headerName: "Owner Name",
         //   field: "ownerName",
@@ -561,22 +553,22 @@ class CustomerSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "Shop Size",
-          field: "shopSize",
-          filter: true,
-          width: 105,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.shopSize}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Shop Size",
+        //   field: "shopSize",
+        //   filter: true,
+        //   width: 105,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.shopSize}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Email",
           field: "email",
@@ -794,88 +786,88 @@ class CustomerSearch extends React.Component {
           },
         },
 
-        {
-          headerName: "Created date",
-          field: "createdAt",
-          filter: true,
-          width: 110,
-          sortable: true,
-          headingFixed: top,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.createdAt?.split("T")[0]}</span>
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Updated date",
-          field: "updatedAt",
-          filter: true,
-          width: 110,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <div className="actions cursor-pointer">
-                    <span>{params?.data?.updatedAt?.split("T")[0]}</span>
-                  </div>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Created date",
+        //   field: "createdAt",
+        //   filter: true,
+        //   width: 110,
+        //   sortable: true,
+        //   headingFixed: top,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.createdAt?.split("T")[0]}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "Updated date",
+        //   field: "updatedAt",
+        //   filter: true,
+        //   width: 110,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <div className="actions cursor-pointer">
+        //             <span>{params?.data?.updatedAt?.split("T")[0]}</span>
+        //           </div>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
 
-        {
-          headerName: "Shop Photo",
-          field: "Shopphoto",
-          filter: true,
-          sortable: true,
-          width: 110,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  {params?.data?.shopPhoto && (
-                    <img
-                      width={40}
-                      height={40}
-                      src={`${Image_URL}/Images/${params?.data?.shopPhoto[0]}`}
-                      alt="Img"
-                    />
-                  )}
-                </div>
-              </>
-            );
-          },
-        },
-        {
-          headerName: "Photo",
-          field: "Photo",
-          filter: true,
-          width: 110,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  {params?.data?.Photo && (
-                    <img
-                      width={40}
-                      height={40}
-                      src={`${Image_URL}/Images/${params?.data?.Photo}`}
-                      alt="img"
-                    />
-                  )}
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Shop Photo",
+        //   field: "Shopphoto",
+        //   filter: true,
+        //   sortable: true,
+        //   width: 110,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           {params?.data?.shopPhoto && (
+        //             <img
+        //               width={40}
+        //               height={40}
+        //               src={`${Image_URL}/Images/${params?.data?.shopPhoto[0]}`}
+        //               alt="Img"
+        //             />
+        //           )}
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "Photo",
+        //   field: "Photo",
+        //   filter: true,
+        //   width: 110,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           {params?.data?.Photo && (
+        //             <img
+        //               width={40}
+        //               height={40}
+        //               src={`${Image_URL}/Images/${params?.data?.Photo}`}
+        //               alt="img"
+        //             />
+        //           )}
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
 
         {
           headerName: "Created BY",
@@ -1254,7 +1246,7 @@ class CustomerSearch extends React.Component {
       registrationType: item.registrationType,
       comPanNo: item.comPanNo,
       mobileNumber: item.mobileNumber,
-      panNo: item.panNo,
+      // panNo: item.panNo,
       aadharNo: item.aadharNo,
       // ownerName: item.ownerName,
       // passPortNo: item.passPortNo,

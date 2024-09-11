@@ -35,6 +35,7 @@ import {
   Create_Account_List,
   Create_Payment,
   Create_Receipt,
+  Create_Transporter_List,
   Update_payment_By_Id,
   Update_Receipt_By_Id,
   View_Expense_Account,
@@ -76,6 +77,8 @@ const CreatePayment = (args) => {
       newFormValues[index]["partyId"] = selectedItem?._id;
     } else if (selectedItem?.User) {
       newFormValues[index]["userId"] = selectedItem?._id;
+    } else if (selectedItem?.transporter) {
+      newFormValues[index]["transporterId"] = selectedItem?._id;
     } else {
       newFormValues[index]["expenseId"] = selectedItem?._id;
     }
@@ -94,6 +97,7 @@ const CreatePayment = (args) => {
           .then((res) => {
             let data = res?.Receipts;
             let value = {};
+            debugger;
             value["paymentMode"] = data?.paymentMode;
             value["database"] = data?.database;
             if (!!data?.partyId) {
@@ -102,6 +106,9 @@ const CreatePayment = (args) => {
             } else if (!!data?.userId) {
               value["party"] = data?.userId;
               value["userId"] = data?.userId?._id;
+            } else if (!!data?.transporterId) {
+              value["party"] = data?.transporterId;
+              value["transporterId"] = data?.transporterId?._id;
             } else {
               value["party"] = data?.expenseId;
               value["expenseId"] = data?.expenseId?._id;
@@ -125,11 +132,19 @@ const CreatePayment = (args) => {
     let url = `${Create_Account_List + userdata?._id}/`;
     const fetchData = async () => {
       try {
-        const [CustomeData, UserData, ExpensesData] = await Promise.allSettled([
-          CreateCustomerList(userdata?._id, userdata?.database),
-          _Get(url, userdata?.database),
-          _Get(View_Expense_Account, userdata?.database),
-        ]);
+        const [CustomeData, UserData, ExpensesData, TransporterList] =
+          await Promise.allSettled([
+            CreateCustomerList(userdata?._id, userdata?.database),
+            _Get(url, userdata?.database),
+            _Get(View_Expense_Account, userdata?.database),
+            _Get(Create_Transporter_List, userdata?.database),
+          ]);
+        if (TransporterList?.value?.Transporter?.length > 0) {
+          TransporterList?.value?.Transporter?.forEach((element) => {
+            element["transporter"] = true;
+            element["fullName"] = element?.companyName;
+          });
+        }
         if (CustomeData?.value?.Customer?.length > 0) {
           CustomeData?.value?.Customer?.forEach((element) => {
             element["party"] = true;
@@ -148,6 +163,9 @@ const CreatePayment = (args) => {
             element["fullName"] = `${element?.title} ${element?.type}`;
           });
         }
+        let Transporter = TransporterList?.value?.Transporter
+          ? TransporterList?.value?.Transporter
+          : [];
         let customer = CustomeData?.value?.Customer
           ? CustomeData?.value?.Customer
           : [];
@@ -157,7 +175,7 @@ const CreatePayment = (args) => {
         let Expenses = ExpensesData?.value?.Expenses
           ? ExpensesData?.value?.Expenses
           : [];
-        let wholeData = [...customer, ...User, ...Expenses];
+        let wholeData = [...customer, ...User, ...Expenses, ...Transporter];
         setPartyList(wholeData);
       } catch (error) {
         setError(error);
@@ -608,6 +626,8 @@ const CreatePayment = (args) => {
                               : `${
                                   !!element?.userId
                                     ? element?.userId
+                                    : element?.transporterId
+                                    ? element?.transporterId
                                     : element?.expenseId
                                 }`
                           }`

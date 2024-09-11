@@ -31,7 +31,6 @@ const toWords = new ToWords({
   },
 });
 const InvoiceCharges = ({ invoiceData }) => {
-  console.log(invoiceData);
   return (
     <>
       <View

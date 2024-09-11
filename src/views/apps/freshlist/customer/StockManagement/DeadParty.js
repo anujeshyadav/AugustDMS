@@ -91,7 +91,9 @@ class DeadPartyReport extends React.Component {
           width: 240,
           cellRendererFramework: (params) => {
             return (
-              <div className="d-flex align-items-center cursor-pointer">
+              <div
+                style={{ color: params?.data?.days > 30 ? "red" : "blue" }}
+                className="d-flex align-items-center cursor-pointer">
                 <div className="">
                   <span>{params?.data?.Party?.CompanyName}</span>
                 </div>
@@ -252,14 +254,21 @@ class DeadPartyReport extends React.Component {
 
         {
           headerName: "Last Purchase Date",
-          field: "lastDays",
+          field: "purchaseDate",
           filter: "agSetColumnFilter",
           width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div className="">
-                  <span>{params?.data?.lastDays}</span>
+                  <span>
+                    {params?.data?.purchaseDate &&
+                    params?.data?.purchaseDate?.includes("T") ? (
+                      <>{params?.data?.purchaseDate?.split("T")[0]}</>
+                    ) : (
+                      <></>
+                    )}
+                  </span>
                 </div>
               </div>
             );
@@ -282,7 +291,7 @@ class DeadPartyReport extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let rowData = res?.Parties;
-       
+       console.log(rowData);
         if (rowData?.length) {
           this.setState({ rowData: rowData, rowAllData: rowData });
         }

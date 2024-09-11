@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -158,7 +158,15 @@ class AccounSearch extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <>
-                <Route
+                <div style={{ color: "black" }}>
+                  <Link
+                    style={{ color: "black" }}
+                    title="Click to Edit User"
+                    to={`/app/SoftNumen/account/CreateAccount/${params?.data?._id}`}>
+                    {params?.data?.firstName}
+                  </Link>
+                </div>
+                {/* <Route
                   render={({ history }) => (
                     <div
                       onClick={() =>
@@ -172,7 +180,7 @@ class AccounSearch extends React.Component {
                       </span>
                     </div>
                   )}
-                />
+                /> */}
               </>
             );
           },
@@ -418,22 +426,22 @@ class AccounSearch extends React.Component {
             );
           },
         },
-        {
-          headerName: "Address",
-          field: "address",
-          filter: true,
-          width: 300,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.address}</span>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Address",
+        //   field: "address",
+        //   filter: true,
+        //   width: 300,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <span>{params?.data?.address}</span>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         {
           headerName: "Salary",
           field: "last_job_Salary",
@@ -497,7 +505,7 @@ class AccounSearch extends React.Component {
           },
         },
         {
-          headerName: "Address One",
+          headerName: "Address",
           field: "address1",
           filter: true,
           sortable: true,
@@ -512,7 +520,7 @@ class AccounSearch extends React.Component {
           },
         },
         {
-          headerName: "Address Two",
+          headerName: "Address One",
           field: "address2",
           filter: true,
           sortable: true,
@@ -716,7 +724,6 @@ class AccounSearch extends React.Component {
   async Apicalling(id, db) {
     let userinfo = JSON.parse(localStorage.getItem("userData"));
 
-    console.log(userinfo?.rolename.roleName);
     this.setState({ Loading: true, AllcolumnDefs: this.state.columnDefs });
 
     let userHeading = JSON.parse(localStorage.getItem("AccountSearch"));
@@ -865,6 +872,7 @@ class AccounSearch extends React.Component {
           ele?.shift?.id && ele?.shift?.id ? ele?.shift?.id : ele?.shift;
       }
       delete ele?.status;
+      delete ele?.lastName;
       delete ele?.createdAt;
       delete ele?.created_by;
       delete ele?.__v;
@@ -878,8 +886,52 @@ class AccounSearch extends React.Component {
       delete ele?.planStatus;
       delete ele?.setRule;
       delete ele?.profileImage;
+      delete ele?.otpVerify;
     });
+
+    //origional start
     const worksheet = XLSX.utils.json_to_sheet(this.state.rowAllData);
+
+    // extra code start here
+    // Define the range of the worksheet
+    const range = XLSX.utils.decode_range(worksheet["!ref"]);
+
+    // First, unlock all cells by default
+    for (let R = range.s.r; R <= range.e.r; ++R) {
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        const cellAddress = { c: C, r: R };
+        const cellRef = XLSX.utils.encode_cell(cellAddress);
+        if (!worksheet[cellRef]) worksheet[cellRef] = {}; // Create the cell if it doesn't exist
+        worksheet[cellRef].s = { locked: false }; // Unlock all cells
+      }
+    }
+
+    // Lock the first row (R = 0)
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      const cellAddress = { c: C, r: 0 }; // Address for the first row (row 0)
+      const cellRef = XLSX.utils.encode_cell(cellAddress);
+      if (!worksheet[cellRef]) worksheet[cellRef] = {}; // Create the cell if it doesn't exist
+      worksheet[cellRef].s = { locked: true }; // Lock the first row cells
+    }
+
+    // Lock the first column (C = 0)
+    for (let R = range.s.r; R <= range.e.r; ++R) {
+      const cellAddress = { c: 0, r: R }; // Address for the first column (column 0)
+      const cellRef = XLSX.utils.encode_cell(cellAddress);
+      if (!worksheet[cellRef]) worksheet[cellRef] = {}; // Create the cell if it doesn't exist
+      worksheet[cellRef].s = { locked: true }; // Lock the first column cells
+    }
+
+    // Enable sheet protection (locks only the first row and first column)
+    // worksheet["!protect"] = {
+    //   selectLockedCells: true, // Can select locked cells
+    //   selectUnlockedCells: true, // Can select unlocked cells
+    //   sheet: true, // Enable sheet protection
+    //   objects: false, // Prevent editing objects (e.g., charts)
+    //   scenarios: false, // Prevent editing scenarios
+    // };
+
+    // extra code end here
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
@@ -894,6 +946,9 @@ class AccounSearch extends React.Component {
     });
     saveAs(dataBlob, `${fileName}.xlsx`);
     this.setState({ rowAllData: this.state.rowData });
+
+    // origional ending here
+
     // const CsvData = this.gridApi.getDataAsCsv({
     //   processCellCallback: this.processCell,
     // });
@@ -1102,19 +1157,18 @@ class AccounSearch extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row
-                       style={{marginLeft:'3px',marginRight:'3px'}}>
+                      <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
                         <Col lg="4" xl="4" md="4">
                           <Row>
-                            <Col
-                              lg="4"
-                              md="4"
-                              xl="4"
-                              xs="12"
-                              >
+                            <Col lg="4" md="4" xl="4" xs="12">
                               <h2
                                 className="float-left "
-                                style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                                style={{
+                                  fontWeight: "600",
+                                  textTransform: "uppercase",
+                                  fontSize: "22px",
+                                  marginTop: "25px",
+                                }}>
                                 User list
                               </h2>
                             </Col>
@@ -1123,7 +1177,7 @@ class AccounSearch extends React.Component {
                               md="8"
                               xl="8"
                               xs="12"
-                              style={{marginTop:"25px" }}>
+                              style={{ marginTop: "25px" }}>
                               {this.state.MasterShow ? (
                                 <SuperAdminUI
                                   onDropdownChange={this.handleDropdownChange}
@@ -1140,7 +1194,7 @@ class AccounSearch extends React.Component {
                           lg="2"
                           md="6"
                           sm="12"
-                          style={{ marginTop:"25px" }}>
+                          style={{ marginTop: "25px" }}>
                           <div className="">
                             {/* 
                             <div className="mb-1 mr-1">
@@ -1212,7 +1266,7 @@ class AccounSearch extends React.Component {
                                   xl="3"
                                   md="3"
                                   xs="12"
-                                  style={{ marginTop:"25px" }}>
+                                  style={{ marginTop: "25px" }}>
                                   <span className="">
                                     <Route
                                       render={({ history }) => (
@@ -1244,7 +1298,7 @@ class AccounSearch extends React.Component {
                                   xl="4"
                                   md="4"
                                   xs="12"
-                                  style={{ marginTop:"25px" }}>
+                                  style={{ marginTop: "25px" }}>
                                   <span>
                                     <Route
                                       render={({ history }) => (
@@ -1276,7 +1330,7 @@ class AccounSearch extends React.Component {
                                   xl="5"
                                   md="5"
                                   xs="12"
-                                  style={{ marginTop:"25px" }}>
+                                  style={{ marginTop: "25px" }}>
                                   <span>
                                     <Route
                                       render={({ history }) => (
@@ -1310,7 +1364,7 @@ class AccounSearch extends React.Component {
                           </>
                         )}
 
-                        <Col lg="1" md="1" xl="1" style={{ marginTop:"25px" }}>
+                        <Col lg="1" md="1" xl="1" style={{ marginTop: "25px" }}>
                           {InsiderPermissions && InsiderPermissions.View && (
                             <>
                               <span className="">
@@ -1416,7 +1470,9 @@ class AccounSearch extends React.Component {
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
+                              <div
+                                className="ag-theme-material w-100   ag-grid-table card-body"
+                                style={{ marginTop: "-1rem" }}>
                                 <ContextLayout.Consumer className="ag-theme-alpine">
                                   {(context) => (
                                     <AgGridReact

@@ -572,7 +572,7 @@ const EditOrder = (args) => {
 
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,
-      address: UserInfo?.address,
+      address: Party?.address,
       grandTotal: Number((gstdetails?.Tax?.GrandTotal).toFixed(2)),
       roundOff: Number(
         (gstdetails?.Tax?.GrandTotal - gstdetails?.Tax?.RoundOff).toFixed(2)
@@ -587,9 +587,7 @@ const EditOrder = (args) => {
       state: Party?.State,
       city: Party?.City,
       orderItems: Product,
-      // DateofDelivery: dateofDelivery,
     };
-    console.log(payload);
     if (CustomerTerm == "Cash") {
       await _Put(Sales_Edit_Order, Params.id, payload)
         .then((res) => {

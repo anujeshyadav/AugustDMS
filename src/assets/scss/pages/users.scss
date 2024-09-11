@@ -1732,5 +1732,56 @@ button{
    background-color: #EDAD76  !important;  
    
 }
-.ag-header-group-cell-label {
+// .ag-header-group-cell-label {
+// }
+// .ag-header-group-cell-label {}
+
+body {
+  background-color: #e2f4e8 !important;
+}
+
+[dir=ltr] .row {
+  margin-right: -1px;
+  margin-left: -1px;
+}
+
+span.badge.badge-secondary {
+  background-color: #e2f4e8 !important;
+}
+
+.header-navbar.navbar-expand-sm.navbar.navbar-horizontal.navbar-shadow.floating-nav {
+  background-color: #e2f4e8 !important;
+}
+
+.horizontal-menu-wrapper {
+  background-color: #e2f4e8 !important;
+}
+
+.horizontal-layout .header-navbar .navbar-container {
+  background-color: #e2f4e8 !important;
+}
+
+.horizontal-layout.navbar-floating .horizontal-menu-wrapper {
+  background-color: #e2f4e8 !important;
+}
+
+.header-navbar {
+  background-color: #e2f4e8 !important;
+}
+
+.sidebarmenu {
+  background-color: #e2f4e8 !important;
+}
+
+.header-navbar-shadow {
+  background: #e2f4e8 !important;
+}
+
+.horizontal-layout.navbar-floating .horizontal-menu-wrapper {
+  background: #e2f4e8 !important;
+}
+
+[dir] .card {
+
+  border-radius: 16px;
 }

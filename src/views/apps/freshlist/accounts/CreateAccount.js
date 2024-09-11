@@ -1310,7 +1310,23 @@ const CreateAccount = () => {
                                 />
                               </FormGroup>
                             </Col>
-
+                            <Col lg="6" md="6" sm="12">
+                              <FormGroup className="cssforproductlist">
+                                <Label>
+                                  Address{" "}
+                                  <span style={{ color: "red" }}>*</span>
+                                </Label>
+                                <Input
+                                  required
+                                  className="form-control"
+                                  placeholder="address name"
+                                  type="text"
+                                  name="address1"
+                                  value={formData?.address1}
+                                  onChange={handleInputChange}
+                                />
+                              </FormGroup>
+                            </Col>
                             <Col className="mt-2 mb-2" lg="12" md="12" sm="12">
                               <Row>
                                 <Col lg="6" md="6" sm="6" xs="12">
@@ -1933,10 +1949,10 @@ const CreateAccount = () => {
                                 />
                               </FormGroup>
                             </Col>
-                            <Col lg="6" md="6" sm="12">
+                            {/* <Col lg="6" md="6" sm="12">
                               <FormGroup className="cssforproductlist">
                                 <Label>
-                                  Address 1st{" "}
+                                  Address{" "}
                                   <span style={{ color: "red" }}>*</span>
                                 </Label>
                                 <Input
@@ -1949,11 +1965,11 @@ const CreateAccount = () => {
                                   onChange={handleInputChange}
                                 />
                               </FormGroup>
-                            </Col>
+                            </Col> */}
                             <Col lg="6" md="6" sm="12">
                               <FormGroup className="cssforproductlist">
                                 <Label>
-                                  Address 2nd
+                                  Address
                                   <span style={{ color: "red" }}>*</span>
                                 </Label>
                                 <Input

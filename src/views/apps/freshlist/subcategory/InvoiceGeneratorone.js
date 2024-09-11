@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
-
+import LatestInvoice from "./LastestInvoice";
 import POInVoice from "./POInVoice";
 import POInvoiceone from "./POInvoiceone";
 import POInvoiceTwo from "./POInvoiceTwo";
 import PoinvoiceThree from "./PoinvoiceThree";
 
-
-const InvoiceGenerator = props => {
+const InvoiceGenerator = (props) => {
   const [Printview, setPrintview] = useState({});
   const [AllCharges, setAllCharges] = useState({});
   const [details, setDetails] = useState([]);
@@ -46,6 +45,15 @@ const InvoiceGenerator = props => {
             tableList={details}
             AllCharges={AllCharges}
             fileName="invoice3.pdf"
+          />
+        )}
+        {props?.CompanyDetails?.BillNumber == 5 && (
+          <LatestInvoice
+            invoiceData={Printview}
+            BilData={props}
+            tableList={details}
+            AllCharges={AllCharges}
+            fileName="invoice5.pdf"
           />
         )}
         {props?.CompanyDetails?.BillNumber == 3 && (

@@ -229,8 +229,6 @@ class Login extends React.Component {
     };
     await UserLogin(data)
       .then((res) => {
-        debugger;
-
         this.setState({ Loader: false });
         let basicinfor = res?.user;
         this.setState({ UserCredential: basicinfor });

@@ -697,7 +697,6 @@ class InvoiceGenerator extends React.Component {
   handleSubmitOtherCharges = async (e) => {
     const UserInformation = this.context;
     e.preventDefault();
-debugger;
     this.state.AssignDeliveryBoy
       ? this.setState({ DeliveryBoyErr: false })
       : this.setState({ DeliveryBoyErr: true });
@@ -714,7 +713,6 @@ debugger;
         value["lastLedgerBalance"] = "Not Found";
         console.log(err);
       });
-    // debugger;
     this.state.PrintData?.partyId?.assignTransporter?.length > 0
       ? (value["DeliveryType"] = "OutStation")
       : (value["DeliveryType"] = "Local");
@@ -726,8 +724,10 @@ debugger;
     this.setState({
       ButtonText: this.state.AssignDeliveryBoy ? "Submitting.." : "Submit",
     });
+    let gstDetails = HsnSummaryCalculation(value);
+    value["gstDetails"] = gstDetails;
     this.setState({ PrintData: value });
-    debugger;
+
     // testing
 
     // this.setState({ ButtonText: "Submit" });
@@ -777,6 +777,7 @@ debugger;
   handleShowInvoice = async (data) => {
     const UserInformation = this.context;
     let value = { ...data };
+    debugger;
     await _Get(Last_Ledger_Balance, value?.partyId?._id)
       .then((res) => {
         if (!!res?.Ledger.debit) {
@@ -790,6 +791,8 @@ debugger;
         console.log(err);
       });
     value["salesInvoiceStatus"] = true;
+    let gstDetails = HsnSummaryCalculation(value);
+    value["gstDetails"] = gstDetails;
 
     this.setState({ PrintData: value });
 
@@ -1289,7 +1292,6 @@ debugger;
       Discounts[0]["discountedAmount"] = Number(value?.amount?.toFixed(2));
       value["discountDetails"] = Discounts;
     }
-    // debugger;
     let lastdiscount =
       value?.discountDetails[value?.discountDetails?.length - 1];
     // let charge = value?.chargesDetails[value?.chargesDetails?.length - 1];
@@ -1364,6 +1366,45 @@ debugger;
     }
     value["transporter"] = Allvalue?.transporter;
     value["vehicleNo"] = Allvalue?.vehicleNo;
+
+    let OtherCharges = {};
+    if (charges > 0) {
+      OtherCharges.taxable = charges;
+      OtherCharges.withDiscountAmount = Number(
+        (charges * ((100 + Number(maxGst?.gstPercentage)) / 100)).toFixed(2)
+      );
+      OtherCharges.withoutTaxablePrice = charges;
+      if (value?.igstTaxType == 1) {
+        OtherCharges.igstTax = [
+          {
+            rate: maxGst?.gstPercentage,
+            amount: Number(
+              (charges * (maxGst?.gstPercentage / 100)).toFixed(2)
+            ),
+          },
+        ];
+        OtherCharges.centralTax = [];
+        OtherCharges.stateTax = [];
+      } else {
+        OtherCharges.igstTax = [];
+        OtherCharges.centralTax = [
+          {
+            rate: maxGst?.gstPercentage,
+            amount:
+              Number((charges * (maxGst?.gstPercentage / 100)).toFixed(2)) / 2,
+          },
+        ];
+        OtherCharges.stateTax = [
+          {
+            rate: maxGst?.gstPercentage,
+            amount:
+              Number((charges * (maxGst?.gstPercentage / 100)).toFixed(2)) / 2,
+          },
+        ];
+      }
+      value["gstOtherCharges"] = [OtherCharges];
+    }
+   
     this.setState({ PrintData: value });
     this.setState({ PrintMainData: value });
   };

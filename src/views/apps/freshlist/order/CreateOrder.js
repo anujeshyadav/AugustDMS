@@ -471,7 +471,7 @@ const CreateOrder = (args) => {
       discountPercentage: Party?.category ? Party?.category?.discount : 0,
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,
-      address: `${Party?.address1} ${Party?.address2}`,
+      address: Party?.address,
       igstTaxType: gstdetails?.Tax?.IgstTaxType,
       grandTotal: Number((gstdetails?.Tax?.GrandTotal).toFixed(2)),
       roundOff: Number(gstdetails?.Tax?.RoundOff?.toFixed(2)),
@@ -495,7 +495,6 @@ const CreateOrder = (args) => {
       await SaveOrder(payload)
         .then((res) => {
           setLoading(false);
-          console.log(res);
           swal("Order Created Successfully");
           History.goBack();
         })

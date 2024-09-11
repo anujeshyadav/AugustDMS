@@ -613,7 +613,7 @@ const CreateCustomer = () => {
                                 </Label>
                                 <Input
                                   required
-                                  placeholder="Enter Last Name"
+                                  placeholder="Enter Incharge Name"
                                   type="text"
                                   name="name"
                                   value={formData?.name}
@@ -886,7 +886,7 @@ const CreateCustomer = () => {
                               <FormGroup>
                                 <Label>Email Id</Label>
                                 <Input
-                                  placeholder="last job firm name"
+                                  placeholder="Email id .."
                                   type="email"
                                   name="email"
                                   value={formData?.email}

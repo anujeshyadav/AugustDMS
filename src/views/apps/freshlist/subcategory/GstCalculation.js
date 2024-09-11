@@ -644,7 +644,7 @@ const GstCalculation = ({ invoiceData }) => {
                       alignContent: "center",
                       height: "17px",
                     }}>
-                    <Text style={{ fontSize: "10px" }}>Other Charges</Text>
+                    <Text style={{ fontSize: "10px" }}>Charges</Text>
                   </View>
                   <View
                     style={{
@@ -826,7 +826,7 @@ const GstCalculation = ({ invoiceData }) => {
                       borderBottom: "1px solid black",
                     }}>
                     <Text style={{ fontSize: "10px" }}>
-                      {(ele?.withoutTaxablePrice).toFixed(2)}
+                      {(ele?.withDiscountAmount).toFixed(2)}
                     </Text>
                   </View>
                 </View>
@@ -864,7 +864,31 @@ const GstCalculation = ({ invoiceData }) => {
               height: "17px",
             }}>
             <Text style={{ fontSize: "10px", fontWeight: "bold" }}>
-              {invoiceData?.amount && <>{(invoiceData?.amount).toFixed(2)}</>}
+              {invoiceData?.amount && (
+                <>
+                  {!!invoiceData?.chargesDetails &&
+                  invoiceData?.chargesDetails > 0 ? (
+                    <>
+                      {(
+                        invoiceData?.amount + invoiceData?.chargesDetails
+                      ).toFixed(2)}
+                    </>
+                  ) : (
+                    <>
+                      {!!invoiceData?.coolieAndCartage &&
+                      invoiceData?.coolieAndCartage > 0 ? (
+                        <>
+                          {(
+                            invoiceData?.amount + invoiceData?.coolieAndCartage
+                          ).toFixed(2)}
+                        </>
+                      ) : (
+                        <>{(invoiceData?.amount).toFixed(2)}</>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
             </Text>
           </View>
           {/* for dynamic below */}

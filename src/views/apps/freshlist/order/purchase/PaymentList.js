@@ -542,10 +542,13 @@ class PurchaseCompleted extends React.Component {
           headerName: "Particular",
           // field: "particular",
           valueGetter: (params) => {
+            debugger;
             if (params?.data?.expenseId) return params?.data?.expenseId?.title;
             if (params?.data?.partyId)
               return params?.data?.partyId?.CompanyName;
             if (params?.data?.userId) return params?.data?.userId?.firstName;
+            if (params?.data?.transporterId?.companyName)
+              return params?.data?.transporterId?.companyName;
             return null;
           },
           filter: true,
@@ -904,7 +907,8 @@ class PurchaseCompleted extends React.Component {
             ? ele?.partyId?.CompanyName
             : ele?.userId?.firstName
             ? ele?.userId?.firstName
-            : ele?.expenseId?.title,
+            : ele?.transporterId?.companyName
+            ? ele?.transporterId?.companyName : ele?.expenseId?.title,
           // User: ele?.userId?.firstName ? ele?.userId?.firstName : "-",
           // ExpenseType: ele?.expenseId?.title ? ele?.expenseId?.title : "-",
           PaymentMode: ele?.paymentMode,
@@ -959,6 +963,9 @@ class PurchaseCompleted extends React.Component {
       return {
         date: ele?.date?.split("T")[0],
         paymentMode: ele?.paymentMode,
+        transporterId: ele?.transporterId?.companyName
+          ? ele?.transporterId?.companyName
+          : "",
         partyId: ele?.partyId?.firstName ? ele?.partyId?.firstName : "",
         userId: ele?.userId?.firstName ? ele?.userId?.firstName : "",
         expenseId: ele?.expenseId?.title ? ele?.expenseId?.title : "",

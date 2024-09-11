@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import { FaPencilAlt } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -114,8 +114,14 @@ class CreateTransportList extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.companyName}</span>
+                <div
+                  title="Click to Edit Transporter"
+                  className="actions cursor-pointer text-center">
+                  <Link
+                    style={{ color: "black" }}
+                    to={`/app/ajgroup/transporter/CreateTransporter/${params?.data?._id}`}>
+                    <span>{params?.data?.companyName}</span>
+                  </Link>
                 </div>
               </>
             );
@@ -266,29 +272,29 @@ class CreateTransportList extends React.Component {
             ) : null;
           },
         },
-        {
-          headerName: "Image",
-          field: "image",
-          filter: true,
-          width: 90,
-          sortable: true,
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  {params?.data?.image && (
-                    <img
-                      width={40}
-                      height={40}
-                      src={`${Image_URL}/Images/${params?.data?.image}`}
-                      alt="Img"
-                    />
-                  )}
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Image",
+        //   field: "image",
+        //   filter: true,
+        //   width: 90,
+        //   sortable: true,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           {params?.data?.image && (
+        //             <img
+        //               width={40}
+        //               height={40}
+        //               src={`${Image_URL}/Images/${params?.data?.image}`}
+        //               alt="Img"
+        //             />
+        //           )}
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
         // {
         //   headerName: "Id",
         //   field: "id",
@@ -1082,7 +1088,9 @@ class CreateTransportList extends React.Component {
                         <>
                           {this.state.rowData === null ? null : (
                             <div>
-                              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
+                              <div
+                                className="ag-theme-material w-100   ag-grid-table card-body"
+                                style={{ marginTop: "-1rem" }}>
                                 <ContextLayout.Consumer className="ag-theme-alpine">
                                   {(context) => (
                                     <AgGridReact

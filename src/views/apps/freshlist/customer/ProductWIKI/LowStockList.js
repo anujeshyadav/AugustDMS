@@ -149,6 +149,7 @@ class LowStockAlert extends React.Component {
 
           sortable: true,
           cellRendererFramework: (params) => {
+            console.log(params?.data);
             return (
               <>
                 <div className="actions cursor-pointer">

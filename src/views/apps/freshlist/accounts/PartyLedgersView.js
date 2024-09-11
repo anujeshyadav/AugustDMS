@@ -24,6 +24,7 @@ import UserContext from "../../../../context/Context";
 import { Route } from "react-router-dom";
 import {
   Create_Account_List,
+  Create_Transporter_List,
   View_Expense_Account,
   View_Ledger_by_id,
 } from "../../../../ApiEndPoint/Api";
@@ -143,11 +144,19 @@ const PartyLedgersView = () => {
       let userdata = JSON.parse(localStorage.getItem("userData"));
       try {
         let url = `${Create_Account_List + userdata?._id}/`;
-        const [CustomeData, UserData, ExpensesData] = await Promise.allSettled([
-          CreateCustomerList(userdata?._id, userdata?.database),
-          _Get(url, userdata?.database),
-          _Get(View_Expense_Account, userdata?.database),
-        ]);
+        const [CustomeData, UserData, ExpensesData, TransporterList] =
+          await Promise.allSettled([
+            CreateCustomerList(userdata?._id, userdata?.database),
+            _Get(url, userdata?.database),
+            _Get(View_Expense_Account, userdata?.database),
+            _Get(Create_Transporter_List, userdata?.database),
+          ]);
+        if (TransporterList?.value?.Transporter?.length > 0) {
+          TransporterList?.value?.Transporter?.forEach((element) => {
+            element["transporter"] = true;
+            element["fullName"] = element?.companyName;
+          });
+        }
 
         if (CustomeData?.value?.Customer?.length > 0) {
           CustomeData?.value?.Customer?.forEach((element) => {
@@ -167,7 +176,9 @@ const PartyLedgersView = () => {
             element["fullName"] = `${element?.title} ${element?.type}`;
           });
         }
-
+        let Transporter = TransporterList?.value?.Transporter
+          ? TransporterList?.value?.Transporter
+          : [];
         let customer = CustomeData?.value?.Customer
           ? CustomeData?.value?.Customer
           : [];
@@ -177,7 +188,7 @@ const PartyLedgersView = () => {
         let Expenses = ExpensesData?.value?.Expenses
           ? ExpensesData?.value?.Expenses
           : [];
-        let wholeData = [...customer, ...User, ...Expenses];
+        let wholeData = [...customer, ...User, ...Expenses, ...Transporter];
 
         setPartyList(wholeData);
       } catch (error) {
@@ -526,7 +537,6 @@ const PartyLedgersView = () => {
                           <tbody>
                             {Ledger &&
                               Ledger?.map((ele, index) => {
-                                console.log(ele);
                                 return (
                                   <tr key={ele?._id}>
                                     <td>

@@ -214,8 +214,8 @@ class LowStockAlert extends React.Component {
           field: "warehouseName",
           filter: true,
           sortable: true,
-          width:300,
-          cellRendererFramework: params => {
+          width: 300,
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
@@ -230,8 +230,8 @@ class LowStockAlert extends React.Component {
           field: "Product_Title",
           filter: true,
           sortable: true,
-          width:180,
-          cellRendererFramework: params => {
+          width: 180,
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
@@ -246,12 +246,12 @@ class LowStockAlert extends React.Component {
           field: "currentStock",
           filter: true,
           sortable: true,
-          width:140,
-          cellRendererFramework: params => {
+          width: 140,
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
-                 {params?.data?.currentStock} 
+                  {params?.data?.currentStock}
                 </div>
               </>
             );
@@ -262,8 +262,8 @@ class LowStockAlert extends React.Component {
           field: "MIN_stockalert",
           filter: true,
           sortable: true,
-          width:140,
-          cellRendererFramework: params => {
+          width: 140,
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
@@ -278,12 +278,15 @@ class LowStockAlert extends React.Component {
           field: "Product_MRP",
           filter: true,
           sortable: true,
-          width:140,
-          cellRendererFramework: params => {
+          width: 140,
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.Product_MRP}</span>
+                  <span>
+                    {params?.data?.Product_MRP &&
+                      params?.data?.Product_MRP?.toFixed(2)}
+                  </span>
                 </div>
               </>
             );
@@ -294,8 +297,8 @@ class LowStockAlert extends React.Component {
           field: "warehosueAddress",
           filter: true,
           sortable: true,
-          width:450,
-          cellRendererFramework: params => {
+          width: 450,
+          cellRendererFramework: (params) => {
             return (
               <>
                 <div className="actions cursor-pointer text-center">
@@ -321,24 +324,25 @@ class LowStockAlert extends React.Component {
         //   },
         // },
 
-        {
-          headerName: "Updated date",
-          field: "updatedAt",
-          filter: true,
-          sortable: true,
-          width:140,
-          cellRendererFramework: params => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <div className="actions cursor-pointer">
-                    <span>{params?.data?.updatedAt?.split("T")[0]}</span>
-                  </div>
-                </div>
-              </>
-            );
-          },
-        },
+        // {
+        //   headerName: "Updated date",
+        //   field: "updatedAt",
+        //   filter: true,
+        //   sortable: true,
+        //   width:140,
+        //   cellRendererFramework: params => {
+        //     console.log(params?.data);
+        //     return (
+        //       <>
+        //         <div className="actions cursor-pointer text-center">
+        //           <div className="actions cursor-pointer">
+        //             <span>{params?.data?.updatedAt?.split("T")[0]}</span>
+        //           </div>
+        //         </div>
+        //       </>
+        //     );
+        //   },
+        // },
       ],
       AllcolumnDefs: [],
       SelectedcolumnDefs: [],
@@ -385,7 +389,6 @@ class LowStockAlert extends React.Component {
     this.setState({ Loading: true });
     await _Get(Low_Stock_Alerts, db)
       .then(res => {
-        debugger;
         this.setState({ Loading: false });
         let value = res?.alertProducts;
         if (value?.length) {

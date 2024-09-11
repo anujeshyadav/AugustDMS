@@ -2632,6 +2632,7 @@ const CreateCustomer = () => {
                                 type="select">
                                 <option value="N/A">--Select--</option>
 
+                                <option value="eCommerce">E-Commerce</option>
                                 <option value="Debitor">Debitor</option>
                                 <option value="Creditor">Creditor</option>
                               </CustomInput>

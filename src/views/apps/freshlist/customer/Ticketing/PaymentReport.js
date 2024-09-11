@@ -347,6 +347,8 @@ class PaymentReport extends React.Component {
             if (params?.data?.expenseId) return params?.data?.expenseId?.title;
             if (params?.data?.partyId) return params?.data?.partyId?.CompanyName;
             if (params?.data?.userId) return params?.data?.userId?.firstName;
+            if (params?.data?.transporterId)
+              return params?.data?.transporterId?.companyName;
             return null;
           },
           filter: true,

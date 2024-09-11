@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
 
 const PartyDataUi = ({ invoiceData, BilData }) => {
   const curentDate = new Date();
-  console.log(curentDate.toTimeString().split(" ")[0]);
   let day = curentDate.getDate();
   let month = curentDate.getMonth() + 1;
   let year = curentDate.getFullYear();

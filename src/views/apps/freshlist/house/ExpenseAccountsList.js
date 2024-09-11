@@ -383,7 +383,6 @@ class ExpenseAccountsList extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Expenses;
-        console.log(value);
         this.setState({ rowData: value });
         this.setState({ rowAllData: value });
       })

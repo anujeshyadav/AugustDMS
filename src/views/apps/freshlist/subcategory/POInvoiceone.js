@@ -109,18 +109,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                 }}>
                 ARN : {invoiceData?.ARN}
               </Text>
-              {/* <Text
-                style={{
-                  fontSize: "8px",
-                }}>
-                Ack No. : 182314174528668
-              </Text>
-              <Text
-                style={{
-                  fontSize: "8px",
-                }}>
-                Ack Date : 14-Aug-23
-              </Text> */}
+             
             </>
           )}
           <View>

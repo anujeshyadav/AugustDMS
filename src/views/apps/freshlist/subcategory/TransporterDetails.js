@@ -2,7 +2,6 @@ import React from "react";
 import { Text, View } from "@react-pdf/renderer";
 
 const TransporterDetails = ({ invoiceData, backGround }) => {
-  console.log(invoiceData);
   return (
     <>
       <View

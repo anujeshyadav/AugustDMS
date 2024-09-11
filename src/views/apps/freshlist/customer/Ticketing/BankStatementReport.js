@@ -131,6 +131,8 @@ class BankStatementReport extends React.Component {
             if (params?.data?.partyId)
               return params?.data?.partyId?.CompanyName;
             if (params?.data?.userId) return params?.data?.userId?.firstName;
+            if (params?.data?.transporterId)
+              return params?.data?.transporterId?.companyName;
             return null;
           },
           filter: true,
@@ -516,7 +518,7 @@ class BankStatementReport extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "BankStatement.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -540,7 +542,7 @@ class BankStatementReport extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `BankStatement.${excelType}`);
       },
     });
   };

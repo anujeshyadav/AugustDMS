@@ -98,7 +98,9 @@ class WareHouseOverDueStock extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <>
-                <div className="actions cursor-pointer text-center">
+                <div
+                  style={{ color: params?.data?.overDue > 30 ? "red" : "blue" }}
+                  className="actions cursor-pointer text-center">
                   <span>{params?.data?.product?.Product_Title}</span>
                 </div>
               </>
@@ -195,6 +197,23 @@ class WareHouseOverDueStock extends React.Component {
             );
           },
         },
+        {
+          headerName: "OverDue Days",
+          field: "overDue",
+          filter: true,
+          sortable: true,
+          width: 140,
+          editable: true,
+          cellRendererFramework: (params) => {
+            return (
+              <>
+                <div className="actions cursor-pointer text-center">
+                  <span>{params?.data?.overDue && params?.data?.overDue}</span>
+                </div>
+              </>
+            );
+          },
+        },
       ],
     };
   }
@@ -211,7 +230,7 @@ class WareHouseOverDueStock extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.allProduct;
-        debugger;
+        console.log(value);
         value.forEach((element) => {
           element["salesDate"] = moment(element?.product?.salesDate).format(
             "DD-MM-YYYY"

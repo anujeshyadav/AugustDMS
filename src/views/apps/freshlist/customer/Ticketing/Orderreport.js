@@ -392,7 +392,7 @@ class Salesreport extends React.Component {
         this.setState({ AllcolumnDefs: this.state.columnDefs });
         this.setState({ SelectedCols: this.state.columnDefs });
 
-        let userHeading = JSON.parse(localStorage.getItem("OrderReportList"));
+        let userHeading = JSON.parse(localStorage.getItem("PartywiseProductWiseSaleReport"));
         if (userHeading?.length) {
           this.setState({ columnDefs: userHeading });
           // this.gridApi.setColumnDefs(userHeading);
@@ -414,7 +414,9 @@ class Salesreport extends React.Component {
     if (userInfo?.rolename?.roleName === "MASTER") {
       this.setState({ MasterShow: true });
     }
-    const InsidePermissions = CheckPermission("Order Report");
+    const InsidePermissions = CheckPermission(
+      "PARTY WISE AND PRODUCT WISE SALE REPORT"
+    );
     await this.Apicalling(userInfo?._id, userInfo?.database);
     this.setState({ InsiderPermissions: InsidePermissions });
   }
@@ -520,14 +522,14 @@ class Salesreport extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("SalesReportPartyWise", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("SalesReportPartyWise.pdf");
   }
 
   exportToPDF = async () => {
@@ -571,7 +573,7 @@ class Salesreport extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "SalesReportPartyWise.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -595,7 +597,7 @@ class Salesreport extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `SalesReportPartyWise.${excelType}`);
       },
     });
   };
@@ -670,7 +672,7 @@ class Salesreport extends React.Component {
     this.setState({ SelectedcolumnDefs: this.state.SelectedcolumnDefs });
     this.setState({ rowData: this.state.rowData });
     localStorage.setItem(
-      "OrderReportList",
+      "PartywiseProductWiseSaleReport",
       JSON.stringify(this.state.SelectedcolumnDefs)
     );
     this.LookupviewStart();
