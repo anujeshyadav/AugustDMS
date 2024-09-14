@@ -86,7 +86,7 @@ class TaxReport extends React.Component {
           headerName: "Total Tax Input",
           field: "totalTaxInput",
           filter: true,
-          width: 155,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -104,7 +104,7 @@ class TaxReport extends React.Component {
           headerName: "Total Tax Output",
           field: "totalTaxOut",
           filter: true,
-          width: 165,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -122,7 +122,7 @@ class TaxReport extends React.Component {
           headerName: "BALANCE TAX",
           field: "BalanceTax",
           filter: true,
-          width: 155,
+          width: 110,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
@@ -484,7 +484,7 @@ class TaxReport extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2  mr-2">
+          <Row style={{marginLeft:"3px",marginRight:"3px"}}>
             <Col style={{ marginTop: "30px" }}>
               <h3 className="float-left " style={{ fontWeight: "600" }}>
                 Tax Report
@@ -500,7 +500,7 @@ class TaxReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "30px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "30px" }} xl="3" lg="3" md="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -509,7 +509,7 @@ class TaxReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                   <div className="table-input cssforproductlist">
@@ -625,7 +625,7 @@ class TaxReport extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
@@ -641,7 +641,7 @@ class TaxReport extends React.Component {
                       colResizeDefault={"shift"}
                       animateRows={true}
                       floatingFilter={false}
-                      // pagination={true}
+                      pagination={true}
                       paginationPageSize={this.state.paginationPageSize}
                       pivotPanelShow="always"
                       enableRtl={context.state.direction === "rtl"}

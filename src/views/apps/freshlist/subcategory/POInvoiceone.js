@@ -109,7 +109,6 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                 }}>
                 ARN : {invoiceData?.ARN}
               </Text>
-             
             </>
           )}
           <View>
@@ -716,7 +715,7 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                     <Text style={styles.header}>
                       SP Name :
                       {BilData?.PrintData?.userId?.firstName &&
-                        `${BilData?.PrintData?.userId?.firstName} ${BilData?.PrintData?.userId?.lastName}`}
+                        `${BilData?.PrintData?.userId?.firstName}`}
                     </Text>
                   </View>
                   {invoiceData?.transporter && invoiceData?.transporter ? (

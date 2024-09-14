@@ -762,7 +762,7 @@ class Salesreport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col lg="2" md="2" xl="2" style={{ marginTop: "30px" }}>
+            <Col lg="3" md="3" xl="3" style={{ marginTop: "30px" }}>
               {" "}
               <div className="table-input cssforproductlist">
                 <Input
@@ -772,7 +772,7 @@ class Salesreport extends React.Component {
                 />
               </div>
             </Col>
-            <Col lg="5" md="5" xl="5">
+            <Col lg="4" md="4" xl="4">
               <Row>
                 <Col lg="5" md="5" xl="5" style={{ marginTop: "9px" }}>
                   <div className="table-input cssforproductlist">

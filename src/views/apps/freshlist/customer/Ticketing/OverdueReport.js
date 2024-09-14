@@ -105,10 +105,10 @@ class OverdueReport extends React.Component {
           },
         },
         {
-          headerName: "DueStatus",
+          headerName: "Due Status",
           field: "dueStatus",
           filter: true,
-          width: 200,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -121,7 +121,7 @@ class OverdueReport extends React.Component {
           headerName: "Order Amount",
           field: "totalOrderAmount",
           filter: true,
-          width: 200,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -134,7 +134,7 @@ class OverdueReport extends React.Component {
           headerName: "locking Amount",
           field: "lockingAmount",
           filter: true,
-          width: 200,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -144,10 +144,10 @@ class OverdueReport extends React.Component {
           },
         },
         {
-          headerName: "PaidAmount",
+          headerName: "Paid Amount",
           field: "totalPaidAmount",
           filter: true,
-          width: 260,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -160,7 +160,7 @@ class OverdueReport extends React.Component {
           headerName: "Remaining Amount",
           field: "remainingAmount",
           filter: true,
-          width: 260,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -173,7 +173,7 @@ class OverdueReport extends React.Component {
           headerName: "Date",
           field: "updatedAt",
           filter: true,
-          width: 200,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -182,24 +182,24 @@ class OverdueReport extends React.Component {
             );
           },
         },
-        {
-          headerName: "lockingAmount",
-          field: "lockingAmount",
-          filter: true,
-          width: 200,
-          cellRendererFramework: (params) => {
-            return (
-              <div>
-                <span>{params?.data?.lockingAmount}</span>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "locking Amount",
+        //   field: "lockingAmount",
+        //   filter: true,
+        //   width: 140,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div>
+        //         <span>{params?.data?.lockingAmount}</span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "lock Time",
           field: "lockInTime",
           filter: true,
-          width: 200,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -230,10 +230,10 @@ class OverdueReport extends React.Component {
         // },
 
         {
-          headerName: "mobile Number",
+          headerName: "mobile No",
           field: "partyId.mobileNumber",
           filter: true,
-          width: 230,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -246,7 +246,7 @@ class OverdueReport extends React.Component {
           headerName: "Pan Num",
           field: "partyId.panNo",
           filter: true,
-          width: 230,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -604,7 +604,7 @@ class OverdueReport extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row className="ml-2  mr-2">
+            <Row style={{marginLeft:"3px",marginRight:"3px"}}>
               <Col style={{ marginTop: "30px" }}>
                 <h3 className="float-left " style={{ fontWeight: "600" }}>
                   Over Due Report
@@ -620,7 +620,7 @@ class OverdueReport extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col style={{ marginTop: "30px" }} lg="2" xl="2" md="2">
+              <Col style={{ marginTop: "30px" }} lg="3" xl="3" md="3">
                 <div className="table-input">
                   <Input
                     placeholder="search Item here..."
@@ -629,7 +629,7 @@ class OverdueReport extends React.Component {
                   />
                 </div>
               </Col>
-              <Col xl="5" lg="5" md="5">
+              <Col xl="4" lg="4" md="4">
                 <Row>
                   <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                     {" "}
@@ -659,6 +659,13 @@ class OverdueReport extends React.Component {
                     <div className="table-input">
                       <Button
                         type="submit"
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "rgb(8, 91, 245)",
+                          color: "white",
+                          fontWeight: "600",
+                          height: "43px",
+                        }}
                         color="primary"
                         onClick={this.handleSubmitDate}>
                         Submit
@@ -740,7 +747,7 @@ class OverdueReport extends React.Component {
                 )}
               </Col>
             </Row>
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   <ContextLayout.Consumer className="ag-theme-alpine">
@@ -756,7 +763,7 @@ class OverdueReport extends React.Component {
                         colResizeDefault={"shift"}
                         animateRows={true}
                         floatingFilter={false}
-                        // pagination={true}
+                      pagination={true}
                         paginationPageSize={this.state.paginationPageSize}
                         pivotPanelShow="always"
                         enableRtl={context.state.direction === "rtl"}

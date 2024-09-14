@@ -123,7 +123,7 @@ function ProfitandLossReport() {
         </div>
         <div id="testId">
           <div className="d-flex justify-content-center">
-            <div className="p-3">
+            <div className=" ">
               <hr />
               <h3>Profit and Loss Account</h3>
               <hr />
@@ -131,7 +131,7 @@ function ProfitandLossReport() {
           </div>
 
           <div>
-            <div className="p-5">
+            <div className="p-1">
               <div style={{ backgroundColor: "#8080809c" }}>
                 <Row>
                   <Col>
@@ -275,7 +275,7 @@ function ProfitandLossReport() {
 
                       padding: "8px",
                     }}>
-                    <strong style={{ fontSize: "20px" }}>Gross Profit</strong>
+                    <strong style={{ fontSize: "16px" }}>Gross Profit</strong>
                   </div>
                 </Col>
                 <Col>
@@ -286,7 +286,7 @@ function ProfitandLossReport() {
 
                       padding: "8px",
                     }}>
-                    <strong style={{ fontSize: "20px" }}>
+                    <strong style={{ fontSize: "16px" }}>
                       RS {GrossProfit ? GrossProfit : 0.0}
                     </strong>
                   </div>
@@ -356,7 +356,7 @@ function ProfitandLossReport() {
 
                       padding: "8px",
                     }}>
-                    <strong style={{ fontSize: "20px" }}>Net Profit</strong>
+                    <strong style={{ fontSize: "16px" }}>Net Profit</strong>
                   </div>
                 </Col>
                 <Col>
@@ -366,7 +366,7 @@ function ProfitandLossReport() {
 
                       padding: "8px",
                     }}>
-                    <strong style={{ fontSize: "20px" }}>
+                    <strong style={{ fontSize: "16px" }}>
                       RS {NetProfit ? NetProfit : 0.0}
                     </strong>
                   </div>

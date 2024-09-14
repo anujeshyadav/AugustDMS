@@ -296,7 +296,7 @@ class PaymentReport extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 100,
+          width: 55,
           filter: true,
         },
 
@@ -305,7 +305,7 @@ class PaymentReport extends React.Component {
           field: "date",
           filter: true,
           resizable: true,
-          width: 200,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -369,7 +369,7 @@ class PaymentReport extends React.Component {
           field: "voucherType",
           filter: true,
           resizable: true,
-          width: 230,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -407,7 +407,7 @@ class PaymentReport extends React.Component {
           },
           editable: true,
           resizable: true,
-          width: 180,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -470,7 +470,7 @@ class PaymentReport extends React.Component {
           field: "cashRunning",
           filter: true,
           resizable: true,
-          width: 180,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -921,7 +921,7 @@ class PaymentReport extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2  mr-2">
+          <Row style={{marginLeft:"3px",marginRight:"3px"}}>
             <Col style={{ marginTop: "30px" }}>
               <h3 className="float-left " style={{ fontWeight: "600" }}>
                 Payment Report
@@ -937,7 +937,7 @@ class PaymentReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "30px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "30px" }} xl="3" lg="3" md="3">
               <div className="table-input">
                 <Input
                   placeholder="search Item here..."
@@ -946,7 +946,7 @@ class PaymentReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                   <div className="table-input">
@@ -1055,7 +1055,7 @@ class PaymentReport extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">

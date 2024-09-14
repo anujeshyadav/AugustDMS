@@ -122,18 +122,6 @@ const EditOrder = (args) => {
             setBorderColor("red");
           }
         }
-        // const gstdetails = GstCalculation(Party, list, Context);
-        // setGSTData(gstdetails);
-        // list[index]["taxableAmount"] = gstdetails?.gstDetails[index]?.taxable;
-        // list[index]["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
-        // list[index]["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
-        // list[index]["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
-        // list[index]["grandTotal"] = gstdetails?.gstDetails[index]?.grandTotal;
-        // list[index]["gstPercentage"] =
-        //   gstdetails?.gstDetails[index]?.gstPercentage;
-        // list[index]["disCountPercentage"] =
-        //   gstdetails?.gstDetails[index]?.discountPercentage;
-        // setProduct(list);
       }
     }
   };

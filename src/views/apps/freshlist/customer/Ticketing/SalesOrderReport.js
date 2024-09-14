@@ -128,7 +128,7 @@ class SalesOrderReport extends React.Component {
           headerName: "Order Number",
           field: "order.orderNo",
           filter: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
@@ -165,7 +165,7 @@ class SalesOrderReport extends React.Component {
           headerName: "Order Date",
           field: "order.createdAt",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -241,7 +241,7 @@ class SalesOrderReport extends React.Component {
           headerName: "CGST Rate",
           field: "cgstRate",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -253,10 +253,10 @@ class SalesOrderReport extends React.Component {
           },
         },
         {
-          headerName: "SGSTRate",
+          headerName: "SGST Rate",
           field: "sgstRate",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -268,10 +268,10 @@ class SalesOrderReport extends React.Component {
           },
         },
         {
-          headerName: "IGSTRate",
+          headerName: "IGST Rate",
           field: "igstRate",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -283,10 +283,10 @@ class SalesOrderReport extends React.Component {
           },
         },
         {
-          headerName: "BasicAmount",
+          headerName: "Basic Amount",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -302,7 +302,7 @@ class SalesOrderReport extends React.Component {
           headerName: "Tax",
           field: "igstTotal",
           filter: true,
-          width: 150,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -321,7 +321,7 @@ class SalesOrderReport extends React.Component {
           headerName: "Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="text-center cursor-pointer">
@@ -800,7 +800,7 @@ class SalesOrderReport extends React.Component {
                 {/* <option value="delivery">Delivery</option> */}
               </CustomInput>
             </Col>
-            <Col style={{ marginTop: "30px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "30px" }} xl="3" lg="3" md="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -809,7 +809,7 @@ class SalesOrderReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="2" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                   <div className="table-input cssforproductlist">

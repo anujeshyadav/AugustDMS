@@ -766,9 +766,10 @@ class targerReport extends React.Component {
                 )}
               </Col>
             </Row>
-            <>
+            <CardBody style={{ marginTop: "-3rem" }}>
+
               {this.state.rowData === null ? null : (
-                <div className="ag-theme-material w-100   ag-grid-table">
+                <div className="ag-theme-material w-100 my-2 ag-grid-table  "  >
                   <ContextLayout.Consumer className="ag-theme-alpine">
                     {(context) => (
                       <AgGridReact
@@ -793,7 +794,8 @@ class targerReport extends React.Component {
                   </ContextLayout.Consumer>
                 </div>
               )}
-            </>
+                
+            </CardBody>
           </Card>
         </div>
 

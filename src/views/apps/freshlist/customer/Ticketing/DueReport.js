@@ -73,7 +73,7 @@ class DueReport extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -151,7 +151,7 @@ class DueReport extends React.Component {
           headerName: "Party name",
           field: "partyId.CompanyName",
           filter: true,
-          width: 180,
+         
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -177,7 +177,7 @@ class DueReport extends React.Component {
           headerName: "Vouchar Number",
           field: "voucherNo",
           filter: true,
-          width: 200,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -190,7 +190,7 @@ class DueReport extends React.Component {
           headerName: "Vouchar Date",
           field: "voucherDate",
           filter: true,
-          width: 260,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -204,7 +204,7 @@ class DueReport extends React.Component {
           field: "partyId.limit",
           filter: true,
           editable: true,
-          width: 220,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -218,7 +218,7 @@ class DueReport extends React.Component {
           field: "dueDays",
           filter: true,
           editable: true,
-          width: 220,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -232,7 +232,7 @@ class DueReport extends React.Component {
           field: "overDueDays",
           filter: true,
           editable: true,
-          width: 220,
+          width:130,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -245,13 +245,13 @@ class DueReport extends React.Component {
           headerName: "Lock Status",
           field: "lockStatus",
           filter: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <Badge color="primary" pill>
+               
                   <span>{params?.data?.lockStatus}</span>
-                </Badge>
+                
               </div>
             );
           },
@@ -260,7 +260,7 @@ class DueReport extends React.Component {
           headerName: "Sales Person Name",
           field: "salesPerson",
           filter: true,
-          width: 180,
+          
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -650,7 +650,7 @@ class DueReport extends React.Component {
       <>
        
             <Card>
-              <Row className="ml-2  mr-2">
+              <Row style={{marginLeft:"3px",marginRight:"3px"}}>
                 <Col style={{marginTop:'30px'}}>
                   <h3 className="float-left " style={{ fontWeight: "600" }}>
                     Due Report
@@ -666,7 +666,7 @@ class DueReport extends React.Component {
                 ) : (
                   <Col></Col>
                 )}
-                <Col style={{marginTop:'30px'}} xl='2' lg='2' md='2'>
+                <Col style={{marginTop:'30px'}} xl='3' lg='3' md='3'>
                 <div className="table-input ">
                 <Input
                  
@@ -678,7 +678,7 @@ class DueReport extends React.Component {
                 />
               </div>
                 </Col>
-                <Col md='5' lg='5' xl='5' >
+                <Col md='4' lg='4' xl='4' >
                 <Row>
                 <Col md='5' lg='5' xl='5' style={{marginTop:'9px'}}>
                 <div className="table-input">
@@ -789,7 +789,7 @@ class DueReport extends React.Component {
                   )}
                 </Col>
               </Row>
-              <CardBody style={{ marginTop: "0rem" }}>
+              <CardBody style={{ marginTop: "-3rem" }}>
                 {this.state.rowData === null ? null : (
                   <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   
@@ -806,7 +806,7 @@ class DueReport extends React.Component {
                           colResizeDefault={"shift"}
                           animateRows={true}
                           floatingFilter={false}
-                          // pagination={true}
+                          pagination={true}
                           paginationPageSize={this.state.paginationPageSize}
                           pivotPanelShow="always"
                           enableRtl={context.state.direction === "rtl"}

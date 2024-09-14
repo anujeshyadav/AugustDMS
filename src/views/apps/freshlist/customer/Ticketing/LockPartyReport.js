@@ -92,7 +92,7 @@ class purchasereportamount extends React.Component {
           headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 100,
+          width: 55,
           filter: true,
         },
 
@@ -139,7 +139,7 @@ class purchasereportamount extends React.Component {
           headerName: "email",
           field: "email",
           filter: true,
-
+width: 300,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -152,7 +152,7 @@ class purchasereportamount extends React.Component {
           headerName: "gst Number",
           field: "gstNumber",
           filter: true,
-          width: 200,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -165,7 +165,7 @@ class purchasereportamount extends React.Component {
           headerName: "Address",
           field: "address",
           filter: true,
-          width: 180,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -178,7 +178,7 @@ class purchasereportamount extends React.Component {
           headerName: "Party Type",
           field: "partyType",
           filter: true,
-          width: 240,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -191,7 +191,7 @@ class purchasereportamount extends React.Component {
           headerName: "Pan Num",
           field: "panNo",
           filter: true,
-          width: 180,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -204,7 +204,7 @@ class purchasereportamount extends React.Component {
           headerName: "Billing Status",
           field: "autoBillingStatus",
           filter: true,
-          width: 180,
+          width: 140,
           cellRendererFramework: (params) => {
             return <div>{params?.data?.autoBillingStatus}</div>;
           },
@@ -586,7 +586,7 @@ class purchasereportamount extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2">
+          <Row style={{marginLeft:"3px",marginRight:"3px"}}>
             <Col style={{ marginTop: "30px" }}>
               <h3 className="float-left " style={{ fontWeight: "600" }}>
                 Lock Party Report
@@ -602,7 +602,7 @@ class purchasereportamount extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "30px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "30px" }} xl="3" lg="3" md="3">
               {" "}
               <div className="table-input">
                 <Input
@@ -612,7 +612,7 @@ class purchasereportamount extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                   <div className="table-input">
@@ -728,7 +728,7 @@ class purchasereportamount extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
@@ -744,7 +744,7 @@ class purchasereportamount extends React.Component {
                       colResizeDefault={"shift"}
                       animateRows={true}
                       floatingFilter={false}
-                      // pagination={true}
+                    pagination={true}
                       paginationPageSize={this.state.paginationPageSize}
                       pivotPanelShow="always"
                       enableRtl={context.state.direction === "rtl"}

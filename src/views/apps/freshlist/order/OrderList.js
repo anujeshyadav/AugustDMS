@@ -1824,6 +1824,30 @@ class OrderList extends React.Component {
                         />
                       </span>
                     )}
+                    {InsiderPermissions && InsiderPermissions?.Create && (
+                      <span>
+                        <Route
+                          render={({ history }) => (
+                            <Button
+                              style={{
+                                cursor: "pointer",
+                                backgroundColor: "rgb(8, 91, 245)",
+                                color: "white",
+                                fontWeight: "500",
+                                height: "43px",
+                                textTransform: "uppercase",
+                              }}
+                              className=" mx-1"
+                              color="#39cccc"
+                              onClick={() =>
+                                history.push("/app/jupitech/order/createInvoice")
+                              }>
+                              <FaPlus size={15} /> Invoice
+                            </Button>
+                          )}
+                        />
+                      </span>
+                    )}
                   </div>
                   <div>
                     {InsiderPermissions && InsiderPermissions?.Create && (
@@ -1839,7 +1863,7 @@ class OrderList extends React.Component {
                                 height: "43px",
                                 textTransform: "uppercase",
                               }}
-                              className="float-right"
+                              className="float-right pr-2"
                               color="#39cccc"
                               onClick={() =>
                                 history.push(

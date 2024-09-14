@@ -104,65 +104,40 @@ class GSTR1 extends React.Component {
 
       B2CS: [
         {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          width: 80,
-          filter: true,
-        },
-
-        {
-          headerName: "Invoice Type",
-          field: "order.partyId.partyType",
+          headerName: "Type",
           filter: true,
           width: 150,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <span>
-                  OE
-                  {/* {params?.data?.order?.partyId?.partyType == 0 ? (
-                    "Unknown"
-                  ) : (
-                    <>
-                      {params?.data?.order?.partyId?.partyType == 1
-                        ? "Regular"
-                        : "Unregisterd"}
-                    </>
-                  )} */}
-                </span>
-              </div>
-            );
+          valueGetter: (params) => {
+            if (params.data?.productId?.GSTRate >= 65) return "E";
+            return "OE";
           },
-        },
-        {
-          headerName: "Place of Supply",
-          field: "order?.partyId?.gstNumber?.slice(0, 2)",
-          filter: true,
-          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.partyId?.gstNumber &&
-                    params?.data?.order?.partyId?.gstNumber?.slice(0, 2)}
-                  -{params?.data?.order.partyId.State}-
-                  {params?.data?.order.partyId.City}
-                </span>
+                <span>{params?.value}</span>
               </div>
             );
           },
         },
 
         {
-          headerName: "Applicable % of Tax Rate",
-          field: "gstPercentage",
+          headerName: "Place of Supply",
           filter: true,
-          width: 230,
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.gstNumber) {
+              let data = `${params?.data?.order?.partyId?.gstNumber?.slice(
+                0,
+                2
+              )}-${params?.data?.order.partyId.State}`;
+              return data;
+            }
+          },
+          resizable: true,
+          width: 290,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                {/* <span>{params?.data?.gstPercentage}</span> */}
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -180,6 +155,23 @@ class GSTR1 extends React.Component {
             );
           },
         },
+        {
+          headerName: "Appilicable % of Tax Rate",
+          valueGetter: (params) => {
+            if (params?.data?.productId?.GSTRate >= 65)
+              return params?.data?.productId?.GSTRate;
+
+            return null;
+          },
+          filter: true,
+          width: 200,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">{params?.value}</div>
+            );
+          },
+        },
+
         {
           headerName: "Taxable Value",
           field: "taxableAmount",
@@ -206,69 +198,21 @@ class GSTR1 extends React.Component {
             );
           },
         },
-        // {
-        //   headerName: "SGST",
-        //   field: "sgstRate",
-        //   filter: true,
 
-        //   width: 180,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.sgstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "CGST",
-        //   field: "cgstRate",
-        //   filter: true,
-        //   width: 180,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.cgstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "IGST",
-        //   field: "igstRate",
-        //   filter: true,
-        //   width: 180,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.igstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-
-        // {
-        //   headerName: "Grand Total",
-        //   field: "grandTotal",
-        //   filter: true,
-        //   width: 150,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.grandTotal}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
         {
           headerName: "E-commerce GSTIN",
-          field: "invoiceId",
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.partyType == "eCommerce")
+              return params?.data?.order?.partyId?.gstNumber;
+
+            return null;
+          },
           filter: true,
-          width: 170,
+          width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.invoiceId}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -277,14 +221,13 @@ class GSTR1 extends React.Component {
       B2CL: [
         {
           headerName: "Invoice Number",
-          field: "invoiceId",
+          field: "order.invoiceId",
           filter: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
-            console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.invoiceId}</span>
+                <span>{params?.data?.order?.invoiceId}</span>
               </div>
             );
           },
@@ -292,14 +235,14 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Invoice Date",
-          field: "date",
+          field: "updatedAt",
           filter: true,
           width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>
-                  {moment(params?.data?.date?.split("T")[0]).format(
+                  {moment(params?.data?.order?.updatedAt?.split("T")[0]).format(
                     "DD-MMM-YYYY"
                   )}
                 </span>
@@ -310,57 +253,65 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Invoice Value",
-          field: "grandTotal",
+          field: "order.grandTotal",
           filter: true,
           width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.grandTotal}</span>
+                <span>{params?.data?.order?.grandTotal}</span>
               </div>
             );
           },
         },
         {
           headerName: "Place of Supply",
-          field: "partyId?.gstNumber?.slice(0, 2)",
           filter: true,
-          width: 220,
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.gstNumber) {
+              let data = `${params?.data?.order?.partyId?.gstNumber?.slice(
+                0,
+                2
+              )}-${params?.data?.order?.partyId?.State}`;
+              return data;
+            }
+          },
+          resizable: true,
+          width: 290,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.partyId?.gstNumber &&
-                    params?.data?.partyId?.gstNumber?.slice(0, 2)}
-                  -{params?.data?.partyId?.State}-{params?.data?.partyId?.City}
-                </span>
+                <span>{params?.value}</span>
               </div>
             );
           },
         },
 
         {
-          headerName: "Applicable % of Tax Rate",
-          field: "gstPercentage",
+          headerName: "Appilicable % of Tax Rate",
+          valueGetter: (params) => {
+            if (params?.data?.productId?.GSTRate >= 65)
+              return params?.data?.productId?.GSTRate;
+
+            return null;
+          },
           filter: true,
-          width: 230,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
-                {/* <span>{params?.data?.gstPercentage}</span> */}
-              </div>
+              <div className="cursor-pointer text-center">{params?.value}</div>
             );
           },
         },
         {
           headerName: "Rate",
-          field: "gstPercentage",
+          field: "productId.GSTRate",
           filter: true,
           width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.gstPercentage}</span>
+                <span>{params?.data?.productId?.GSTRate}</span>
               </div>
             );
           },
@@ -378,46 +329,6 @@ class GSTR1 extends React.Component {
             );
           },
         },
-        // {
-        //   headerName: "SGST",
-        //   field: "sgstRate",
-        //   filter: true,
-
-        //   width: 180,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.sgstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "CGST",
-        //   field: "cgstRate",
-        //   filter: true,
-        //   width: 180,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.cgstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "IGST",
-        //   field: "igstRate",
-        //   filter: true,
-        //   width: 180,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.igstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
 
         {
           headerName: "Cess Amount",
@@ -434,13 +345,18 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "E-commerce GSTIN",
-          field: "invoiceId",
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.partyType == "eCommerce")
+              return params?.data?.order?.partyId?.gstNumber;
+
+            return null;
+          },
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.invoiceId}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -448,10 +364,10 @@ class GSTR1 extends React.Component {
       ],
       CDNR: [
         {
-          headerName: "GSTIN",
+          headerName: "GSTIN/UIN of Recipient",
           field: "order.partyId.gstNumber",
           filter: true,
-          width: 140,
+          width: 240,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -462,13 +378,13 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Receiver Name",
-          field: "order.partyId.ownerName",
+          field: "order.partyId.CompanyName",
           filter: true,
           width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.partyId?.ownerName}</span>
+                <span>{params?.data?.order?.partyId?.CompanyName}</span>
               </div>
             );
           },
@@ -480,7 +396,7 @@ class GSTR1 extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          width: 150,
+          width: 260,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -494,7 +410,7 @@ class GSTR1 extends React.Component {
           field: "order.date",
           filter: true,
           resizable: true,
-          width: 140,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -509,20 +425,17 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Note Type",
-          field: "order.creditType",
+          valueGetter: (params) => {
+            if (params?.data?.order?.creditType) return "C";
+            return "D";
+          },
           filter: true,
           resizable: true,
-          width: 160,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.creditType == "C" ? (
-                    <>{params?.data?.order?.creditType}</>
-                  ) : (
-                    <>{params?.data?.order?.debitType}</>
-                  )}
-                </span>
+                <span>{params.value}</span>
               </div>
             );
           },
@@ -530,42 +443,55 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Place of Supply",
-          field: "order.partyId.address1",
           filter: true,
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.gstNumber) {
+              let data = `${params?.data?.order?.partyId?.gstNumber?.slice(
+                0,
+                2
+              )}-${params?.data?.order.partyId.State}`;
+              return data;
+            }
+          },
+          resizable: true,
           width: 290,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.partyId?.gstNumber?.slice(0, 2)}-
-                  {params?.data?.order?.partyId?.State}
-                </span>
+                <span>{params.value}</span>
               </div>
             );
           },
         },
         {
           headerName: "Reverse Charges",
-          field: "order.reverseCharge",
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.assignTransporter?.length > 0)
+              return "Y";
+
+            return "N";
+          },
           filter: true,
           width: 160,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.reverseCharge}</span>
-              </div>
+              <div className="cursor-pointer text-center">{params?.value}</div>
             );
           },
         },
         {
           headerName: "Note Supply Type",
-          field: "invoiceId",
+          valueGetter: (params) => {
+            if (params?.data?.order?.igstTaxType)
+              return "Intra-State supplies attracting IGST";
+            return "Regular B2B";
+          },
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>Regular</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -586,15 +512,17 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Applicable % of Tax Rate",
-          field: "gstPercentage",
+          valueGetter: (params) => {
+            if (params?.data?.productId?.GSTRate >= 65)
+              return params?.data?.productId?.GSTRate;
+
+            return null;
+          },
           filter: true,
           width: 230,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
-                {" "}
-                <span></span>{" "}
-              </div>
+              <div className="cursor-pointer text-center">{params?.value}</div>
             );
           },
         },
@@ -627,7 +555,7 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Cess Amount",
-          field: "grandTotal",
+          field: "",
           filter: true,
           width: 140,
           cellRendererFramework: (params) => {
@@ -641,12 +569,29 @@ class GSTR1 extends React.Component {
       ],
       CDNUR: [
         {
+          headerName: "UR Type",
+          valueGetter: (params) => {
+            return "B2CL";
+          },
+          filter: true,
+          editable: true,
+          resizable: true,
+          width: 145,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">
+                <span>B2CL</span>
+              </div>
+            );
+          },
+        },
+        {
           headerName: "Note Number",
           field: "order._id",
           filter: true,
           editable: true,
           resizable: true,
-          width: 145,
+          width: 205,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -675,20 +620,19 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Note Type",
-          field: "order.creditType",
+          valueGetter: (params) => {
+            if (params?.data?.order?.creditType) return "C";
+            return "D";
+          },
           filter: true,
           resizable: true,
           width: 140,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span className="cursor-pointer text-center">
-                  {params?.data?.order?.creditType == "C" ? (
-                    <>{params?.data?.order?.creditType}</>
-                  ) : (
-                    <>{params?.data?.order?.debitType}</>
-                  )}
-                </span>
+                <div className="cursor-pointer text-center">
+                  <span>{params.value}</span>
+                </div>
               </div>
             );
           },
@@ -696,46 +640,27 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Place of Supply",
-          field: "order.partyId.address1",
           filter: true,
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.gstNumber) {
+              let data = `${params?.data?.order?.partyId?.gstNumber?.slice(
+                0,
+                2
+              )}-${params?.data?.order.partyId.State}`;
+              return data;
+            }
+          },
+          resizable: true,
           width: 290,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.partyId?.gstNumber?.slice(0, 2)}-
-                  {params?.data?.order?.partyId?.State}
-                </span>
+                <span>{params.value}</span>
               </div>
             );
           },
         },
-        // {
-        //   headerName: "Reverse Charges",
-        //   field: "order.reverseCharge",
-        //   filter: true,
-        //   width: 200,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>{params?.data?.order?.reverseCharge}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "Note Supply Type",
-        //   field: "invoiceId",
-        //   filter: true,
-        //   width: 200,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div>
-        //         <span>Regular</span>
-        //       </div>
-        //     );
-        //   },
-        // },
+
         {
           headerName: "Note Value",
           field: "grandTotal",
@@ -752,15 +677,17 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Applicable % of Tax Rate",
-          field: "gstPercentage",
+          valueGetter: (params) => {
+            if (params?.data?.productId?.GSTRate >= 65)
+              return params?.data?.productId?.GSTRate;
+
+            return null;
+          },
           filter: true,
           width: 230,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
-                {" "}
-                <span></span>{" "}
-              </div>
+              <div className="cursor-pointer text-center">{params?.value}</div>
             );
           },
         },
@@ -793,7 +720,7 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Cess Amount",
-          field: "grandTotal",
+          field: "",
           filter: true,
           width: 140,
           cellRendererFramework: (params) => {
@@ -866,7 +793,7 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Invoice Value",
-          field: "grandTotal",
+          field: "order.grandTotal",
           filter: true,
           width: 150,
           cellRendererFramework: (params) => {
@@ -908,12 +835,7 @@ class GSTR1 extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.partyId?.gstNumber &&
-                    params?.data?.order?.partyId?.gstNumber?.slice(0, 2)}
-                  -{params?.data?.order.partyId.State}-
-                  {params?.data?.order.partyId.City}
-                </span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -921,7 +843,6 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Reverse Charge",
-          field: "invoiceId",
           filter: true,
           valueGetter: (params) => {
             if (params?.data?.order?.partyId?.assignTransporter?.length > 0)
@@ -932,19 +853,7 @@ class GSTR1 extends React.Component {
           width: 160,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
-                {/* {!!params?.data?.order?.partyId?.assignTransporter?.length >
-                  0 && params?.data?.order?.partyId?.assignTransporter > 0 ? (
-                  <>
-                    <span>Yes</span>
-                  </>
-                ) : (
-                  <>
-                    <span>No</span>
-                  </>
-                )} */}
-                {params?.value}
-              </div>
+              <div className="cursor-pointer text-center">{params?.value}</div>
             );
           },
         },
@@ -967,13 +876,17 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Invoice Type",
-          field: "order.partyId.partyType",
           filter: true,
-          width: 140,
+          valueGetter: (params) => {
+            if (params?.data?.order?.igstTaxType)
+              return "Intra-State supplies attracting IGST";
+            return "Regular B2B";
+          },
+          width: 280,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.partyId?.partyType}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -981,7 +894,7 @@ class GSTR1 extends React.Component {
         {
           headerName: "E-commerce GSTIN",
           valueGetter: (params) => {
-            if (params?.data?.order?.partyId?.partyType=="eCommerce")
+            if (params?.data?.order?.partyId?.partyType == "eCommerce")
               return params?.data?.order?.partyId?.gstNumber;
 
             return null;
@@ -1035,71 +948,10 @@ class GSTR1 extends React.Component {
             );
           },
         },
-        // {
-        //   headerName: "SGST",
-        //   field: "sgstRate",
-        //   filter: true,
-
-        //   width: 140,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div className="cursor-pointer text-center">
-        //         <span>{params?.data?.sgstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "CGST",
-        //   field: "cgstRate",
-        //   filter: true,
-        //   width: 140,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div className="cursor-pointer text-center">
-        //         <span>{params?.data?.cgstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "IGST",
-        //   field: "igstRate",
-        //   filter: true,
-        //   width: 140,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div className="cursor-pointer text-center">
-        //         <span>{params?.data?.igstRate}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
-
-        // {
-        //   headerName: "Grand Total",
-        //   field: "grandTotal",
-        //   filter: true,
-        //   width: 140,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <div className="cursor-pointer text-center">
-        //         <span>{params?.data?.grandTotal}</span>
-        //       </div>
-        //     );
-        //   },
-        // },
       ],
-      columnDefs: [
+      CONSOLIDATED: [
         {
-          headerName: "UID",
-          valueGetter: "node.rowIndex + 1",
-          field: "node.rowIndex + 1",
-          width: 80,
-          filter: true,
-        },
-        {
-          headerName: "GSTIN",
+          headerName: "GSTIN/UIN No. Of Receipient",
           field: "order.partyId.gstNumber",
           filter: true,
           width: 140,
@@ -1112,15 +964,28 @@ class GSTR1 extends React.Component {
           },
         },
         {
-          headerName: "Party Name",
+          headerName: "Receiver Name",
           field: "order.partyId.CompanyName",
           filter: true,
           resizable: true,
-          width: 220,
+          width: 210,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.order?.partyId?.CompanyName}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Invoice Number",
+          field: "order.invoiceId",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">
+                <span>{params?.data?.order?.invoiceId}</span>
               </div>
             );
           },
@@ -1133,7 +998,11 @@ class GSTR1 extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.updatedAt?.split("T")[0]}</span>
+                <span>
+                  {moment(params?.data?.order?.updatedAt?.split("T")[0]).format(
+                    "DD-MMM-YYYY"
+                  )}
+                </span>
               </div>
             );
           },
@@ -1141,7 +1010,7 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Invoice Value",
-          field: "grandTotal",
+          field: "order.grandTotal",
           filter: true,
           width: 150,
           cellRendererFramework: (params) => {
@@ -1153,61 +1022,106 @@ class GSTR1 extends React.Component {
           },
         },
         {
-          headerName: "Place of Supply",
-          field: "order?.partyId?.gstNumber?.slice(0, 2)",
+          headerName: "Invoice id",
+          field: "order.invoiceId",
           filter: true,
-          width: 290,
+          width: 150,
           cellRendererFramework: (params) => {
-            console.log(params.data);
+            // console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {params?.data?.order?.partyId?.gstNumber &&
-                    params?.data?.order?.partyId?.gstNumber?.slice(0, 2)}
-                  -{params?.data?.order.partyId.State}-
-                  {params?.data?.order.partyId.City}
-                </span>
+                <span>{params?.data?.order?.invoiceId}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Place of Supply",
+          filter: true,
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.gstNumber) {
+              let data = `${params?.data?.order?.partyId?.gstNumber?.slice(
+                0,
+                2
+              )}-${params?.data?.order.partyId.State}`;
+              return data;
+            }
+          },
+          resizable: true,
+          width: 290,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">
+                <span>{params?.value}</span>
               </div>
             );
           },
         },
 
         {
-          headerName: "Reverse Charges",
-          field: "invoiceId",
+          headerName: "Reverse Charge",
           filter: true,
-          width: 170,
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.assignTransporter?.length > 0)
+              return "Y";
+
+            return "N";
+          },
+          width: 160,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
-                <span>Yes</span>
-              </div>
+              <div className="cursor-pointer text-center">{params?.value}</div>
+            );
+          },
+        },
+        {
+          headerName: "Appilicable % of Tax Rate",
+          valueGetter: (params) => {
+            if (params?.data?.productId?.GSTRate >= 65)
+              return params?.data?.productId?.GSTRate;
+
+            return null;
+          },
+          filter: true,
+          width: 200,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">{params?.value}</div>
             );
           },
         },
 
         {
           headerName: "Invoice Type",
-          field: "order.partyId.partyType",
           filter: true,
-          width: 140,
+          valueGetter: (params) => {
+            if (params?.data?.order?.igstTaxType)
+              return "Intra-State supplies attracting IGST";
+            return "Regular B2B";
+          },
+          width: 280,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.partyId?.partyType}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
         },
         {
           headerName: "E-commerce GSTIN",
-          field: "invoiceId",
+          valueGetter: (params) => {
+            if (params?.data?.order?.partyId?.partyType == "eCommerce")
+              return params?.data?.order?.partyId?.gstNumber;
+
+            return null;
+          },
           filter: true,
-          width: 200,
+          width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.invoiceId}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -1229,7 +1143,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1239,60 +1153,20 @@ class GSTR1 extends React.Component {
           },
         },
         {
-          headerName: "SGST",
-          field: "sgstRate",
-          filter: true,
-
-          width: 140,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <span>{params?.data?.sgstRate}</span>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "CGST",
-          field: "cgstRate",
+          headerName: "Cess Amount",
+          field: "taxableAmount",
           filter: true,
           width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.cgstRate}</span>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "IGST",
-          field: "igstRate",
-          filter: true,
-          width: 140,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <span>{params?.data?.igstRate}</span>
-              </div>
-            );
-          },
-        },
-
-        {
-          headerName: "Grand Total",
-          field: "grandTotal",
-          filter: true,
-          width: 140,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <span>{params?.data?.grandTotal}</span>
+                {/* <span>{params?.data?.taxableAmount}</span> */}
               </div>
             );
           },
         },
       ],
+      columnDefs: [],
     };
   }
   toggleTab = (tab) => {
@@ -1303,37 +1177,41 @@ class GSTR1 extends React.Component {
     if (this.state.setActiveTab !== tab) {
       this.setState({ setActiveTab: tab });
     }
-    // important codition below
+    // important conditions below
     if (tab == 1) {
+      //B2B
       this.setState({ Dropdown: false });
       let selected = this.state.rowAllData?.filter(
-        (ele) => ele?.order?.partyId?.partyType == "Debtor"
+        (ele) => ele?.order?.partyId?.partyType == "Debitor"
       );
       this.setState({ columnDefs: this.state.B2B });
-      this.setState({ rowData: this.state.rowAllData });
+      this.setState({ rowData: selected });
     } else if (tab == 2) {
-      let selected = this.state.orderCompletedData?.filter(
+      //B2CL
+      let selected = this.state.rowAllData?.filter(
         (ele) =>
-          // ele?.igstTaxType === 1 &&
-          // ele?.grandTotal > 250000 &&
-          ele?.grandTotal > 250000
-        // ele?.partyId?.partyType == 1
+          ele?.order?.igstTaxType == 1 &&
+          ele?.order?.partyId?.registrationType == "Regular" &&
+        ele?.grandTotal > 250000
       );
       this.setState({ Dropdown: false });
       this.setState({ rowData: selected });
       this.setState({ columnDefs: this.state.B2CL });
     } else if (tab == 3) {
+      //B2CS
       this.setState({ Dropdown: false });
       let selected = this.state.rowAllData?.filter(
-        (ele) => ele?.order?.partyId?.partyType == "Creditor"
+        (ele) => ele?.order?.partyId?.registrationType == "UnRegister"
       );
 
-      let intraState = selected?.filter(
-        (ele) => ele?.order?.partyId?.gstNumber?.slice(0, 2) == ComGSt
-      );
-      this.setState({ rowData: intraState });
+      // let intraState = selected?.filter(
+      //   (ele) => ele?.order?.partyId?.gstNumber?.slice(0, 2) == ComGSt
+      // );
+      this.setState({ rowData: selected });
       this.setState({ columnDefs: this.state.B2CS });
     } else if (tab == 4) {
+      
+      //CDNR
       this.setState({ Dropdown: false });
 
       let cdNrlist = this.state.CDNURLIST?.filter(
@@ -1343,10 +1221,12 @@ class GSTR1 extends React.Component {
       this.setState({ rowData: CDNRList });
       this.setState({ columnDefs: this.state.CDNR });
     } else if (tab == 5) {
-      // start
+      // CDNUR
+      debugger
       this.setState({ Dropdown: false });
       let cdNrlist = this.state.CDNURLIST?.filter(
         (ele) =>
+          ele?.igstRate > 0 &&
           ele?.order?.partyId?.registrationType == "UnRegister" &&
           ele?.grandTotal > 250000
       );
@@ -1357,43 +1237,12 @@ class GSTR1 extends React.Component {
 
       // end
     } else if (tab == 6) {
+      //CONSOLIDATED 
       this.setState({ Dropdown: false });
-      this.setState({ columnDefs: [...CONSOLIDATED] });
+      this.setState({ columnDefs: this.state.CONSOLIDATED });
       this.setState({ rowData: this.state.rowAllData });
     }
-    //  else {
-    //   this.setState({ SelectedHSN: this.state.HSNCodeList[0] });
-    //   let Summary = this.state.HSNWhole?.filter(
-    //     (ele) => ele?.HSN_Code == this.state.HSNCodeList[0]
-    //   );
-    //   this.setState({ rowData: Summary });
-    //   this.setState({ Dropdown: true });
-    //   this.setState({ columnDefs: [...this.state.HSN] });
-    //   if (Summary?.length > 0) {
-    //     let TaxPercentage = Summary[0].GSTRate;
-    //     let Taxable = [],
-    //       GrandTotal = null,
-    //       SGST = null,
-    //       CGST = null,
-    //       IGST = null;
-    //     Summary?.map((ele) => {
-    //       Taxable.push(ele?.Product_MRP);
-    //     });
-    //     let TotalTaxable = Taxable.reduce((a, b) => a + b, 0);
-    //     SGST = (TotalTaxable * TaxPercentage) / 200;
-    //     CGST = (TotalTaxable * TaxPercentage) / 200;
-    //     IGST = (TotalTaxable * TaxPercentage) / 100;
-    //     GrandTotal = TotalTaxable + IGST;
-    //     this.setState({
-    //       TotalTaxable,
-    //       TaxPercentage,
-    //       SGST,
-    //       CGST,
-    //       IGST,
-    //       GrandTotal,
-    //     });
-    //   }
-    // }
+   
   };
 
   LookupviewStart = () => {
@@ -1415,15 +1264,17 @@ class GSTR1 extends React.Component {
             return { ...val, order: element };
           });
         });
+       
         if (Alldata?.length > 0) {
           this.setState({ Loading: false });
           let selected = Alldata?.filter(
-            (ele) => ele?.order?.partyId?.partyType == "Creditor"
+            (ele) => ele?.order?.partyId?.partyType == "Debitor" && ele?.order?.partyId?.registrationType=="Regular"
           );
-
-          this.setState({ rowData: selected });
-          this.setState({ rowAllData: Alldata });
-          this.setState({ orderCompletedData: completed });
+          this.setState({
+            rowData: selected,
+            rowAllData: Alldata,
+            orderCompletedData: completed,
+          });
         }
         this.setState({ AllcolumnDefs: this.state.B2B });
         this.setState({ SelectedCols: this.state.B2B });

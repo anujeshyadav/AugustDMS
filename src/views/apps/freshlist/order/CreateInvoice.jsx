@@ -24,9 +24,11 @@ import {
   UnitListView,
   CreateCustomerList,
   _Get,
+  _PostSave,
 } from "../../../../ApiEndPoint/ApiCalling";
 import "../../../../assets/scss/pages/users.scss";
 import {
+  Create_Existing_Invoice,
   PurchaseProductList_Product,
   WareHouse_Current_Stock,
 } from "../../../../ApiEndPoint/Api";
@@ -38,9 +40,9 @@ let SelectedITems = [];
 let SelectedSize = [];
 let geotagging = "";
 
-const CreateOrder = (args) => {
-  const [Index, setIndex] = useState("");
-  const [borderColor, setBorderColor] = useState("black");
+const CreateInvoice = (args) => {
+  const [InvoiceNumber, setInvoiceNumber] = useState("");
+  const [ARN, setARN] = useState("");
   const [CustomerLimit, setCustomerLimit] = useState(0);
   const [CustomerTerm, setCustomerTerm] = useState("");
   const [PartyLogin, setPartyLogin] = useState(false);
@@ -91,7 +93,6 @@ const CreateOrder = (args) => {
         : (currentvalue = Number(value));
     if (Number(currentvalue) <= avalaibleSize) {
       if (Number(value != 0)) {
-        setIndex(index);
         if (name == "GrossQty") {
           list[index]["GrossQty"] = Number(value);
           list[index]["qty"] = Number(
@@ -116,16 +117,18 @@ const CreateOrder = (args) => {
           gstdetails?.gstDetails[index]?.gstPercentage;
         list[index]["disCountPercentage"] =
           gstdetails?.gstDetails[index]?.discountPercentage;
-        if (CustomerTerm == "Cash") {
-          setProduct(list);
-        } else {
-          if (gstdetails?.Tax.GrandTotal < CustomerLimit) {
-            setBorderColor("green");
-            setProduct(list);
-          } else {
-            setBorderColor("red");
-          }
-        }
+        setProduct(list);
+
+        // if (CustomerTerm == "Cash") {
+        //   setProduct(list);
+        // } else {
+        //   if (gstdetails?.Tax.GrandTotal < CustomerLimit) {
+        //     setBorderColor("green");
+        //     setProduct(list);
+        //   } else {
+        //     setBorderColor("red");
+        //   }
+        // }
       }
     }
   };
@@ -148,35 +151,35 @@ const CreateOrder = (args) => {
   const handleSelectionParty = async (selectedList, selectedItem) => {
     setPartyId(selectedItem._id);
     setParty(selectedItem);
-    let paymentTermCash = selectedItem?.paymentTerm
-      .toLowerCase()
-      ?.includes("cash");
     const gstdetails = GstCalculation(selectedItem, product, Context);
     setGSTData(gstdetails);
-    if (!paymentTermCash) {
-      let URL = "order/check-party-limit/";
-      await _Get(URL, selectedItem._id)
-        .then((res) => {
-          setCustomerTerm("");
-          setCustomerLimit(Number(res?.CustomerLimit));
-          let grandTotal =
-            gstdetails?.Tax?.GrandTotal > 0 ? gstdetails?.Tax?.GrandTotal : 0;
-          if (grandTotal < Number(res?.CustomerLimit)) {
-            setBorderColor("green");
-          } else {
-            setBorderColor("red");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setCustomerLimit(0);
-      setCustomerTerm("Cash");
-      if (paymentTermCash) {
-        setBorderColor("green");
-      }
-    }
+    // let paymentTermCash = selectedItem?.paymentTerm
+    //   .toLowerCase()
+    //   ?.includes("cash");
+    // if (!paymentTermCash) {
+    //   let URL = "order/check-party-limit/";
+    //   await _Get(URL, selectedItem._id)
+    //     .then((res) => {
+    //       setCustomerTerm("");
+    //       setCustomerLimit(Number(res?.CustomerLimit));
+    //       let grandTotal =
+    //         gstdetails?.Tax?.GrandTotal > 0 ? gstdetails?.Tax?.GrandTotal : 0;
+    //       if (grandTotal < Number(res?.CustomerLimit)) {
+    //         setBorderColor("green");
+    //       } else {
+    //         setBorderColor("red");
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // } else {
+    //   setCustomerLimit(0);
+    //   setCustomerTerm("Cash");
+    //   if (paymentTermCash) {
+    //     setBorderColor("green");
+    //   }
+    // }
   };
 
   const handleSelection = async (selectedList, selectedItem, index) => {
@@ -429,7 +432,6 @@ const CreateOrder = (args) => {
       if (ele?.disCountPercentage > 1) {
         return {
           productId: ele?.productId,
-          // productData: ele?.productData,
           discountPercentage: ele?.disCountPercentage,
           qty: ele?.qty,
           price: ele?.price,
@@ -449,7 +451,6 @@ const CreateOrder = (args) => {
       } else {
         return {
           productId: ele?.productId,
-          // productData: ele?.productData,
           discountPercentage: ele?.disCountPercentage,
 
           qty: ele?.qty,
@@ -477,9 +478,9 @@ const CreateOrder = (args) => {
     const payload = {
       userId: Party?.created_by?._id,
       partyId: PartyId,
+      invoiceId: InvoiceNumber,
       database: UserInfo?.database,
-      ARN: "",
-      // ARN: Party?.rolename + 11544341546556,
+      ARN: arnNumber ? ARN : "",
       ARNStatus: arnStatus,
       discountPercentage: Party?.category ? Party?.category?.discount : 0,
       SuperAdmin: Context?.CompanyDetails?.created_by,
@@ -502,39 +503,17 @@ const CreateOrder = (args) => {
       DateofDelivery: "",
       geotagging: geotagging,
     };
-    debugger;
-    if (CustomerTerm == "Cash") {
-      await SaveOrder(payload)
-        .then((res) => {
-          setLoading(false);
-          swal("Order Created Successfully");
-          History.goBack();
-        })
-        .catch((err) => {
-          setLoading(false);
-          swal("SomeThing Went Wrong");
-          console.log(err.response);
-        });
-    } else {
-      if (GSTData?.Tax?.GrandTotal < CustomerLimit) {
-        await SaveOrder(payload)
-          .then((res) => {
-            setLoading(false);
-            // console.log(res);
-            swal("Order Created Successfully");
-            History.goBack();
-          })
-          .catch((err) => {
-            setLoading(false);
-            swal("SomeThing Went Wrong");
-            console.log(err.response);
-          });
-      } else {
-        setLoading(false);
 
-        swal("Error", `Your Max Limit is ${CustomerLimit}`);
-      }
-    }
+    await _PostSave(Create_Existing_Invoice, payload)
+      .then((res) => {
+        setLoading(false);
+        swal("Invoice Created Successfully");
+        History.push("/app/softNumen/order/confirmedOrder");
+      })
+      .catch((err) => {
+        setLoading(false);
+        swal("SomeThing Went Wrong");
+      });
   };
 
   const onRemove1 = (selectedList, removedItem, index) => {
@@ -547,7 +526,7 @@ const CreateOrder = (args) => {
           <Row className="m-1">
             <Col className="">
               <div>
-                <h1 className="">Create Sales Order</h1>
+                <h1 className="">Create Existing Invoice</h1>
               </div>
             </Col>
             <Col>
@@ -590,7 +569,7 @@ const CreateOrder = (args) => {
                         />
                       </div>
                     </Col>
-                    {/* <Col className="mb-1" lg="2" md="2" sm="12">
+                    <Col className="mb-1" lg="2" md="2" sm="12">
                       <div className="">
                         <Label>
                           order Date <span style={{ color: "red" }}>*</span>
@@ -603,8 +582,41 @@ const CreateOrder = (args) => {
                           onChange={(e) => setOrderDate(e.target.value)}
                         />
                       </div>
-                    </Col> */}
-                    {CustomerLimit > 0 && (
+                    </Col>
+                    <Col className="mb-1" lg="2" md="2" sm="12">
+                      <div className="">
+                        <Label>
+                          Invoice Number <span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          required
+                          type="text"
+                          placeholder="Enter Invoice Number"
+                          name="InvoiceNumber"
+                          value={InvoiceNumber}
+                          onChange={(e) => setInvoiceNumber(e.target.value)}
+                        />
+                      </div>
+                    </Col>
+                    {!!GSTData?.Tax?.GrandTotal &&
+                      GSTData?.Tax?.GrandTotal > 49999 && (
+                        <Col className="" lg="2" md="2" sm="12">
+                          <div className="">
+                            <Label>
+                              ARN Number <span style={{ color: "red" }}>*</span>
+                            </Label>
+                            <Input
+                              required
+                              type="text"
+                              placeholder="Enter ARN Number"
+                              name="ARN"
+                              value={ARN}
+                              onChange={(e) => setARN(e.target.value)}
+                            />
+                          </div>
+                        </Col>
+                      )}
+                    {/* {CustomerLimit > 0 && (
                       <Col className="mb-1" lg="2" md="2" sm="12">
                         <div className="">
                           <Label>
@@ -621,8 +633,8 @@ const CreateOrder = (args) => {
                           />
                         </div>
                       </Col>
-                    )}
-                    {CustomerLimit > 0 ? (
+                    )} */}
+                    {/* {CustomerLimit > 0 ? (
                       <Col className="mb-1" lg="2" md="2" sm="12">
                         <div className="">
                           <Label>
@@ -665,7 +677,7 @@ const CreateOrder = (args) => {
                           </div>
                         </Col>
                       </>
-                    )}
+                    )} */}
                   </>
                 )}
                 <Col className="mb-1" lg="4" md="4" sm="12"></Col>
@@ -787,7 +799,8 @@ const CreateOrder = (args) => {
                       <div className="viewspacebetween">
                         <div style={{ width: "300px" }}>
                           <Label>
-                            Product <span style={{ color: "red" }}>*</span>
+                            Select Product{" "}
+                            <span style={{ color: "red" }}>*</span>
                           </Label>
                           <Multiselect
                             required
@@ -814,9 +827,6 @@ const CreateOrder = (args) => {
                             placeholder="Req_Qty"
                             required
                             value={product?.HSN_Code}
-                            // onChange={(e) =>
-                            //   handleRequredQty(e, index, product?.availableQty)
-                            // }
                           />
                         </div>
                         <div
@@ -838,8 +848,6 @@ const CreateOrder = (args) => {
                           <Input
                             required
                             type="number"
-                            // min={0.001}
-                            // step="0.001"
                             name="GrossQty"
                             placeholder="Gross Qty"
                             value={product?.GrossQty}
@@ -867,9 +875,6 @@ const CreateOrder = (args) => {
                             readOnly
                             autocomplete="off"
                             value={product?.availableQty}
-                            // onChange={e =>
-                            //   handleRequredQty(e, index, product?.availableQty)
-                            // }
                           />
                         </div>
                         <div
@@ -884,7 +889,6 @@ const CreateOrder = (args) => {
                             name="qty"
                             min={1}
                             placeholder="Req_Qty"
-                            // autocomplete="true"
                             value={product?.qty}
                             onChange={(e) =>
                               handleRequredQty(
@@ -907,23 +911,6 @@ const CreateOrder = (args) => {
                             placeholder="Unit"
                             value={product?.primaryUnit}
                           />
-                          {/* <Multiselect
-                          required
-                          selectionLimit={1}
-                          isObject="false"
-                          options={UnitList}
-                          onSelect={(selectedList, selectedItem) =>
-                            handleSelectionUnit(
-                              selectedList,
-                              selectedItem,
-                              index
-                            )
-                          }
-                          onRemove={(selectedList, selectedItem) => {
-                            onRemove1(selectedList, selectedItem, index);
-                          }}
-                          displayValue="primaryUnit"
-                        /> */}
                         </div>
                         <div
                           className="viewspacebetween2"
@@ -956,7 +943,6 @@ const CreateOrder = (args) => {
                           <Input
                             type="number"
                             name="basicPrice"
-                            readOnly
                             min={1}
                             step="0.01"
                             onChange={(e) => handleChangePrice(e, index)}
@@ -995,89 +981,6 @@ const CreateOrder = (args) => {
                       </div>
                     </Col>
 
-                    {/* <Col lg="2" md="2" className="mb-1">
-                      <div className="">
-                        <Label>Available Size</Label>
-                        <Input
-                          type="number"
-                          disabled
-                          name="availableQty"
-                          placeholder="AvailableSize"
-                          value={product?.availableQty}
-                        />
-                      </div>
-                    </Col> */}
-
-                    {/* <Col className="mb-1">
-                      <div className="">
-                        <Label>Taxable</Label>
-                        <Input
-                          type="number"
-                          name="taxableAmount"
-                          disabled
-                          placeholder="Price"
-                          value={product.taxableAmount}
-                        />
-                      </div>
-                    </Col> */}
-
-                    {/* {GSTData?.Tax?.IgstTaxType ? (
-                      <>
-                        <Col className="mb-1">
-                          <div className="">
-                            <Label>IGST</Label>
-                            <Input
-                              type="number"
-                              name="igstRate"
-                              readOnly
-                              placeholder="igstRate"
-                              value={product.igstRate}
-                            />
-                          </div>
-                        </Col>
-                      </>
-                    ) : (
-                      <>
-                        <Col className="mb-1">
-                          <div className="">
-                            <Label>SGST</Label>
-                            <Input
-                              type="number"
-                              name="sgstRate"
-                              readOnly
-                              placeholder="sgstRate"
-                              value={product.sgstRate}
-                            />
-                          </div>
-                        </Col>
-                        <Col className="mb-1">
-                          <div className="">
-                            <Label>CGST</Label>
-                            <Input
-                              type="number"
-                              name="cgstRate"
-                              readOnly
-                              placeholder="cgstRate"
-                              value={product.cgstRate}
-                            />
-                          </div>
-                        </Col>
-                      </>
-                    )} */}
-
-                    {/* <Col className="mb-1">
-                      <div className="">
-                        <Label>Total </Label>
-                        <Input
-                          type="number"
-                          name="grandTotal"
-                          readOnly
-                          placeholder="TtlPrice"
-                          value={product.grandTotal}
-                        />
-                      </div>
-                    </Col> */}
-
                     <Col className="d-flex mt-1 abb">
                       <div className="btnStyle">
                         {index ? (
@@ -1108,79 +1011,7 @@ const CreateOrder = (args) => {
                   </div>
                 </Col>
               </Row>
-              {/* <Row>
-                <Col className="mb-1" lg="12" md="12" sm="12">
-                  <div className=" d-flex justify-content-end">
-                    <ul className="subtotal">
-                      <li>
-                        <Label className="pr-5">
-                          Total:
-                          <span className="p-2">
-                            {!!GSTData?.Tax?.Amount && GSTData?.Tax?.Amount
-                              ? (GSTData?.Tax?.Amount).toFixed(2)
-                              : 0}
-                          </span>
-                        </Label>
-                      </li>
-                      {GSTData?.Tax?.IgstTaxType &&
-                      GSTData?.Tax?.IgstTaxType ? (
-                        <li>
-                          <Label className="">
-                            IGST Tax:{" "}
-                            <strong>
-                              RS{" "}
-                              {!!GSTData?.Tax?.IgstTotal &&
-                              GSTData?.Tax?.IgstTotal
-                                ? (GSTData?.Tax?.IgstTotal).toFixed(2)
-                                : 0}
-                            </strong>
-                          </Label>
-                        </li>
-                      ) : (
-                        <>
-                          <li>
-                            <Label className="">
-                              SGST Tax:{" "}
-                              <strong>
-                                RS{" "}
-                                {!!GSTData?.Tax?.SgstTotal &&
-                                GSTData?.Tax?.SgstTotal
-                                  ? (GSTData?.Tax?.SgstTotal).toFixed(2)
-                                  : 0}
-                              </strong>
-                            </Label>
-                          </li>
-                          <li>
-                            <Label className="">
-                              CGST Tax:{" "}
-                              <strong>
-                                RS{" "}
-                                {!!GSTData?.Tax?.CgstTotal &&
-                                GSTData?.Tax?.CgstTotal
-                                  ? (GSTData?.Tax?.CgstTotal).toFixed(2)
-                                  : 0}
-                              </strong>
-                            </Label>
-                          </li>
-                        </>
-                      )}
 
-                      <li>
-                        {" "}
-                        <Label className="pr-5">
-                          Grand Total :{" "}
-                          <strong>
-                            RS{" "}
-                            {!!GSTData?.Tax?.GrandTotal
-                              ? (GSTData?.Tax?.GrandTotal).toFixed(2)
-                              : 0}
-                          </strong>
-                        </Label>
-                      </li>
-                    </ul>
-                  </div>
-                </Col>
-              </Row> */}
               <Row>
                 <Col className="mb-1 mt-1" lg="12" md="12" sm="12">
                   <div className=" d-flex justify-content-end">
@@ -1263,7 +1094,17 @@ const CreateOrder = (args) => {
               </Row>
               {!Loading && !Loading ? (
                 <>
-                  {GSTData?.Tax?.GrandTotal > 0 && (
+                  <Col>
+                    <div className="d-flex justify-content-center">
+                      <Button.Ripple
+                        color="primary"
+                        type="submit"
+                        className="mt-2">
+                        Submit
+                      </Button.Ripple>
+                    </div>
+                  </Col>
+                  {/* {GSTData?.Tax?.GrandTotal > 0 && (
                     <Row>
                       {borderColor == "green" ? (
                         <Col>
@@ -1291,7 +1132,7 @@ const CreateOrder = (args) => {
                         </>
                       )}
                     </Row>
-                  )}
+                  )} */}
                 </>
               ) : (
                 <Row>
@@ -1314,4 +1155,4 @@ const CreateOrder = (args) => {
     </div>
   );
 };
-export default CreateOrder;
+export default CreateInvoice;

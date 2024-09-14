@@ -124,13 +124,16 @@ class HSNWiseReport extends React.Component {
         },
         {
           headerName: "UQC",
-          field: "unitType",
+          valueGetter: (params) => {
+            let value = `${params?.data?.primaryUnit} - ${params?.data?.secondaryUnit}`;
+            return value;
+          },
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.unitType}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -163,6 +166,19 @@ class HSNWiseReport extends React.Component {
           },
         },
         {
+          headerName: "Taxable Value",
+          field: "taxableAmount",
+          filter: true,
+          width: 140,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">
+                <span>{params?.data?.taxableAmount}</span>
+              </div>
+            );
+          },
+        },
+        {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
@@ -171,19 +187,6 @@ class HSNWiseReport extends React.Component {
             return (
               <div className="cursor-pointer text-center">
                 <span>{params?.data?.gstPercentage}</span>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "Taxable Value",
-          field: "taxableAmount",
-          filter: true,
-          width: 145,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <span>{params?.data?.taxableAmount}</span>
               </div>
             );
           },
@@ -274,13 +277,16 @@ class HSNWiseReport extends React.Component {
 
         {
           headerName: "UQC",
-          field: "unitType",
+          valueGetter: (params) => {
+            let value = `${params?.data?.primaryUnit} - ${params?.data?.secondaryUnit}`;
+            return value;
+          },
           filter: true,
           width: 190,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.unitType}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -423,7 +429,10 @@ class HSNWiseReport extends React.Component {
 
         {
           headerName: "UQC",
-          field: "unitType",
+          valueGetter: (params) => {
+            let value = `${params?.data?.primaryUnit} - ${params?.data?.secondaryUnit}`;
+            return value;
+          },
           filter: true,
           editable: true,
           resizable: true,
@@ -431,7 +440,7 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.unitType}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -578,13 +587,16 @@ class HSNWiseReport extends React.Component {
 
         {
           headerName: "UQC",
-          field: "unitType",
+          valueGetter: (params) => {
+            let value = `${params?.data?.primaryUnit} - ${params?.data?.secondaryUnit}`;
+            return value;
+          },
           filter: true,
-          width: 180,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.unitType}</span>
+                <span>{params?.value}</span>
               </div>
             );
           },
@@ -941,17 +953,17 @@ class HSNWiseReport extends React.Component {
 
     await _Post(HSN_SAle_Summary_Report, db, id)
       .then(res => {
+        console.log(res?.HSNSales);
+        debugger;
         this.setState({
           Loading: false,
           rowData: res?.HSNSales,
           AllcolumnDefs: this.state.columnDefs,
           SelectedCols: this.state.columnDefs,
         });
-
         let userHeading = JSON.parse(localStorage.getItem("hsnsummaryReport"));
         if (userHeading?.length) {
           this.setState({ columnDefs: userHeading });
-          // this.gridApi.setColumnDefs(userHeading);
           this.setState({ SelectedcolumnDefs: userHeading });
         } else {
           this.setState({ columnDefs: this.state.HSNSALESUMMART });

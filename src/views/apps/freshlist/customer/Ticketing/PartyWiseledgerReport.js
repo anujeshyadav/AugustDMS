@@ -110,10 +110,10 @@ class PartyWiseledgerReport extends React.Component {
       },
       columnDefs: [
         {
-          headerName: "UID",
+          headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 120,
+          width: 55,
           filter: true,
         },
 
@@ -174,7 +174,7 @@ class PartyWiseledgerReport extends React.Component {
           headerName: "Date",
           field: "date",
           filter: true,
-          width: 200,
+          width: 95,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
@@ -185,7 +185,7 @@ class PartyWiseledgerReport extends React.Component {
           },
         },
         {
-          headerName: "PARTICULARS",
+          headerName: "Company Name",
           field: "partyId.CompanyName",
           filter: true,
           width: 200,
@@ -227,14 +227,14 @@ class PartyWiseledgerReport extends React.Component {
           headerName: "Debit",
           field: "debit",
           filter: true,
-          width: 250,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
                 {params?.data?.debit && (
-                  <Badge color="info">
+                   
                     <span>-{params?.data?.debit}</span>
-                  </Badge>
+                  
                 )}
               </div>
             );
@@ -245,16 +245,16 @@ class PartyWiseledgerReport extends React.Component {
           headerName: "Credit",
           field: "credit",
           filter: true,
-          width: 200,
+          width: 100,
           cellRendererFramework: (params) => {
             console.log(params.data);
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
                   {params.data?.credit && (
-                    <Badge color="primary">
+                    < >
                       {params.data?.credit && params.data?.credit}
-                    </Badge>
+                    </ >
                   )}
                 </div>
               </div>
@@ -266,14 +266,14 @@ class PartyWiseledgerReport extends React.Component {
           field: "cashRunning",
           filter: true,
           resizable: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <Badge color="primary">
+                  
                     {Number(params?.data?.cashRunning)?.toFixed(2)}
-                  </Badge>
+                   
                 </div>
               </div>
             );
@@ -784,8 +784,8 @@ class PartyWiseledgerReport extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-1 mr-1">
-            <Col lg="3" md="3" xl="3" style={{ marginTop: "30px" }}>
+          <Row style={{marginLeft:"3px",marginRight:"3px"}}>
+            <Col lg="4" md="4" xl="4" style={{ marginTop: "30px" }}>
               <Row>
                 <Col lg="6" md="6" xl="6">
                   <h3 className="float-left " style={{ fontWeight: "600" }}>
@@ -848,7 +848,7 @@ class PartyWiseledgerReport extends React.Component {
                 </Col>
               </Row>
             </Col>
-            <Col md="5" lg="5" xl="5">
+            <Col md="4" lg="4" xl="4">
               <Row>
                 <Col md="5" lg="5" xl="5" style={{ marginTop: "9px" }}>
                   <div className="table-input">
@@ -970,9 +970,9 @@ class PartyWiseledgerReport extends React.Component {
               <Col></Col>
             )}
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
-              <div className="ag-theme-material w-100  ag-grid-table">
+              <div className="ag-theme-material w-100 my-1  ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {(context) => (
                     <AgGridReact
@@ -986,7 +986,7 @@ class PartyWiseledgerReport extends React.Component {
                       colResizeDefault={"shift"}
                       animateRows={true}
                       floatingFilter={false}
-                      // pagination={true}
+                    pagination={true}
                       paginationPageSize={this.state.paginationPageSize}
                       pivotPanelShow="always"
                       enableRtl={context.state.direction === "rtl"}

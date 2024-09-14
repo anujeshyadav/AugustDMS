@@ -89,7 +89,7 @@ class PartyLedgerReport extends React.Component {
           headerName: "S.No",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -98,7 +98,7 @@ class PartyLedgerReport extends React.Component {
           field: "date",
           filter: true,
           resizable: true,
-          width: 230,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -130,7 +130,7 @@ class PartyLedgerReport extends React.Component {
           field: "voucherType",
           filter: true,
           resizable: true,
-          width: 230,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -168,7 +168,7 @@ class PartyLedgerReport extends React.Component {
           // },
           editable: true,
           resizable: true,
-          width: 180,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -184,7 +184,7 @@ class PartyLedgerReport extends React.Component {
           field: "credit",
           filter: true,
           resizable: true,
-          width: 180,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -200,7 +200,7 @@ class PartyLedgerReport extends React.Component {
           field: "cashRunning",
           filter: true,
           resizable: true,
-          width: 180,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -586,8 +586,8 @@ class PartyLedgerReport extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-1  mr-1">
-            <Col lg="3" md="3" xl="3">
+          <Row style={{marginLeft:"3px",marginRight:"3px"}}>
+            <Col lg="4" md="4" xl="4">
               <Row>
                 <Col xl="6" lg="6" md="6" xs="12" style={{ marginTop: "30px" }}>
                   <h3 className="float-left " style={{ fontWeight: "600" }}>
@@ -641,7 +641,14 @@ class PartyLedgerReport extends React.Component {
                     <Button
                       onClick={this.handleLedger}
                       type="submit"
-                      className=""
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "rgb(8, 91, 245)",
+                          color: "white",
+                          fontWeight: "600",
+                          height: "43px",
+                        }}
+                      className="float-right"
                       color="primary">
                       Submit
                     </Button>
@@ -649,7 +656,7 @@ class PartyLedgerReport extends React.Component {
                 </Col>
               </Row>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "9px" }}>
                   <div className="table-input ">
@@ -677,6 +684,13 @@ class PartyLedgerReport extends React.Component {
                   <div className="table-input">
                     <Button
                       type="submit"
+                       style={{
+                          cursor: "pointer",
+                          backgroundColor: "rgb(8, 91, 245)",
+                          color: "white",
+                          fontWeight: "600",
+                          height: "43px",
+                        }}
                       color="primary"
                       onClick={this.handleSubmitDate}>
                       Submit
@@ -771,7 +785,7 @@ class PartyLedgerReport extends React.Component {
               <Col></Col>
             )}
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">

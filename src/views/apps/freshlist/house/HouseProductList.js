@@ -140,7 +140,7 @@ class HouseProductList extends React.Component {
             return (
               <div className="">
                 <div>
-                  <span>{params.data?.Product_MRP.toFixed(2)}</span>
+                  <span>{params.data?.Product_MRP?.toFixed(2)}</span>
                 </div>
               </div>
             );

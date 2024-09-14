@@ -485,10 +485,7 @@ const AssignTeamMember = () => {
                                         ele?.created_by?.firstName && (
                                           <strong style={{ fontSize: "16px" }}>
                                             {ele?.created_by?.firstName && (
-                                              <>
-                                                {ele?.created_by?.firstName}{" "}
-                                                {ele?.created_by?.lastName}
-                                              </>
+                                              <>{ele?.created_by?.firstName} </>
                                             )}
                                           </strong>
                                         )}
@@ -509,8 +506,8 @@ const AssignTeamMember = () => {
                                           <option
                                             key={i}
                                             data-id={item._id}
-                                            data-name={`${item?.firstName} ${item?.lastName}`}>
-                                            {`${item?.firstName} ${item?.lastName}`}
+                                            data-name={`${item?.firstName}`}>
+                                            {`${item?.firstName}`}
                                           </option>
                                         ))}
                                         {/* <option>

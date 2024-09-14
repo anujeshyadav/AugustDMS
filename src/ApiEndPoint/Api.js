@@ -231,6 +231,7 @@ export const Delete_Sales = "/order/delete-sales/";
 export const Order_By_Billing = "/order/order-billing/";
 // By other
 export const Save_Place_Order = "/order/save-place-order";
+export const Create_Existing_Invoice = "/order/save-sales-invoice-order";
 export const Place_Order_List = "/order/view-place-order/";
 export const Place_ORder_Return_Product =
   "/purchase-return/save-purchase-return";

@@ -81,6 +81,7 @@ class HouseProductList extends React.Component {
       Arrindex: "",
       rowData: [],
       maxDiscount: "",
+      ProfitPercentage: null,
 
       setMySelectedarr: [],
       formValues: [{}],
@@ -135,7 +136,6 @@ class HouseProductList extends React.Component {
           filter: true,
           width: 160,
           cellRendererFramework: (params) => {
-        
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <span>
@@ -239,7 +239,7 @@ class HouseProductList extends React.Component {
                           18) /
                           100)}
                   </span> */}
-                  <span>{params.data?.Product_MRP.toFixed(2)}</span>
+                  <span>{params.data?.Product_MRP?.toFixed(2)}</span>
                 </div>
               </div>
             );
@@ -398,7 +398,7 @@ class HouseProductList extends React.Component {
         (((Number(data?.SalesRate) + gd) * data?.GSTRate) / 100).toFixed(2)
       );
       let Mrp = Number((Number(data?.SalesRate) + gd + tax).toFixed(2));
-      formValues[i]["Product_MRP"] = Mrp;
+      formValues[i]["Product_MRP"] = Number(Mrp?.toFixed(2));
       if (data?.landedCost > data?.SalesRate) {
         formValues[i]["lossStatus"] = true;
       } else {
@@ -408,7 +408,7 @@ class HouseProductList extends React.Component {
       debugger;
 
       let data = formValues[i];
-      let LandedCost = data.landedCost || data.Purchase_Rate;
+      let LandedCost = data?.landedCost || data?.Purchase_Rate;
 
       let Mrp = data?.Product_MRP;
       let gst = (100 + data?.GSTRate) / 100;
@@ -542,7 +542,7 @@ class HouseProductList extends React.Component {
           if (cost > ele?.SalesRate) {
             ele["lossStatus"] = true;
           } else {
-            ele["lossStatus"] = false;  
+            ele["lossStatus"] = false;
           }
         });
         console.log(res?.Product);
@@ -950,6 +950,50 @@ class HouseProductList extends React.Component {
       });
     }
   };
+  // handleSubmitProfitPercentage = (e) => {
+  //   e.preventDefault();
+  //   debugger;
+  //   console.log(this.state.ProfitPercentage);
+
+  //                             let { name, value } = e.target;
+  //                             let formValues = this.state.formValues;
+  //                             let LandedCost =
+  //                               element?.Purchase_Rate || element?.landedCost;
+
+  //                             formValues[index][name] = Number(value);
+  //                             formValues[index]["SalesRate"] = Number(
+  //                               (
+  //                                 LandedCost *
+  //                                 ((100 + Number(value)) / 100)
+  //                               ).toFixed(2)
+  //                             );
+  //                             let data = formValues[index];
+  //                             let Discount = data?.maxDiscount;
+  //                             let gd = Number(
+  //                               (
+  //                                 (Number(data?.SalesRate) * Discount) /
+  //                                 100
+  //                               ).toFixed(2)
+  //                             );
+  //                             let tax = Number(
+  //                               (
+  //                                 ((Number(data?.SalesRate) + gd) *
+  //                                   data?.GSTRate) /
+  //                                 100
+  //                               ).toFixed(2)
+  //                             );
+  //                             let Mrp = Number(
+  //                               (Number(data?.SalesRate) + gd + tax).toFixed(2)
+  //                             );
+  //                             formValues[index]["Product_MRP"] = Mrp;
+  //                             if (LandedCost > data?.SalesRate) {
+  //                               formValues[index]["lossStatus"] = true;
+  //                             } else {
+  //                               formValues[index]["lossStatus"] = false;
+  //                             }
+  //                             this.setState({ formValues });
+
+  // };
   handleParentSubmit = (e) => {
     e.preventDefault();
     let SuperAdmin = JSON.parse(localStorage.getItem("SuperadminIdByMaster"));
@@ -1282,6 +1326,9 @@ class HouseProductList extends React.Component {
             {this.state.BulkEdit ? (
               <>
                 <div className="">
+                  <div className="d-flex justify-content-center">
+                    <h3 className="mb-1">Edit Product MRP or Sales Rate</h3>
+                  </div>
                   <Row>
                     <Col lg="4" md="4" sm="12">
                       <Input
@@ -1308,12 +1355,30 @@ class HouseProductList extends React.Component {
                         placeholder="Search Proudct here"
                       />
                     </Col>
+                    <Col></Col>
+
+                    <Col lg="3" md="3" sm="12">
+                      <Input
+                        type="number"
+                        name="ProfitPercentage"
+                        value={this.state.ProfitPercentage}
+                        onChange={(e) =>
+                          this.setState({ ProfitPercentage: e.target.value })
+                        }
+                        placeholder="Profit Percentage for all Product"
+                      />
+                    </Col>
+                    <Col lg="2" md="2" sm="12">
+                      <Button
+                        onClick={this.handleSubmitProfitPercentage}
+                        color="primary">
+                        Submit
+                      </Button>
+                    </Col>
                   </Row>
                 </div>
-                <div className="d-flex justify-content-center">
-                  <h3 className="mb-1">Edit Product MRP or Sales Rate</h3>
-                </div>
-                <div className="mb-1" style={{ color: "red" }}>
+
+                <div className="mb-1 mt-1" style={{ color: "red" }}>
                   <strong>
                     Note: If Profit % is Zero then By Default Sale Rate is 3%
                     more then Purchase Rate else you want To Set *
@@ -1459,7 +1524,9 @@ class HouseProductList extends React.Component {
                             required
                             type="text"
                             name="Product_MRP"
-                            value={element.Product_MRP?.toFixed(2) || ""}
+                            value={
+                              (element.Product_MRP && element.Product_MRP) || ""
+                            }
                             onChange={(e) => this.handleChange(index, e)}
                           />
                         </Col>

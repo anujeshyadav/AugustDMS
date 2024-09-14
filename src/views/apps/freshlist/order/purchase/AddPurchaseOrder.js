@@ -18,13 +18,11 @@ import Multiselect from "multiselect-react-dropdown";
 import "../../../../../assets/scss/pages/users.scss";
 
 import {
-  UnitListView,
   CreateCustomerList,
   _Get,
   SavePurchaseOrder,
 } from "../../../../../ApiEndPoint/ApiCalling";
 import "../../../../../assets/scss/pages/users.scss";
-import Select from "react-select";
 import UserContext from "../../../../../context/Context";
 import { PurchaseGstCalculation } from "./../PurchaseGstCalculation";
 import { PurchaseProductList_Product } from "../../../../../ApiEndPoint/Api";
@@ -43,11 +41,8 @@ const AddPurchaseOrder = (args) => {
   const [PartyId, setPartyId] = useState("");
   const [Party, setParty] = useState({});
   const [Charges, setCharges] = useState(0);
-  const [maxGstPerct, setmaxGstPerct] = useState();
-  const [UnitList, setUnitList] = useState([]);
   const [UserInfo, setUserInfo] = useState({});
-  const [dateofDelivery, setDateofDelivery] = useState("");
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [orderDate, setOrderDate] = useState("");
   const [product, setProduct] = useState([
     {
       productId: "",
@@ -70,7 +65,6 @@ const AddPurchaseOrder = (args) => {
     },
   ]);
   const Context = useContext(UserContext);
-  let { productId, partyid } = useParams();
 
   const handleRequredQty = (e, index) => {
     const { name, value } = e.target;
@@ -117,7 +111,11 @@ const AddPurchaseOrder = (args) => {
 
   // const handleSelection = async (selectedItem, selectedList, index) => {
   const handleSelection = async (selectedList, selectedItem, index) => {
-    console.log(selectedItem);
+    // let existing = [];
+    // debugger;
+    // if (product) {
+    //   existing = product?.filter((ele) => ele?.productId == selectedItem?._id);
+    // }
     SelectedITems.push(selectedItem);
     let costPrice = Number(
       (
@@ -171,47 +169,14 @@ const AddPurchaseOrder = (args) => {
     });
   };
 
-  const handleSelectionUnit = (selectedList, selectedItem, index) => {
-    SelectedSize.push(selectedItem);
-    setProduct((prevProductList) => {
-      const updatedUnitList = [...prevProductList];
-      const updatedProduct = { ...updatedUnitList[index] }; // Create a copy of the product at the specified index
-      updatedProduct.Size = selectedItem?.unitQty;
-      updatedProduct.unitType = selectedItem.primaryUnit;
-      updatedUnitList[index] = updatedProduct;
-      let myarr = prevProductList?.map((ele, i) => {
-        updatedUnitList[index]["totalprice"] =
-          ele?.qty * ele.price * SelectedSize[i]?.unitQty;
-        let indextotal = ele?.price * ele.qty * SelectedSize[i]?.unitQty;
-        GrandTotal[index] = indextotal;
-        return indextotal;
-      });
-      // let amt = myarr.reduce((a, b) => a + b);
-
-      const gstdetails = PurchaseGstCalculation(
-        Party,
-        updatedUnitList,
-        Context,
-        Charges
-      );
-
-      setGSTData(gstdetails);
-      updatedProduct["taxableAmount"] = gstdetails?.gstDetails[index]?.taxable;
-      updatedProduct["sgstRate"] = gstdetails?.gstDetails[index]?.sgstRate;
-      updatedProduct["cgstRate"] = gstdetails?.gstDetails[index]?.cgstRate;
-      updatedProduct["igstRate"] = gstdetails?.gstDetails[index]?.igstRate;
-      updatedProduct["grandTotal"] = gstdetails?.gstDetails[index]?.grandTotal;
-      updatedProduct["gstPercentage"] =
-        gstdetails?.gstDetails[index]?.gstPercentage;
-      updatedProduct["disCountPercentage"] =
-        gstdetails?.gstDetails[index]?.discountPercentage;
-      return updatedUnitList; // Return the updated product list
-    });
-  };
-
   useEffect(() => {
     let userdata = JSON.parse(localStorage.getItem("userData"));
-
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, "0"); // Day of the month
+    const formattedDate = `${year}-${month}-${day}`; // YYYY-MM-DD format
+    setOrderDate(formattedDate);
     let findParty = userdata?.rolename?.roleName == "Customer";
     if (findParty) {
       setPartyLogin(true);
@@ -238,13 +203,6 @@ const AddPurchaseOrder = (args) => {
       .catch((err) => {
         console.log(err);
       });
-    // UnitListView(userdata?._id, userdata?.database)
-    //   .then((res) => {
-    //     setUnitList(res.Unit);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   }, []);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userData"));
@@ -319,11 +277,6 @@ const AddPurchaseOrder = (args) => {
           grandTotal: ele?.grandTotal,
           taxableAmount: ele?.taxableAmount,
           totalPriceWithDiscount: ele?.grandTotal,
-          // totalPriceWithDiscount: Number(
-          //   ((ele?.totalprice * (100 - ele?.disCountPercentage)) / 100).toFixed(
-          //     2
-          //   )
-          // ),
         };
       } else {
         return {
@@ -333,22 +286,20 @@ const AddPurchaseOrder = (args) => {
           availableQty: ele?.availableQty,
           qty: ele?.qty,
           price: ele?.price,
-          // Size: ele?.Size,
+
           basicPrice: ele?.basicPrice,
 
           totalPrice: ele?.qty * ele?.price,
           primaryUnit: ele?.primaryUnit,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
-          // unitQty: ele?.unitQty,
-          // unitType: ele?.unitType,
+
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
           gstPercentage: ele?.gstPercentage,
           igstRate: ele?.igstRate,
           grandTotal: ele?.grandTotal,
           taxableAmount: ele?.taxableAmount,
-          // totalPriceWithDiscount: ele?.totalprice,
           totalPriceWithDiscount: ele?.grandTotal,
           igstTaxType: gstdetails?.Tax?.IgstTaxType,
         };
@@ -361,12 +312,10 @@ const AddPurchaseOrder = (args) => {
       partyId: PartyId,
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,
-      address: UserInfo?.address,
+      address: Party?.address,
       grandTotal: Number((gstdetails?.Tax?.GrandTotal).toFixed(2)),
       roundOff: Number((gstdetails?.Tax?.RoundOff).toFixed(2)),
-      // roundOff: Number(
-      //   (gstdetails?.Tax?.GrandTotal - gstdetails?.Tax?.RoundOff).toFixed(2)
-      // ),
+
       amount: Number((gstdetails?.Tax?.Amount).toFixed(2)),
       sgstTotal: gstdetails?.Tax?.CgstTotal,
       igstTaxType: gstdetails?.Tax?.IgstTaxType,
@@ -377,7 +326,8 @@ const AddPurchaseOrder = (args) => {
       state: Party?.State,
       city: Party?.City,
       orderItems: Product,
-      DateofDelivery: dateofDelivery,
+      DateofDelivery: "",
+      date: orderDate,
       coolieAndCartage: Charges,
       transportationCost: 0,
       labourCost: 0,
@@ -386,7 +336,6 @@ const AddPurchaseOrder = (args) => {
       tax: OtherGSTCharges,
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
     };
-
     await SavePurchaseOrder(payload)
       .then((res) => {
         setLoading(false);
@@ -401,9 +350,7 @@ const AddPurchaseOrder = (args) => {
       });
   };
 
-  const onRemove1 = (selectedList, removedItem, index) => {
-    // console.log(selectedList);
-  };
+  const onRemove1 = (selectedList, removedItem, index) => {};
 
   const handleChangePrice = (e, index) => {
     const { name, value } = e.target;
@@ -472,7 +419,7 @@ const AddPurchaseOrder = (args) => {
               <Row>
                 {PartyLogin && PartyLogin ? null : (
                   <>
-                    <Col className="mb-1" lg="4" md="4" sm="12">
+                    <Col className="mb-1" lg="3" md="3" sm="12">
                       <div className="">
                         <Label>
                           Choose Party <span style={{ color: "red" }}> *</span>
@@ -491,7 +438,22 @@ const AddPurchaseOrder = (args) => {
                         />
                       </div>
                     </Col>
-                    <Col className="mb-1" lg="4" md="4" sm="12">
+
+                    <Col className="mb-1" lg="3" md="3" sm="12">
+                      <div className="">
+                        <Label>
+                          order Date <span style={{ color: "red" }}>*</span>
+                        </Label>
+                        <Input
+                          required
+                          type="date"
+                          name="orderDate"
+                          value={orderDate}
+                          onChange={(e) => setOrderDate(e.target.value)}
+                        />
+                      </div>
+                    </Col>
+                    <Col className="mb-1" lg="3" md="3" sm="12">
                       <div className="">
                         <Label>Coolie and Cartage</Label>
                         <Input
@@ -513,18 +475,6 @@ const AddPurchaseOrder = (args) => {
                         />
                       </div>
                     </Col>
-                    {/* <Col className="mb-1" lg="4" md="4" sm="12">
-                      <div className="">
-                        <Label>Expected Delivery Date</Label>
-                        <Input
-                          required
-                          type="date"
-                          name="DateofDelivery"
-                          value={dateofDelivery}
-                          onChange={(e) => setDateofDelivery(e.target.value)}
-                        />
-                      </div>
-                    </Col> */}
                   </>
                 )}
                 <Col className="mb-1" lg="4" md="4" sm="12"></Col>
@@ -532,41 +482,6 @@ const AddPurchaseOrder = (args) => {
               {product &&
                 product?.map((product, index) => (
                   <Row className="" key={index}>
-                    {/* <Col className="mb-1">
-                      <div className="">
-                        <Label>Unit</Label>
-                        <Multiselect
-                          required
-                          selectionLimit={1}
-                          isObject="false"
-                          options={UnitList}
-                          onSelect={(selectedList, selectedItem) =>
-                            handleSelectionUnit(
-                              selectedList,
-                              selectedItem,
-                              index
-                            )
-                          }
-                          onRemove={(selectedList, selectedItem) => {
-                            onRemove1(selectedList, selectedItem, index);
-                          }}
-                          displayValue="primaryUnit"
-                        />
-                      </div>
-                    </Col> */}
-                    {/* <Col className="mb-1">
-                      <div className="">
-                        <Label>Price</Label>
-                        <Input
-                          type="number"
-                          name="price"
-                          disabled
-                          placeholder="Price"
-                          value={product.price}
-                        />
-                      </div>
-                    </Col> */}
-
                     <Col className="mb-1">
                       <div className="viewspacebetween">
                         <div className="" style={{ width: "300px" }}>
@@ -574,16 +489,7 @@ const AddPurchaseOrder = (args) => {
                             Choose Product{" "}
                             <span style={{ color: "red" }}> *</span>
                           </Label>
-                          {/* <Select
-                            className="customclass"
-                            // isMulti={true}
-                            defaultValue={selectedOption}
-                            onChange={(selectedList, selectedItem) =>
-                              handleSelection(selectedList, selectedItem, index)
-                            }
-                            options={ProductList}
-                            // options={options}
-                          /> */}
+
                           <Multiselect
                             className="choseeproduct"
                             required
@@ -705,7 +611,7 @@ const AddPurchaseOrder = (args) => {
                       </div> */}
                         <div
                           className="viewspacebetween1"
-                          style={{ width: "90px" }}>
+                          style={{ width: "60px" }}>
                           <Label>Tax %</Label>
                           <Input
                             type="text"
@@ -718,7 +624,7 @@ const AddPurchaseOrder = (args) => {
 
                         <div
                           className="viewspacebetween1"
-                          style={{ width: "90px" }}>
+                          style={{ width: "120px" }}>
                           <Label>Basic Price</Label>
                           <Input
                             type="number"
@@ -732,13 +638,13 @@ const AddPurchaseOrder = (args) => {
                         </div>
                         <div
                           className="viewspacebetween1"
-                          style={{ width: "90px" }}>
+                          style={{ width: "120px" }}>
                           <Label>Basic Total</Label>
                           <Input
                             type="number"
                             name="taxableAmount"
                             disabled
-                            placeholder="taxle Amount"
+                            placeholder="Basic Total"
                             value={
                               product?.taxableAmount &&
                               product?.taxableAmount?.toFixed(2)

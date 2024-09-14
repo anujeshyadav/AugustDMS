@@ -1780,8 +1780,30 @@ span.badge.badge-secondary {
 .horizontal-layout.navbar-floating .horizontal-menu-wrapper {
   background: #e2f4e8 !important;
 }
+body{
+  background: #e2f4e8 !important;
+}
+
+.content-wrapper {
+  background: #e2f4e8 !important;
+}
 
 [dir] .card {
 
   border-radius: 16px;
+}
+select.custom-select {
+  font-size: 12px !important;
+}
+input.form-control {
+  font-size: 12px !important;
+}
+button.btn.btn-primary {
+  font-weight: 600;
+}
+.wrapper.horizontal-layout.theme-primary.fixed-footer.navbar-floating {
+  background: #e2f4e8 !important;
+}
+svg.mt-2 {
+  color: #085bf5 !important;
 }
