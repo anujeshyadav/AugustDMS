@@ -345,16 +345,15 @@ const CreatePurchaseInvoice = (args) => {
       DateofDelivery: "",
       date: orderDate,
       coolieAndCartage: Charges,
-      transportationCost: 0,
-      labourCost: 0,
-      localFreight: 0,
-      miscellaneousCost: 0,
-      tax: OtherGSTCharges,
+      transportationCost: LandedPrice?.transportationCost,
+      labourCost: LandedPrice?.LabourCost,
+      localFreight: LandedPrice?.LocalFreight,
+      miscellaneousCost: LandedPrice?.MiscellanousCost,
+      tax: LandedPrice?.landedTax,
       status: "completed",
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
       ...extraCharges,
     };
-    // await SavePurchaseOrder(payload);
     debugger;
     await _PostSave(Purchase_Direct_Complete, payload)
       .then((res) => {
@@ -383,7 +382,7 @@ const CreatePurchaseInvoice = (args) => {
       );
       setExtraCharges({
         ...extraCharges,
-        transporter: selectedTransporter,
+        transporter: selectedTransporter[0],
         transporterId: value,
       });
     } else {
