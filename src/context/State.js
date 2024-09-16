@@ -46,6 +46,7 @@ const State = (props) => {
   useEffect(() => {
     let myCustomColor = localStorage.getItem("UserDefinedcoler");
     SetmyCustomColor(myCustomColor);
+    // document.body.style.backgroundColor = myCustomColor;
   }, [myCustomColor]);
 
   useEffect(() => {

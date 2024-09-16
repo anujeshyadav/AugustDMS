@@ -1370,7 +1370,7 @@ class HouseProductList extends React.Component {
                     </Col>
                     <Col lg="2" md="2" sm="12">
                       <Button
-                        onClick={this.handleSubmitProfitPercentage}
+                        // onClick={this.handleSubmitProfitPercentage}
                         color="primary">
                         Submit
                       </Button>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import { ImDownload } from "react-icons/im";
 import {
   Card,
@@ -106,29 +106,23 @@ class PurchaseOrderViewList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 75,
+          width: 85,
           height: 35,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
-                {/* {this.state.InsiderPermissions &&
+                {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions.Edit && (
-                    <CornerDownLeft
-                      className="mr-50"
-                      size="25px"
-                      color="green"
-                      onClick={() => {
-                        localStorage.setItem(
-                          "OrderList",
-                          JSON.stringify(params.data)
-                        );
-                        this.props.history.push({
-                          pathname: `/app/AJGroup/order/purchaseReturn/${params.data?._id}`,
-                          state: params.data,
-                        });
-                      }}
-                    />
-                  )} */}
+                    <Link
+                      to={`/app/AJgroup/order/UpdatePurchseOrder/${params.data?._id}`}>
+                      <Edit
+                        title="update Purchase Order"
+                        size={19}
+                        className="mr-50"
+                        color="blue"
+                      />
+                    </Link>
+                  )}
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions.View && (
                     <Eye
@@ -423,7 +417,7 @@ class PurchaseOrderViewList extends React.Component {
           });
           if (newList?.length) {
             this.setState({ rowData: newList?.reverse() });
-          } 
+          }
         }
         this.setState({ AllcolumnDefs: this.state.columnDefs });
         this.setState({ SelectedCols: this.state.columnDefs });

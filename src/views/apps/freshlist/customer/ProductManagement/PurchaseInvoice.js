@@ -1111,15 +1111,24 @@ class PurchaseInvoice extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-                        <Col  >
+                      <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+                        <Col>
                           <h1
                             className="float-left "
-                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
+                            style={{
+                              fontWeight: "600",
+                              textTransform: "uppercase",
+                              fontSize: "18px",
+                              marginTop: "25px",
+                            }}>
                             Purchased Invoice
                           </h1>
                         </Col>
-                        <Col lg="3" md="6" sm="12" style={{marginTop:'25px'}}>
+                        <Col
+                          lg="3"
+                          md="6"
+                          sm="12"
+                          style={{ marginTop: "25px" }}>
                           <div className="table-input mr-1 cssforproductlist">
                             <Input
                               placeholder="search Item here..."
@@ -1131,14 +1140,24 @@ class PurchaseInvoice extends React.Component {
                           </div>
                         </Col>
                         {this.state.MasterShow && (
-                          <Col lg="3" md="4" sm="12" style={{marginTop:'25px'}}>
+                          <Col
+                            lg="3"
+                            md="4"
+                            sm="12"
+                            style={{ marginTop: "25px" }}>
                             <SuperAdminUI
                               onDropdownChange={this.handleDropdownChange}
                               onSubmit={this.handleParentSubmit}
                             />
                           </Col>
                         )}
-                        <Col lg="1" style={{marginTop:'25px'}}>
+                        <Col lg="2" style={{ marginTop: "25px" }}>
+                          {this.state.InsiderPermissions &&
+                            this.state.InsiderPermissions?.Create && (
+                              <Link to="/app/AJgroup/order/CreatePurchaseInvoice">
+                                <Button color="primary">Create Invoice</Button>
+                              </Link>
+                            )}
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions.View && (
                               <>
@@ -1298,7 +1317,7 @@ class PurchaseInvoice extends React.Component {
                                       colResizeDefault={"shift"}
                                       animateRows={true}
                                       floatingFilter={false}
-                                     pagination={true}
+                                      pagination={true}
                                       paginationPageSize={
                                         this.state.paginationPageSize
                                       }

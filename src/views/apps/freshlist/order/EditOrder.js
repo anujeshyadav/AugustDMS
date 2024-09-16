@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -30,6 +30,7 @@ import {
 } from "../../../../../src/ApiEndPoint/Api";
 import { view_create_order_historyBy_id } from "../../../../ApiEndPoint/Api";
 import { GstCalculation } from "./GstCalculation";
+import { Edit } from "react-feather";
 let GrandTotal = [];
 let SelectedITems = [];
 let SelectedSize = [];
@@ -653,6 +654,22 @@ const EditOrder = (args) => {
                             <Label>
                               Choose Party{" "}
                               <span style={{ color: "red" }}> *</span>
+                              <span title="Edit Selected Party">
+                                {PartyId ? (
+                                  <>
+                                    <Link
+                                      target="_blank"
+                                      to={`/app/SoftNumen/account/CreateCustomer/${PartyId}`}>
+                                      <Edit
+                                        color="green"
+                                        style={{ cursor: "pointer" }}
+                                        size={18}
+                                        xlinkTitle="Edit Party"
+                                      />
+                                    </Link>
+                                  </>
+                                ) : null}
+                              </span>
                             </Label>
 
                             <Multiselect
@@ -785,6 +802,22 @@ const EditOrder = (args) => {
                             <div className="viewspacebetween0">
                               <Label>
                                 Product <span style={{ color: "red" }}> *</span>
+                                <span title="Edit Selected Product">
+                                  {!!product?.productId &&
+                                  product?.productId ? (
+                                    <>
+                                      <Link
+                                        target="_blank"
+                                        to={`/app/freshlist/house/EditAddProduct/${product?.productId}`}>
+                                        <Edit
+                                          color="green"
+                                          style={{ cursor: "pointer" }}
+                                          size={18}
+                                        />
+                                      </Link>
+                                    </>
+                                  ) : null}
+                                </span>
                               </Label>
                               <Multiselect
                                 required

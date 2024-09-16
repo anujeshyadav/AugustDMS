@@ -258,6 +258,10 @@ export const Delete_Product_Item = "/raw-material/delete-raw-material/";
 export const Purchase_Return = "/purchase-return/save-purchase-return";
 export const Purchase_Return_List = "/purchase-return/view-purchase-return/";
 export const Purchase_Edit_Order = "/purchase-order/update-purchase-order/";
+export const Purchase_AddInforEdit_Order =
+  "/purchase-order/purchase-order-update/";
+export const Purchase_Direct_Complete =
+  "/purchase-order/purchase-invoice-order";
 export const Purchase_Status_Order =
   "/purchase-order/update-purchase-order-status/";
 

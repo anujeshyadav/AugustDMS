@@ -26,7 +26,7 @@ import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "jspdf-autotable";
-import { Eye, CornerDownLeft } from "react-feather";
+import { Eye, CornerDownLeft, Trash2 } from "react-feather";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
@@ -38,6 +38,7 @@ import {
 } from "react-icons/fa";
 import swal from "sweetalert";
 import {
+  _Delete,
   _Get,
   Goods_DeliveryOTP,
   Goods_DeliveryOTP_Auth,
@@ -59,6 +60,7 @@ import {
   exportDataToPDF,
 } from "../house/Downloader";
 import {
+  Delete_Sales,
   Last_Ledger_Balance,
   view_create_order_history,
 } from "../../../../ApiEndPoint/Api";
@@ -202,6 +204,18 @@ class CompleteOrder extends React.Component {
                       />
                     </span>
                   )} */}
+
+                {this.state.InsiderPermissions &&
+                  this.state.InsiderPermissions.Delete && (
+                    <Trash2
+                      className="mr-50"
+                      size="25px"
+                      color="red"
+                      onClick={() => {
+                        this.runthisfunctionOtherStatus(params?.data?._id);
+                      }}
+                    />
+                  )}
               </div>
             );
           },
@@ -630,7 +644,29 @@ class CompleteOrder extends React.Component {
     );
     this.LookupviewStart();
   };
-
+  runthisfunctionOtherStatus(id) {
+    swal("Warning", "Sure You Want to Delete it", {
+      buttons: {
+        cancel: "cancel",
+        catch: { text: "Delete ", value: "delete" },
+      },
+    }).then((value) => {
+      switch (value) {
+        case "delete":
+          _Delete(Delete_Sales, id)
+            .then((res) => {
+              let selectedData = this.gridApi.getSelectedRows();
+              this.gridApi.updateRowData({ remove: selectedData });
+              this.componentDidMount();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          break;
+        default:
+      }
+    });
+  }
   HeadingRightShift = () => {
     const updatedSelectedColumnDefs = [
       ...new Set([

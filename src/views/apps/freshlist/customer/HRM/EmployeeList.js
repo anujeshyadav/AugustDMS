@@ -285,22 +285,7 @@ class EmployeeList extends React.Component {
             );
           },
         },
-        {
-          headerName: "Last Name",
-          field: "lastName",
-          filter: true,
-          sortable: true,
-          width: "150",
-          cellRendererFramework: (params) => {
-            return (
-              <>
-                <div className="actions cursor-pointer text-center">
-                  <span>{params?.data?.lastName}</span>
-                </div>
-              </>
-            );
-          },
-        },
+
         {
           headerName: "Email",
           field: "email",

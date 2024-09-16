@@ -29,7 +29,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import { ToWords } from "to-words";
 import "jspdf-autotable";
 
-import { Eye } from "react-feather";
+import { Eye, Trash2 } from "react-feather";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
@@ -38,7 +38,6 @@ import {
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
   FaFilter,
- 
 } from "react-icons/fa";
 import swal from "sweetalert";
 import { _Delete, _Get, _Post } from "../../../../ApiEndPoint/ApiCalling";
@@ -221,35 +220,17 @@ class OrderList extends React.Component {
                       )}
                     </>
                   )} */}
-                {/* {params.data?.status == "pending" ? (
-                  <>
-                    {this.state.InsiderPermissions &&
-                      this.state.InsiderPermissions.Delete && (
-                        <Trash2
-                          className="mr-50"
-                          size="25px"
-                          color="red"
-                          onClick={() => {
-                            this.runthisfunction(params?.data?._id);
-                          }}
-                        />
-                      )}
-                  </>
-                ) : (
-                  <>
-                    {this.state.InsiderPermissions &&
-                      this.state.InsiderPermissions.Delete && (
-                        <Trash2
-                          className="mr-50"
-                          size="25px"
-                          color="red"
-                          onClick={() => {
-                            this.runthisfunctionOtherStatus(params?.data?._id);
-                          }}
-                        />
-                      )}
-                  </>
-                )} */}
+                {this.state.InsiderPermissions &&
+                  this.state.InsiderPermissions.Delete && (
+                    <Trash2
+                      className="mr-50"
+                      size="25px"
+                      color="red"
+                      onClick={() => {
+                        this.runthisfunctionOtherStatus(params?.data?._id);
+                      }}
+                    />
+                  )}
               </div>
             );
           },

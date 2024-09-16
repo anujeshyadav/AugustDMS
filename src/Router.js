@@ -598,6 +598,12 @@ const PaymentListAll = lazy(() =>
 const EditPurchase = lazy(() =>
   import("./views/apps/freshlist/order/purchase/EditPurchase")
 );
+const UpdatePurchseOrder = lazy(() =>
+  import("./views/apps/freshlist/order/purchase/UpdatePurchaseOrder")
+);
+const CreatePurchaseInvoice = lazy(() =>
+  import("./views/apps/freshlist/order/purchase/CreatePurchaseInvoice")
+);
 const PurchaseReturn = lazy(() =>
   import("./views/apps/freshlist/order/purchase/PurchaseReturn")
 );
@@ -1830,6 +1836,14 @@ class AppRouter extends React.Component {
           <AppRoute
             path="/app/AJgroup/order/editPurchase/:id"
             component={EditPurchase}
+          />
+          <AppRoute
+            path="/app/AJgroup/order/UpdatePurchseOrder/:id"
+            component={UpdatePurchseOrder}
+          />
+          <AppRoute
+            path="/app/AJgroup/order/CreatePurchaseInvoice"
+            component={CreatePurchaseInvoice}
           />
           <AppRoute
             path="/app/AJGroup/order/salesReturn/:id"

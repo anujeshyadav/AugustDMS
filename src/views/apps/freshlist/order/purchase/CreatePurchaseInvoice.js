@@ -12,6 +12,10 @@ import {
   Input,
   Label,
   Button,
+  CustomInput,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from "reactstrap";
 import "react-phone-input-2/lib/style.css";
 import Multiselect from "multiselect-react-dropdown";
@@ -21,29 +25,39 @@ import {
   CreateCustomerList,
   _Get,
   SavePurchaseOrder,
+  _PostSave,
 } from "../../../../../ApiEndPoint/ApiCalling";
 import "../../../../../assets/scss/pages/users.scss";
 import UserContext from "../../../../../context/Context";
 import { PurchaseGstCalculation } from "./../PurchaseGstCalculation";
-import { PurchaseProductList_Product } from "../../../../../ApiEndPoint/Api";
+import {
+  Purchase_Direct_Complete,
+  PurchaseProductList_Product,
+} from "../../../../../ApiEndPoint/Api";
 import { Edit } from "react-feather";
 let GrandTotal = [];
 let SelectedITems = [];
 let SelectedSize = [];
+let selectedLandedPrice = [];
 let OtherGSTCharges = 0;
 
-const AddPurchaseOrder = (args) => {
+const CreatePurchaseInvoice = (args) => {
   const [Index, setIndex] = useState("");
   const [PartyLogin, setPartyLogin] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [ProductList, setProductList] = useState([]);
   const [GSTData, setGSTData] = useState({});
   const [PartyList, setPartyList] = useState([]);
+  const [extraCharges, setExtraCharges] = useState({});
   const [PartyId, setPartyId] = useState("");
+  const [LandedPrice, setLandedPrice] = useState([]);
+
   const [Party, setParty] = useState({});
+  const [maxGst, setmaxGst] = useState({});
   const [Charges, setCharges] = useState(0);
   const [UserInfo, setUserInfo] = useState({});
   const [orderDate, setOrderDate] = useState("");
+  const [modal, setModal] = useState(false);
   const [product, setProduct] = useState([
     {
       productId: "",
@@ -100,6 +114,7 @@ const AddPurchaseOrder = (args) => {
   const handleSelectionParty = (selectedList, selectedItem) => {
     setPartyId(selectedItem._id);
     setParty(selectedItem);
+    debugger;
 
     const gstdetails = PurchaseGstCalculation(
       selectedItem,
@@ -335,12 +350,17 @@ const AddPurchaseOrder = (args) => {
       localFreight: 0,
       miscellaneousCost: 0,
       tax: OtherGSTCharges,
+      status: "completed",
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
+      ...extraCharges,
     };
-    await SavePurchaseOrder(payload)
+    // await SavePurchaseOrder(payload);
+    debugger;
+    await _PostSave(Purchase_Direct_Complete, payload)
       .then((res) => {
+        debugger;
         setLoading(false);
-        swal("Purchase Order Added Successfully");
+        swal("Purchase Order Completed");
         history.goBack();
       })
       .catch((err) => {
@@ -354,7 +374,25 @@ const AddPurchaseOrder = (args) => {
   const onRemove1 = (selectedList, removedItem, index) => {
     setPartyId("");
   };
-
+  const HandleUpdatePurchase = (e) => {
+    let { name, value } = e.target;
+    let selectedTransporter = {};
+    if (name == "transporterId") {
+      selectedTransporter = Party?.assignTransporter?.filter(
+        (item) => item?._id?._id == value
+      );
+      setExtraCharges({
+        ...extraCharges,
+        transporter: selectedTransporter,
+        transporterId: value,
+      });
+    } else {
+      setExtraCharges({
+        ...extraCharges,
+        [name]: value,
+      });
+    }
+  };
   const handleChangePrice = (e, index) => {
     const { name, value } = e.target;
     if (Number(value != 0)) {
@@ -393,6 +431,58 @@ const AddPurchaseOrder = (args) => {
     }
   };
 
+  const handleAddLandedPrice = (e, index) => {
+    let { name, value } = e.target;
+    selectedLandedPrice[index] = Number(value);
+    let sum = selectedLandedPrice?.reduce((a, b) => a + b, 0);
+    let landedTax = Number(((sum * maxGst?.gstPercentage) / 100).toFixed(2));
+    setLandedPrice({
+      ...LandedPrice,
+      ["landedTax"]: landedTax,
+      [name]: Number(value),
+    });
+    let TotalExpenses = Number(
+      (sum * (100 + maxGst?.gstPercentage) * 100).toFixed(2)
+    );
+    let LandedPercentage = Number(
+      (TotalExpenses / (GSTData?.Tax?.Amount * 100)).toFixed(2)
+    );
+    product.forEach((ele) => {
+      ele["landedCost"] = Number(
+        ((ele?.basicPrice * (100 + Number(LandedPercentage))) / 100).toFixed(2)
+      );
+    });
+  };
+  const UpdateClick = async (e) => {
+    toggle(e);
+  };
+  const toggle = (e) => {
+    debugger;
+    e.preventDefault();
+    setModal(!modal);
+    product?.forEach((ele) => {
+      if (typeof ele?.gstPercentage == "number") {
+        return ele;
+      } else {
+        if (ele?.gstPercentage?.includes("+")) {
+          ele["gstPercentage"] = ele?.gstPercentage?.split("+")[0] * 2;
+          return ele;
+        } else {
+          return ele;
+        }
+      }
+    });
+
+    const maxGst = product.reduce(function (prev, current) {
+      return prev && prev?.gstPercentage > current?.gstPercentage
+        ? prev
+        : current;
+    });
+    setmaxGst(maxGst);
+    product.forEach((ele) => {
+      ele["landedCost"] = ele?.basicPrice;
+    });
+  };
   return (
     <div>
       <div>
@@ -418,7 +508,8 @@ const AddPurchaseOrder = (args) => {
           </Row>
 
           <CardBody>
-            <Form className="" onSubmit={submitHandler}>
+            {/* <Form className="" onSubmit={submitHandler}> */}
+            <Form className="" onSubmit={UpdateClick}>
               <Row>
                 {PartyLogin && PartyLogin ? null : (
                   <>
@@ -787,7 +878,97 @@ const AddPurchaseOrder = (args) => {
                 </Col>
               </Row>
               <Row>
-                <Col className="mb-1 mt-1" lg="12" md="12" sm="12">
+                <Col lg="6" md="6" sm="6">
+                  <Row>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>Invoice Number</Label>
+                        <Input
+                          required
+                          type="text"
+                          value={extraCharges?.invoiceId}
+                          name="invoiceId"
+                          placeholder="Invoice Id No."
+                          onChange={HandleUpdatePurchase}
+                        />
+                      </div>
+                    </Col>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>Builty Number</Label>
+                        <Input
+                          required
+                          type="text"
+                          value={extraCharges?.BuiltyNumber}
+                          name="BuiltyNumber"
+                          onChange={HandleUpdatePurchase}
+                          placeholder="Builty Number"
+                        />
+                      </div>
+                    </Col>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>Dispatch Date</Label>
+                        <Input
+                          required
+                          type="date"
+                          onChange={HandleUpdatePurchase}
+                          value={extraCharges?.DispatchDate}
+                          name="DispatchDate"
+                        />
+                      </div>
+                    </Col>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>No of Packages</Label>
+                        <Input
+                          required
+                          type="number"
+                          value={extraCharges?.NoOfPackage}
+                          placeholder="Number of Packages"
+                          onChange={HandleUpdatePurchase}
+                          name="NoOfPackage"
+                        />
+                      </div>
+                    </Col>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>Transporter</Label>
+                        <CustomInput
+                          required
+                          type="select"
+                          value={extraCharges?.transporterId}
+                          onChange={HandleUpdatePurchase}
+                          name="transporterId">
+                          <option value="">----Select----</option>
+                          {Party?.assignTransporter?.length && (
+                            <>
+                              {Party?.assignTransporter?.map((ele, i) => (
+                                <option key={i} value={ele?._id?._id}>
+                                  {ele?.companyName}
+                                </option>
+                              ))}
+                            </>
+                          )}
+                        </CustomInput>
+                      </div>
+                    </Col>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>Vehicle Number</Label>
+                        <Input
+                          required
+                          type="text"
+                          value={extraCharges?.vehicleNo}
+                          placeholder="Vehicle Number"
+                          onChange={HandleUpdatePurchase}
+                          name="vehicleNo"
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col className="mb-1 mt-1" lg="6" md="6" sm="6">
                   <div className=" d-flex justify-content-end">
                     <ul className="subtotal">
                       <li>
@@ -907,7 +1088,153 @@ const AddPurchaseOrder = (args) => {
           </CardBody>
         </Card>
       </div>
+      <Modal size="lg" isOpen={modal} toggle={toggle} {...args}>
+        <ModalHeader toggle={toggle}>Update</ModalHeader>
+        <ModalBody>
+          <div className="p-2">
+            <Form onSubmit={submitHandler}>
+              <div>
+                <div className="d-flex justify-content-center p-2">
+                  <h4>Update Landed Price</h4>
+                </div>
+                <Row className="mt-2">
+                  <Col lg="4" md="6" sm="6" className="mb-1">
+                    <Label>Transportation Cost</Label>
+                    <Input
+                      required
+                      type="number"
+                      name="transportationCost"
+                      value={LandedPrice?.transportationCost}
+                      onChange={(e) => handleAddLandedPrice(e, 0)}
+                      placeholder="Transportation cost"
+                    />
+                  </Col>
+                  <Col lg="4" md="6" sm="6" className="mb-1">
+                    <Label>Labour Cost</Label>
+                    <Input
+                      required
+                      type="number"
+                      name="LabourCost"
+                      onChange={(e) => handleAddLandedPrice(e, 1)}
+                      value={LandedPrice?.LabourCost}
+                      placeholder="Labour Cost"
+                    />
+                  </Col>
+                  <Col lg="4" md="6" sm="6" className="mb-1">
+                    <Label>Local Freight</Label>
+                    <Input
+                      required
+                      type="number"
+                      value={LandedPrice?.LocalFreight}
+                      name="LocalFreight"
+                      onChange={(e) => handleAddLandedPrice(e, 2)}
+                      placeholder="LocalFreight cost"
+                    />
+                  </Col>
+                  <Col lg="4" md="6" sm="6" className="mb-1">
+                    <Label>Miscellaneous Cost</Label>
+                    <Input
+                      required
+                      type="number"
+                      name="MiscellanousCost"
+                      value={LandedPrice?.MiscellanousCost}
+                      onChange={(e) => handleAddLandedPrice(e, 3)}
+                      placeholder="MiscellanousCost cost"
+                    />
+                  </Col>
+                  <Col lg="4" md="6" sm="6" className="mb-1">
+                    <Label>Tax</Label>
+                    <Input
+                      readOnly
+                      type="number"
+                      name="landedTax"
+                      value={LandedPrice?.landedTax}
+                      onChange={(e) => handleAddLandedPrice(e, 4)}
+                      placeholder="Tax"
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg="12" md="12" sm="12" className="">
+                    <div className="d-flex justify-content-end">
+                      <h6>Sub-Total</h6> :
+                      <h6>
+                        {(
+                          LandedPrice?.transportationCost +
+                          LandedPrice?.MiscellanousCost +
+                          LandedPrice?.LocalFreight +
+                          LandedPrice?.LabourCost
+                        ).toFixed(2)}
+                      </h6>
+                    </div>
+                  </Col>
+                  <Col lg="12" md="12" sm="12" className="">
+                    <div className="d-flex justify-content-end">
+                      <h6>Tax</h6> :
+                      <h6>
+                        {LandedPrice?.landedTax > 0
+                          ? LandedPrice?.landedTax?.toFixed(2)
+                          : 0.0}
+                      </h6>
+                    </div>
+                  </Col>
+                  <Col lg="12" md="12" sm="12" className="mb-1">
+                    <hr />
+                    <div className="d-flex justify-content-end">
+                      <h6>Total</h6> :
+                      <h6>
+                        {" "}
+                        {(
+                          LandedPrice?.transportationCost +
+                          LandedPrice?.landedTax +
+                          LandedPrice?.MiscellanousCost +
+                          LandedPrice?.LocalFreight +
+                          LandedPrice?.LabourCost
+                        ).toFixed(2)}
+                      </h6>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  {!Loading ? (
+                    <>
+                      <Col>
+                        <div className="d-flex justify-content-center">
+                          <Button
+                            color="primary"
+                            type="submit"
+                            className="mt-2">
+                            Submit
+                          </Button>
+                        </div>
+                      </Col>
+                    </>
+                  ) : (
+                    <>
+                      <Col>
+                        <div className="d-flex justify-content-center">
+                          <Button color="secondary" className="mt-2">
+                            Loading...
+                          </Button>
+                        </div>
+                      </Col>
+                    </>
+                  )}
+                </Row>
+              </div>
+            </Form>
+          </div>
+        </ModalBody>
+        {/* <ModalFooter>
+          <Button color="primary" onClick={toggle}>
+            Do Something
+          </Button>{" "}
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter> */}
+      </Modal>
     </div>
   );
 };
-export default AddPurchaseOrder;
+export default CreatePurchaseInvoice;
