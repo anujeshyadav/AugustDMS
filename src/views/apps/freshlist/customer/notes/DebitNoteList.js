@@ -206,13 +206,15 @@ class DebitNoteList extends React.Component {
 
         {
           headerName: "Created At",
-          field: "createdAt",
           filter: true,
+          valueGetter: (params) => {
+            return params.data?.createdAt?.split("T")[0];
+          },
           width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params.data?.createdAt}</span>
+                <span>{params.value}</span>
               </div>
             );
           },
@@ -413,14 +415,14 @@ class DebitNoteList extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("DebitNote", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("DebitNote.pdf");
   }
 
   exportToPDF = async () => {
@@ -464,7 +466,7 @@ class DebitNoteList extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "DebitNote.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -488,7 +490,7 @@ class DebitNoteList extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `DebitNote.${excelType}`);
       },
     });
   };

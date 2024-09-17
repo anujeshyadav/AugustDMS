@@ -90,11 +90,11 @@ class StockDifferenceReport extends React.Component {
 
       columnDefs: [
         {
-          headerName: "UID",
+          headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
           // checkboxSelection: true,
-          width: 100,
+          width: 55,
           filter: true,
         },
         {
@@ -120,7 +120,7 @@ class StockDifferenceReport extends React.Component {
           field: "openingStock",
           filter: true,
           sortable: true,
-          width: 150,
+          width: 120,
           editable: true,
           cellRendererFramework: params => {
             return (
@@ -137,7 +137,7 @@ class StockDifferenceReport extends React.Component {
           field: "warehouseStock",
           filter: true,
           sortable: true,
-          width: 180,
+          width: 150,
           editable: true,
           cellRendererFramework: params => {
             return (
@@ -154,7 +154,7 @@ class StockDifferenceReport extends React.Component {
           field: "damageItem",
           filter: true,
           sortable: true,
-          width: 190,
+          width: 160,
           editable: true,
           cellRendererFramework: params => {
             return (
@@ -173,7 +173,7 @@ class StockDifferenceReport extends React.Component {
           field: "product.purchaseDate",
           filter: true,
           sortable: true,
-          width: 150,
+          width: 100,
           editable: true,
           cellRendererFramework: params => {
             let dif =
@@ -579,7 +579,7 @@ class StockDifferenceReport extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col style={{ marginTop: "25px" }}>
-              <h3 className="float-left "  style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'24px' }}>
+              <h3 className="float-left "  style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' }}>
                 STOCK DIFFERENCE REPORT
               </h3>
             </Col>
@@ -593,7 +593,7 @@ class StockDifferenceReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -602,7 +602,7 @@ class StockDifferenceReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   <div className="table-input cssforproductlist">
@@ -730,7 +730,7 @@ class StockDifferenceReport extends React.Component {
           </Row>
           <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
-              <div className="ag-theme-material w-100  ag-grid-table">
+              <div className="ag-theme-material w-100 my-1 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {context => (
                     <AgGridReact

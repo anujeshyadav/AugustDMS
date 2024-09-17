@@ -224,8 +224,8 @@ class PurchaseInvoice extends React.Component {
           },
         },
         {
-          headerName: "Orderid",
-          field: "_id",
+          headerName: "invoiceId",
+          field: "invoiceId",
           filter: true,
           editable: true,
           resizable: true,
@@ -236,7 +236,7 @@ class PurchaseInvoice extends React.Component {
             return (
               <div className="cursor-pointer text-center">
                 <div>
-                  <span>{params?.data?._id}</span>
+                  <span>{params?.data?.invoiceId}</span>
                 </div>
               </div>
             );
@@ -349,17 +349,63 @@ class PurchaseInvoice extends React.Component {
         },
 
         {
-          headerName: "Email",
-          field: "partyId.email",
+          headerName: "Builty Number",
+          field: "BuiltyNumber",
           filter: true,
           editable: true,
-          width: 350,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
+              <div className=" text-center">
                 <div>
-                  <span>{params.data?.partyId?.email}</span>
+                  <span>{params.data?.BuiltyNumber}</span>
                 </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "No Of Package",
+          field: "NoOfPackage",
+          filter: true,
+          editable: true,
+          width: 110,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>
+                  <span>{params.data?.NoOfPackage}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Vehicle No",
+          field: "vehicleNo",
+          filter: true,
+          editable: true,
+          width: 110,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>
+                  <span>{params.data?.vehicleNo}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+
+        {
+          headerName: "Tax",
+          field: "Tax",
+          filter: true,
+          width: 100,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>{params.data?.Tax}</div>
               </div>
             );
           },
@@ -379,45 +425,45 @@ class PurchaseInvoice extends React.Component {
         //     );
         //   },
         // },
-        {
-          headerName: "IGST ",
-          field: "igstTotal",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "SGST  ",
-          field: "sgstTotal",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "CGST  ",
-          field: "cgstTotal",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "IGST ",
+        //   field: "igstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "SGST  ",
+        //   field: "sgstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "CGST  ",
+        //   field: "cgstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Amount",
           field: "amount",
@@ -427,6 +473,19 @@ class PurchaseInvoice extends React.Component {
             return (
               <div className="cursor-pointer text-center">
                 <div>{params.data?.amount}</div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Charges",
+          field: "coolieAndCartage",
+          filter: true,
+          width: 100,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>{params.data?.coolieAndCartage}</div>
               </div>
             );
           },
@@ -458,21 +517,21 @@ class PurchaseInvoice extends React.Component {
           },
         },
 
-        {
-          headerName: "Total Product",
-          field: "params?.data?.orderItems?.length",
-          filter: true,
-          resizable: true,
-          width: 125,
-          cellRendererFramework: (params) => {
-            // console.log(params.data);
-            return (
-              <div className="cursor-pointer text-center">
-                <div>{params?.data?.orderItems?.length} Products</div>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "Total Product",
+        //   field: "params?.data?.orderItems?.length",
+        //   filter: true,
+        //   resizable: true,
+        //   width: 125,
+        //   cellRendererFramework: (params) => {
+        //     // console.log(params.data);
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>{params?.data?.orderItems?.length} Products</div>
+        //       </div>
+        //     );
+        //   },
+        // },
 
         // {
         //   headerName: "order Creation date",
@@ -636,7 +695,12 @@ class PurchaseInvoice extends React.Component {
         const newList = res?.orderHistory?.filter((ele) =>
           ele.status?.toLowerCase()?.includes("completed")
         );
-        console.log(newList);
+           newList?.forEach((element) => {
+             element["Tax"] =
+               element.igstTotal > 0
+                 ? element?.igstTotal
+                 : element?.cgstTotal + element?.sgstTotal;
+           });
         this.setState({ rowData: newList?.reverse() });
         this.setState({ AllcolumnDefs: this.state.columnDefs });
 

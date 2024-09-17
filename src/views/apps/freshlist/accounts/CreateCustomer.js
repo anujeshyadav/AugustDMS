@@ -325,14 +325,14 @@ const CreateCustomer = () => {
               setLoader(false);
 
               if (res.status) {
-                history.goBack();
-                swal("Customer Created Successfully");
+                history.push("/app/Ajgroup/account/AssignTeamMember");
+                swal("success","Assign Sales Person","success");
               }
             })
             .catch((err) => {
               setLoader(false);
-
-              swal("something Went Wrong");
+               console.log(err?.response)
+              swal("error",err?.response?.data.message ? err?.response?.data?.message : "Error Occured","error");
             });
         } else {
           CreateCustomerUpdate(Params?.id, formdata)

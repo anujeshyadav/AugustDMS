@@ -90,7 +90,7 @@ class GSTR1 extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -114,7 +114,7 @@ class GSTR1 extends React.Component {
           headerName: "Mobile No",
           field: "mobileNo",
           filter: true,
-          width: 115,
+          width: 100,
           sortable: true,
           cellRendererFramework: params => {
             return (
@@ -130,7 +130,7 @@ class GSTR1 extends React.Component {
           headerName: "Landline Number",
           field: "landlineNumber",
           filter: true,
-          width: 175,
+          width: 140,
           sortable: true,
           cellRendererFramework: params => {
             return (
@@ -146,7 +146,7 @@ class GSTR1 extends React.Component {
           headerName: "Address",
           field: "address",
           filter: true,
-          width: 500,
+          width: 380,
           sortable: true,
           cellRendererFramework: params => {
             return (
@@ -163,7 +163,7 @@ class GSTR1 extends React.Component {
           headerName: "Updated date",
           field: "updatedAt",
           filter: true,
-          width: 150,
+          width: 120,
           sortable: true,
           cellRendererFramework: params => {
             return (
@@ -530,10 +530,10 @@ class GSTR1 extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2  mr-2">
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col style={{ marginTop: "25px" }}>
               <h3 className="float-left " style={{ fontWeight: "600" }}>
-                Warehoue Report
+                Warehouse Report
               </h3>
             </Col>
             {this.state.MasterShow && this.state.MasterShow ? (
@@ -546,7 +546,7 @@ class GSTR1 extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+            <Col xl="3" lg="3" md="3" style={{ marginTop: "25px" }}>
               {" "}
               <div className="table-input cssforproductlist">
                 <Input
@@ -556,7 +556,7 @@ class GSTR1 extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   <div className="table-input cssforproductlist" >
@@ -681,7 +681,7 @@ class GSTR1 extends React.Component {
             </Col>
           </Row>
 
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">

@@ -1033,7 +1033,6 @@ const UpdatePurchaseOrder = (args) => {
                           <div className="">
                             <Label>Transporter</Label>
                             <CustomInput
-                              required
                               type="select"
                               value={extraCharges?.transporterId}
                               onChange={HandleUpdatePurchase}

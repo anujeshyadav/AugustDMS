@@ -179,14 +179,14 @@ class PurchaseReturn extends React.Component {
             console.log(params.data);
             return (
               <div className="cursor-pointer text-center">
-            {params.data?.Return_amount}
+                {params.data?.Return_amount}
               </div>
             );
           },
         },
         {
-          headerName: "Order ID",
-          field: "orderId._id",
+          headerName: "invoiceId",
+          field: "orderId.invoiceId",
           filter: true,
           editable: true,
           width: 150,
@@ -194,7 +194,7 @@ class PurchaseReturn extends React.Component {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.orderId?._id}</span>
+                <span>{params?.data?.orderId?.invoiceId}</span>
               </div>
             );
           },
@@ -202,14 +202,14 @@ class PurchaseReturn extends React.Component {
 
         {
           headerName: "Purchase Date",
-          field: "orderId/DateofDelivery",
+          field: "orderId?.date",
           filter: true,
           width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <div>
-                  <span>{params.data?.orderId?.DateofDelivery}</span>
+                  <span>{params.data?.orderId?.date?.split("T")[0]}</span>
                 </div>
               </div>
             );
@@ -246,22 +246,22 @@ class PurchaseReturn extends React.Component {
           },
         },
 
-        {
-          headerName: "Email",
-          field: "partyId.email",
-          filter: true,
-          editable: true,
-          width: 320,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>
-                  <span>{params.data?.partyId?.email}</span>
-                </div>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "Email",
+        //   field: "partyId.email",
+        //   filter: true,
+        //   editable: true,
+        //   width: 320,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>
+        //           <span>{params.data?.partyId?.email}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Amount",
           field: "amount",
@@ -271,11 +271,7 @@ class PurchaseReturn extends React.Component {
             console.log(params?.data);
             return (
               <div className="cursor-pointer text-center">
-                <div>
-               
-                    {(params.data?.amount).toFixed(2)}
-                
-                </div>
+                <div>{(params.data?.amount).toFixed(2)}</div>
               </div>
             );
           },
@@ -285,16 +281,26 @@ class PurchaseReturn extends React.Component {
           headerName: "IGST  ",
           field: "igstTotal",
           filter: true,
-         width: 100,
+          width: 100,
           cellRendererFramework: (params) => {
             console.log(params.data);
             return (
               <div className="cursor-pointer text-center">
-                <div>
-                  
-                    {params.data?.igstTotal && params.data?.igstTotal}
-                 
-                </div>
+                <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Tax",
+          field: "Tax",
+          filter: true,
+          width: 100,
+          cellRendererFramework: (params) => {
+            console.log(params.data);
+            return (
+              <div className="cursor-pointer text-center">
+                <div>{params.data?.Tax && params.data?.Tax}</div>
               </div>
             );
           },
@@ -307,11 +313,7 @@ class PurchaseReturn extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>
-                  
-                    {params.data?.sgstTotal && params.data?.sgstTotal}
-                
-                </div>
+                <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
               </div>
             );
           },
@@ -320,15 +322,11 @@ class PurchaseReturn extends React.Component {
           headerName: "CGST  ",
           field: "cgstTotal",
           filter: true,
-           width: 100,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>
-                 
-                    {params.data?.cgstTotal && params.data?.cgstTotal}
-                 
-                </div>
+                <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
               </div>
             );
           },
@@ -338,13 +336,11 @@ class PurchaseReturn extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-           width: 100,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>
-                  {params.data?.roundOff} 
-                </div>
+                <div>{params.data?.roundOff}</div>
               </div>
             );
           },
@@ -353,13 +349,11 @@ class PurchaseReturn extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-           width: 105,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <div>
-                  {params?.data?.Return_amount} 
-                </div>
+                <div>{params?.data?.Return_amount}</div>
               </div>
             );
           },
@@ -407,6 +401,12 @@ class PurchaseReturn extends React.Component {
     await Purchase_ReturnList(id, db)
       .then((res) => {
         this.setState({ Loading: false });
+         res?.PurchaseReturn?.forEach((element) => {
+           element["Tax"] =
+             element.igstTotal > 0
+               ? element?.igstTotal
+               : element?.cgstTotal + element?.sgstTotal;
+         });
         this.setState({ rowData: res?.PurchaseReturn?.reverse() });
         this.setState({ AllcolumnDefs: this.state.columnDefs });
         this.setState({ SelectedCols: this.state.columnDefs });
@@ -532,14 +532,14 @@ class PurchaseReturn extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("PurchaseReturnOrder", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("PurchaseReturnOrder.pdf");
   }
 
   exportToPDF = async () => {
@@ -583,7 +583,7 @@ class PurchaseReturn extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "PurchaseReturnOrder.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -607,7 +607,7 @@ class PurchaseReturn extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `PurchaseReturnOrder.${excelType}`);
       },
     });
   };

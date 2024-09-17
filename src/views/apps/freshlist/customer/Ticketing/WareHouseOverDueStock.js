@@ -113,7 +113,7 @@ class WareHouseOverDueStock extends React.Component {
           field: "product.HSN_Code",
           filter: true,
           sortable: true,
-          width: 110,
+          width: 130,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -130,7 +130,7 @@ class WareHouseOverDueStock extends React.Component {
           field: "salesDate",
           filter: true,
           sortable: true,
-          width: 165,
+          width: 120,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -168,7 +168,7 @@ class WareHouseOverDueStock extends React.Component {
           field: "purchaseDate",
           filter: true,
           sortable: true,
-          width: 200,
+          width: 145,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -185,7 +185,7 @@ class WareHouseOverDueStock extends React.Component {
           field: "product.qty",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 100,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -202,7 +202,7 @@ class WareHouseOverDueStock extends React.Component {
           field: "overDue",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 120,
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -608,7 +608,7 @@ class WareHouseOverDueStock extends React.Component {
                 style={{
                   fontWeight: "600",
                   textTransform: "uppercase",
-                  fontSize: "24px",
+                  fontSize: "18px",
                 }}>
                 Dead Stock Report
               </h3>
@@ -623,7 +623,7 @@ class WareHouseOverDueStock extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -632,7 +632,7 @@ class WareHouseOverDueStock extends React.Component {
                 />
               </div>
             </Col>
-            <Col md="5" xl="5" lg="5">
+            <Col md="4" xl="4" lg="4">
               <Row>
                 <Col md="5" xl="5" lg="5" style={{ marginTop: "5px" }}>
                   <div className="table-input cssforproductlist">
@@ -750,7 +750,7 @@ class WareHouseOverDueStock extends React.Component {
           </Row>
           <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
-              <div className="ag-theme-material w-100  ag-grid-table">
+              <div className="ag-theme-material w-100 my-1 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {(context) => (
                     <AgGridReact

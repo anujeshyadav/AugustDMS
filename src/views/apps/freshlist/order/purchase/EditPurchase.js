@@ -680,7 +680,7 @@ const EditPurchase = (args) => {
       .catch((err) => {
         setLoading(false);
 
-        console.log(err.response?.data?.message);
+        // console.log(err.response?.data?.message);
         swal(
           "error",
           `${err.response?.data?.message && err.response?.data?.message}`,

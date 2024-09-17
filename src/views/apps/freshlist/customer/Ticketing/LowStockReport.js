@@ -88,11 +88,11 @@ class LowStockReport extends React.Component {
       },
       columnDefs: [
         {
-          headerName: "UID",
+          headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
           // checkboxSelection: true,
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -100,7 +100,7 @@ class LowStockReport extends React.Component {
           headerName: "Product",
           field: "Product_Title",
           filter: true,
-          width: 220,
+          width: 380,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -113,7 +113,7 @@ class LowStockReport extends React.Component {
           headerName: "HSN",
           field: "HSN_Code",
           filter: true,
-          width: 110,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -126,7 +126,7 @@ class LowStockReport extends React.Component {
           headerName: "Alert Quantity",
           field: "MIN_stockalert",
           filter: true,
-          width: 150,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -139,7 +139,7 @@ class LowStockReport extends React.Component {
           headerName: "Available Stock",
           field: "currentStock",
           filter: true,
-          width: 160,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -152,7 +152,7 @@ class LowStockReport extends React.Component {
           headerName: "Taxable Amount",
           field: "taxableAmount",
           filter: true,
-          width: 160,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -165,7 +165,7 @@ class LowStockReport extends React.Component {
           headerName: "GST",
           field: "GSTRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -178,7 +178,7 @@ class LowStockReport extends React.Component {
           headerName: "Grand Total",
           field: "Total",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -191,7 +191,7 @@ class LowStockReport extends React.Component {
           headerName: "Supplier Name",
           field: "SupplierName",
           filter: true,
-          width: 150,
+          width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -204,7 +204,7 @@ class LowStockReport extends React.Component {
           headerName: "Supplier GST",
           field: "SupplierGST",
           filter: true,
-          width: 180,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -615,7 +615,7 @@ class LowStockReport extends React.Component {
                 style={{
                   fontWeight: "600",
                   textTransform: "uppercase",
-                  fontSize: "24px",
+                  fontSize: "18px",
                 }}>
                 Low Stock Report
               </h3>
@@ -630,7 +630,7 @@ class LowStockReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+            <Col xl="3" lg="3" md="3" style={{ marginTop: "25px" }}>
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -639,7 +639,7 @@ class LowStockReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col md="5" xl="5" lg="5">
+            <Col md="4" xl="4" lg="4">
               <Row>
                 <Col md="5" xl="5" lg="5" style={{ marginTop: "5px" }}>
                   <div className="table-input cssforproductlist">
@@ -755,9 +755,9 @@ class LowStockReport extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "-2rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
-              <div className="ag-theme-material w-100  ag-grid-table">
+              <div className="ag-theme-material w-100 my-2  ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {(context) => (
                     <AgGridReact

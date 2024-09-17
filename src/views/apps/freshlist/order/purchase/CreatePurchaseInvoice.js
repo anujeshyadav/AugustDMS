@@ -934,7 +934,7 @@ const CreatePurchaseInvoice = (args) => {
                       <div className="">
                         <Label>Transporter</Label>
                         <CustomInput
-                          required
+                          // required
                           type="select"
                           value={extraCharges?.transporterId}
                           onChange={HandleUpdatePurchase}

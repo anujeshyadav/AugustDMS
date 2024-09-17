@@ -59,7 +59,11 @@ import {
   Purchase_Invoice_Create,
   Purchase_Status_Order,
 } from "../../../../../ApiEndPoint/Api";
-import { exportDataToExcel, exportDataToPDF } from "../../house/Downloader";
+import {
+  convertDataCSVtoExcel,
+  exportDataToExcel,
+  exportDataToPDF,
+} from "../../house/Downloader";
 
 const SelectedColums = [];
 
@@ -319,18 +323,96 @@ class PendingPurchase extends React.Component {
         //     );
         //   },
         // },
+        // {
+        //   headerName: "Email",
+        //   field: "partyId.email",
+        //   filter: true,
+        //   editable: true,
+        //   width: 250,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>
+        //           <span>{params.data?.partyId?.email}</span>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
-          headerName: "Email",
-          field: "partyId.email",
+          headerName: "invoice No.",
+          field: "invoiceId",
           filter: true,
-          editable: true,
-          width: 250,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
+              <div className=" text-center">
                 <div>
-                  <span>{params.data?.partyId?.email}</span>
+                  <span>{params.data?.invoiceId}</span>
                 </div>
+              </div>
+            );
+          },
+        },
+
+        {
+          headerName: "Builty Number",
+          field: "BuiltyNumber",
+          filter: true,
+          editable: true,
+          width: 125,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>
+                  <span>{params.data?.BuiltyNumber}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "No Of Package",
+          field: "NoOfPackage",
+          filter: true,
+          editable: true,
+          width: 110,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>
+                  <span>{params.data?.NoOfPackage}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Vehicle No",
+          field: "vehicleNo",
+          filter: true,
+          editable: true,
+          width: 110,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>
+                  <span>{params.data?.vehicleNo}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+
+        {
+          headerName: "Tax",
+          field: "Tax",
+          filter: true,
+          width: 100,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>{params.data?.Tax}</div>
               </div>
             );
           },
@@ -350,41 +432,54 @@ class PendingPurchase extends React.Component {
         //     );
         //   },
         // },
+        // {
+        //   headerName: "IGST  ",
+        //   field: "igstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "SGST  ",
+        //   field: "sgstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "CGST  ",
+        //   field: "cgstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
-          headerName: "IGST  ",
-          field: "igstTotal",
+          headerName: "Charges",
+          field: "coolieAndCartage",
           filter: true,
           width: 100,
           cellRendererFramework: (params) => {
             return (
-              <div className="cursor-pointer text-center">
-                <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "SGST  ",
-          field: "sgstTotal",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "CGST  ",
-          field: "cgstTotal",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
+              <div className=" text-center">
+                <div>{params.data?.coolieAndCartage}</div>
               </div>
             );
           },
@@ -531,7 +626,13 @@ class PendingPurchase extends React.Component {
         let newList = pendingStatus?.filter((lst) => {
           return lst.status !== "Deactive";
         });
-        if (newList) {
+        if (newList?.length) {
+          newList?.forEach((element) => {
+            element["Tax"] =
+              element.igstTotal > 0
+                ? element?.igstTotal
+                : element?.cgstTotal + element?.sgstTotal;
+          });
           this.setState({ rowData: newList?.reverse() });
         }
 
@@ -611,7 +712,7 @@ class PendingPurchase extends React.Component {
     const csvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
-    await exportDataToPDF(csvData, "UserList");
+    await exportDataToPDF(csvData, "PurchaseOrderList");
   };
   processCell = (params) => {
     return params.value;
@@ -621,14 +722,14 @@ class PendingPurchase extends React.Component {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
-    await exportDataToExcel(CsvData, "UserList");
+    await exportDataToExcel(CsvData, "PurchaseOrderList");
   };
 
   convertCSVtoExcel = async () => {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
-    await convertDataCSVtoExcel(CsvData, "UserList");
+    await convertDataCSVtoExcel(CsvData, "PurchaseOrderList");
   };
 
   shiftElementUp = () => {
@@ -656,7 +757,7 @@ class PendingPurchase extends React.Component {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
-    await convertDataCsvToXml(CsvData, "UserList");
+    await convertDataCsvToXml(CsvData, "PurchaseOrderList");
   };
 
   HandleSetVisibleField = (e) => {

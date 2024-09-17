@@ -227,15 +227,15 @@ class PurchaseOrderViewList extends React.Component {
           },
         },
         {
-          headerName: "Pan No",
-          field: "partyId.comPanNo",
+          headerName: "invoice No.",
+          field: "invoiceId",
           filter: true,
           width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
                 <div>
-                  <span>{params.data?.partyId?.comPanNo}</span>
+                  <span>{params.data?.invoiceId}</span>
                 </div>
               </div>
             );
@@ -243,16 +243,48 @@ class PurchaseOrderViewList extends React.Component {
         },
 
         {
-          headerName: "Email",
-          field: "partyId.email",
+          headerName: "Builty Number",
+          field: "BuiltyNumber",
           filter: true,
           editable: true,
-          width: 330,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
                 <div>
-                  <span>{params.data?.partyId?.email}</span>
+                  <span>{params.data?.BuiltyNumber}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "No Of Package",
+          field: "NoOfPackage",
+          filter: true,
+          editable: true,
+          width: 110,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>
+                  <span>{params.data?.NoOfPackage}</span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Vehicle No",
+          field: "vehicleNo",
+          filter: true,
+          editable: true,
+          width: 110,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>
+                  <span>{params.data?.vehicleNo}</span>
                 </div>
               </div>
             );
@@ -260,44 +292,58 @@ class PurchaseOrderViewList extends React.Component {
         },
 
         {
-          headerName: "IGST ",
-          field: "igstTotal",
+          headerName: "Tax",
+          field: "Tax",
           filter: true,
           width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
-                <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
+                <div>{params.data?.Tax}</div>
               </div>
             );
           },
         },
-        {
-          headerName: "SGST ",
-          field: "sgstTotal",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className=" text-center">
-                <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "CGST ",
-          field: "cgstTotal",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className=" text-center">
-                <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
-              </div>
-            );
-          },
-        },
+
+        // {
+        //   headerName: "IGST ",
+        //   field: "igstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className=" text-center">
+        //         <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "SGST ",
+        //   field: "sgstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className=" text-center">
+        //         <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "CGST ",
+        //   field: "cgstTotal",
+        //   filter: true,
+        //   width: 100,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className=" text-center">
+        //         <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Amount",
           field: "amount",
@@ -309,19 +355,6 @@ class PurchaseOrderViewList extends React.Component {
                 <div className="text-center">
                   {(params.data?.amount).toFixed(2)}
                 </div>
-              </div>
-            );
-          },
-        },
-        {
-          headerName: "Round Off",
-          field: "roundOff",
-          filter: true,
-          width: 100,
-          cellRendererFramework: (params) => {
-            return (
-              <div className=" text-center">
-                <div>{params.data?.roundOff}</div>
               </div>
             );
           },
@@ -339,6 +372,20 @@ class PurchaseOrderViewList extends React.Component {
             );
           },
         },
+        {
+          headerName: "Round Off",
+          field: "roundOff",
+          filter: true,
+          width: 100,
+          cellRendererFramework: (params) => {
+            return (
+              <div className=" text-center">
+                <div>{params.data?.roundOff}</div>
+              </div>
+            );
+          },
+        },
+
         {
           headerName: "Grand Total",
           field: "grandTotal",
@@ -410,12 +457,17 @@ class PurchaseOrderViewList extends React.Component {
     await PurchaseOrderList(id, db)
       .then((res) => {
         this.setState({ Loading: false });
-
         if (res?.orderHistory) {
           let newList = res?.orderHistory?.filter((lst) => {
             return lst.status !== "Deactive";
           });
           if (newList?.length) {
+            newList?.forEach((element)=>{
+              element["Tax"] =
+                element.igstTotal > 0
+                  ? element?.igstTotal
+                  : element?.cgstTotal + element?.sgstTotal;
+            })
             this.setState({ rowData: newList?.reverse() });
           }
         }
@@ -701,7 +753,7 @@ class PurchaseOrderViewList extends React.Component {
                             border: "1px solid rgb(8, 91, 245)",
                             backgroundColor: "white",
                           }}
-                          className="dropdown-content dropdownmy mt-2">
+                          className="dropdown-content dropdownmy">
                           <h5
                             onClick={() => this.exportToPDF()}
                             style={{ cursor: "pointer" }}

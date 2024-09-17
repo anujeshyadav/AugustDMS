@@ -82,10 +82,10 @@ class LowStockAlert extends React.Component {
       getPageSize: "",
       columnDefs: [
         {
-          headerName: "UID",
+          headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
         // {
@@ -214,7 +214,7 @@ class LowStockAlert extends React.Component {
           field: "warehouseName",
           filter: true,
           sortable: true,
-          width: 300,
+          width:200,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -230,7 +230,7 @@ class LowStockAlert extends React.Component {
           field: "Product_Title",
           filter: true,
           sortable: true,
-          width: 180,
+          width: 380,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -246,7 +246,7 @@ class LowStockAlert extends React.Component {
           field: "currentStock",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -262,7 +262,7 @@ class LowStockAlert extends React.Component {
           field: "MIN_stockalert",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -278,7 +278,7 @@ class LowStockAlert extends React.Component {
           field: "Product_MRP",
           filter: true,
           sortable: true,
-          width: 140,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -297,7 +297,7 @@ class LowStockAlert extends React.Component {
           field: "warehosueAddress",
           filter: true,
           sortable: true,
-          width: 450,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <>
@@ -798,7 +798,7 @@ class LowStockAlert extends React.Component {
                     <Card>
                       <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                         <Col >
-                          <h3 style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px',marginTop:'30px' }}>Shortage Stock Report</h3>
+                          <h3 style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>Shortage Stock Report</h3>
                         </Col>
 
                         {this.state.MasterShow && (
@@ -814,7 +814,7 @@ class LowStockAlert extends React.Component {
                             />
                           </Col>
                         )}
-                        <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+                        <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="3">
                           <div className="table-input cssforproductlist">
                             <Input
                               placeholder="search Item here..."
@@ -825,7 +825,7 @@ class LowStockAlert extends React.Component {
                             />
                           </div>
                         </Col>
-                        <Col md="5" xl="5" lg="5">
+                        <Col md="4" xl="4" lg="4">
                           <Row>
                             <Col
                               md="5"
