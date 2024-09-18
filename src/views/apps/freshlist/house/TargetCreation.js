@@ -117,7 +117,6 @@ class TargetCreation extends React.Component {
                       size="25px"
                       color="green"
                       onClick={() => {
-                        debugger;
                         this.setState({ ViewData: params?.data });
                         this.toggleModal();
                       }}

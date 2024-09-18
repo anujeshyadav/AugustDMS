@@ -224,10 +224,7 @@ export default function AddRoleNew() {
                     <Row className="gy-0 container">
                       {Roles &&
                         Roles?.map((value, index) => {
-                          {
-                            /* console.log(Selected);
-                          debugger; */
-                          }
+                      
                           return (
                             <Col
                               key={index}

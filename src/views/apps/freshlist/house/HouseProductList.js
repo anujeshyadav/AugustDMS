@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { ImDownload } from "react-icons/im";
 
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -125,7 +125,11 @@ class HouseProductList extends React.Component {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <span>{params?.data?.Product_Title}</span>
+                  <Link
+                    style={{ color: "black" }}
+                    to={`/app/freshlist/house/EditAddProduct/${params?.data?._id}`}>
+                    <span>{params?.data?.Product_Title}</span>
+                  </Link>
                 </div>
               </div>
             );
@@ -139,7 +143,7 @@ class HouseProductList extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="">
-                <div>
+                <div style={{ color: "black" }}>
                   <span>{params.data?.Product_MRP?.toFixed(2)}</span>
                 </div>
               </div>
@@ -600,7 +604,6 @@ class HouseProductList extends React.Component {
   }
 
   exportToExcel = async (fileName, e) => {
-    
     let Data = this.state.rowAllData?.map((item, i) => {
       return {
         id: item?.id,
@@ -877,76 +880,79 @@ class HouseProductList extends React.Component {
     } = this.state;
     return (
       <>
-        
-            <Card>
-              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-                <Col  >
-                  <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'25px' }}>
-                    Product List
-                  </h1>
-                </Col>
-             
-                {this.state.MasterShow && (
-                  <Col  xl="3" lg="3" style={{marginTop:"25px"}}>
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
-                    />
-                  </Col>
-                )}
-                <Col  xl="3" lg="3" style={{marginTop:"25px"}}>
-                
-                  <div className="table-input ">
-                    <Input
-                      placeholder="search Item here..."
-                      onChange={(e) => this.updateSearchQuery(e.target.value)}
-                      value={this.state.value}
-                    />
-                  </div>
-               
+        <Card>
+          <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+            <Col>
+              <h1
+                className="float-left"
+                style={{
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  fontSize: "18px",
+                  marginTop: "25px",
+                }}>
+                Product List
+              </h1>
+            </Col>
+
+            {this.state.MasterShow && (
+              <Col xl="3" lg="3" style={{ marginTop: "25px" }}>
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
               </Col>
-              
-                <Col xl="2" lg="2" style={{marginTop:"25px"}}>
-                <div style={{display:'flex', justifyContent:"space-between"}}>
+            )}
+            <Col xl="3" lg="3" style={{ marginTop: "25px" }}>
+              <div className="table-input ">
+                <Input
+                  placeholder="search Item here..."
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
+
+            <Col xl="2" lg="2" style={{ marginTop: "25px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
-                {InsiderPermissions && InsiderPermissions.Create && (
-                  <span className=" ">
-                    <Route
-                      render={({ history }) => (
-                        <Button
-                          color="rgb(8, 91, 245)"
-                          style={{
-                            cursor: "pointer",
-                             backgroundColor: "rgb(8, 91, 245) !important",
-                            color: "white",
-                            fontWeight: "600",
-                            height:"35px"
-                          }}
-                      className="float-right categorysbutton45"
-                       
-                          onClick={() =>
-                            history.push("/app/freshlist/house/AddProduct")
-                          }>
-                          Add Product
-                        </Button>
-                      )}
-                    />
-                  </span>
-                )}
+                  {InsiderPermissions && InsiderPermissions.Create && (
+                    <span className=" ">
+                      <Route
+                        render={({ history }) => (
+                          <Button
+                            color="rgb(8, 91, 245)"
+                            style={{
+                              cursor: "pointer",
+                              backgroundColor: "rgb(8, 91, 245) !important",
+                              color: "white",
+                              fontWeight: "600",
+                              height: "35px",
+                            }}
+                            className="float-right categorysbutton45"
+                            onClick={() =>
+                              history.push("/app/freshlist/house/AddProduct")
+                            }>
+                            Add Product
+                          </Button>
+                        )}
+                      />
+                    </span>
+                  )}
                 </div>
                 <div>
-                {InsiderPermissions && InsiderPermissions.View && (
-                  <span className=" ">
-                    <FaFilter
-                      style={{ cursor: "pointer" }}
-                      title="filter coloumn"
-                      size="35px"
-                      onClick={this.LookupviewStart}
-                      color="rgb(8, 91, 245)"
-                      className="float-right  "
-                    />
-                  </span>
-                )}
+                  {InsiderPermissions && InsiderPermissions.View && (
+                    <span className=" ">
+                      <FaFilter
+                        style={{ cursor: "pointer" }}
+                        title="filter coloumn"
+                        size="35px"
+                        onClick={this.LookupviewStart}
+                        color="rgb(8, 91, 245)"
+                        className="float-right  "
+                      />
+                    </span>
+                  )}
                   {InsiderPermissions && InsiderPermissions.Download && (
                     <div
                       onMouseEnter={this.toggleDropdown}
@@ -1019,45 +1025,42 @@ class HouseProductList extends React.Component {
                       )}
                     </div>
                   )}
-                  
                 </div>
-                </div>
-              
-                 
-                </Col>
-              </Row>
+              </div>
+            </Col>
+          </Row>
 
-              <>
-                {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
-                    
-                    <ContextLayout.Consumer className="ag-theme-alpine">
-                      {(context) => (
-                        <AgGridReact
-                          id="myAgGrid"
-                          gridOptions={this.gridOptions}
-                          rowSelection="multiple"
-                          defaultColDef={defaultColDef}
-                          columnDefs={columnDefs}
-                          rowData={rowData}
-                          onGridReady={this.onGridReady}
-                          colResizeDefault={"shift"}
-                          animateRows={true}
-                          floatingFilter={false}
-                          pagination={true}
-                          paginationPageSize={this.state.paginationPageSize}
-                          pivotPanelShow="always"
-                          enableRtl={context.state.direction === "rtl"}
-                          ref={this.gridRef} // Attach the ref to the grid
-                          domLayout="autoHeight" // Adjust layout as needed
-                        />
-                      )}
-                    </ContextLayout.Consumer>
-                  </div>
-                )}
-              </>
-            </Card>
-          
+          <>
+            {this.state.rowData === null ? null : (
+              <div
+                className="ag-theme-material w-100   ag-grid-table card-body"
+                style={{ marginTop: "-1rem" }}>
+                <ContextLayout.Consumer className="ag-theme-alpine">
+                  {(context) => (
+                    <AgGridReact
+                      id="myAgGrid"
+                      gridOptions={this.gridOptions}
+                      rowSelection="multiple"
+                      defaultColDef={defaultColDef}
+                      columnDefs={columnDefs}
+                      rowData={rowData}
+                      onGridReady={this.onGridReady}
+                      colResizeDefault={"shift"}
+                      animateRows={true}
+                      floatingFilter={false}
+                      pagination={true}
+                      paginationPageSize={this.state.paginationPageSize}
+                      pivotPanelShow="always"
+                      enableRtl={context.state.direction === "rtl"}
+                      ref={this.gridRef} // Attach the ref to the grid
+                      domLayout="autoHeight" // Adjust layout as needed
+                    />
+                  )}
+                </ContextLayout.Consumer>
+              </div>
+            )}
+          </>
+        </Card>
 
         <Modal
           isOpen={this.state.modal}

@@ -82,7 +82,6 @@ const CreateOrder = (args) => {
 
   const handleRequredQty = (e, index, avalaibleSize) => {
     const { name, value } = e.target;
-    debugger;
     if (Number(value) <= avalaibleSize) {
       if (Number(value != 0)) {
         setIndex(index);
@@ -424,7 +423,6 @@ const CreateOrder = (args) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // debugger;
     const gstdetails = GstCalculation(Party, product, Context);
     let Product = product?.map((ele) => {
       if (ele?.disCountPercentage > 1) {

@@ -556,7 +556,6 @@ class Achivement extends React.Component {
 
   HandleSetVisibleField = e => {
     e.preventDefault();
-    debugger;
     this.gridApi.setColumnDefs(this.state.SelectedcolumnDefs);
     this.setState({ columnDefs: this.state.SelectedcolumnDefs });
     this.setState({ SelectedcolumnDefs: this.state.SelectedcolumnDefs });

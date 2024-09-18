@@ -137,7 +137,6 @@ const EditOrder = (args) => {
       let URL = "order/check-party-limit/";
       await _Get(URL, selectedItem._id)
         .then((res) => {
-          debugger;
 
           setCustomerLimit(Number(res?.CustomerLimit));
           let CurrentLimit = Number(res?.CustomerLimit);
@@ -148,12 +147,10 @@ const EditOrder = (args) => {
           }
         })
         .catch((err) => {
-          debugger;
 
           console.log(err);
         });
     } else {
-      debugger;
 
       setCustomerLimit(0);
       setCustomerTerm("Cash");
@@ -260,17 +257,14 @@ const EditOrder = (args) => {
   };
 
   const fetchQuantity = async (warehouseId) => {
-    debugger;
 
     for (const id of warehouseId) {
-      debugger;
       // const quantity = await fetchQuantity(id);
       // results.push({ warehouseId: id, quantity });
       let URl = `${WareHouse_Current_Stock}${id?.warehouseid}/`;
 
       await _Get(URl, id?.productId?._id)
         .then((res) => {
-          debugger;
           console.log(res?.currentStock);
           Stocks.push(res?.currentStock);
         })
@@ -358,13 +352,11 @@ const EditOrder = (args) => {
             // (async () => {
             //   await _Get(URL, res?.orderHistory?.partyId?._id)
             //     .then((response) => {
-            //       debugger;
             //       setCustomerTerm("");
             //       setCustomerLimit(Number(response?.CustomerLimit));
             //       CurrentLimit = Number(response?.CustomerLimit);
             //     })
             //     .catch((err) => {
-            //       debugger;
             //       console.log(err);
             //     });
             // })();
@@ -451,7 +443,6 @@ const EditOrder = (args) => {
           //   Context
           // );
           // console.log(gstdetail);
-          // debugger;
           // if (gstdetail?.Tax?.GrandTotal < CurrentLimit) {
           //   setBorderColor("green");
           //   setProduct(list);

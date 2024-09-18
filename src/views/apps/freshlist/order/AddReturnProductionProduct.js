@@ -419,7 +419,6 @@ const AddReturnProductionProduct = (args) => {
     e.preventDefault();
 
     let userdata = JSON.parse(localStorage.getItem("userData"));
-    debugger;
     let returnItems = product?.map((ele, i) => {
       return {
         productId: ele?.productId,

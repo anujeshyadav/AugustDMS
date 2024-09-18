@@ -773,7 +773,6 @@ class OrderList extends React.Component {
     //  this.setState({ wordsNumber: words });
     //  .....................................
     if (UserInformation?.CompanyDetails?.BillNumber) {
-      // debugger;
       await _Post(
         Sales_OrderTo_DispatchList,
         this.state.PrintData?._id,
@@ -813,7 +812,6 @@ class OrderList extends React.Component {
     this.setState({ ShowMyBill: false });
   };
   // handleAddCharges = (e) => {
-  //   debugger;
   //   const selected =
   //     e.target.options[e.target.selectedIndex].getAttribute("data_id");
   //   let getValue = Number(selected?.split("*")[0]);
@@ -821,7 +819,6 @@ class OrderList extends React.Component {
   //   let value = { ...this.state?.PrintMainData };
   //   let Allvalue = { ...this.state?.PrintData };
   //   value["otherCharges"] = Number(e.target.value);
-  //   // debugger;
   //   value["amount"] = Number(value?.amount + getValue);
   //   if (value?.igstTaxType == 1) {
   //     let otherigst = Number((getValue * GST).toFixed(2));
@@ -895,7 +892,6 @@ class OrderList extends React.Component {
   //       let discountAmount = Number(
   //         (subtotal / ((100 + ele?.percentage) / 100)).toFixed(2)
   //       );
-  //       debugger;
   //       latestSubTotal = discountAmount;
   //       subtotal = discountAmount; // If you need to adjust the original subtotal too.
   //       ele["discountedAmount"] = Number(discountAmount.toFixed(2));
@@ -1076,11 +1072,9 @@ class OrderList extends React.Component {
   //   value["vehicleNo"] = Allvalue?.vehicleNo;
   //   this.setState({ PrintData: value });
   //   this.setState({ PrintMainData: value });
-  //   debugger;
   // };
 
   handleAddCharges = (e) => {
-    debugger;
     let value = _.cloneDeep(this.state?.PrintMainData);
     let Allvalue = _.cloneDeep(this.state?.PrintData);
 
@@ -1285,7 +1279,6 @@ class OrderList extends React.Component {
       );
     } else {
       if (lastdiscount?.discountedAmount > 0) {
-        debugger;
         // Sum = lastdiscount?.discountedAmount + value?.amount;
         Sum = lastdiscount?.discountedAmount;
         gstCalculation = Number(

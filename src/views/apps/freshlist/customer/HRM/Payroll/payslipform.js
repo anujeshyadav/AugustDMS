@@ -21,7 +21,6 @@ let NetSalary;
 let GrossSalary;
 const Payslip = () => {
   const Alldata = useContext(UserContext);
-  // debugger;
   // console.log(Alldata?.CompanyDetails?.logo);
   const [SalaryData, setSalaryData] = useState({});
   const [setSalaryAddValues, setSalaryADD] = useState([]);

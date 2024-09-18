@@ -212,23 +212,18 @@ const EditAddProduct = () => {
     let userData = JSON.parse(localStorage.getItem("userData"));
     let payload = {
       database: userData?.database,
-      // ProfitPercentage: Data?.ProfitPercentage ? Data?.ProfitPercentage : 0,
-      // unitType: Data?.unitType,
-      // unitQty: Number(Data?.unitQty),
+      
       category: Data?.category,
       SubCategory: Data?.SubCategory,
       warehouse: Data?.warehouse,
-      // Unit: Number(Data?.Unit),
       Product_Title: Data?.Product_Title,
       Product_MRP: Number(Data?.Product_MRP),
       igstType: Boolean(Data?.purchaseStatus),
       price: Number(Data?.Product_MRP),
-      // Size: Data?.Size,
-      // discount: Number(Data?.discount),
+    
       HSN_Code: Data?.HSN_Code,
       GSTRate: Number(Data?.GSTRate),
       Product_Desc: Data?.Product_Desc,
-      // file: Data?.Product_image,
       gstPercentage: Number(Data?.GSTRate),
       primaryUnit: Data?.primaryUnit,
       secondaryUnit: Data?.secondaryUnit,
@@ -899,23 +894,15 @@ const EditAddProduct = () => {
                     type="number"
                     id="Purchase_Rate"
                     step="0.01"
-                    // min={Data.landedCost}
                     name="Purchase_Rate"
                     placeholder="PurchaseRate"
                     value={Data.Purchase_Rate}
                     onChange={(e) => {
                       let value = e.target.value;
-                      if (Data.landedCost) {
-                        setData({
-                          ...Data,
-                          ["Purchase_Rate"]: value,
-                        });
-                      } else {
-                        setData({
-                          ...Data,
-                          ["Purchase_Rate"]: value,
-                        });
-                      }
+                      setData({
+                        ...Data,
+                        ["Purchase_Rate"]: +value,
+                      });
                     }}
                     // onChange={handleInputChange}
                   />

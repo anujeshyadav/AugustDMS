@@ -142,12 +142,10 @@ const CreateDispach = (args) => {
 
     Save_GoodDispatch(formdata)
       .then((res) => {
-        debugger;
         console.log(res);
         let payload = { status: "Inprocess" };
         Edit_StatusDispatchList(DispatchData?._id, payload)
           .then((res) => {
-            debugger;
             setLoader(false);
 
             console.log(res);
@@ -155,7 +153,6 @@ const CreateDispach = (args) => {
           })
           .catch((err) => {
             setLoader(false);
-            debugger;
             console.log(err);
           });
         if (res.status) {
@@ -165,7 +162,6 @@ const CreateDispach = (args) => {
         }
       })
       .catch((err) => {
-        debugger;
         setLoader(false);
         console.log(err.response);
         swal("Something went wrong Please Try again After Some Time");

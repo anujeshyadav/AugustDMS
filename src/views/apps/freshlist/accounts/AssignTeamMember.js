@@ -223,7 +223,6 @@ const AssignTeamMember = () => {
                   id="12"
                   value={SelectedDepartments}
                   onChange={(e) => {
-                    debugger;
                     setChild(false);
 
                     setSelectedDepartments(e.target.value);

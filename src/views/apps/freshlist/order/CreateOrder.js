@@ -503,7 +503,6 @@ const CreateOrder = (args) => {
       DateofDelivery: "",
       geotagging: geotagging,
     };
-    debugger;
     if (CustomerTerm == "Cash") {
       await SaveOrder(payload)
         .then((res) => {

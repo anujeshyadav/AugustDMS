@@ -130,7 +130,6 @@ const CreateTarget = (args) => {
   const handleSelection = (selectedList, selectedItem, index) => {
     SelectedITems.push(selectedItem);
     setProduct((prevProductList) => {
-      debugger;
       const updatedProductList = [...prevProductList];
       const updatedProduct = { ...updatedProductList[index] };
       updatedProduct.price = selectedItem?.Product_MRP;

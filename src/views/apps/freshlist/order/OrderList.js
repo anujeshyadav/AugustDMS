@@ -423,7 +423,6 @@ class OrderList extends React.Component {
                                 //   params?.data?._id
                                 // )
                                 //   .then((res) => {
-                                //     debugger;
                                 //     this.setState({ Dispatching: false });
 
                                 //     // console.log(res);

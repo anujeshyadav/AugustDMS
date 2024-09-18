@@ -434,7 +434,6 @@ class SalesLead extends React.Component {
     };
   }
   runthisfunction() {
-    debugger;
     console.log(this.state.bulkDelete);
     swal("Warning", "Sure You Want to Delete it", {
       buttons: {
@@ -462,7 +461,6 @@ class SalesLead extends React.Component {
   }
 
   handleAssingtoSalesPerson = (ele, e) => {
-    // debugger;
     // console.log(e.target.checked);
     const index = this.state.rowData.findIndex(item => item._id === ele._id);
 
@@ -801,12 +799,10 @@ class SalesLead extends React.Component {
       let URl = `${Bulk_Upload_Lead_Customer}/${userData?.database}`;
       await _BulkUpload(URl, formdata)
         .then(res => {
-          debugger;
           this.setState({ Loading: false });
           swal(`${res?.message}`);
         })
         .catch(err => {
-          debugger;
           console.log(err.response.data);
           this.setState({ Loading: false });
 
@@ -896,7 +892,6 @@ class SalesLead extends React.Component {
   };
   handleUnAssignParty = async e => {
     e.preventDefault();
-    debugger;
     this.setState({ Loading: true });
     let list = SelectedChildForUnlink?.map(ele => {
       return { id: ele?._id };

@@ -97,7 +97,6 @@ class PartyLedger extends React.Component {
                   color="green"
                   onClick={(e) => {
                     this.togglemodal();
-                    debugger;
                     this.setState({ ViewOneData: params.data });
                   }}
                 />

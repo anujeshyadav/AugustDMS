@@ -777,7 +777,6 @@ class InvoiceGenerator extends React.Component {
   handleShowInvoice = async (data) => {
     const UserInformation = this.context;
     let value = { ...data };
-    debugger;
     await _Get(Last_Ledger_Balance, value?.partyId?._id)
       .then((res) => {
         if (!!res?.Ledger.debit) {

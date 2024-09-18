@@ -37,7 +37,6 @@ const PracticsEditform = () => {
         desc: data?.desc,
         database: user?.database,
       };
-      debugger;
       try {
         await _Put(Hrm_SkillUpdate, id, Payload);
         history.push("/app/ajgroup/HRM/practiceList");

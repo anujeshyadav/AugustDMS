@@ -116,7 +116,6 @@ const BonusForm = () => {
   };
 
   const toggleSelectAllEmployees = (e) => {
-    debugger;
     console.log(e.target.checked);
     const { employees } = data;
     if (e.target.checked) {

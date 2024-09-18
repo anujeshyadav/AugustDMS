@@ -91,7 +91,6 @@ function ViewSuperAdCustomer() {
               subscriptionType: a?.subscriptionType,
             },
           };
-          debugger;
           console.log(Data);
           setData(Data);
         })

@@ -879,7 +879,6 @@ class attenviewform extends React.Component {
     let URl = `${Hrm_Salary_List}/1/`;
     await _Get(URl, db, id)
       .then(res => {
-        debugger;
         this.setState({ Loading: false });
         let selected = res?.ApplyRule?.filter(ele => ele?._id == pid);
         if (selected?.length > 0) {
@@ -1153,7 +1152,6 @@ class attenviewform extends React.Component {
 
   HandleSetVisibleField = e => {
     e.preventDefault();
-    debugger;
     this.gridApi.setColumnDefs(this.state.SelectedcolumnDefs);
     this.setState({ columnDefs: this.state.SelectedcolumnDefs });
     this.setState({ SelectedcolumnDefs: this.state.SelectedcolumnDefs });

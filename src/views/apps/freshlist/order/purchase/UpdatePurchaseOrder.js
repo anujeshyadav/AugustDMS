@@ -155,7 +155,6 @@ const UpdatePurchaseOrder = (args) => {
     const { name, value } = e.target;
     setIndex(index);
     if (Number(value != 0)) {
-      debugger;
       const list = [...product];
       if (name == "GrossQty") {
         list[index]["GrossQty"] = Number(value);
@@ -465,7 +464,6 @@ const UpdatePurchaseOrder = (args) => {
                     setLoading(false);
                   })
                   .catch((err) => {
-                    // debugger;
                     _Post(Purchase_Invoice_Create, Data?._id, {
                       ...payload,
                       status: "completed",
@@ -476,7 +474,6 @@ const UpdatePurchaseOrder = (args) => {
                 // }
               })
               .catch((err) => {
-                debugger;
                 console.log(err.response);
                 setLoading(true);
                 console.log(err);
@@ -494,19 +491,15 @@ const UpdatePurchaseOrder = (args) => {
     let item = {
       status: "completed",
     };
-    debugger;
     await _Put(Purchase_Status_Order, Data?._id, item)
       .then((res) => {
-        debugger;
         _Post(Purchase_Invoice_Create, Data?._id, "finalPayload")
           .then((res) => {
-            debugger;
             setLoading(false);
             History.goBack();
             swal("success", "Order Completed Successfully", "success");
           })
           .catch((err) => {
-            debugger;
             console.log(err.response);
           });
       })

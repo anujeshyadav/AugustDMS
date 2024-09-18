@@ -82,7 +82,6 @@ const SetRules = () => {
       // bonusType,
       // loanType,
     };
-    debugger;
 
     try {
       await _PostSave(SAVE_RULE_CREATION, payload);

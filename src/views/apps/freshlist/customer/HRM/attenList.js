@@ -866,7 +866,6 @@ function InnerTable(
         shift: ele?.shift,
       };
     });
-    debugger;
     await axiosConfigThirdParty
       .put(UpdateAttendanceByMonth, { updates: payload })
       .then((res) => {

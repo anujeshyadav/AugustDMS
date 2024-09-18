@@ -542,7 +542,6 @@ class PurchaseCompleted extends React.Component {
           headerName: "Particular",
           // field: "particular",
           valueGetter: (params) => {
-            debugger;
             if (params?.data?.expenseId) return params?.data?.expenseId?.title;
             if (params?.data?.partyId)
               return params?.data?.partyId?.CompanyName;

@@ -416,7 +416,6 @@ const PurchaseReturn = (args) => {
                   let selectedParty = data?.filter(
                     (ele) => ele?._id == value?.partyId?._id
                   );
-                  debugger;
                   setParty(selectedParty[0]);
                 }
               })

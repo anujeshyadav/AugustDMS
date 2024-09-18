@@ -113,7 +113,6 @@ const AddPurchaseOrder = (args) => {
   // const handleSelection = async (selectedItem, selectedList, index) => {
   const handleSelection = async (selectedList, selectedItem, index) => {
     // let existing = [];
-    // debugger;
     // if (product) {
     //   existing = product?.filter((ele) => ele?.productId == selectedItem?._id);
     // }
@@ -310,7 +309,7 @@ const AddPurchaseOrder = (args) => {
     const payload = {
       userId: UserInfo?._id,
       database: UserInfo?.database,
-      partyId: PartyId,
+      partyId: PartyId ? PartyId : "",
       SuperAdmin: Context?.CompanyDetails?.created_by,
       fullName: fullname,
       address: Party?.address,
@@ -337,18 +336,23 @@ const AddPurchaseOrder = (args) => {
       tax: OtherGSTCharges,
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
     };
-    await SavePurchaseOrder(payload)
-      .then((res) => {
-        setLoading(false);
-        swal("Purchase Order Added Successfully");
-        history.goBack();
-      })
-      .catch((err) => {
-        swal("SomeThing Went Wrong");
+    if (PartyId) {
+      await SavePurchaseOrder(payload)
+        .then((res) => {
+          setLoading(false);
+          swal("Purchase Order Added Successfully");
+          history.goBack();
+        })
+        .catch((err) => {
+          swal("SomeThing Went Wrong");
 
-        setLoading(false);
-        console.log(err);
-      });
+          setLoading(false);
+          console.log(err);
+        });
+    } else {
+      setLoading(false);
+      swal("Error", "Select Required Fields", "error");
+    }
   };
 
   const onRemove1 = (selectedList, removedItem, index) => {

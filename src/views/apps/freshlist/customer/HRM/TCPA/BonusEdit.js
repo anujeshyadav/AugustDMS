@@ -83,7 +83,6 @@ const BonusForm = () => {
       year: Number(data.years),
       database: user.database,
     };
-    debugger;
     await _Put(Bonus_UpdateBy_Id, data?.userId, payload)
       .then((res) => {
         setLoading(false);

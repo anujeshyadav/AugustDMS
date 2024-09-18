@@ -2172,7 +2172,7 @@ const CreateAccount = () => {
                                 <Col lg="6" md="6" sm="12">
                                   <FormGroup className="cssforproductlist">
                                     <Label>
-                                      O/P Balance Mode
+                                      O/P Balance Type
                                       <span style={{ color: "red" }}>*</span>
                                     </Label>
                                     <CustomInput
@@ -2186,8 +2186,8 @@ const CreateAccount = () => {
                                       <option value="">
                                         ----select Type----
                                       </option>
-                                      <option value="Dr">Dr</option>
-                                      <option value="Dr">Cr</option>
+                                      <option value="debit">Dr</option>
+                                      <option value="credit">Cr</option>
                                     </CustomInput>
                                   </FormGroup>
                                 </Col>

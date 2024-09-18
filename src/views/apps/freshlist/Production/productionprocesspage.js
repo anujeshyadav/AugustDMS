@@ -138,7 +138,6 @@ const ProductionProcess = (args) => {
   };
   const handleSubmitCharges = (e) => {
     e.preventDefault();
-    debugger;
     const list = [...product];
     let amt = 0;
     if (list.length > 0) {

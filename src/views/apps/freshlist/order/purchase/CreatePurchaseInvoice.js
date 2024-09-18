@@ -114,7 +114,6 @@ const CreatePurchaseInvoice = (args) => {
   const handleSelectionParty = (selectedList, selectedItem) => {
     setPartyId(selectedItem._id);
     setParty(selectedItem);
-    debugger;
 
     const gstdetails = PurchaseGstCalculation(
       selectedItem,
@@ -128,7 +127,6 @@ const CreatePurchaseInvoice = (args) => {
   // const handleSelection = async (selectedItem, selectedList, index) => {
   const handleSelection = async (selectedList, selectedItem, index) => {
     // let existing = [];
-    // debugger;
     // if (product) {
     //   existing = product?.filter((ele) => ele?.productId == selectedItem?._id);
     // }
@@ -352,20 +350,23 @@ const CreatePurchaseInvoice = (args) => {
       maxGstPercentage: Number(gstdetails?.Tax?.maxGst),
       ...extraCharges,
     };
-    debugger;
-    await _PostSave(Purchase_Direct_Complete, payload)
-      .then((res) => {
-        debugger;
-        setLoading(false);
-        swal("Purchase Order Completed");
-        history.goBack();
-      })
-      .catch((err) => {
-        swal("SomeThing Went Wrong");
+    if (PartyId) {
+      await _PostSave(Purchase_Direct_Complete, payload)
+        .then((res) => {
+          setLoading(false);
+          swal("Purchase Order Completed");
+          history.goBack();
+        })
+        .catch((err) => {
+          swal("SomeThing Went Wrong");
 
-        setLoading(false);
-        console.log(err);
-      });
+          setLoading(false);
+          console.log(err);
+        });
+    } else {
+      setLoading(false);
+      swal("Error", "Enter Requied Fields", "error");
+    }
   };
 
   const onRemove1 = (selectedList, removedItem, index) => {
@@ -430,6 +431,7 @@ const CreatePurchaseInvoice = (args) => {
 
   const handleAddLandedPrice = (e, index) => {
     let { name, value } = e.target;
+    debugger;
     selectedLandedPrice[index] = Number(value);
     let sum = selectedLandedPrice?.reduce((a, b) => a + b, 0);
     let landedTax = Number(((sum * maxGst?.gstPercentage) / 100).toFixed(2));
@@ -1101,7 +1103,11 @@ const CreatePurchaseInvoice = (args) => {
                       min={0}
                       type="number"
                       name="transportationCost"
-                      value={LandedPrice?.transportationCost}
+                      value={
+                        LandedPrice?.transportationCost
+                          ? LandedPrice?.transportationCost
+                          : 0
+                      }
                       onChange={(e) => handleAddLandedPrice(e, 0)}
                       placeholder="Transportation cost"
                     />
@@ -1114,7 +1120,9 @@ const CreatePurchaseInvoice = (args) => {
                       type="number"
                       name="LabourCost"
                       onChange={(e) => handleAddLandedPrice(e, 1)}
-                      value={LandedPrice?.LabourCost}
+                      value={
+                        LandedPrice?.LabourCost ? LandedPrice?.LabourCost : 0
+                      }
                       placeholder="Labour Cost"
                     />
                   </Col>
@@ -1124,7 +1132,11 @@ const CreatePurchaseInvoice = (args) => {
                       required
                       min={0}
                       type="number"
-                      value={LandedPrice?.LocalFreight}
+                      value={
+                        LandedPrice?.LocalFreight
+                          ? LandedPrice?.LocalFreight
+                          : 0
+                      }
                       name="LocalFreight"
                       onChange={(e) => handleAddLandedPrice(e, 2)}
                       placeholder="LocalFreight cost"
@@ -1137,7 +1149,11 @@ const CreatePurchaseInvoice = (args) => {
                       min={0}
                       type="number"
                       name="MiscellanousCost"
-                      value={LandedPrice?.MiscellanousCost}
+                      value={
+                        LandedPrice?.MiscellanousCost
+                          ? LandedPrice?.MiscellanousCost
+                          : 0
+                      }
                       onChange={(e) => handleAddLandedPrice(e, 3)}
                       placeholder="MiscellanousCost cost"
                     />
@@ -1160,10 +1176,10 @@ const CreatePurchaseInvoice = (args) => {
                       <h6>Sub-Total</h6> :
                       <h6>
                         {(
-                          LandedPrice?.transportationCost +
-                          LandedPrice?.MiscellanousCost +
-                          LandedPrice?.LocalFreight +
-                          LandedPrice?.LabourCost
+                          (LandedPrice?.transportationCost ?? 0) +
+                          (LandedPrice?.MiscellanousCost ?? 0) +
+                          (LandedPrice?.LocalFreight ?? 0) +
+                          (LandedPrice?.LabourCost ?? 0)
                         ).toFixed(2)}
                       </h6>
                     </div>
@@ -1185,12 +1201,19 @@ const CreatePurchaseInvoice = (args) => {
                       <h6>
                         {" "}
                         {(
+                          (LandedPrice?.transportationCost ?? 0) +
+                          (LandedPrice?.landedTax ?? 0) +
+                          (LandedPrice?.MiscellanousCost ?? 0) +
+                          (LandedPrice?.LocalFreight ?? 0) +
+                          (LandedPrice?.LabourCost ?? 0)
+                        ).toFixed(2)}
+                        {/* {(
                           LandedPrice?.transportationCost +
                           LandedPrice?.landedTax +
                           LandedPrice?.MiscellanousCost +
                           LandedPrice?.LocalFreight +
                           LandedPrice?.LabourCost
-                        ).toFixed(2)}
+                        ).toFixed(2)} */}
                       </h6>
                     </div>
                   </Col>

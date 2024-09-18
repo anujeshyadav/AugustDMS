@@ -12,7 +12,6 @@ export const PurchaseReturnGstCalculation = (Party, product, Context) => {
   let RoundOff = 0;
   let Discount = 0;
   let DiscountPercentage = 0;
-  debugger;
   if (!!Party?.category?.discount) {
     // DiscountPercentage = (100 + Party?.category?.discount) / 100;
     DiscountPercentage = 1;
@@ -112,7 +111,6 @@ export const PurchaseReturnGstCalculation = (Party, product, Context) => {
     });
   } else {
     gstDetails = product?.map((ele, i) => {
-      debugger;
       IgstTaxType = true;
       let GstRate = Number(ele?.productData?.GSTRate) / 2;
       let wholeGst = Number(ele?.productData?.GSTRate);

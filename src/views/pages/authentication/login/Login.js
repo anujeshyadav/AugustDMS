@@ -96,14 +96,11 @@ class Login extends React.Component {
   }
   loginOTPHandler = async (e) => {
     e.preventDefault();
-    debugger;
     let UserCredential = this.state.UserCredential;
     if (this.state.emailotp?.length == 4) {
       let Opt = { otp: this.state.emailotp, email: UserCredential?.email };
-      debugger;
       await UserOTPVerify(Opt)
         .then((response) => {
-          debugger;
           let basicinfor = response?.user;
 
           if (response?.status) {

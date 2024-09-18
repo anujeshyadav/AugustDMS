@@ -157,7 +157,6 @@ const EditPurchase = (args) => {
     const { name, value } = e.target;
     setIndex(index);
     if (Number(value != 0)) {
-      debugger;
       const list = [...product];
       if (name == "GrossQty") {
         list[index]["GrossQty"] = Number(value);
@@ -487,10 +486,8 @@ const EditPurchase = (args) => {
             let item = {
               status: "completed",
             };
-            debugger;
             await _Put(Purchase_Status_Order, Data?._id, item)
               .then((res) => {
-                debugger;
                 // if (status == "completed") {
                 _Post(Purchase_Invoice_Create, Data?._id, {
                   ...payload,
@@ -498,13 +495,11 @@ const EditPurchase = (args) => {
                 })
                   .then((res) => {
                     // setEditted(false);
-                    debugger;
                     History.goBack();
                     swal("success", "Order Completed Successfully", "success");
                     setLoading(false);
                   })
                   .catch((err) => {
-                    // debugger;
                     _Post(Purchase_Invoice_Create, Data?._id, {
                       ...payload,
                       status: "completed",
@@ -518,7 +513,6 @@ const EditPurchase = (args) => {
               })
               .catch((err) => {
                 // setEditted(false)
-                debugger;
                 console.log(err.response);
                 setLoading(true);
                 console.log(err);
@@ -536,24 +530,19 @@ const EditPurchase = (args) => {
     let item = {
       status: "completed",
     };
-    debugger;
     await _Put(Purchase_Status_Order, Data?._id, item)
       .then((res) => {
-        debugger;
         _Post(Purchase_Invoice_Create, Data?._id, finalPayload)
           .then((res) => {
-            debugger;
             setLoading(false);
             History.goBack();
             swal("success", "Order Completed Successfully", "success");
           })
           .catch((err) => {
-            debugger;
             console.log(err.response);
           });
       })
       .catch((err) => {
-        debugger;
         console.log(err.response);
         swal("error", "Error Occured", "error");
 

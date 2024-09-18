@@ -22,7 +22,6 @@ class RevenueGenerated extends React.Component {
     if (userData?.database) {
       await _Get(TransactionCalculation, userData?.database)
         .then((res) => {
-          // debugger;
           // this.setState({ rowData: res?.SalesCalculation });
         })
         .catch((err) => {

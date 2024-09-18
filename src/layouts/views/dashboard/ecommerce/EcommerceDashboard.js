@@ -154,7 +154,6 @@ class EcommerceDashboard extends React.Component {
 
     await _Get(LowStock_Calculation, userInfo?.database)
       .then((res) => {
-        debugger;
         this.setState({ Lowstock: res?.WarehouseStock });
         console.log(res?.alertProducts);
       })

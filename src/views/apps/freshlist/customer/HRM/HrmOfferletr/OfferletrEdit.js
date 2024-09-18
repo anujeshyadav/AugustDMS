@@ -40,7 +40,6 @@ const OfferEditlist = () => {
         mobileNo: data?.mobileNo,
         database: userinfo?.database,
       };
-      debugger;
       try {
         await _Put(Hrm_OfferUpdate, id, payload);
         history.push("/app/ajgroup/HRM/offerList");

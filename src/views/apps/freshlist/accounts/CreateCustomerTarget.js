@@ -232,7 +232,6 @@ const CreateCustomerTarget = (args) => {
       if (error) {
         swal("Error occured while Entering Details");
       } else {
-        debugger;
         // Create_Targetsave(payload)
         await _PostSave(Create_CustomerTarget_save, payload)
           .then((res) => {

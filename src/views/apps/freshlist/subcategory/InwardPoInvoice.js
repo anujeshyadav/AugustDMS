@@ -77,7 +77,6 @@ const StockTrxPOinvoice = ({
   tableList,
   AllCharges,
 }) => {
-  debugger;
   // const { items, customerName, date, total, place_supply } = invoiceData;
   const curentDate = new Date();
   let day = curentDate.getDate();

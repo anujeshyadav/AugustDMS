@@ -631,7 +631,6 @@ const CreateCustomer = () => {
                                         name="firstName"
                                         value={formData?.firstName}
                                         onChange={(e) => {
-                                          debugger;
                                           const inputPan = e.target.value;
                                           const filteredValue =
                                             inputPan.replace(/\s/g, "");
@@ -3542,6 +3541,43 @@ const CreateCustomer = () => {
                                 value={formData?.serviceArea}
                                 onChange={handleInputChange}
                               />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6" md="6" sm="12">
+                            <FormGroup className="cssforproductlist">
+                              <Label>
+                                Opening Balance{" "}
+                                <span style={{ color: "red" }}>*</span>
+                              </Label>
+                              <Input
+                                required
+                                className="form-control"
+                                placeholder="Opening Balance"
+                                type="number"
+                                name="OpeningBalance"
+                                value={formData?.OpeningBalance}
+                                onChange={handleInputChange}
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6" md="6" sm="12">
+                            <FormGroup className="cssforproductlist">
+                              <Label>
+                                O/P Balance Type
+                                <span style={{ color: "red" }}>*</span>
+                              </Label>
+                              <CustomInput
+                                required
+                                className="form-control"
+                                placeholder="Opening Balance"
+                                type="select"
+                                name="Type"
+                                value={formData?.Type}
+                                onChange={handleInputChange}>
+                                <option value="">----select Type----</option>
+                                <option value="debit">Dr</option>
+                                <option value="credit">Cr</option>
+                              </CustomInput>
                             </FormGroup>
                           </Col>
                         </Row>

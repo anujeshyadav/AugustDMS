@@ -257,7 +257,6 @@ const CreateCustomer = () => {
           transporter["rolename"] = transporter?.rolename?._id;
           setFormValues(transporter?.serviceArea);
           setFormData(transporter);
-          debugger;
           // transporter.Duedate = transporter?.Duedate?.split("T")[0];
           // if (transporter?.Country) {
           //   let countryselected = Country?.getAllCountries()?.filter(
@@ -922,6 +921,43 @@ const CreateCustomer = () => {
                                   value={formData?.password}
                                   onChange={handleInputChange}
                                 />
+                              </FormGroup>
+                            </Col>
+                            <Col lg="6" md="6" sm="12">
+                              <FormGroup className="cssforproductlist">
+                                <Label>
+                                  Opening Balance{" "}
+                                  <span style={{ color: "red" }}>*</span>
+                                </Label>
+                                <Input
+                                  required
+                                  className="form-control"
+                                  placeholder="Opening Balance"
+                                  type="number"
+                                  name="OpeningBalance"
+                                  value={formData?.OpeningBalance}
+                                  onChange={handleInputChange}
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col lg="6" md="6" sm="12">
+                              <FormGroup className="cssforproductlist">
+                                <Label>
+                                  O/P Balance Type
+                                  <span style={{ color: "red" }}>*</span>
+                                </Label>
+                                <CustomInput
+                                  required
+                                  className="form-control"
+                                  placeholder="Opening Balance"
+                                  type="select"
+                                  name="Type"
+                                  value={formData?.Type}
+                                  onChange={handleInputChange}>
+                                  <option value="">----select Type----</option>
+                                  <option value="debit">Dr</option>
+                                  <option value="credit">Cr</option>
+                                </CustomInput>
                               </FormGroup>
                             </Col>
                           </Row>

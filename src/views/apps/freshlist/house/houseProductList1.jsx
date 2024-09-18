@@ -526,6 +526,13 @@ class HouseProductList extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         res?.Product?.forEach((ele) => {
+          if (!!ele?.ProfitPercentage){
+            ele["ProfitPercentage"] = ele?.ProfitPercentage;
+          }else{
+            ele["ProfitPercentage"] = 3;
+          }
+          
+          console.log(ele?.ProfitPercentage);
           let Mrp = ele?.Product_MRP;
           let gst = (100 + ele?.GSTRate) / 100;
           let Dis = (100 + maxDiscount) / 100;
@@ -950,50 +957,61 @@ class HouseProductList extends React.Component {
       });
     }
   };
-  // handleSubmitProfitPercentage = (e) => {
-  //   e.preventDefault();
-  //   debugger;
-  //   console.log(this.state.ProfitPercentage);
+  handleSubmitProfitPercentage = async (e) => {
+    e.preventDefault();
+    let lessProfit = this.state.formValues?.filter(
+      (ele) => ele?.ProfitPercentage <= this.state.ProfitPercentage
+    );
+    lessProfit?.forEach((element, index) => {
+      let LandedCost =
+        element?.Purchase_Rate > element?.landedCost
+          ? element?.Purchase_Rate
+          : element?.landedCost;
 
-  //                             let { name, value } = e.target;
-  //                             let formValues = this.state.formValues;
-  //                             let LandedCost =
-  //                               element?.Purchase_Rate || element?.landedCost;
+      element["SalesRate"] = Number(
+        (
+          LandedCost *
+          ((100 + Number(this.state.ProfitPercentage)) / 100)
+        ).toFixed(2)
+      );
+      let Discount = element?.maxDiscount;
+      let gd = Number(
+        ((Number(element["SalesRate"]) * Discount) / 100).toFixed(2)
+      );
+      let tax = Number(
+        (
+          ((Number(element["SalesRate"]) + gd) * element?.GSTRate) /
+          100
+        ).toFixed(2)
+      );
+      let Mrp = Number((Number(element["SalesRate"]) + gd + tax).toFixed(2));
+      element["Product_MRP"] = Mrp;
+      element["ProfitPercentage"] = Number(this.state.ProfitPercentage);
+    });
+    this.setState({ loading: true });
+    let value = lessProfit?.map((ele) => {
+      return {
+        id: ele?._id,
+        Product_MRP: ele?.Product_MRP,
+        SalesRate: ele?.SalesRate,
+        ProfitPercentage: ele?.ProfitPercentage,
+      };
+    });
+    await axiosConfig
+      .put(Product_Price_Bulk_Update, { Products: value })
+      .then((res) => {
+        this.setState({ loading: false, ProfitPercentage :""});
+        swal("success", "Updated Successfully", "success");
+        this.LookupviewStart();
+        this.componentDidMount();
+      })
+      .catch((err) => {
+        this.setState({ loading: false });
+        swal("error", "Error Occured try Again After Some Time", "error");
 
-  //                             formValues[index][name] = Number(value);
-  //                             formValues[index]["SalesRate"] = Number(
-  //                               (
-  //                                 LandedCost *
-  //                                 ((100 + Number(value)) / 100)
-  //                               ).toFixed(2)
-  //                             );
-  //                             let data = formValues[index];
-  //                             let Discount = data?.maxDiscount;
-  //                             let gd = Number(
-  //                               (
-  //                                 (Number(data?.SalesRate) * Discount) /
-  //                                 100
-  //                               ).toFixed(2)
-  //                             );
-  //                             let tax = Number(
-  //                               (
-  //                                 ((Number(data?.SalesRate) + gd) *
-  //                                   data?.GSTRate) /
-  //                                 100
-  //                               ).toFixed(2)
-  //                             );
-  //                             let Mrp = Number(
-  //                               (Number(data?.SalesRate) + gd + tax).toFixed(2)
-  //                             );
-  //                             formValues[index]["Product_MRP"] = Mrp;
-  //                             if (LandedCost > data?.SalesRate) {
-  //                               formValues[index]["lossStatus"] = true;
-  //                             } else {
-  //                               formValues[index]["lossStatus"] = false;
-  //                             }
-  //                             this.setState({ formValues });
-
-  // };
+        console.log(err);
+      });
+  };
   handleParentSubmit = (e) => {
     e.preventDefault();
     let SuperAdmin = JSON.parse(localStorage.getItem("SuperadminIdByMaster"));
@@ -1369,11 +1387,13 @@ class HouseProductList extends React.Component {
                       />
                     </Col>
                     <Col lg="2" md="2" sm="12">
+                      {this.state.ProfitPercentage >= 1 &&
                       <Button
-                        // onClick={this.handleSubmitProfitPercentage}
+                        onClick={this.handleSubmitProfitPercentage}
                         color="primary">
                         Submit
                       </Button>
+                      }
                     </Col>
                   </Row>
                 </div>

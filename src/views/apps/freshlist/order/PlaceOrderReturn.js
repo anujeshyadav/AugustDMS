@@ -78,7 +78,6 @@ const PlaceOrderReturn = (args) => {
     setUserName(e.target.value);
   };
   const handleProductChangeProduct = (e, index) => {
-    debugger;
     setIndex(index);
     let list = product;
 

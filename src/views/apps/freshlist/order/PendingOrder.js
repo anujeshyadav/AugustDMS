@@ -126,7 +126,6 @@ class PendingOrder extends React.Component {
                         size="20px"
                         color="white"
                         onClick={() => {
-                          debugger;
                           this.setState({ ViewOneData: params?.data });
                           this.toggleModal();
                         }}
@@ -432,10 +431,8 @@ class PendingOrder extends React.Component {
       });
     // if (this.state.Delivery_Status == "Completed") {
     //   console.log(this.state.ViewOneData);
-    //   debugger;
     //   await Goods_DeliveryOTP(this.state.ViewOneData?.userId?._id)
     //     .then((res) => {
-    //       debugger;
     //       console.log(res);
     //       swal("success", "OTP Send Successfully To your Registered Mail");
     //       this.setState({ OtpScreen: true });

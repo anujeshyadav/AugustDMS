@@ -55,7 +55,6 @@ const EditPlaceOrder = args => {
 console.log(product);
 
 const handleProductChangeProduct = (e, index) => {
-  // debugger;
   setIndex(index);
   const { name, value } = e.target;
   let orderitem = product?.orderItems;
@@ -108,7 +107,6 @@ useEffect(() => {
 
 const submitHandler = (e) => {
   e.preventDefault();
-  debugger;
   console.log(product, product.orderItems);
   let editedproduct = product?.orderItems?.map((ele) => {
     return {

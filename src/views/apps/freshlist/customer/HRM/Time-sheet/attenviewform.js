@@ -36,7 +36,6 @@ const AttenviewForm = () => {
 
     _Get(HRM_ATTENDANCE_LIST, userId.database)
       .then((res) => {
-        debugger;
         let selected = res?.attendanceTotal?.filter(
           (ele, i) => ele?.details?._id == id
         );

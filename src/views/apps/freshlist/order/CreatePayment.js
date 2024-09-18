@@ -97,7 +97,6 @@ const CreatePayment = (args) => {
           .then((res) => {
             let data = res?.Receipts;
             let value = {};
-            debugger;
             value["paymentMode"] = data?.paymentMode;
             value["database"] = data?.database;
             if (!!data?.partyId) {
