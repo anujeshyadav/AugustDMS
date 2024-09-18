@@ -86,9 +86,7 @@ const CreateAccount = () => {
   const Context = useContext(UserContext);
   let history = useHistory();
   let Params = useParams();
-  useEffect(() => {
-    // console.log(formData);
-  }, [formData]);
+ 
   useEffect(() => {
     let userData = JSON.parse(localStorage.getItem("userData"));
     if (userData?.database) {
@@ -139,11 +137,9 @@ const CreateAccount = () => {
             UserData["rolename"] = UserData?.rolename?._id;
             UserData["shift"] = UserData?.shift?._id;
             SetRules(res?.User?.setRule);
-            // setSelectedRoleToAssign(res?.User?.warehouse);
-// debugger
+
             if (res?.User?.warehouse?.length > 0) {
               let value = res?.User?.warehouse;
-              // debugger
               let selectedwarehouse = value?.map((element) => {
                 return element?.id;
               });
@@ -323,9 +319,6 @@ const CreateAccount = () => {
           if (WithoutMaster) {
             setAllAssignRoleList(WithoutMaster);
           }
-          // if (WithoutSuperadminandMaster) {
-          //   setAllAssignRoleList(WithoutSuperadminandMaster);
-          // }
         })
         .catch((err) => {
           console.log(err);
@@ -1689,6 +1682,7 @@ const CreateAccount = () => {
                               Select Role
                               <span style={{ color: "red" }}>*</span>
                             </Label>
+
                             <CustomInput
                               required
                               id="122"
@@ -2122,7 +2116,6 @@ const CreateAccount = () => {
                                   value={formData?.pfPercentage}
                                   onChange={(e) => {
                                     const inputValue = e.target.value;
-                                    // Check if the input value is a number and has at most 2 digits
                                     if (/^\d{0,2}$/.test(inputValue)) {
                                       setFormData({
                                         ...formData,
@@ -2130,10 +2123,10 @@ const CreateAccount = () => {
                                       });
                                     }
                                   }}
-                                  // onChange={handleInputChange}
                                 />
                               </FormGroup>
                             </Col>
+
                             <Col className="mb-1" lg="6" md="6" sm="12">
                               <Label>
                                 Employee Rule{" "}
@@ -2157,6 +2150,49 @@ const CreateAccount = () => {
                                 displayValue="title" // Property name to display in the dropdown options
                               />
                             </Col>
+                            {formData.rolename !== "SuperAdmin" && (
+                              <>
+                                <Col lg="6" md="6" sm="12">
+                                  <FormGroup className="cssforproductlist">
+                                    <Label>
+                                      Opening Balance{" "}
+                                      <span style={{ color: "red" }}>*</span>
+                                    </Label>
+                                    <Input
+                                      required
+                                      className="form-control"
+                                      placeholder="Opening Balance"
+                                      type="number"
+                                      name="OpeningBalance"
+                                      value={formData?.OpeningBalance}
+                                      onChange={handleInputChange}
+                                    />
+                                  </FormGroup>
+                                </Col>
+                                <Col lg="6" md="6" sm="12">
+                                  <FormGroup className="cssforproductlist">
+                                    <Label>
+                                      O/P Balance Mode
+                                      <span style={{ color: "red" }}>*</span>
+                                    </Label>
+                                    <CustomInput
+                                      required
+                                      className="form-control"
+                                      placeholder="Opening Balance"
+                                      type="select"
+                                      name="Type"
+                                      value={formData?.Type}
+                                      onChange={handleInputChange}>
+                                      <option value="">
+                                        ----select Type----
+                                      </option>
+                                      <option value="Dr">Dr</option>
+                                      <option value="Dr">Cr</option>
+                                    </CustomInput>
+                                  </FormGroup>
+                                </Col>
+                              </>
+                            )}
                           </>
                         )}
                       </Row>

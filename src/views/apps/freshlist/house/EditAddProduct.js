@@ -929,7 +929,6 @@ const EditAddProduct = () => {
                       readOnly
                       id="Product_MRP"
                       type="text"
-                      // min={Data.landedCost * 1.05}
                       name="Product_MRP"
                       placeholder="Product MRP"
                       value={

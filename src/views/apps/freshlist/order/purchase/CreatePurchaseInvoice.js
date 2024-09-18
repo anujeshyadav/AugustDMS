@@ -283,7 +283,7 @@ const CreatePurchaseInvoice = (args) => {
           totalPrice: ele?.qty * ele?.price,
           primaryUnit: ele?.primaryUnit,
           basicPrice: ele?.basicPrice,
-
+          landedCost: ele?.landedCost,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
           sgstRate: ele?.sgstRate,
@@ -302,14 +302,12 @@ const CreatePurchaseInvoice = (args) => {
           availableQty: ele?.availableQty,
           qty: ele?.qty,
           price: ele?.price,
-
           basicPrice: ele?.basicPrice,
-
+          landedCost: ele?.landedCost,
           totalPrice: ele?.qty * ele?.price,
           primaryUnit: ele?.primaryUnit,
           secondaryUnit: ele?.secondaryUnit,
           secondarySize: ele?.secondarySize,
-
           sgstRate: ele?.sgstRate,
           cgstRate: ele?.cgstRate,
           gstPercentage: ele?.gstPercentage,
@@ -456,7 +454,6 @@ const CreatePurchaseInvoice = (args) => {
     toggle(e);
   };
   const toggle = (e) => {
-    debugger;
     e.preventDefault();
     setModal(!modal);
     product?.forEach((ele) => {
@@ -551,7 +548,7 @@ const CreatePurchaseInvoice = (args) => {
                     <Col className="mb-1" lg="3" md="3" sm="12">
                       <div className="">
                         <Label>
-                          order Date <span style={{ color: "red" }}>*</span>
+                          Invoice Date <span style={{ color: "red" }}>*</span>
                         </Label>
                         <Input
                           required
@@ -1101,6 +1098,7 @@ const CreatePurchaseInvoice = (args) => {
                     <Label>Transportation Cost</Label>
                     <Input
                       required
+                      min={0}
                       type="number"
                       name="transportationCost"
                       value={LandedPrice?.transportationCost}
@@ -1112,6 +1110,7 @@ const CreatePurchaseInvoice = (args) => {
                     <Label>Labour Cost</Label>
                     <Input
                       required
+                      min={0}
                       type="number"
                       name="LabourCost"
                       onChange={(e) => handleAddLandedPrice(e, 1)}
@@ -1123,6 +1122,7 @@ const CreatePurchaseInvoice = (args) => {
                     <Label>Local Freight</Label>
                     <Input
                       required
+                      min={0}
                       type="number"
                       value={LandedPrice?.LocalFreight}
                       name="LocalFreight"
@@ -1134,6 +1134,7 @@ const CreatePurchaseInvoice = (args) => {
                     <Label>Miscellaneous Cost</Label>
                     <Input
                       required
+                      min={0}
                       type="number"
                       name="MiscellanousCost"
                       value={LandedPrice?.MiscellanousCost}
