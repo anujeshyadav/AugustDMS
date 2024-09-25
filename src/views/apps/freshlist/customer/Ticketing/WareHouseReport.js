@@ -69,7 +69,7 @@ class WareHouseReport extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -83,10 +83,10 @@ class WareHouseReport extends React.Component {
       },
       columnDefs: [
         {
-          headerName: "UID",
+          headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -107,7 +107,7 @@ class WareHouseReport extends React.Component {
           headerName: "CLOSING STOCK",
           field: "closingStock",
           filter: true,
-          width: 170,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -121,7 +121,7 @@ class WareHouseReport extends React.Component {
           headerName: "DAMAGE STOCK",
           field: "damageItem.currentStock",
           filter: true,
-          width: 170,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -134,7 +134,7 @@ class WareHouseReport extends React.Component {
           headerName: "PENDING STOCK",
           field: "pendingStock",
           filter: true,
-          width: 170,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -154,7 +154,7 @@ class WareHouseReport extends React.Component {
           headerName: "WAREHOUSE",
           field: "warehouseName",
           filter: true,
-          width: 450,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
@@ -526,9 +526,9 @@ class WareHouseReport extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2  mr-2">
-            <Col style={{ marginTop: "25px" }}>
-              <h3 className="float-left " style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h3   style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                 WareHouse Stock Report
               </h3>
             </Col>
@@ -542,7 +542,7 @@ class WareHouseReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -551,7 +551,7 @@ class WareHouseReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   <div className="table-input cssforproductlist">
@@ -669,7 +669,7 @@ class WareHouseReport extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">

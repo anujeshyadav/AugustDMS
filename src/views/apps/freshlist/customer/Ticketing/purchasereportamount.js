@@ -84,7 +84,7 @@ class purchasereportamount extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -92,7 +92,7 @@ class purchasereportamount extends React.Component {
           headerName: "GSTIN",
           field: "order.partyId.gstNumber",
           filter: true,
-          width: 180,
+          width: 135,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -121,7 +121,7 @@ class purchasereportamount extends React.Component {
           headerName: "Party Type",
           field: "order.partyId.partyType",
           filter: true,
-          width: 160,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -135,7 +135,7 @@ class purchasereportamount extends React.Component {
           headerName: "INVOICE Number",
           field: "order.invoiceId",
           filter: true,
-          width: 180,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -148,7 +148,7 @@ class purchasereportamount extends React.Component {
           headerName: "Purchase Date",
           field: "order.createdAt",
           filter: true,
-          width: 150,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -162,7 +162,7 @@ class purchasereportamount extends React.Component {
           field: "ARN",
           filter: true,
           editable: true,
-          width: 180,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -175,7 +175,7 @@ class purchasereportamount extends React.Component {
           headerName: "Recieved Date",
           field: "updatedAt",
           filter: true,
-          width: 165,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -188,7 +188,7 @@ class purchasereportamount extends React.Component {
           headerName: " Particulard",
           field: "order.partyId.ownerName",
           filter: true,
-          width: 180,
+          
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -201,7 +201,7 @@ class purchasereportamount extends React.Component {
           headerName: "HSN",
           field: "productId.HSN_Code",
           filter: true,
-          width: 110,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -214,7 +214,7 @@ class purchasereportamount extends React.Component {
           headerName: "QNTY",
           field: "qty",
           filter: true,
-          width: 110,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -227,7 +227,7 @@ class purchasereportamount extends React.Component {
           headerName: "DISCOUNT(%)",
           field: "discountPercentage",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -254,7 +254,7 @@ class purchasereportamount extends React.Component {
           headerName: "Taxable",
           field: "taxableAmount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -267,7 +267,7 @@ class purchasereportamount extends React.Component {
           headerName: "CGST",
           field: "cgstRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -280,7 +280,7 @@ class purchasereportamount extends React.Component {
           headerName: "SGST",
           field: "sgstRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -293,7 +293,7 @@ class purchasereportamount extends React.Component {
           headerName: "IGST",
           field: "igstRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -306,7 +306,7 @@ class purchasereportamount extends React.Component {
           headerName: "Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -669,9 +669,9 @@ class purchasereportamount extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2  mr-2">
-            <Col style={{ marginTop: "25px" }}>
-              <h3 className="float-left " style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h3 style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                 PARTY WISE AND PRODUCT WISE PURCHASE REPORT
               </h3>
             </Col>
@@ -685,7 +685,7 @@ class purchasereportamount extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+            <Col xl="3" lg="3" md="3" style={{ marginTop: "25px" }}>
               {" "}
               <div className="table-input cssforproductlist">
                 <Input
@@ -695,7 +695,7 @@ class purchasereportamount extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   {" "}
@@ -814,7 +814,7 @@ class purchasereportamount extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">

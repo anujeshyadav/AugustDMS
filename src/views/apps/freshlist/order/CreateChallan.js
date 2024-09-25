@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { history } from "../../../../history";
+import CryptoJS from "crypto-js"; // Importing CryptoJS
 
 import {
   Card,
@@ -33,6 +34,7 @@ import {
 import UserContext from "../../../../context/Context";
 import { GstCalculation } from "./GstCalculation";
 import swal from "sweetalert";
+import { handleKey } from "./HandleKeyPress";
 let GrandTotal = [];
 let SelectedITems = [];
 let SelectedSize = [];
@@ -137,25 +139,13 @@ const CreateOrder = (args) => {
   };
 
   useEffect(() => {
-    // Function to handle key down events
-    const handleKeyDown = (event) => {
-      if (event.ctrlKey && event.key === "b") {
-        console.log("Ctrl+b was pressed", event.key);
-        // alert("hello", event.key);
-        // Add your logic here
-      } else {
-        console.log("was pressed", event.key);
-      }
-    };
-
-    // Add event listener to the document
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Clean up the event listener
+    const handleKeyPress = async (event) => handleKey(event);
+    document.addEventListener("keydown", handleKeyPress);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
   const handleSelectionParty = async (selectedList, selectedItem) => {
     setPartyId(selectedItem._id);
     setParty(selectedItem);

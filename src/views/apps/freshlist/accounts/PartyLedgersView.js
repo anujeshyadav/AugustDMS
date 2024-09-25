@@ -541,9 +541,7 @@ const PartyLedgersView = () => {
                                   <tr key={ele?._id}>
                                     <td>
                                       <div className="d-flex justify-content-center">
-                                        <div>
-                                          {ele?.createdAt?.split("T")[0]}
-                                        </div>
+                                        <div>{ele?.date?.split("T")[0]}</div>
                                       </div>
                                     </td>
                                     {/* <td>

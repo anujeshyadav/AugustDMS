@@ -140,7 +140,7 @@ class GSTR1 extends React.Component {
           headerName: "Purchase Date",
           field: "mobileNo",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -166,7 +166,7 @@ class GSTR1 extends React.Component {
           headerName: "GST Number",
           field: "address",
           filter: true,
-          width: 180,
+          width: 150,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -180,7 +180,7 @@ class GSTR1 extends React.Component {
           headerName: "Rate",
           field: "updatedAt",
           filter: true,
-          width: 140,
+          width: 100,
 
           valueGetter: params => {
             const dateList = new Date(params?.data?.updatedAt);
@@ -192,7 +192,7 @@ class GSTR1 extends React.Component {
           headerName: "Discount Amount",
           field: "updatedAt",
           filter: true,
-          width: 180,
+          width: 140,
           valueGetter: params => {
             const dateList = new Date(params?.data?.updatedAt);
             const onlyDate = dateList?.toISOString().split("T")[0];
@@ -203,7 +203,7 @@ class GSTR1 extends React.Component {
           headerName: "GST",
           field: "updatedAt",
           filter: true,
-          width: 180,
+          width: 100,
           valueGetter: params => {
             const dateList = new Date(params?.data?.updatedAt);
             const onlyDate = dateList?.toISOString().split("T")[0];
@@ -214,7 +214,7 @@ class GSTR1 extends React.Component {
           headerName: "SGST",
           field: "updatedAt",
           filter: true,
-          width: 180,
+          width: 100,
           valueGetter: params => {
             const dateList = new Date(params?.data?.updatedAt);
             const onlyDate = dateList?.toISOString().split("T")[0];
@@ -225,7 +225,7 @@ class GSTR1 extends React.Component {
           headerName: "CGST",
           field: "updatedAt",
           filter: true,
-          width: 180,
+          width: 100,
           valueGetter: params => {
             const dateList = new Date(params?.data?.updatedAt);
             const onlyDate = dateList?.toISOString().split("T")[0];
@@ -236,7 +236,7 @@ class GSTR1 extends React.Component {
           headerName: "IGST",
           field: "updatedAt",
           filter: true,
-          width: 180,
+         width: 100,
           valueGetter: params => {
             const dateList = new Date(params?.data?.updatedAt);
             const onlyDate = dateList?.toISOString().split("T")[0];
@@ -591,7 +591,7 @@ class GSTR1 extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+              <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 GSTR 3B
               </h2>
             </Col>
@@ -606,7 +606,7 @@ class GSTR1 extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col lg="2" xl="2" md="2" style={{ marginTop: "25px" }}>
+            <Col lg="3" xl="3" md="3" style={{ marginTop: "25px" }}>
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -615,7 +615,7 @@ class GSTR1 extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   {" "}

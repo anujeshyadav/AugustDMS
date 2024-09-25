@@ -68,7 +68,7 @@ class PurchaseOrderReport extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -85,7 +85,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -106,7 +106,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "Product Name",
           field: "productId.Product_Title",
           filter: true,
-          width: 200,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -119,7 +119,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "HSN",
           field: "productId.HSN_Code",
           filter: true,
-          width: 180,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -132,7 +132,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "QNTY",
           field: "qty",
           filter: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -145,7 +145,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "Taxable",
           field: "taxableAmount",
           filter: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -158,7 +158,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "CGST",
           field: "cgstRate",
           filter: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -171,7 +171,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "SGST",
           field: "sgstRate",
           filter: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -184,7 +184,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "IGST",
           field: "igstRate",
           filter: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -197,7 +197,7 @@ class PurchaseOrderReport extends React.Component {
           headerName: "Total",
           field: "grandTotal",
           filter: true,
-          width: 180,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -570,9 +570,9 @@ class PurchaseOrderReport extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2  mr-2">
-            <Col style={{ marginTop: "25px" }}>
-              <h3 className="float-left " style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h3 style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                 PURCHASE ORDER REPORT
               </h3>
             </Col>
@@ -586,7 +586,7 @@ class PurchaseOrderReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="3">
               {" "}
               <div className="table-input">
                 <Input
@@ -596,7 +596,7 @@ class PurchaseOrderReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   <div className="table-input">
@@ -704,7 +704,7 @@ class PurchaseOrderReport extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
@@ -720,7 +720,7 @@ class PurchaseOrderReport extends React.Component {
                       colResizeDefault={"shift"}
                       animateRows={true}
                       floatingFilter={false}
-                      // pagination={true}
+                      pagination={true}
                       paginationPageSize={this.state.paginationPageSize}
                       pivotPanelShow="always"
                       enableRtl={context.state.direction === "rtl"}

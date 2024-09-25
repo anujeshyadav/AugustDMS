@@ -133,7 +133,7 @@ class GSTR1 extends React.Component {
             }
           },
           resizable: true,
-          width: 290,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -146,7 +146,7 @@ class GSTR1 extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -164,7 +164,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 200,
+          width: 195,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -176,7 +176,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -189,7 +189,7 @@ class GSTR1 extends React.Component {
           headerName: "Cess Amount",
           field: "CessAmount",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -208,7 +208,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 180,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -237,7 +237,7 @@ class GSTR1 extends React.Component {
           headerName: "Invoice Date",
           field: "updatedAt",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -255,7 +255,7 @@ class GSTR1 extends React.Component {
           headerName: "Invoice Value",
           field: "order.grandTotal",
           filter: true,
-          width: 160,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -277,7 +277,7 @@ class GSTR1 extends React.Component {
             }
           },
           resizable: true,
-          width: 290,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -296,7 +296,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 200,
+          width: 195,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -307,7 +307,7 @@ class GSTR1 extends React.Component {
           headerName: "Rate",
           field: "productId.GSTRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -320,7 +320,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -334,7 +334,7 @@ class GSTR1 extends React.Component {
           headerName: "Cess Amount",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -352,7 +352,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 180,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -367,7 +367,7 @@ class GSTR1 extends React.Component {
           headerName: "GSTIN/UIN of Recipient",
           field: "order.partyId.gstNumber",
           filter: true,
-          width: 240,
+          width: 170,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -396,7 +396,7 @@ class GSTR1 extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          width: 260,
+          width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -410,7 +410,7 @@ class GSTR1 extends React.Component {
           field: "order.date",
           filter: true,
           resizable: true,
-          width: 150,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -454,7 +454,7 @@ class GSTR1 extends React.Component {
             }
           },
           resizable: true,
-          width: 290,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -472,7 +472,7 @@ class GSTR1 extends React.Component {
             return "N";
           },
           filter: true,
-          width: 160,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -487,7 +487,7 @@ class GSTR1 extends React.Component {
             return "Regular B2B";
           },
           filter: true,
-          width: 200,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -500,7 +500,7 @@ class GSTR1 extends React.Component {
           headerName: "Note Value",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -519,7 +519,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 230,
+          width:195,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -530,7 +530,7 @@ class GSTR1 extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -543,7 +543,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -557,7 +557,7 @@ class GSTR1 extends React.Component {
           headerName: "Cess Amount",
           field: "",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -591,7 +591,7 @@ class GSTR1 extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          width: 205,
+          width: 200,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -605,7 +605,7 @@ class GSTR1 extends React.Component {
           field: "order.date",
           filter: true,
           resizable: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -651,7 +651,7 @@ class GSTR1 extends React.Component {
             }
           },
           resizable: true,
-          width: 290,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -665,7 +665,7 @@ class GSTR1 extends React.Component {
           headerName: "Note Value",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -684,7 +684,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 230,
+          width: 195,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -695,7 +695,7 @@ class GSTR1 extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -708,7 +708,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 145,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -722,7 +722,7 @@ class GSTR1 extends React.Component {
           headerName: "Cess Amount",
           field: "",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -737,7 +737,7 @@ class GSTR1 extends React.Component {
           headerName: "GSTIN/UIN No. Of Receipient",
           field: "order.partyId.gstNumber",
           filter: true,
-          width: 140,
+          width: 210,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -777,7 +777,7 @@ class GSTR1 extends React.Component {
           headerName: "Invoice Date",
           field: "order.updatedAt",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -795,7 +795,7 @@ class GSTR1 extends React.Component {
           headerName: "Invoice Value",
           field: "order.grandTotal",
           filter: true,
-          width: 150,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -850,7 +850,7 @@ class GSTR1 extends React.Component {
 
             return "N";
           },
-          width: 160,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -882,7 +882,7 @@ class GSTR1 extends React.Component {
               return "Intra-State supplies attracting IGST";
             return "Regular B2B";
           },
-          width: 280,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -900,7 +900,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 180,
+          width: 145,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -913,7 +913,7 @@ class GSTR1 extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -926,7 +926,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 140,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -939,7 +939,7 @@ class GSTR1 extends React.Component {
           headerName: "Cess Amount",
           field: "taxableAmount",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -954,7 +954,7 @@ class GSTR1 extends React.Component {
           headerName: "GSTIN/UIN No. Of Receipient",
           field: "order.partyId.gstNumber",
           filter: true,
-          width: 140,
+          width: 210,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -994,7 +994,7 @@ class GSTR1 extends React.Component {
           headerName: "Invoice Date",
           field: "order.updatedAt",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1012,7 +1012,7 @@ class GSTR1 extends React.Component {
           headerName: "Invoice Value",
           field: "order.grandTotal",
           filter: true,
-          width: 150,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1025,7 +1025,7 @@ class GSTR1 extends React.Component {
           headerName: "Invoice id",
           field: "order.invoiceId",
           filter: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             // console.log(params?.data);
             return (
@@ -1048,7 +1048,7 @@ class GSTR1 extends React.Component {
             }
           },
           resizable: true,
-          width: 290,
+          width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1067,7 +1067,7 @@ class GSTR1 extends React.Component {
 
             return "N";
           },
-          width: 160,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -1099,7 +1099,7 @@ class GSTR1 extends React.Component {
               return "Intra-State supplies attracting IGST";
             return "Regular B2B";
           },
-          width: 280,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1117,7 +1117,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width: 180,
+          width: 145,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1130,7 +1130,7 @@ class GSTR1 extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1143,7 +1143,7 @@ class GSTR1 extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 140,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1156,7 +1156,7 @@ class GSTR1 extends React.Component {
           headerName: "Cess Amount",
           field: "taxableAmount",
           filter: true,
-          width: 140,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1697,7 +1697,7 @@ class GSTR1 extends React.Component {
           <Card>
             <Row style={{marginLeft:'3px',marginRight:'3px'}}>
               <Col  >
-                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                   GSTR1
                 </h2>
               </Col>
@@ -1712,7 +1712,7 @@ class GSTR1 extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="2" xl="2" md="2" style={{ marginTop: "25px" }}>
+              <Col lg="3" xl="3" md="3" style={{ marginTop: "25px" }}>
                 <div className="table-input cssforproductlist">
                   <Input
                     placeholder="search Item here..."
@@ -1721,7 +1721,7 @@ class GSTR1 extends React.Component {
                   />
                 </div>
               </Col>
-              <Col xl="5" lg="5" md="5">
+              <Col xl="4" lg="4" md="4">
                 <Row>
                   <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                     <div className="table-input cssforproductlist">
@@ -1871,7 +1871,7 @@ class GSTR1 extends React.Component {
             <hr className="mt-1" />
             <Row className="">
               <Col>
-                <div className="mx-2 ">
+                <div className="  ">
                   <Nav
                     tabs
                     style={{

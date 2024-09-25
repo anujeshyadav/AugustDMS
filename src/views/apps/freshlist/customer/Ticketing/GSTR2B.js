@@ -124,7 +124,7 @@ class GSTR1 extends React.Component {
           headerName: "Purchase Date",
           field: "DateofDelivery",
           filter: true,
-          width: 155,
+          width: 120,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -163,7 +163,7 @@ class GSTR1 extends React.Component {
           headerName: "GST Number",
           field: "partyId.gstNumber",
           filter: true,
-          width: 180,
+          width: 150,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -177,7 +177,7 @@ class GSTR1 extends React.Component {
           headerName: "SGST",
           field: "updatedAt",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -190,7 +190,7 @@ class GSTR1 extends React.Component {
           headerName: "CGST",
           field: "updatedAt",
           filter: true,
-          width: 140,
+         width: 100,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -203,7 +203,7 @@ class GSTR1 extends React.Component {
           headerName: "IGST",
           field: "updatedAt",
           filter: true,
-          width: 140,
+         width: 100,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -216,7 +216,7 @@ class GSTR1 extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -229,7 +229,7 @@ class GSTR1 extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 140,
+         width: 105,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -242,7 +242,7 @@ class GSTR1 extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+         width: 110,
           cellRendererFramework: params => {
             return (
               <div className="text-center">
@@ -601,7 +601,7 @@ class GSTR1 extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+              <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
                 GSTR 2B- (B2B)
               </h2>
             </Col>
@@ -616,7 +616,7 @@ class GSTR1 extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col style={{ marginTop: "25px" }} xl="2" lg="2" md="2">
+            <Col style={{ marginTop: "25px" }} xl="3" lg="3" md="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -625,7 +625,7 @@ class GSTR1 extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   {" "}

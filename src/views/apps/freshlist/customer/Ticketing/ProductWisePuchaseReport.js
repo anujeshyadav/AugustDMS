@@ -86,10 +86,10 @@ class ProductWisePuchaseReport extends React.Component {
       },
       columnDefs: [
         {
-          headerName: "UID",
+          headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
@@ -97,7 +97,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "Particular",
           field: "productId.Product_Title",
           filter: true,
-          width: 200,
+          width: 350,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -110,7 +110,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "HSN",
           field: "productId.HSN_Code",
           filter: true,
-          width: 110,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -123,7 +123,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "QNTY",
           field: "qty",
           filter: true,
-          width: 105,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -136,7 +136,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "Taxable",
           field: "taxableAmount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
@@ -150,7 +150,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "CGST",
           field: "cgstRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -163,7 +163,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "SGST",
           field: "sgstRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -176,7 +176,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "IGST",
           field: "igstRate",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -189,7 +189,7 @@ class ProductWisePuchaseReport extends React.Component {
           headerName: "Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -539,9 +539,9 @@ class ProductWisePuchaseReport extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2  mr-2">
-            <Col style={{ marginTop: "25px" }}>
-              <h3 className="float-left " style={{ fontWeight: "500" }}>
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+            <Col  >
+              <h3 style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                 PRODUCT WISE PURCHASE REPORT
               </h3>
             </Col>
@@ -555,7 +555,7 @@ class ProductWisePuchaseReport extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+            <Col xl="3" lg="3" md="3" style={{ marginTop: "25px" }}>
               {" "}
               <div className="table-input cssforproductlist">
                 <Input
@@ -565,7 +565,7 @@ class ProductWisePuchaseReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col xl="5" lg="5" md="5">
+            <Col xl="4" lg="4" md="4">
               <Row>
                 <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                   <div className="table-input cssforproductlist">
@@ -681,7 +681,7 @@ class ProductWisePuchaseReport extends React.Component {
               )}
             </Col>
           </Row>
-          <CardBody style={{ marginTop: "0rem" }}>
+          <CardBody style={{ marginTop: "-3rem" }}>
             {this.state.rowData === null ? null : (
               <div className="ag-theme-material w-100 my-2 ag-grid-table">
                 <ContextLayout.Consumer className="ag-theme-alpine">
