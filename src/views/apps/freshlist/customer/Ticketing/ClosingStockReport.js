@@ -151,7 +151,7 @@ class ClosingStockReport extends React.Component {
               field: "oQty",
               headerClass: "header-style",
               filter: true,
-               width: 105,
+              width: 105,
               sortable: true,
               cellRendererFramework: (params) => {
                 return (
@@ -203,7 +203,7 @@ class ClosingStockReport extends React.Component {
               field: "OpeningTax",
               filter: true,
               sortable: true,
-             width: 105,
+              width: 105,
 
               cellRendererFramework: (params) => {
                 return (
@@ -554,7 +554,28 @@ class ClosingStockReport extends React.Component {
       modal: !prevState.modal,
     }));
   };
+  combineProducts = (arr) => {
+    // Create a map to hold combined data
+    const combined = {};
+    let array = [];
+    arr.map((product, index) => {
+      const { pId, pQty, sQty, cQty } = product;
+      if (combined[pId]) {
+        let current = array.filter((item) => item?.productId?._id == pId);
+        let index = array.indexOf(current[0]);
+        let currentItem = current[0];
+        currentItem.pQty += pQty;
+        currentItem.sQty += sQty;
+        // currentItem.cQty = currentItem.pQty - currentItem.cQty;
+        array[index][currentItem];
+      } else {
+        combined[pId] = { ...product }; // Initialize with the product object
+        array.push(product);
+      }
+    });
 
+    return array;
+  };
   async Apicalling(id, db) {
     this.setState({ Loading: true });
     await _Get(WareHouse_Closing_Stock, db)
@@ -570,14 +591,21 @@ class ClosingStockReport extends React.Component {
             ).toFixed(2);
             let OpeningTax = +((Total / (100 + gstRate)) * gstRate).toFixed(2);
             let OpeningTotal = +Total;
-            return { ...ele, ...val, OpeningTax, OpeningTotal };
+            return {
+              ...ele,
+              ...val,
+              OpeningTax,
+              OpeningTotal,
+              pId: val.productId?._id,
+            };
           });
         });
-        
+        debugger;
+        let combined = this.combineProducts(alldata);
         if (alldata?.length) {
           this.setState({
-            rowData: alldata?.reverse(),
-            rowAllData: alldata.reverse(),
+            rowData: combined,
+            rowAllData: alldata,
             AllcolumnDefs: this.state.columnDefs,
             SelectedCols: this.state.columnDefs,
           });
@@ -652,7 +680,7 @@ class ClosingStockReport extends React.Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.columnApi = params.columnApi;
-    this.gridRef.current = params.api; 
+    this.gridRef.current = params.api;
     this.setState({
       currenPageSize: this.gridApi.paginationGetCurrentPage() + 1,
       getPageSize: this.gridApi.paginationGetPageSize(),
@@ -774,16 +802,16 @@ class ClosingStockReport extends React.Component {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
-      Papa.parse(CsvData, {
-        complete: (result) => {
-          const ws = XLSX.utils.json_to_sheet(result.data);
-          
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-          const excelType = "xlsx";
-          XLSX.writeFile(wb, `ClosingStockReport.${excelType}`);
-        },
-      });
+    Papa.parse(CsvData, {
+      complete: (result) => {
+        const ws = XLSX.utils.json_to_sheet(result.data);
+
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        const excelType = "xlsx";
+        XLSX.writeFile(wb, `ClosingStockReport.${excelType}`);
+      },
+    });
     // debugger
     // const blob = await this.convertCsvToExcel(CsvData);
     // this.downloadExcelFile(blob);
@@ -828,16 +856,55 @@ class ClosingStockReport extends React.Component {
   handleDate = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  };  
-
-  handleSubmitDate = () => {
-    const filteredItems = this.state.rowAllData.filter((item) => {
-      const dateList = new Date(item?.createdAt);
-      const onlyDate = dateList.toISOString().split("T")[0];
-      return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
-    });
-    this.setState({ rowData: filteredItems });
   };
+  handleSubmitDate = () => {
+    const { rowAllData, startDate, EndDate } = this.state;
+
+    // Filter items within the date range
+    const filteredItems = rowAllData?.filter((item) => {
+      const dateList = item?.date;
+      const onlyDate = dateList?.split("T")[0];
+      return onlyDate >= startDate && onlyDate <= EndDate;
+    });
+
+    // If data is found within the date range
+    if (filteredItems?.length > 0) {
+      this.setState({ rowData: filteredItems });
+    } else {
+      // If no data is found, find the latest date before the start date
+      const previousDateItems = rowAllData
+        ?.filter((item) => {
+          const dateList = item?.date;
+          const onlyDate = dateList?.split("T")[0];
+          return onlyDate < startDate; // Find dates before the start date
+        })
+        .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by latest date
+
+      if (previousDateItems.length > 0) {
+        const latestPreviousDate = previousDateItems[0].date.split("T")[0]; // Get the latest previous date
+
+        // Get all items with the same latest previous date
+        const latestPreviousData = previousDateItems.filter((item) => {
+          return item.date.split("T")[0] === latestPreviousDate;
+        });
+
+        this.setState({ rowData: latestPreviousData });
+      } else {
+        // No data found at all
+        this.setState({ rowData: [] });
+      }
+    }
+  };
+
+  // handleSubmitDate = () => {
+  //   const filteredItems = this.state.rowAllData?.filter((item) => {
+  //     const dateList = item?.date;
+  //     const onlyDate = dateList?.split("T")[0];
+  //     return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
+  //   });
+  //   debugger;
+  //   this.setState({ rowData: filteredItems });
+  // };
   convertCsvToXml = () => {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
