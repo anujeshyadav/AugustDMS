@@ -563,9 +563,11 @@ class ClosingStockReport extends React.Component {
       if (combined[pId]) {
         let current = array.filter((item) => item?.productId?._id == pId);
         let index = array.indexOf(current[0]);
-        let currentItem = current[0];
+        let currentItem =current[0]
+        // let currentItem =JSON.parse(JSON.stringify( current[0]));
         currentItem.pQty += pQty;
         currentItem.sQty += sQty;
+        currentItem.currentStock = product.currentStock;
         // currentItem.cQty = currentItem.pQty - currentItem.cQty;
         array[index][currentItem];
       } else {
@@ -582,6 +584,7 @@ class ClosingStockReport extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Warehouse;
+        debugger;
         let closing = value?.filter((ele) => ele?.closingStatus == "closing");
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
@@ -600,12 +603,13 @@ class ClosingStockReport extends React.Component {
             };
           });
         });
-        debugger;
+        let newClosing = JSON.parse(JSON.stringify(alldata));
+
         let combined = this.combineProducts(alldata);
         if (alldata?.length) {
           this.setState({
+            rowAllData: newClosing,
             rowData: combined,
-            rowAllData: alldata,
             AllcolumnDefs: this.state.columnDefs,
             SelectedCols: this.state.columnDefs,
           });
@@ -859,7 +863,7 @@ class ClosingStockReport extends React.Component {
   };
   handleSubmitDate = () => {
     const { rowAllData, startDate, EndDate } = this.state;
-
+debugger;
     // Filter items within the date range
     const filteredItems = rowAllData?.filter((item) => {
       const dateList = item?.date;
