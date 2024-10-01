@@ -416,6 +416,10 @@ class ClosingStockReport extends React.Component {
               filter: true,
               sortable: true,
               width: 105,
+               valueGetter: (params) => {
+                debugger
+                return params?.data?.sQty * params?.data?.sRate;
+                  },
               field: "sTotal",
               headerClass: "header-style",
               cellRendererFramework: (params) => {
@@ -423,8 +427,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.sTotal &&
-                          params?.data?.sTotal?.toFixed(2)}
+                        {params?.value && params?.value?.toFixed(2)}
+                        {/* {params?.data?.sTotal &&
+                          params?.data?.sTotal?.toFixed(2)} */}
                       </span>
                     </div>
                   </>
@@ -559,7 +564,7 @@ class ClosingStockReport extends React.Component {
     const combined = {};
     let array = [];
     arr.map((product, index) => {
-      const { pId, pQty, sQty, cQty } = product;
+      const { pId, pQty, sQty, cQty, price, gstPercentage } = product;
       if (combined[pId]) {
         let current = array.filter((item) => item?.productId?._id == pId);
         let index = array.indexOf(current[0]);
@@ -568,6 +573,12 @@ class ClosingStockReport extends React.Component {
         currentItem.pQty += pQty;
         currentItem.sQty += sQty;
         currentItem.currentStock = product.currentStock;
+
+
+        currentItem.sRate = product?.productId?.SalesRate;
+        currentItem.sTaxRate = + gstPercentage;
+        // currentItem.sTotal = sQty * product?.productId?.SalesRate;
+        // currentItem["sTotal"] = sQty * product?.productId?.SalesRate;
         // currentItem.cQty = currentItem.pQty - currentItem.cQty;
         array[index][currentItem];
       } else {
@@ -584,7 +595,6 @@ class ClosingStockReport extends React.Component {
       .then((res) => {
         this.setState({ Loading: false });
         let value = res?.Warehouse;
-        debugger;
         let closing = value?.filter((ele) => ele?.closingStatus == "closing");
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
@@ -604,8 +614,9 @@ class ClosingStockReport extends React.Component {
           });
         });
         let newClosing = JSON.parse(JSON.stringify(alldata));
-
+        debugger;
         let combined = this.combineProducts(alldata);
+        console.log(combined);
         if (alldata?.length) {
           this.setState({
             rowAllData: newClosing,
@@ -863,7 +874,6 @@ class ClosingStockReport extends React.Component {
   };
   handleSubmitDate = () => {
     const { rowAllData, startDate, EndDate } = this.state;
-debugger;
     // Filter items within the date range
     const filteredItems = rowAllData?.filter((item) => {
       const dateList = item?.date;
