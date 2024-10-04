@@ -665,7 +665,7 @@ class ResignationList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={13} /> Resignation
+                        <FaPlus size={12} /> Resignation
                       </Button>
                     )}
                   />

@@ -40,6 +40,7 @@ import {
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
   FaFilter,
+  FaPlus,
 } from "react-icons/fa";
 import swal from "sweetalert";
 import {
@@ -773,7 +774,7 @@ class DamagedStock extends React.Component {
                          onClick={() =>
                            history.push("/app/Jupitech/warehouse/AddDamage")
                          }>
-                         + Damage
+                         <FaPlus size={12} /> Damage
                        </Button>
                      )}
                    />

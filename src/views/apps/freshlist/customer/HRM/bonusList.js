@@ -643,7 +643,7 @@ class BonusList extends React.Component {
                         onClick={() =>
                           history.push("/app/ajgroup/HRM/TCPA/bonusform/0")
                         }>
-                        <FaPlus size={13} /> Check Bonus
+                        <FaPlus size={12} /> Check Bonus
                       </Button>
                     )}
                   />

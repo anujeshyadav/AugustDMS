@@ -1046,6 +1046,15 @@ class Receipt extends React.Component {
                             Receipt List
                           </h1>
                         </Col>
+                       
+                        {this.state.MasterShow && (
+                          <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
+                            <SuperAdminUI
+                              onDropdownChange={this.handleDropdownChange}
+                              onSubmit={this.handleParentSubmit}
+                            />
+                          </Col>
+                        )}
                         <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
                           <div className="table-input cssforproductlist">
                             <Input
@@ -1057,15 +1066,6 @@ class Receipt extends React.Component {
                             />
                           </div>
                         </Col>
-                        {this.state.MasterShow && (
-                          <Col lg="3" md="6" sm="12" style={{marginTop:"25px"}}>
-                            <SuperAdminUI
-                              onDropdownChange={this.handleDropdownChange}
-                              onSubmit={this.handleParentSubmit}
-                            />
-                          </Col>
-                        )}
-                       
                          
 
                        
@@ -1093,7 +1093,7 @@ class Receipt extends React.Component {
                                         `/app/ajgroup/order/CreateReceipt/${0}`
                                       )
                                     }>
-                                    <FaPlus size={15} /> Receipt
+                                    <FaPlus size={12} /> Receipt
                                   </Button>
                                 )}
                               />
@@ -1117,7 +1117,7 @@ class Receipt extends React.Component {
                                         `/app/jupitech/ExpenseAccountsList`
                                       )
                                     }>
-                                    <FaPlus size={15} /> Accounts
+                                    <FaPlus size={12} /> Accounts
                                   </Button>
                                 )}
                               />

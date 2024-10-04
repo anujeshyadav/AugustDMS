@@ -764,8 +764,8 @@ class ExpenseAccountsList extends React.Component {
                         {InsiderPermissions && InsiderPermissions.Create && (
                           <>
                             <Col
-                              lg="2"
-                              xl="2"
+                              lg="1"
+                              xl="1"
                               md="5"
                               style={{ marginTop: "25px" }}>
                               <Route
@@ -776,6 +776,7 @@ class ExpenseAccountsList extends React.Component {
                                       backgroundColor: "rgb(8, 91, 245)",
                                       color: "white",
                                       height: "43px",
+                                      fontSize:"11px",
                                       fontWeight: "600",
                                       width: "100%",
                                       textTransform: "uppercase",

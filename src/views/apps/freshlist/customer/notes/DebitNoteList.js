@@ -36,6 +36,7 @@ import {
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
   FaFilter,
+  FaPlus,
 } from "react-icons/fa";
 import swal from "sweetalert";
 import {
@@ -689,7 +690,16 @@ class DebitNoteList extends React.Component {
                           Debit Note List
                         </h1>
                       </Col>
-                      <Col lg="3" md="4" sm="12" className="mt-2">
+                     
+                      {this.state.MasterShow && (
+                        <Col className="mt-2" lg="3" md="4" sm="12">
+                          <SuperAdminUI
+                            onDropdownChange={this.handleDropdownChange}
+                            onSubmit={this.handleParentSubmit}
+                          />
+                        </Col>
+                      )}
+                         <Col lg="3" md="4" sm="12" className="mt-2">
                         <div className="table-input mr-1 cssforproductlist">
                           <Input
                             placeholder="search Item here..."
@@ -700,14 +710,6 @@ class DebitNoteList extends React.Component {
                           />
                         </div>
                       </Col>
-                      {this.state.MasterShow && (
-                        <Col className="mt-2" lg="3" md="4" sm="12">
-                          <SuperAdminUI
-                            onDropdownChange={this.handleDropdownChange}
-                            onSubmit={this.handleParentSubmit}
-                          />
-                        </Col>
-                      )}
                       <Col lg="1" >
                         <div className=" mt-2">
                           <Button
@@ -716,7 +718,8 @@ class DebitNoteList extends React.Component {
                             style={{height:'35px',paddingTop:'8px'}}
                             color="primary"
                             >
-                            + Add
+
+                            <FaPlus size={12} /> Add
                           </Button>
                         </div>
                       </Col>
@@ -800,7 +803,7 @@ class DebitNoteList extends React.Component {
                     {InsiderPermissions && InsiderPermissions.View && (
                       <>
                         {this.state.rowData === null ? null : (
-                          <div className="ag-theme-material w-100   ag-grid-table">
+                          <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                             {/* <div className="d-flex flex-wrap justify-content-between align-items-center">
                               <div className="mb-1">
                                 <UncontrolledDropdown className="p-1 ag-dropdown">

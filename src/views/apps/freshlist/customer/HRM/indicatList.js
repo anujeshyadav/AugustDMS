@@ -682,7 +682,7 @@ class IndicList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={13} /> Show Indicator
+                        <FaPlus size={12} /> Show Indicator
                       </Button>
                     )}
                   />

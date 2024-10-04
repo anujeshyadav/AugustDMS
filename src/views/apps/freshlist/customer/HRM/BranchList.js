@@ -112,14 +112,14 @@ class HolidayList extends React.Component {
         {
           headerName: "Actions",
           field: "transactions",
-          width: 120,
+          width: 90,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
                 {this.state.InsiderPermissions.Delete && (
                   <Trash2
                     className="mr-50"
-                    size="25px"
+                    size="20px"
                     color="red"
                     onClick={() => this.runthisfunction(params.data._id)}
                   />
@@ -128,7 +128,7 @@ class HolidayList extends React.Component {
                   this.state.InsiderPermissions?.View && (
                     <Eye
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="green"
                       //   onClick={() => {
                       //     this.handleChangeView(params.data, "readonly");
@@ -150,7 +150,7 @@ class HolidayList extends React.Component {
                   this.state.InsiderPermissions?.Edit && (
                     <Edit
                       className="mr-50"
-                      size="25px"
+                      size="20px"
                       color="blue"
                       onClick={(e) => {
                         e.preventDefault();
@@ -195,7 +195,7 @@ class HolidayList extends React.Component {
           headerName: "Branch Name",
           field: "branchName",
           filter: true,
-          width: 140,
+         
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -210,7 +210,7 @@ class HolidayList extends React.Component {
           headerName: "Branch id",
           field: "id",
           filter: true,
-          width: 140,
+         
           editable: true,
           cellRendererFramework: (params) => {
             return (
@@ -226,7 +226,7 @@ class HolidayList extends React.Component {
           headerName: "Address",
           field: "address",
           filter: true,
-          width: 250,
+          width: 320,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -241,7 +241,7 @@ class HolidayList extends React.Component {
           headerName: "state",
           field: "state",
           filter: true,
-          width: 180,
+          
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -678,21 +678,13 @@ class HolidayList extends React.Component {
     return (
       <>
         <Card>
-          <Row className="ml-2 mr-2 ">
+          <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col className="mt-2">
-              <h1 className="float-left" style={{ fontWeight: "500" }}>
+              <h1 className="float-left" style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' }}>
                 Branch List
               </h1>
             </Col>
-            <Col lg="3" className="mt-2">
-              <div className="table-input mr-1 cssforproductlist">
-                <Input
-                  placeholder="search Item here..."
-                  onChange={(e) => this.updateSearchQuery(e.target.value)}
-                  value={this.state.value}
-                />
-              </div>
-            </Col>
+           
             {this.state.MasterShow && (
               <Col lg="3" className="mt-2">
                 <SuperAdminUI
@@ -701,7 +693,16 @@ class HolidayList extends React.Component {
                 />
               </Col>
             )}
-            <Col lg="2" xs="8" className="mt-2">
+            <Col lg="3" className="mt-2">
+            <div className="table-input   cssforproductlist">
+              <Input
+                placeholder="search Item here..."
+                onChange={(e) => this.updateSearchQuery(e.target.value)}
+                value={this.state.value}
+              />
+            </div>
+          </Col>
+            <Col lg="1" xs="8" className="mt-2">
               {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
                   <Route
@@ -727,7 +728,7 @@ class HolidayList extends React.Component {
                           });
                           this.LookupviewStart();
                         }}>
-                        <FaPlus size={15} /> Add
+                        <FaPlus size={12} /> Add
                       </Button>
                     )}
                   />
@@ -818,7 +819,7 @@ class HolidayList extends React.Component {
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (
-            <CardBody style={{ marginTop: "0rem" }}>
+            <CardBody style={{ marginTop: "-3rem" }}>
               {this.state.rowData === null ? null : (
                 <div className="ag-theme-material w-100 my-2 ag-grid-table">
                   {/*

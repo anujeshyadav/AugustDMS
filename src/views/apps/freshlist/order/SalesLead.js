@@ -29,7 +29,10 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+ 
+ 
 } from "reactstrap";
+ 
 import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -1078,34 +1081,7 @@ class SalesLead extends React.Component {
                   </>
                 )}
               </Col>
-                 <Col lg="1" xs="8" style={{marginTop:"25px"}}>
-                {InsiderPermissions && InsiderPermissions?.Create && (
-                  <span>
-                    <Route
-                      render={({ history }) => (
-                        <Button
-                        
-                          style={{
-                            cursor: "pointer",
-                            backgroundColor: "rgb(8, 91, 245)",
-                            color: "white",
-                            fontWeight: "600",
-                            height: "43px",
-                            
-                            
-                            fontSize:'13px',
-                          }}
-                          className="float-left cssbuttonsaleslead"
-                          color="#39cccc"
-                          onClick={this.handleUpload}
-                        >
-                         + Upload
-                        </Button>
-                      )}
-                    />
-                  </span>
-                )}
-              </Col>
+                
              
               <Col lg="2" md="6" sm="12" style={{marginTop:"25px"}}>
                 
@@ -1119,7 +1095,7 @@ class SalesLead extends React.Component {
                   
               </Col>
                  <Col lg="2" md="6" sm="12" style={{marginTop:"5px"}}>
-                <Label>SalesPerson List</Label>
+                <Label>Sales Person List</Label>
                 <Multiselect
                   required
                   className="cssformulti 6545"
@@ -1135,6 +1111,34 @@ class SalesLead extends React.Component {
                   }}
                   displayValue="fullName"
                 />
+              </Col>
+               <Col lg="1" xs="8" style={{marginTop:"25px"}}>
+                {InsiderPermissions && InsiderPermissions?.Create && (
+                  <span>
+                    <Route
+                      render={({ history }) => (
+                        <Button
+                        
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                            textTransform:"uppercase",
+                            
+                            fontSize:'12px',
+                          }}
+                          className="float-left cssbuttonsaleslead"
+                          color="#39cccc"
+                          onClick={this.handleUpload}
+                        >
+                         <FaPlus size={12} /> Upload
+                        </Button>
+                      )}
+                    />
+                  </span>
+                )}
               </Col>
               <Col lg="1" xs="4" style={{marginTop:"25px"}}>
                 {InsiderPermissions && InsiderPermissions?.View && (

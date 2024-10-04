@@ -675,7 +675,7 @@ class AnnounceList extends React.Component {
                               )
                             }
                           >
-                            <FaPlus size={13} /> Announcements
+                            <FaPlus size={12} /> Announcements
                           </Button>
                         )}
                       />

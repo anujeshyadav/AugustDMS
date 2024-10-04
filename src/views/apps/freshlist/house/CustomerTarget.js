@@ -639,6 +639,7 @@ class CustomerTarget extends React.Component {
                                         color: "white",
                                         fontWeight: "600",
                                         height: "43px",
+                                          textTransform:"uppercase",
                                       }}
                                       className="float-left"
                                       color="#39cccc"
@@ -647,7 +648,7 @@ class CustomerTarget extends React.Component {
                                           "/app/jupitech/account/CreateCustomerTarget/0"
                                         )
                                       }>
-                                      <FaPlus size={15} /> Create Target
+                                      <FaPlus size={12} /> Create Target
                                     </Button>
                                   )}
                                 />

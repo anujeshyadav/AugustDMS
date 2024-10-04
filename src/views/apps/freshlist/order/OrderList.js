@@ -1775,7 +1775,7 @@ class OrderList extends React.Component {
                 </h2>
               </Col>
               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" style={{ marginTop: "25px" }}>
+                <Col lg="2" md="4" sm="12" style={{ marginTop: "25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -1795,7 +1795,7 @@ class OrderList extends React.Component {
                   </div>
                 </div>
               </Col>
-              <Col lg="3" xs="8" style={{ marginTop: "25px" }}>
+              <Col lg="4" xs="8" style={{ marginTop: "25px" }}>
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}>
                   <div>
@@ -1808,7 +1808,7 @@ class OrderList extends React.Component {
                                 cursor: "pointer",
                                 backgroundColor: "rgb(8, 91, 245)",
                                 color: "white",
-                                fontWeight: "500",
+                                fontWeight: "600",
                                 height: "43px",
                                 textTransform: "uppercase",
                               }}
@@ -1817,7 +1817,7 @@ class OrderList extends React.Component {
                               onClick={() =>
                                 history.push("/app/softnumen/order/createorder")
                               }>
-                              <FaPlus size={15} /> Order
+                              <FaPlus size={12} /> Order
                             </Button>
                           )}
                         />
@@ -1832,7 +1832,7 @@ class OrderList extends React.Component {
                                 cursor: "pointer",
                                 backgroundColor: "rgb(8, 91, 245)",
                                 color: "white",
-                                fontWeight: "500",
+                                fontWeight: "600",
                                 height: "43px",
                                 textTransform: "uppercase",
                               }}
@@ -1841,7 +1841,7 @@ class OrderList extends React.Component {
                               onClick={() =>
                                 history.push("/app/jupitech/order/createInvoice")
                               }>
-                              <FaPlus size={15} /> Invoice
+                              <FaPlus size={12} /> Invoice
                             </Button>
                           )}
                         />
@@ -1858,7 +1858,7 @@ class OrderList extends React.Component {
                                 cursor: "pointer",
                                 backgroundColor: "rgb(8, 91, 245)",
                                 color: "white",
-                                fontWeight: "500",
+                                fontWeight: "600",
                                 height: "43px",
                                 textTransform: "uppercase",
                               }}
@@ -1869,7 +1869,7 @@ class OrderList extends React.Component {
                                   "/app/jupitech/order/CreateChallan"
                                 )
                               }>
-                              <FaPlus size={15} /> challan
+                              <FaPlus size={12} /> challan
                             </Button>
                           )}
                         />

@@ -613,7 +613,7 @@ class HolidayList extends React.Component {
                             "/app/ajgroup/HRM/Time-sheet/holidayform"
                           )
                         }>
-                        <FaPlus size={13} /> Add Holiday
+                        <FaPlus size={12} /> Add Holiday
                       </Button>
                     )}
                   />

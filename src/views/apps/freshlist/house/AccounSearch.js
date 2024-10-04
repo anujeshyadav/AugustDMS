@@ -1166,7 +1166,7 @@ class AccounSearch extends React.Component {
                                 style={{
                                   fontWeight: "600",
                                   textTransform: "uppercase",
-                                  fontSize: "22px",
+                                  fontSize: "18px",
                                   marginTop: "25px",
                                 }}>
                                 User list
@@ -1191,60 +1191,11 @@ class AccounSearch extends React.Component {
                         </Col>
 
                         <Col
-                          lg="2"
+                          lg="3"
                           md="6"
                           sm="12"
                           style={{ marginTop: "25px" }}>
-                          <div className="">
-                            {/* 
-                            <div className="mb-1 mr-1">
-                             
-                              <UncontrolledDropdown className="p-1 ag-dropdown">
-                                <DropdownToggle tag="div">
-                                  {this.gridApi
-                                    ? this.state.currenPageSize
-                                    : "" * this.state.getPageSize -
-                                      (this.state.getPageSize - 1)}{" "}
-                                  -{" "}
-                                  {this.state.rowData.length -
-                                    this.state.currenPageSize *
-                                      this.state.getPageSize >
-                                  0
-                                    ? this.state.currenPageSize *
-                                      this.state.getPageSize
-                                    : this.state.rowData.length}{" "}
-                                  of {this.state.rowData.length}
-                                  <ChevronDown className="ml-50" size={15} />
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(10)}>
-                                    10
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(20)}>
-                                    20
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(50)}>
-                                    50
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(100)}>
-                                    100
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    tag="div"
-                                    onClick={() => this.filterSize(134)}>
-                                    134
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </UncontrolledDropdown> 
-                            </div>*/}
+                          <div className="">                           
                             <div className="table-input cssforproductlist">
                               <Input
                                 placeholder="search Item here..."
@@ -1259,7 +1210,7 @@ class AccounSearch extends React.Component {
 
                         {InsiderPermissions && InsiderPermissions.Create && (
                           <>
-                            <Col lg="5" xl="5" md="5">
+                            <Col lg="4" xl="4" md="5">
                               <Row>
                                 <Col
                                   lg="3"
@@ -1287,7 +1238,7 @@ class AccounSearch extends React.Component {
                                               "/app/SoftNumen/account/CreateAccount/0"
                                             )
                                           }>
-                                          <FaPlus size={15} /> User
+                                          <FaPlus size={12} /> User
                                         </Button>
                                       )}
                                     />

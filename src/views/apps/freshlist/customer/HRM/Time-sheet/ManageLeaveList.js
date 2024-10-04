@@ -178,7 +178,7 @@ class ManageLeaveList extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 95,
+          width: 90,
           cellRendererFramework: params => {
             return params.data?.checkStatus == "Approved" ? (
               <div className="cursor-pointer text-center">
@@ -244,7 +244,7 @@ class ManageLeaveList extends React.Component {
           headerName: "Start Date",
           field: "startDate",
           filter: true,
-          width: 105,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -259,7 +259,7 @@ class ManageLeaveList extends React.Component {
           headerName: "End Date",
           field: "endDate",
           filter: true,
-          width: 105,
+          width: 100,
           cellRendererFramework: params => {
             return (
               <div className="cursor-pointer text-center">
@@ -698,16 +698,18 @@ class ManageLeaveList extends React.Component {
                 <Col xl="2" lg="2" md="2" style={{ marginTop: "30px" }}>
                   <div className="table-input ">
                     <Button
-                      type="submit"
+                     
                       style={{
-                        cursor: "pointer",
-                        backgroundColor: "rgb(8, 91, 245)",
-                        color: "white",
-                        fontWeight: "600",
-                        height: "43px",
-                      }}
+                          cursor: "pointer",
+                          backgroundColor: "rgb(8, 91, 245)",
+                          color: "white",
+                          fontWeight: "600",
+                        
+                          height: "43px",
+                        }}
                       className="float-left"
                       color="#39cccc"
+                       type="submit"
                       onClick={this.handleSubmitDate}
                     >
                       Submit
@@ -726,10 +728,12 @@ class ManageLeaveList extends React.Component {
                           cursor: "pointer",
                           backgroundColor: "rgb(8, 91, 245)",
                           color: "white",
+                          fontSize:"12px",
+                          float:"right",
                           fontWeight: "600",
                           height: "43px",
                         }}
-                        className="float-right "
+                       
                         color="#39cccc"
                         onClick={() =>
                           history.push(
@@ -737,7 +741,7 @@ class ManageLeaveList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={13} /> Manage Leave
+                        <FaPlus size={12} /> Manage Leave
                       </Button>
                     )}
                   />

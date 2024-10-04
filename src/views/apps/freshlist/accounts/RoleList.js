@@ -529,38 +529,7 @@ class RoleList extends React.Component {
                       )}
                   </div>
 
-                  {this.state.InsiderPermissions &&
-                    this.state.InsiderPermissions?.Create && (
-                      <div style={{marginTop:"25px"}}>
-                        <div>
-                          <Route
-                            render={({ history }) => (
-                              <button
-                                style={{
-                              cursor: "pointer",
-                              backgroundColor: "rgb(8, 91, 245)",
-                              color: "white",
-                              fontWeight: "600",
-                              height: "35px",
-                              border: "none",
-                              outline: "none",
-                              width: "100%",
-                              borderRadius: "10px",
-                              textTransform:'uppercase'
-                            }}
-                            color="#39cccc"
-                                onClick={() =>
-                                  history.push(
-                                    "/app/freshlist/account/addRoleNew"
-                                  )
-                                }>
-                                <FaPlus size={13} /> Role
-                              </button>
-                            )}
-                          />
-                        </div>
-                      </div>
-                    )}
+                 
 
                   {this.state.InsiderPermissions &&
                     this.state.InsiderPermissions?.Create && (
@@ -660,6 +629,38 @@ class RoleList extends React.Component {
                         </div>
                         
                       </>
+                    )}
+                       {this.state.InsiderPermissions &&
+                    this.state.InsiderPermissions?.Create && (
+                      <div style={{marginTop:"25px"}}>
+                        <div>
+                          <Route
+                            render={({ history }) => (
+                              <button
+                                style={{
+                              cursor: "pointer",
+                              backgroundColor: "rgb(8, 91, 245)",
+                              color: "white",
+                              fontWeight: "600",
+                              height: "35px",
+                              border: "none",
+                              outline: "none",
+                              width: "100%",
+                              borderRadius: "10px",
+                              textTransform:'uppercase'
+                            }}
+                            color="#39cccc"
+                                onClick={() =>
+                                  history.push(
+                                    "/app/freshlist/account/addRoleNew"
+                                  )
+                                }>
+                                <FaPlus size={12} /> Role
+                              </button>
+                            )}
+                          />
+                        </div>
+                      </div>
                     )}
                </div>
               </Col>

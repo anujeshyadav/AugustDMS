@@ -753,7 +753,7 @@ class RuleList extends React.Component {
                             "/app/ajgroup/HRM/Setrules/rulesform"
                           )
                         }>
-                        <FaPlus size={13} /> Add Rules
+                        <FaPlus size={12} /> Add Rules
                       </Button>
                     )}
                   />

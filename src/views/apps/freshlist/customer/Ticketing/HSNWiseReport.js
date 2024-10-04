@@ -100,7 +100,7 @@ class HSNWiseReport extends React.Component {
           headerName: "HSN",
           field: "HSN_Code",
           filter: true,
-          width: 140,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -113,7 +113,8 @@ class HSNWiseReport extends React.Component {
           headerName: "DESCRIPTION",
           field: "Product_Desc",
           filter: true,
-          width: 200,
+          
+          
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -129,7 +130,7 @@ class HSNWiseReport extends React.Component {
             return value;
           },
           filter: true,
-          width: 200,
+        
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -143,7 +144,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Total Quantity",
           field: "qty",
           filter: true,
-          width: 145,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -156,7 +157,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Total Value",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -169,7 +170,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 140,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -182,7 +183,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -197,7 +198,7 @@ class HSNWiseReport extends React.Component {
           field: "sgstRate",
           filter: true,
 
-          width: 205,
+          width: 165,
           cellRendererFramework: (params) => {
             return (
               <div>
@@ -210,7 +211,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Central Tax Amount",
           field: "cgstRate",
           filter: true,
-          width: 185,
+          width: 160,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -223,7 +224,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Integrated Tax Amount",
           field: "igstRate",
           filter: true,
-          width: 215,
+          width: 190,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -236,7 +237,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Cess Amount",
           field: "CessAmount",
           filter: true,
-          width: 150,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -251,7 +252,7 @@ class HSNWiseReport extends React.Component {
           headerName: "HSN",
           field: "HSN_Code",
           filter: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -282,7 +283,7 @@ class HSNWiseReport extends React.Component {
             return value;
           },
           filter: true,
-          width: 190,
+          
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -295,7 +296,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Total Quantity",
           field: "qty",
           filter: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -309,7 +310,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Total value",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -322,7 +323,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -335,7 +336,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 190,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -349,7 +350,7 @@ class HSNWiseReport extends React.Component {
           field: "sgstRate",
           filter: true,
 
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -362,7 +363,7 @@ class HSNWiseReport extends React.Component {
           headerName: "CGST",
           field: "cgstRate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -375,7 +376,7 @@ class HSNWiseReport extends React.Component {
           headerName: "IGST",
           field: "igstRate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -389,7 +390,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Cess Amount",
           field: "grandTotal",
           filter: true,
-          width: 150,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -404,7 +405,7 @@ class HSNWiseReport extends React.Component {
           headerName: "HSN",
           field: "HSN_Code",
           filter: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -436,7 +437,7 @@ class HSNWiseReport extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          width: 180,
+          
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -450,7 +451,7 @@ class HSNWiseReport extends React.Component {
           field: "qty",
           filter: true,
           resizable: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -464,7 +465,7 @@ class HSNWiseReport extends React.Component {
           field: "grandTotal",
           filter: true,
           resizable: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -478,7 +479,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -491,7 +492,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -505,7 +506,7 @@ class HSNWiseReport extends React.Component {
           field: "sgstRate",
           filter: true,
 
-          width: 205,
+          width: 170,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -518,7 +519,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Central Tax Amount",
           field: "cgstRate",
           filter: true,
-          width: 195,
+          width: 165,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -531,7 +532,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Integrated Tax Amount",
           field: "igstRate",
           filter: true,
-          width: 230,
+          width: 185,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -545,7 +546,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Cess Amount",
           field: "",
           filter: true,
-          width: 150,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -561,7 +562,7 @@ class HSNWiseReport extends React.Component {
           headerName: "HSN",
           field: "HSN_Code",
           filter: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -592,7 +593,7 @@ class HSNWiseReport extends React.Component {
             return value;
           },
           filter: true,
-          width: 200,
+          
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -605,7 +606,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Total Quantity",
           field: "qty",
           filter: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -619,7 +620,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Total value",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -632,7 +633,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -645,7 +646,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -659,7 +660,7 @@ class HSNWiseReport extends React.Component {
           field: "sgstRate",
           filter: true,
 
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -672,7 +673,7 @@ class HSNWiseReport extends React.Component {
           headerName: "CGST",
           field: "cgstRate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -685,7 +686,7 @@ class HSNWiseReport extends React.Component {
           headerName: "IGST",
           field: "igstRate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -699,7 +700,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Cess Amount",
           field: "grandTotal",
           filter: true,
-          width: 150,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -714,14 +715,14 @@ class HSNWiseReport extends React.Component {
           headerName: "UID",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
         {
           headerName: "GSTIN",
           field: "order.partyId.gstNumber",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -748,7 +749,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Invoice Date",
           field: "order.updatedAt",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -762,7 +763,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Invoice Value",
           field: "grandTotal",
           filter: true,
-          width: 150,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -794,7 +795,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Reverse Charges",
           field: "invoiceId",
           filter: true,
-          width: 150,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -808,7 +809,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Invoice Type",
           field: "order.partyId.partyType",
           filter: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -834,7 +835,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Rate",
           field: "gstPercentage",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -847,7 +848,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Taxable Value",
           field: "taxableAmount",
           filter: true,
-          width: 150,
+          width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -860,8 +861,8 @@ class HSNWiseReport extends React.Component {
           headerName: "SGST",
           field: "sgstRate",
           filter: true,
-
-          width: 140,
+         
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -887,7 +888,7 @@ class HSNWiseReport extends React.Component {
           headerName: "IGST",
           field: "igstRate",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -901,7 +902,7 @@ class HSNWiseReport extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 150,
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1364,7 +1365,7 @@ class HSNWiseReport extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="2" xl="2" md="2" style={{ marginTop: "25px" }}>
+              <Col lg="3" xl="3" md="3" style={{ marginTop: "25px" }}>
                 <div className="table-input cssforproductlist">
                   <Input
                     placeholder="search Item here..."
@@ -1373,7 +1374,7 @@ class HSNWiseReport extends React.Component {
                   />
                 </div>
               </Col>
-              <Col md="5" xl="5" lg="5">
+              <Col md="4" xl="4" lg="4">
                 <Row>
                   <Col style={{ marginTop: "5px" }} md="5" xl="5" lg="5">
                     <div className="table-input cssforproductlist">
@@ -1498,10 +1499,10 @@ class HSNWiseReport extends React.Component {
                 )}
               </Col>
             </Row>
-            <hr className="mt-1" />
+            <hr className=" " />
             <Row className="">
               <Col>
-                <div className="mx-1 ">
+                <div className="  ">
                   <Nav
                     tabs
                     style={{

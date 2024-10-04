@@ -551,7 +551,7 @@ class DamageStockReport extends React.Component {
         <Card>
           <Row style={{marginLeft:'3px',marginRight:'3px'}}>
             <Col  >
-              <h3 className="float-left "style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
+              <h3 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'30px' }}>
                 Damage Stock Report
               </h3>
             </Col>
@@ -692,7 +692,7 @@ class DamageStockReport extends React.Component {
           </Row>
           <>
             {this.state.rowData === null ? null : (
-              <div className="ag-theme-material w-100   ag-grid-table card-body" style={{marginTop:"-1.5rem"}}>
+              <div className="ag-theme-material w-100 my-2  ag-grid-table card-body"  >
                 <ContextLayout.Consumer className="ag-theme-alpine">
                   {(context) => (
                     <AgGridReact

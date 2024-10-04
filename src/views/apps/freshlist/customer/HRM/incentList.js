@@ -682,7 +682,7 @@ class IncenList extends React.Component {
                             history.push("/app/ajgroup/HRM/TCPA/incenform/0")
                           }
                         >
-                          <FaPlus size={15} /> Check Incentive
+                          <FaPlus size={12} /> Check Incentive
                         </Button>
                       )}
                     />

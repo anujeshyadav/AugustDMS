@@ -638,7 +638,7 @@ class TermList extends React.Component {
                           )
                         }
                       >
-                        <FaPlus size={13} /> Termination
+                        <FaPlus size={12} /> Termination
                       </Button>
                     )}
                   />

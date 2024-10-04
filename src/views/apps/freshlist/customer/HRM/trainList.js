@@ -680,14 +680,14 @@ class TrainingList extends React.Component {
             </Col>
             
             {this.state.MasterShow && (
-              <Col className="mt-2" lg="2">
+              <Col className="mt-2" lg="3">
                 <SuperAdminUI
                   onDropdownChange={this.handleDropdownChange}
                   onSubmit={this.handleParentSubmit}
                 />
               </Col>
             )}
-            <Col className="mt-2" lg="2">
+            <Col className="mt-2" lg="3">
               <div className="table-input cssforproductlist">
                 <Input
                   placeholder="search Item here..."
@@ -696,8 +696,11 @@ class TrainingList extends React.Component {
                 />
               </div>
             </Col>
+            
             <Col className="mt-2" lg="2" xs="6">
-              {InsiderPermissions && InsiderPermissions.Create && (
+            <div style={{display:"flex",justifyContent:"space-between"}}>
+            <div>
+             {InsiderPermissions && InsiderPermissions.Create && (
                 <span>
                   <Route
                     render={({ history }) => (
@@ -717,15 +720,17 @@ class TrainingList extends React.Component {
                             "/app/ajgroup/HRM/RecPlace/trainingForm"
                           )
                         }>
-                        <FaPlus size={13} />
+                        <FaPlus size={12} />
                         Training
                       </Button>
                     )}
                   />
                 </span>
               )}
-            </Col>
-            <Col className="mt-2" lg="1" xs="6">
+            </div>
+            <div>
+            
+            
               {InsiderPermissions && InsiderPermissions.View && (
                 <>
                   <span className="">
@@ -798,6 +803,8 @@ class TrainingList extends React.Component {
                   </div>
                 </span>
               )}
+                </div>
+            </div>
             </Col>
           </Row>
           {InsiderPermissions && InsiderPermissions.View && (

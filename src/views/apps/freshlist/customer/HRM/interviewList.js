@@ -651,7 +651,7 @@ class InterviewList extends React.Component {
                             "/app/ajgroup/HRM/RecPlace/interviewForm"
                           )
                         }>
-                        <FaPlus size={15} /> Add Interview
+                        <FaPlus size={12} /> Add Interview
                       </Button>
                     )}
                   />

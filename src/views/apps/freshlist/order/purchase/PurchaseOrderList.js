@@ -263,7 +263,7 @@ class PurchaseOrderViewList extends React.Component {
           field: "NoOfPackage",
           filter: true,
           editable: true,
-          width: 110,
+          width: 115,
           cellRendererFramework: (params) => {
             return (
               <div className=" text-center">
@@ -806,7 +806,7 @@ class PurchaseOrderViewList extends React.Component {
                           onClick={() =>
                             history.push("/app/AJgroup/order/AddPurchaseOrder")
                           }>
-                          <FaPlus size={15} /> Add Purchase Order
+                          <FaPlus size={12} /> Add Purchase Order
                         </Button>
                       )}
                     />

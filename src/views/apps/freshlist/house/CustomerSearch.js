@@ -1572,7 +1572,7 @@ class CustomerSearch extends React.Component {
                                       cursor: "pointer",
                                       backgroundColor: "rgb(8, 91, 245)",
                                       color: "white",
-                                      fontWeight: "500",
+                                      fontWeight: "600",
                                       height: "43px",
                                       textTransform: "uppercase",
                                       fontSize: "14px",
@@ -1600,7 +1600,7 @@ class CustomerSearch extends React.Component {
                                       cursor: "pointer",
                                       backgroundColor: "rgb(8, 91, 245)",
                                       color: "white",
-                                      fontWeight: "500",
+                                      fontWeight: "600",
                                       height: "43px",
                                       textTransform: "uppercase",
                                       fontSize: "14px",
@@ -1612,7 +1612,7 @@ class CustomerSearch extends React.Component {
                                         `/app/SoftNumen/account/CreateCustomer/${0}`
                                       )
                                     }>
-                                    <FaPlus size={13} /> Create Customer
+                                    <FaPlus size={12} /> Create Customer
                                   </Button>
                                 )}
                               />

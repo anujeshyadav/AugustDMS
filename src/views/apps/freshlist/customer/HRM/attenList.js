@@ -1521,7 +1521,7 @@ function List() {
               </CustomInput>
             </div>
           </Col> */}
-          <Col lg="2" className="mb-2" style={{marginTop:"25px"}} sm="12">
+          <Col lg="3" className="mb-2" style={{marginTop:"25px"}} sm="12">
             <Input
               
               type="text"

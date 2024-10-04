@@ -664,7 +664,7 @@ class practiceList extends React.Component {
                               "/app/ajgroup/HRM/RecPlace/practskillform"
                             )
                           }>
-                          <FaPlus size={13} /> Practice & Skills
+                          <FaPlus size={12} /> Practice & Skills
                         </Button>
                       )}
                     />

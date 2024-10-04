@@ -30,6 +30,7 @@ import {
 import { Image_URL } from "../../../../ApiEndPoint/Api";
 import { CheckPermission } from "../house/CheckPermission";
 import SuperAdminUI from "../../../SuperAdminUi/SuperAdminUI";
+import { FaPlus } from "react-icons/fa";
 
 class CategoryList extends React.Component {
   state = {
@@ -388,7 +389,7 @@ class CategoryList extends React.Component {
                     className="float-right categorysbutton45"
                     style={{ backgroundColor: "rgb(8, 91, 245)" , height:"35px"}}
                     onClick={() => this.gridApi.exportDataAsCsv()}>
-                    <span style={{ color: "white" }}> Export as CSV</span>
+                    <span style={{ color: "white",textTransform:"uppercase" }}> Export as CSV</span>
                   </Button>
                 </div>
               <div>
@@ -401,7 +402,7 @@ class CategoryList extends React.Component {
                       "/app/freshlist/category/addCategory"
                     )
                   }>
-                   <span style={{ color: "white" }}>  + Add Category</span>
+                   <span style={{ color: "white",textTransform:"uppercase" }}>  <FaPlus size={12} /> Add Category</span>
                  
                 </Button>
                 </div>

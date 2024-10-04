@@ -89,7 +89,7 @@ class PromotionalActivityReport extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -966,17 +966,16 @@ class PromotionalActivityReport extends React.Component {
     } = this.state;
     return (
       <>
-        <Col className="app-user-list">
-          <Col sm="12">
+        
             <Card>
-              <Row className="ml-2 mt-2 mr-2">
-                <Col lg="3" md="3" sm="12">
-                  <h3 className="float-left " style={{ fontWeight: "600" }}>
+              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+                <Col  >
+                  <h3 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'20px' }}>
                     Promotional Activity Report
                   </h3>
                 </Col>
                 {this.state.MasterShow && this.state.MasterShow ? (
-                  <Col lg="4" md="4" sm="6">
+                  <Col lg="2" md="2" sm="6" style={{marginTop:'30px'}}>
                     <SuperAdminUI
                       onDropdownChange={this.handleDropdownChange}
                       onSubmit={this.handleParentSubmit}
@@ -986,7 +985,7 @@ class PromotionalActivityReport extends React.Component {
                   <Col></Col>
                 )}
                 {InsiderPermissions && InsiderPermissions?.View && (
-                  <Col lg="2" md="2" sm="2" xs="2">
+                  <Col lg="2" md="2" sm="2" xs="2" style={{marginTop:'30px'}}>
                     <CustomInput
                       type="select"
                       name="typeofpromotion"
@@ -1004,7 +1003,53 @@ class PromotionalActivityReport extends React.Component {
                     </CustomInput>
                   </Col>
                 )}
-                <Col lg="1" md="1" sm="6" xs="6">
+                  <Col lg="2" md="2" sm="2" style={{marginTop:'30px'}}>
+                   <div className="table-input ">
+                          <Input
+                            className=" "
+                            placeholder="search Item here..."
+                            onChange={(e) =>
+                              this.updateSearchQuery(e.target.value)
+                            }
+                            value={this.state.value}
+                          />
+                        </div>
+                  </Col>
+                  <Col lg="4" md="4" sm="4" >
+                  <div style={{display:"flex",justifyContent:"space-between"}}>
+                        <div className="table-input  " style={{marginTop:'10px'}}>
+                          <Label>Start Date</Label>
+                          <Input
+                            type="date"
+                            name="startDate"
+                            value={this.state.startDate}
+                            onChange={this.handleDate}
+                          />
+                        </div>
+
+                        <div className="table-input " style={{marginTop:'10px'}}>
+                          <Label>End Date</Label>
+                          <Input
+                            type="date"
+                            name="EndDate"
+                            value={this.state.EndDate}
+                            onChange={this.handleDate}
+                          />
+                        </div>
+
+                        <div className="table-input " style={{marginTop:'30px'}}>
+                          <Button
+                            type="submit"
+                            
+                            color="primary"
+                            onClick={this.handleSubmitDate}>
+                            Submit
+                          </Button>
+                        </div>
+                       
+                      </div>
+                  </Col>
+                <Col lg="1" md="1" sm="6" xs="6" style={{marginTop:'30px'}}>
                   {InsiderPermissions && InsiderPermissions?.View && (
                     <span className="">
                       <FaFilter
@@ -1013,7 +1058,7 @@ class PromotionalActivityReport extends React.Component {
                         size="35px"
                         onClick={this.LookupviewStart}
                         color="#39cccc"
-                        className="float-right mt-1"
+                        className="float-right "
                       />
                     </span>
                   )}
@@ -1027,15 +1072,17 @@ class PromotionalActivityReport extends React.Component {
                           style={{ cursor: "pointer" }}
                           title="Download file"
                           size="35px"
-                          className="dropdown-button mt-1"
+                          className="dropdown-button  "
                           color="#39cccc"
                         />
                         {isOpen && (
                           <div
-                            style={{
-                              position: "absolute",
-                              zIndex: "1",
-                            }}
+                          style={{
+                          position: "absolute",
+                          zIndex: "1",
+                          border: "1px solid rgb(8, 91, 245)",
+                          backgroundColor: "white",
+                        }}
                             className="dropdown-content dropdownmy">
                             <h5
                               onClick={() => this.exportToPDF()}
@@ -1077,94 +1124,7 @@ class PromotionalActivityReport extends React.Component {
               <CardBody style={{ marginTop: "0rem" }}>
                 {this.state.rowData === null ? null : (
                   <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-                      <div className="mb-1">
-                        <UncontrolledDropdown className="p-1 ag-dropdown">
-                          <DropdownToggle tag="div">
-                            {this.gridApi
-                              ? this.state.currenPageSize
-                              : "" * this.state.getPageSize -
-                                (this.state.getPageSize - 1)}{" "}
-                            -{" "}
-                            {this.state.rowData.length -
-                              this.state.currenPageSize *
-                                this.state.getPageSize >
-                            0
-                              ? this.state.currenPageSize *
-                                this.state.getPageSize
-                              : this.state.rowData.length}{" "}
-                            of {this.state.rowData.length}
-                            <ChevronDown className="ml-50" size={15} />
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(5)}>
-                              5
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(20)}>
-                              20
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(50)}>
-                              50
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(100)}>
-                              100
-                            </DropdownItem>
-                            <DropdownItem
-                              tag="div"
-                              onClick={() => this.filterSize(134)}>
-                              134
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                      <div className="d-flex flex-wrap justify-content-end mb-1">
-                        <div className="table-input mr-1">
-                          <Label>Start Date</Label>
-                          <Input
-                            type="date"
-                            name="startDate"
-                            value={this.state.startDate}
-                            onChange={this.handleDate}
-                          />
-                        </div>
-                        <div className="table-input mr-1">
-                          <Label>End Date</Label>
-                          <Input
-                            type="date"
-                            name="EndDate"
-                            value={this.state.EndDate}
-                            onChange={this.handleDate}
-                          />
-                        </div>
-                        <div className="table-input mr-1">
-                          <Button
-                            type="submit"
-                            className="mt-1"
-                            color="primary"
-                            onClick={this.handleSubmitDate}>
-                            Submit
-                          </Button>
-                        </div>
-                        <div className="table-input mr-1">
-                          <Input
-                            className="mt-1"
-                            placeholder="search Item here..."
-                            onChange={(e) =>
-                              this.updateSearchQuery(e.target.value)
-                            }
-                            value={this.state.value}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                     
                     <ContextLayout.Consumer className="ag-theme-alpine">
                       {(context) => (
                         <AgGridReact
@@ -1178,7 +1138,7 @@ class PromotionalActivityReport extends React.Component {
                           colResizeDefault={"shift"}
                           animateRows={true}
                           floatingFilter={false}
-                          // pagination={true}
+                         pagination={true}
                           paginationPageSize={this.state.paginationPageSize}
                           pivotPanelShow="always"
                           enableRtl={context.state.direction === "rtl"}
@@ -1191,8 +1151,7 @@ class PromotionalActivityReport extends React.Component {
                 )}
               </CardBody>
             </Card>
-          </Col>
-        </Col>
+          
 
         <Modal
           isOpen={this.state.modal}

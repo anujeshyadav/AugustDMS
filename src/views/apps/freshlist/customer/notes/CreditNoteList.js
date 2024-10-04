@@ -17,6 +17,11 @@ import {
   Badge,
   Spinner,
 } from "reactstrap";
+import {
+  
+  FaPlus,
+  FaTruck,
+} from "react-icons/fa";
 import { ImDownload } from "react-icons/im";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -550,7 +555,7 @@ class CreditNoteList extends React.Component {
               </Col>
 
               {this.state.MasterShow ? (
-                <Col lg="3" md="4" sm="12" style={{ marginTop:"25px" }}>
+                <Col lg="2" md="4" sm="12" style={{ marginTop:"25px" }}>
                   <SuperAdminUI
                     onDropdownChange={this.handleDropdownChange}
                     onSubmit={this.handleParentSubmit}
@@ -573,18 +578,20 @@ class CreditNoteList extends React.Component {
                 </div>
               </Col>
               <Col style={{ marginTop:"25px" }} lg="1">
+
                 <div  >
                   <Button onClick={this.toggleModal}   style={{
                     cursor: "pointer",
                     backgroundColor: "rgb(8, 91, 245)",
                     color: "white",
+                    textTransform:"uppercase",
                     fontWeight: "600",
                     height: "43px",
                   }}
                   className="float-left "
                   color="#39cccc"
                     >
-                    + Add
+                   <FaPlus size={12} /> Add
                   </Button>
                 </div>
               </Col>

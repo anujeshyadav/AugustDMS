@@ -1188,21 +1188,7 @@ class PurchaseInvoice extends React.Component {
                             Purchased Invoice
                           </h1>
                         </Col>
-                        <Col
-                          lg="3"
-                          md="6"
-                          sm="12"
-                          style={{ marginTop: "25px" }}>
-                          <div className="table-input mr-1 cssforproductlist">
-                            <Input
-                              placeholder="search Item here..."
-                              onChange={(e) =>
-                                this.updateSearchQuery(e.target.value)
-                              }
-                              value={this.state.value}
-                            />
-                          </div>
-                        </Col>
+                        
                         {this.state.MasterShow && (
                           <Col
                             lg="3"
@@ -1215,13 +1201,39 @@ class PurchaseInvoice extends React.Component {
                             />
                           </Col>
                         )}
+                          <Col
+                          lg="3"
+                          md="6"
+                          sm="12"
+                          style={{ marginTop: "25px" }}>
+                          <div className="table-input   cssforproductlist">
+                            <Input
+                              placeholder="search Item here..."
+                              onChange={(e) =>
+                                this.updateSearchQuery(e.target.value)
+                              }
+                              value={this.state.value}
+                            />
+                          </div>
+                        </Col>
                         <Col lg="2" style={{ marginTop: "25px" }}>
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.Create && (
                               <Link to="/app/AJgroup/order/CreatePurchaseInvoice">
-                                <Button color="primary">Create Invoice</Button>
+                                <Button color="primary"  style={{
+                                        cursor: "pointer",
+                                        backgroundColor: "rgb(8, 91, 245)",
+                                        color: "white",
+                                        fontWeight: "600",
+                                        fontSize:"12px",
+                                        height: "43px",
+                                          textTransform:"uppercase",
+                                      }}>Create Invoice</Button>
                               </Link>
                             )}
+                        </Col>
+                        <Col lg="1" style={{ marginTop: "25px" }}>
+                        
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions.View && (
                               <>

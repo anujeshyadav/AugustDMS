@@ -797,7 +797,7 @@ class HolidayList extends React.Component {
                           });
                           this.LookupviewStart();
                         }}>
-                        <FaPlus size={13} /> Add Shift
+                        <FaPlus size={12} /> Add Shift
                       </Button>
                     )}
                   />

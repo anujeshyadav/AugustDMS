@@ -626,7 +626,7 @@ class ApprList extends React.Component {
                           history.push("/app/ajgroup/HRM/TCPA/apprform")
                         }
                       >
-                        <FaPlus size={13} /> Add Appraisal
+                        <FaPlus size={12} /> Add Appraisal
                       </Button>
                     )}
                   />

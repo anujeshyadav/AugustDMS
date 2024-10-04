@@ -691,16 +691,7 @@ class JobList extends React.Component {
                     Job List
                   </h1>
                 </Col>
-                
-                {this.state.MasterShow && (
-                  <Col lg="3" md="6" sm="12" className="mt-2">
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
-                    />
-                  </Col>
-                )}
-                <Col lg="3" md="6" sm="12" className="mt-2">
+                 <Col lg="3" md="6" sm="12" className="mt-2">
                   <div className="table-input cssforproductlist">
                     <Input
                       placeholder="search Item here..."
@@ -709,6 +700,15 @@ class JobList extends React.Component {
                     />
                   </div>
                 </Col>
+                {this.state.MasterShow && (
+                  <Col lg="3" md="6" sm="12" className="mt-2">
+                    <SuperAdminUI
+                      onDropdownChange={this.handleDropdownChange}
+                      onSubmit={this.handleParentSubmit}
+                    />
+                  </Col>
+                )}
+               
                 <Col lg="2" className="mt-2" xs="6">
                   {InsiderPermissions && InsiderPermissions.Create && (
                     <span >
@@ -728,7 +728,7 @@ class JobList extends React.Component {
                               history.push("/app/ajgroup/HRM/RecPlace/jobForm")
                             }
                           >
-                            <FaPlus size={15} /> Create Job
+                            <FaPlus size={12} /> Create Job
                           </Button>
                         )}
                       />

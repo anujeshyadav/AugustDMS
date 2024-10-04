@@ -241,6 +241,90 @@ class ClosingStockReport extends React.Component {
           ],
         },
         {
+          headerName: "Pending stock details",
+          headerClass: "header-group-style",
+          children: [
+            {
+              headerName: "Pending Stock",
+              field: "productId.pendingQty",
+              headerClass: "header-style",
+              filter: true,
+              width: 120,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>{params?.data?.productId?.pendingQty}</span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Price",
+              field: "productId.SalesRate",
+              headerClass: "header-style",
+              filter: true,
+              width: 100,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>
+                        {params?.data?.productId?.pendingQty > 0 &&
+                          params?.data?.productId?.SalesRate &&
+                          params?.data?.productId?.SalesRate?.toFixed(2)}
+                      </span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Tax Rate",
+              field: "productId.GSTRate",
+              headerClass: "header-style",
+              filter: true,
+              width: 90,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>
+                        {params?.data?.productId?.pendingQty > 0 &&
+                          params?.data?.productId?.GSTRate}
+                      </span>
+                    </div>
+                  </>
+                );
+              },
+            },
+            {
+              headerName: "Total",
+              field: "PendingTotal",
+              headerClass: "header-style",
+              filter: true,
+              width: 100,
+              sortable: true,
+              cellRendererFramework: (params) => {
+                return (
+                  <>
+                    <div className="actions cursor-pointer text-center">
+                      <span>
+                        {params?.data?.PendingTotal &&
+                          params?.data?.PendingTotal?.toFixed(2)}
+                      </span>
+                    </div>
+                  </>
+                );
+              },
+            },
+          ],
+        },
+        {
           headerName: "Inward stock details",
           headerClass: "header-group-style",
           children: [
@@ -416,10 +500,10 @@ class ClosingStockReport extends React.Component {
               filter: true,
               sortable: true,
               width: 105,
-               valueGetter: (params) => {
-                debugger
+              valueGetter: (params) => {
+                debugger;
                 return params?.data?.sQty * params?.data?.sRate;
-                  },
+              },
               field: "sTotal",
               headerClass: "header-style",
               cellRendererFramework: (params) => {
@@ -599,6 +683,8 @@ class ClosingStockReport extends React.Component {
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
             let gstRate = Number(val?.productId?.GSTRate);
+            let PendingTotal =
+              +((val?.productId.pendingQty * val?.productId.SalesRate).toFixed(2));
             let Total = +(
               val.productId?.Opening_Stock * val?.productId?.Purchase_Rate
             ).toFixed(2);
@@ -610,6 +696,7 @@ class ClosingStockReport extends React.Component {
               OpeningTax,
               OpeningTotal,
               pId: val.productId?._id,
+              PendingTotal,
             };
           });
         });

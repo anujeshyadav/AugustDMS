@@ -646,7 +646,7 @@ class JobappList extends React.Component {
                     />
                   </div>
                 </Col>
-                <Col className="mt-2" lg="3" xs="7">
+                <Col className="mt-2" lg="2" xs="7">
                   {InsiderPermissions && InsiderPermissions.Create && (
                     <span>
                       <Route
@@ -667,7 +667,7 @@ class JobappList extends React.Component {
                                 "/app/ajgroup/HRM/RecPlace/applresultForm"
                               )
                             }>
-                            <FaPlus size={15} /> Applied/Result
+                            <FaPlus size={12} /> Applied/Result
                           </Button>
                         )}
                       />

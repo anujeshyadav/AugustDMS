@@ -293,15 +293,14 @@ const PartyLedgersView = () => {
             <Card>
               {!HideOtherData && (
                 <>
-                  <Row className="ml-2 mr-2">
-                    <Col lg="4" md="4" sm="4">
+                  
+                  <Row style={{marginLeft:'3px',marginRight:'3px'}}>
+ <Col lg="2" md="2" sm="2">
                       <SuperAdminUI
                         onDropdownChange={handleDropdownChange}
                         onSubmit={handleParentSubmit}
                       />
                     </Col>
-                  </Row>
-                  <Row className="m-2">
                     <Col lg="2" md="2" sm="6" className="mt-2">
                       <Multiselect
                         required
@@ -340,7 +339,7 @@ const PartyLedgersView = () => {
                       })}
                   </CustomInput> */}
                     </Col>
-                    <Col lg="2" md="2" sm="6" className="mt-2">
+                    <Col lg="1" md="1" sm="6" className="mt-2">
                       <div className="table-input mr-1 ">
                         <Button
                           onClick={handleLedger}
@@ -358,8 +357,13 @@ const PartyLedgersView = () => {
                         </Button>
                       </div>
                     </Col>
-                    <Col lg="2" md="2">
-                      <div className="table-input mr-1 cssforproductlist">
+
+                    <Col lg="3" xl="3">
+                    <Row>
+                    
+                    
+                    <Col lg="6" md="6">
+                      <div className="table-input   cssforproductlist">
                         <Label>Start Date</Label>
                         <Input
                           value={Filter.startDate}
@@ -369,8 +373,8 @@ const PartyLedgersView = () => {
                         />
                       </div>
                     </Col>
-                    <Col lg="2" md="2">
-                      <div className="table-input mr-1 cssforproductlist">
+                    <Col lg="6" md="6">
+                      <div className="table-input   cssforproductlist">
                         <Label>End Date</Label>
                         <Input
                           value={Filter.EndDate}
@@ -379,6 +383,8 @@ const PartyLedgersView = () => {
                           name="EndDate"
                         />
                       </div>
+                    </Col>
+                     </Row>
                     </Col>
                     <Col lg="1" md="1" sm="6">
                       <div
@@ -399,17 +405,14 @@ const PartyLedgersView = () => {
                           Submit
                         </Button>
                       </div>
+                      
                     </Col>
-                    {/* <Button
-                  type="download"
-                  className="btn"
-                  onClick={downloadExcel}
-                >
-                  Download
-                </Button> */}
-                    <Col lg="1" md="1" sm="6">
+                   
+                    
+                    <Col lg="3" md="3" sm="6">
+                    <div style={{display:"flex", justifyContent:"space-between"}}>
                       <div
-                        className="table-input mr-1 mt-2 "
+                        className="table-input  mt-2 "
                         style={{ marginTop: "6px" }}>
                         <Button
                           onClick={downloadExcel}
@@ -427,9 +430,10 @@ const PartyLedgersView = () => {
                           .XLSX
                         </Button>
                       </div>
-                    </Col>
+                    
+                    <div>
                     {Ledger?.length > 0 && Ledger && (
-                      <Col lg="1" md="1" sm="1">
+                      < >
                         {/* <div className="d-flex justify-content-center">
                           <LedgerPdf
                             downloadFileName="Ledger"
@@ -450,9 +454,10 @@ const PartyLedgersView = () => {
                           }}>
                           Print
                         </Button>
-                      </Col>
+                      </ >
                     )}
-                    <Col lg="1" md="1" sm="3">
+                      </div>
+                    
                       <div className="float-right mt-2">
                         <Route
                           render={({ history }) => (
@@ -472,6 +477,7 @@ const PartyLedgersView = () => {
                           )}
                         />
                       </div>
+                     </div>
                     </Col>
                   </Row>
                 </>
@@ -541,7 +547,9 @@ const PartyLedgersView = () => {
                                   <tr key={ele?._id}>
                                     <td>
                                       <div className="d-flex justify-content-center">
-                                        <div>{ele?.date?.split("T")[0]}</div>
+                                        <div>
+                                          {ele?.createdAt?.split("T")[0]}
+                                        </div>
                                       </div>
                                     </td>
                                     {/* <td>
@@ -606,8 +614,8 @@ const PartyLedgersView = () => {
                                   <th scope="row">
                                     <div
                                       style={{
-                                        fontWeight: "bold",
-                                        fontSize: "20px",
+                                        fontWeight: "600",
+                                        fontSize: "18px",
                                       }}
                                       className="d-flex justify-content-center">
                                       Total
@@ -615,12 +623,14 @@ const PartyLedgersView = () => {
                                   </th>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "bold" }}
+                                      style={{ fontWeight: "600",
+                                        fontSize: "18px", }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "bold" }}
+                                      style={{ fontWeight: "600",
+                                        fontSize: "18px",}}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   {/* <td>
@@ -637,7 +647,8 @@ const PartyLedgersView = () => {
                                   </td> */}
                                   <td>
                                     <div
-                                      style={{ fontWeight: "bold" }}
+                                      style={{ fontWeight: "600",
+                                        fontSize: "18px", }}
                                       className="d-flex justify-content-center">
                                       <div style={{ fontSize: "20px" }}>
                                         <strong>
@@ -682,8 +693,8 @@ const PartyLedgersView = () => {
                                   <th scope="row">
                                     <div
                                       style={{
-                                        fontWeight: "bold",
-                                        fontSize: "20px",
+                                       fontWeight: "600",
+                                        fontSize: "18px",
                                       }}
                                       className="d-flex justify-content-center">
                                       Closing Balance
@@ -691,17 +702,20 @@ const PartyLedgersView = () => {
                                   </th>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "bold" }}
+                                      style={{ fontWeight: "600",
+                                        fontSize: "18px", }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "bold" }}
+                                      style={{ fontWeight: "600",
+                                        fontSize: "18px", }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "bold" }}
+                                      style={{ fontWeight: "600",
+                                        fontSize: "18px",}}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   {/* <td>
@@ -721,7 +735,8 @@ const PartyLedgersView = () => {
 
                                   <td>
                                     <div
-                                      style={{ fontWeight: "bold" }}
+                                      style={{ fontWeight: "600",
+                                        fontSize: "18px", }}
                                       className="d-flex justify-content-center">
                                       <div style={{ fontSize: "20px" }}>
                                         <strong>

@@ -920,7 +920,7 @@ class CreateTransportList extends React.Component {
                                           cursor: "pointer",
                                           backgroundColor: "rgb(8, 91, 245)",
                                           color: "white",
-                                          fontWeight: "500",
+                                          fontWeight: "600",
                                           width: "100%",
                                           height: "43px",
                                           textTransform: "uppercase",
@@ -949,7 +949,7 @@ class CreateTransportList extends React.Component {
                                             cursor: "pointer",
                                             backgroundColor: "rgb(8, 91, 245)",
                                             color: "white",
-                                            fontWeight: "500",
+                                            fontWeight: "600",
                                             textTransform: "uppercase",
                                             paddingLeft: "20px",
                                             height: "43px",
@@ -962,7 +962,7 @@ class CreateTransportList extends React.Component {
                                             )
                                           }>
                                           <FaPlus
-                                            size={13}
+                                            size={12}
                                             style={{ marginRight: "2px" }}
                                           />
                                           Transporter

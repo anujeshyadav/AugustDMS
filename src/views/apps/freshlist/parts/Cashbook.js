@@ -66,7 +66,7 @@ class Cashbook extends React.Component {
       rowData: [],
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 5,
+      paginationPageSize: 15,
       InsiderPermissions: {},
       currenPageSize: "",
       getPageSize: "",
@@ -82,23 +82,23 @@ class Cashbook extends React.Component {
       },
       columnDefs: [
         {
-          headerName: "UID",
+          headerName: "S No.",
           valueGetter: "node.rowIndex + 1",
           field: "node.rowIndex + 1",
-          width: 80,
+          width: 55,
           filter: true,
         },
 
         {
           headerName: "Actions",
           field: "transactions",
-          width: 95,
+          width: 75,
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer text-center">
                 <Eye
                   className="mr-50"
-                  size="25px"
+                  size="20px"
                   color="green"
                   onClick={(e) => {
                     this.togglemodal();
@@ -113,7 +113,7 @@ class Cashbook extends React.Component {
           headerName: "Status",
           field: "status",
           filter: true,
-          width: 95,
+          width: 90,
           cellRendererFramework: (params) => {
             return params.data?.status?.toLowerCase()?.includes("completed") ? (
               <div className="cursor-pointer text-center">
@@ -143,7 +143,7 @@ class Cashbook extends React.Component {
           headerName: "Product ",
           field: "orderItems",
           filter: true,
-          width: 100,
+          
           cellRendererFramework: (params) => {
             return (
               <>
@@ -161,7 +161,7 @@ class Cashbook extends React.Component {
           field: "createdAt",
           filter: true,
           resizable: true,
-          width: 190,
+          width: 165,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
@@ -192,7 +192,7 @@ class Cashbook extends React.Component {
           headerName: "Company Pan Number",
           field: "partyId.comPanNo",
           filter: true,
-          width: 210,
+          width: 170,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -208,7 +208,7 @@ class Cashbook extends React.Component {
           field: "fullName",
           filter: true,
           resizable: true,
-          width: 280,
+          width: 230,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -223,7 +223,7 @@ class Cashbook extends React.Component {
           headerName: "Party limit",
           field: "partyId.limit",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -260,7 +260,7 @@ class Cashbook extends React.Component {
           headerName: "IGST ",
           field: "igstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -273,7 +273,7 @@ class Cashbook extends React.Component {
           headerName: "SGST  ",
           field: "sgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -286,7 +286,7 @@ class Cashbook extends React.Component {
           headerName: "CGST  ",
           field: "cgstTotal",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -299,7 +299,7 @@ class Cashbook extends React.Component {
           headerName: "Amount",
           field: "amount",
           filter: true,
-          width: 140,
+          width: 100,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -312,7 +312,7 @@ class Cashbook extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -325,7 +325,7 @@ class Cashbook extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-          width: 140,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -1047,15 +1047,24 @@ class Cashbook extends React.Component {
                 <>
                   <Col sm="12">
                     <Card>
-                      <Row className=" ml-2 mr-2">
+                      <Row style={{marginLeft:'3px',marginRight:'3px'}}>
                         <Col className="mt-2">
                           <h1
                             className="float-left"
-                            style={{ fontWeight: "600" }}>
+                            style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px'  }}>
                             Cashbook
                           </h1>
                         </Col>
-                        <Col lg="3" md="6" sm="12" className="mt-2">
+                       
+                        {this.state.MasterShow && (
+                          <Col lg="3" md="6" sm="12" className="mt-2">
+                            <SuperAdminUI
+                              onDropdownChange={this.handleDropdownChange}
+                              onSubmit={this.handleParentSubmit}
+                            />
+                          </Col>
+                        )}
+                           <Col lg="3" md="6" sm="12" className="mt-2">
                           <div className="table-input cssforproductlist">
                             <Input
                               placeholder="search Item here..."
@@ -1066,14 +1075,6 @@ class Cashbook extends React.Component {
                             />
                           </div>
                         </Col>
-                        {this.state.MasterShow && (
-                          <Col lg="3" md="6" sm="12" className="mt-2">
-                            <SuperAdminUI
-                              onDropdownChange={this.handleDropdownChange}
-                              onSubmit={this.handleParentSubmit}
-                            />
-                          </Col>
-                        )}
                         <Col lg="2" md="2" sm="6" xs="6" className="mt-2">
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.Create && (
@@ -1095,7 +1096,7 @@ class Cashbook extends React.Component {
                                           "/app/SoftNumen/parts/Addorderbycashbook"
                                         )
                                       }>
-                                      <FaPlus size={15} /> Add order
+                                      <FaPlus size={12} /> Add order
                                     </Button>
                                   )}
                                 />
@@ -1185,7 +1186,7 @@ class Cashbook extends React.Component {
                         this.state.InsiderPermissions?.View && (
                           <>
                             {this.state.rowData === null ? null : (
-                              <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                              <div className="ag-theme-material w-100  ag-grid-table card-body" style={{marginTop:"-1rem"}}>
                                 {/*
                               <div className="d-flex flex-wrap justify-content-between align-items-center">
                                   <div className="mb-1">
@@ -1264,7 +1265,7 @@ class Cashbook extends React.Component {
                                       colResizeDefault={"shift"}
                                       animateRows={true}
                                       floatingFilter={false}
-                                      // pagination={true}
+                                      pagination={true}
                                       paginationPageSize={
                                         this.state.paginationPageSize
                                       }

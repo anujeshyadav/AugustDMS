@@ -647,7 +647,7 @@ class OfferList extends React.Component {
                               "/app/ajgroup/HRM/RecPlace/offerletterForm"
                             )
                           }>
-                          <FaPlus size={13} /> Offer Letter
+                          <FaPlus size={12} /> Offer Letter
                         </Button>
                       )}
                     />

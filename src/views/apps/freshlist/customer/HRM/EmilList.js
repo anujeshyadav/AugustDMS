@@ -679,7 +679,7 @@ class EmilList extends React.Component {
                             this.LookupviewStart();
                           }}
                         >
-                          <FaPlus size={15} /> Add
+                          <FaPlus size={12} /> Add
                         </Button>
                       )}
                     />

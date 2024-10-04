@@ -1617,7 +1617,7 @@ h3.float-left {
 }
 
 button.btn.btn-\#39cccc {
-  padding-top: 10px !important;
+  padding-top: 11px !important;
   height: 35px !important;
 }
 
@@ -1806,4 +1806,43 @@ button.btn.btn-primary {
 }
 svg.mt-2 {
   color: #085bf5 !important;
+}
+button.float-right.btn.btn-\#39cccc {
+  font-size: 11px !important;
+}
+button.float-right.btn.btn-\#39cccc {
+  padding-left: 11px !important;
+  padding-right: 11px !important;
+}
+button.float-left.cssbuttonsaleslead.btn.btn-\#39cccc {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+label {
+  text-transform: uppercase !important;
+  font-size: 12px;
+}
+
+button.btn.btn-\#39cccc {
+  text-transform: uppercase;
+}
+button.btn.btn-primary {
+  text-transform: uppercase;
+}
+h3 {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+}
+h5.text-bold {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+}
+.d-flex.justify-content-center {
+  font-size: 12px;
+  font-weight: 600;
+}
+.ag-theme-material.w-100.my-2.ag-grid-table.card-body {
+  margin-top: -3rem !important;
 }

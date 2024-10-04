@@ -678,7 +678,7 @@ class EventList extends React.Component {
                             this.setState({ createAdvence: true });
                             this.LookupviewStart();
                           }}>
-                          <FaPlus size={13} /> Add
+                          <FaPlus size={12} /> Add
                         </Button>
                       )}
                     />

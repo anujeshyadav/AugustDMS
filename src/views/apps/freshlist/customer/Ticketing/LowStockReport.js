@@ -204,7 +204,7 @@ class LowStockReport extends React.Component {
           headerName: "Supplier GST",
           field: "SupplierGST",
           filter: true,
-          width: 110,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">

@@ -1294,7 +1294,7 @@ class PurchaseCompleted extends React.Component {
                                 `/app/ajgroup/order/CreatePayment/${0}`
                               )
                             }>
-                            <FaPlus size={15} /> Payment
+                            <FaPlus size={12} /> Payment
                           </Button>
                         )}
                       />

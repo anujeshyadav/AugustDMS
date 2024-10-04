@@ -924,7 +924,7 @@ const CreateCustomer = () => {
                                 />
                               </FormGroup>
                             </Col>
-                            <Col lg="6" md="6" sm="12">
+                            <Col lg="4" md="4" sm="12">
                               <FormGroup className="cssforproductlist">
                                 <Label>
                                   Opening Balance{" "}
@@ -941,7 +941,7 @@ const CreateCustomer = () => {
                                 />
                               </FormGroup>
                             </Col>
-                            <Col lg="6" md="6" sm="12">
+                            <Col lg="4" md="4" sm="12">
                               <FormGroup className="cssforproductlist">
                                 <Label>
                                   O/P Balance Type

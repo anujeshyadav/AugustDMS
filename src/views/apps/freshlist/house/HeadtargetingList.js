@@ -716,6 +716,7 @@ class HeadtargetingList extends React.Component {
                                         color: "white",
                                         fontWeight: "600",
                                         paddingTop:'11px',
+                                        textTransform:"uppercase",
                                         height: "43px",
                                       }}
                                       className="float-left"
@@ -725,7 +726,7 @@ class HeadtargetingList extends React.Component {
                                           "/app/SoftNumen/account/CreateTarget"
                                         )
                                       }>
-                                      <FaPlus size={15} /> Create Target
+                                      <FaPlus size={12} /> Create Target
                                     </Button>
                                   )}
                                 />
@@ -733,7 +734,7 @@ class HeadtargetingList extends React.Component {
                             )}
                         </Col>
 
-                        <Col style={{ marginTop: "10px" }} xs="4" lg="1">
+                        <Col style={{ marginTop: "25px" }} xs="4" lg="1">
                           {this.state.InsiderPermissions &&
                             this.state.InsiderPermissions?.View && (
                               <>

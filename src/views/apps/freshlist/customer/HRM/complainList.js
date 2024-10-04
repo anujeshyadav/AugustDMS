@@ -665,7 +665,7 @@ class ComplainList extends React.Component {
                             "/app/ajgroup/HRM/HRMAdminForms/complainForm"
                           )
                         }>
-                        <FaPlus size={13} /> Create Complaint
+                        <FaPlus size={12} /> Create Complaint
                       </Button>
                     )}
                   />
