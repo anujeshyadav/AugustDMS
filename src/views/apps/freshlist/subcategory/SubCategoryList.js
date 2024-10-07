@@ -31,6 +31,8 @@ import swal from "sweetalert";
 import { Image_URL } from "../../../../ApiEndPoint/Api";
 import { CheckPermission } from "../house/CheckPermission";
 import SuperAdminUI from "../../../SuperAdminUi/SuperAdminUI";
+import { FaPlus } from "react-icons/fa";
+ 
 
 class SubCategoryList extends React.Component {
   state = {
@@ -407,6 +409,8 @@ class SubCategoryList extends React.Component {
                         backgroundColor: "rgb(8, 91, 245)",
                         color: "white",
                         fontWeight: "600",
+                      
+                        
                       }}
                            color="rgb(8, 91, 245)"
                     className="float-right categorysbutton45"
@@ -425,6 +429,7 @@ class SubCategoryList extends React.Component {
                         backgroundColor: "rgb(8, 91, 245)",
                         color: "white",
                         fontWeight: "600",
+                        
                       }}
                      color="rgb(8, 91, 245)"
                     className="float-right categorysbutton45 mr-2"
@@ -434,7 +439,7 @@ class SubCategoryList extends React.Component {
                           "/app/freshlist/subcategory/addSubCategory"
                         )
                       }>
-                      + SubCategory
+                      <FaPlus size={12} /> SubCategory
                     </Button>
                   )}
                 />

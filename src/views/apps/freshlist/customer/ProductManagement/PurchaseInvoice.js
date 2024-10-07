@@ -229,7 +229,7 @@ class PurchaseInvoice extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          width: 195,
+          width: 175,
           cellRendererFramework: (params) => {
             // console.log(params.data);
 
@@ -297,6 +297,25 @@ class PurchaseInvoice extends React.Component {
                     "NA"
                   )}
                   <span></span>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Date",
+          field: "date",
+          valueGetter: (params) => {
+            return params.data?.date?.split("T")[0];
+          },
+          filter: true,
+          resizable: true,
+          width: 95,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">
+                <div>
+                  <span>{params?.value}</span>
                 </div>
               </div>
             );

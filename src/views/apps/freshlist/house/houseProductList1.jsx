@@ -115,10 +115,10 @@ class HouseProductList extends React.Component {
           },
         },
         {
-          headerName: "HSN_Code",
+          headerName: "HSN Code",
           field: "HSN_Code",
           filter: true,
-          width: 150,
+          width: 140,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -134,7 +134,7 @@ class HouseProductList extends React.Component {
           headerName: "Purchase Rate",
           field: "Purchase_Rate",
           filter: true,
-          width: 160,
+          width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -151,7 +151,7 @@ class HouseProductList extends React.Component {
           headerName: "Profit %",
           field: "ProfitPercentage",
           filter: true,
-          width: 160,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -168,7 +168,7 @@ class HouseProductList extends React.Component {
           headerName: "Sales Rate",
           field: "SalesRate",
           filter: true,
-          width: 130,
+          width: 95,
           cellRendererFramework: (params) => {
             // console.log(params?.data?.lossStatus);
             return (
@@ -188,7 +188,7 @@ class HouseProductList extends React.Component {
           headerName: "Grade Discount",
           field: "maxDiscount",
           filter: true,
-          width: 180,
+          width: 130,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -204,7 +204,7 @@ class HouseProductList extends React.Component {
           headerName: "Tax",
           field: "GSTRate",
           filter: true,
-          width: 150,
+          width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
@@ -225,7 +225,7 @@ class HouseProductList extends React.Component {
           headerName: "Product MRP",
           field: "Product_MRP",
           filter: true,
-          width: 155,
+          width:120,
           cellRendererFramework: (params) => {
             return (
               <div className="">
@@ -1060,7 +1060,7 @@ class HouseProductList extends React.Component {
                 style={{
                   fontWeight: "600",
                   textTransform: "uppercase",
-                  fontSize: "22px",
+                  fontSize: "18px",
                   marginTop: "25px",
                 }}>
                 Product Price List
@@ -1077,7 +1077,7 @@ class HouseProductList extends React.Component {
             ) : (
               <Col></Col>
             )}
-            <Col lg="2" md="2" sm="12" style={{ marginTop: "25px" }}>
+            <Col lg="3" md="3" sm="12" style={{ marginTop: "25px" }}>
               <div className="table-input ">
                 <Input
                   placeholder="search Item here..."
@@ -1101,8 +1101,10 @@ class HouseProductList extends React.Component {
                             height: "35px",
                             color: "white",
                             fontWeight: "600",
+                            textTransform:"uppercase"
+
                           }}
-                          className="float-right categorysbutton45 ml-3"
+                          className="float-right categorysbutton45  ml-3"
                           onClick={() => {
                             this.setState({ BulkEdit: true, EditCol: false });
                             this.LookupviewStart();
@@ -1132,6 +1134,7 @@ class HouseProductList extends React.Component {
                             color: "white",
                             height: "35px",
                             fontWeight: "600",
+                             textTransform:"uppercase"
                           }}
                           className="float-right categorysbutton45"
                           onClick={() =>

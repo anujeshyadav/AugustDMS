@@ -48,7 +48,10 @@ import UserContext from "../../../../../context/Context";
 import { CheckPermission } from "../../house/CheckPermission";
 import SuperAdminUI from "../../../../SuperAdminUi/SuperAdminUI";
 import { ImDownload } from "react-icons/im";
-import { WareHouse_Closing_Stock } from "../../../../../ApiEndPoint/Api";
+import {
+  PurchaseProductList_Product,
+  WareHouse_Closing_Stock,
+} from "../../../../../ApiEndPoint/Api";
 
 const SelectedColums = [];
 
@@ -101,7 +104,10 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.productId?.Product_Title}</span>
+                      <span>
+                        {params?.data?.productId?.Product_Title &&
+                          params?.data?.productId?.Product_Title}
+                      </span>
                     </div>
                   </>
                 );
@@ -117,28 +123,15 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.productId?.HSN_Code}</span>
+                      <span>
+                        {params?.data?.productId?.HSN_Code &&
+                          params?.data?.productId?.HSN_Code}
+                      </span>
                     </div>
                   </>
                 );
               },
             },
-            // {
-            //   headerName: "Tax Rate",
-            //   field: "productId.GSTRate",
-            //   filter: true,
-            //   sortable: true,
-            //   width: 140,
-            //   cellRendererFramework: (params) => {
-            //     return (
-            //       <>
-            //         <div className="actions cursor-pointer text-center">
-            //           <span>{params?.data?.productId?.GSTRate}</span>
-            //         </div>
-            //       </>
-            //     );
-            //   },
-            // },
           ],
         },
 
@@ -157,7 +150,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.oQty}</span>
+                      <span>{params?.data?.oQty ? params?.data?.oQty : 0}</span>
                     </div>
                   </>
                 );
@@ -175,7 +168,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.oRate && params?.data?.oRate?.toFixed(2)}
+                        {params?.data?.oRate
+                          ? params?.data?.oRate?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -192,7 +187,9 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.oTaxRate}</span>
+                      <span>
+                        {params?.data?.oTaxRate ? params?.data?.oTaxRate : 0}
+                      </span>
                     </div>
                   </>
                 );
@@ -210,8 +207,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.OpeningTax &&
-                          params?.data?.OpeningTax?.toFixed(2)}
+                        {params?.data?.OpeningTax
+                          ? params?.data?.OpeningTax?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -230,8 +228,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.oTotal &&
-                          params?.data?.oTotal?.toFixed(2)}
+                        {params?.data?.oTotal
+                          ? params?.data?.oTotal?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -246,7 +245,7 @@ class ClosingStockReport extends React.Component {
           children: [
             {
               headerName: "Pending Stock",
-              field: "productId.pendingQty",
+              field: "pendingStock",
               headerClass: "header-style",
               filter: true,
               width: 120,
@@ -255,7 +254,11 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.productId?.pendingQty}</span>
+                      <span>
+                        {params?.data?.pendingStock
+                          ? params?.data?.pendingStock
+                          : 0}
+                      </span>
                     </div>
                   </>
                 );
@@ -273,9 +276,10 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.productId?.pendingQty > 0 &&
-                          params?.data?.productId?.SalesRate &&
-                          params?.data?.productId?.SalesRate?.toFixed(2)}
+                        {params?.data?.pendingStock > 0 &&
+                        params?.data?.productId?.SalesRate
+                          ? params?.data?.productId?.SalesRate?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -294,8 +298,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.productId?.pendingQty > 0 &&
-                          params?.data?.productId?.GSTRate}
+                        {params?.data?.pendingStock > 0
+                          ? params?.data?.productId?.GSTRate
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -314,8 +319,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.PendingTotal &&
-                          params?.data?.PendingTotal?.toFixed(2)}
+                        {params?.data?.PendingTotal
+                          ? params?.data?.PendingTotal?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -339,7 +345,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.pQty}</span>
+                      <span>{params?.data?.pQty ? params?.data?.pQty : 0}</span>
                     </div>
                   </>
                 );
@@ -357,7 +363,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.pRate && params?.data?.pRate?.toFixed(2)}
+                        {params?.data?.pRate
+                          ? params?.data?.pRate?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -376,8 +384,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.pTaxRate &&
-                          params?.data?.pTaxRate?.toFixed(2)}
+                        {params?.data?.pTaxRate
+                          ? params?.data?.pTaxRate?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -412,8 +421,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.pTotal &&
-                          params?.data?.pTotal?.toFixed(2)}
+                        {params?.data?.pTotal
+                          ? params?.data?.pTotal?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -437,7 +447,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.sQty}</span>
+                      <span>{params?.data?.sQty ? params?.data?.sQty : 0}</span>
                     </div>
                   </>
                 );
@@ -455,7 +465,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.sRate && params?.data?.sRate?.toFixed(2)}
+                        {params?.data?.sRate
+                          ? params?.data?.sRate?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -473,7 +485,9 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.sTaxRate}</span>
+                      <span>
+                        {params?.data?.sTaxRate ? params?.data?.sTaxRate : 0}
+                      </span>
                     </div>
                   </>
                 );
@@ -501,8 +515,8 @@ class ClosingStockReport extends React.Component {
               sortable: true,
               width: 105,
               valueGetter: (params) => {
-                debugger;
-                return params?.data?.sQty * params?.data?.sRate;
+                let value = params?.data?.sQty * params?.data?.sRate;
+                return value ? value : 0;
               },
               field: "sTotal",
               headerClass: "header-style",
@@ -510,11 +524,7 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>
-                        {params?.value && params?.value?.toFixed(2)}
-                        {/* {params?.data?.sTotal &&
-                          params?.data?.sTotal?.toFixed(2)} */}
-                      </span>
+                      <span>{params?.value && params?.value?.toFixed(2)}</span>
                     </div>
                   </>
                 );
@@ -538,7 +548,11 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.currentStock}</span>
+                      <span>
+                        {params?.data?.currentStock
+                          ? params?.data?.currentStock
+                          : 0}
+                      </span>
                     </div>
                   </>
                 );
@@ -556,7 +570,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.price && params?.data?.price?.toFixed(2)}
+                        {params?.data?.price
+                          ? params?.data?.price?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -574,7 +590,11 @@ class ClosingStockReport extends React.Component {
                 return (
                   <>
                     <div className="actions cursor-pointer text-center">
-                      <span>{params?.data?.gstPercentage}</span>
+                      <span>
+                        {params?.data?.gstPercentage
+                          ? params?.data?.gstPercentage
+                          : 0}
+                      </span>
                     </div>
                   </>
                 );
@@ -608,8 +628,9 @@ class ClosingStockReport extends React.Component {
                   <>
                     <div className="actions cursor-pointer text-center">
                       <span>
-                        {params?.data?.totalPrice &&
-                          params?.data?.totalPrice?.toFixed(2)}
+                        {params?.data?.totalPrice
+                          ? params?.data?.totalPrice?.toFixed(2)
+                          : 0}
                       </span>
                     </div>
                   </>
@@ -644,29 +665,34 @@ class ClosingStockReport extends React.Component {
     }));
   };
   combineProducts = (arr) => {
-    // Create a map to hold combined data
     const combined = {};
     let array = [];
     arr.map((product, index) => {
-      const { pId, pQty, sQty, cQty, price, gstPercentage } = product;
+      const {
+        pId,
+        pQty,
+        sQty,
+        cQty,
+        price,
+        gstPercentage,
+        pendingStock,
+        PendingTotal,
+        SalesRate,
+      } = product;
       if (combined[pId]) {
         let current = array.filter((item) => item?.productId?._id == pId);
         let index = array.indexOf(current[0]);
-        let currentItem =current[0]
-        // let currentItem =JSON.parse(JSON.stringify( current[0]));
+        let currentItem = current[0];
         currentItem.pQty += pQty;
         currentItem.sQty += sQty;
-        currentItem.currentStock = product.currentStock;
-
-
+        currentItem.pendingStock += +pendingStock;
         currentItem.sRate = product?.productId?.SalesRate;
-        currentItem.sTaxRate = + gstPercentage;
-        // currentItem.sTotal = sQty * product?.productId?.SalesRate;
-        // currentItem["sTotal"] = sQty * product?.productId?.SalesRate;
-        // currentItem.cQty = currentItem.pQty - currentItem.cQty;
+        currentItem.currentStock = product.currentStock;
+        currentItem.sTaxRate = +gstPercentage;
+        currentItem.PendingTotal = +PendingTotal;
         array[index][currentItem];
       } else {
-        combined[pId] = { ...product }; // Initialize with the product object
+        combined[pId] = { ...product };
         array.push(product);
       }
     });
@@ -683,10 +709,11 @@ class ClosingStockReport extends React.Component {
         let alldata = closing?.flatMap((ele) => {
           return ele?.productItems?.map((val) => {
             let gstRate = Number(val?.productId?.GSTRate);
-            let PendingTotal =
-              +((val?.productId.pendingQty * val?.productId.SalesRate).toFixed(2));
+            let PendingTotal = +(
+              val?.pendingStock * val?.productId.SalesRate
+            ).toFixed(2);
             let Total = +(
-              val.productId?.Opening_Stock * val?.productId?.Purchase_Rate
+              val?.pendingStock * val?.productId?.Purchase_Rate
             ).toFixed(2);
             let OpeningTax = +((Total / (100 + gstRate)) * gstRate).toFixed(2);
             let OpeningTotal = +Total;
@@ -700,10 +727,9 @@ class ClosingStockReport extends React.Component {
             };
           });
         });
+
         let newClosing = JSON.parse(JSON.stringify(alldata));
-        debugger;
         let combined = this.combineProducts(alldata);
-        console.log(combined);
         if (alldata?.length) {
           this.setState({
             rowAllData: newClosing,
@@ -726,9 +752,44 @@ class ClosingStockReport extends React.Component {
         this.setState({ SelectedCols: this.state.columnDefs });
       })
       .catch((err) => {
-        this.setState({ Loading: false });
-        console.log(err);
-        this.setState({ rowData: [] });
+        if (err?.response?.status == 404) {
+          _Get(PurchaseProductList_Product, db)
+            .then((res) => {
+              res?.Product?.forEach((ele) => {
+                debugger;
+                let Total = +(ele?.Opening_Stock * ele?.Purchase_Rate).toFixed(
+                  2
+                );
+                let OpeningTax = +(
+                  (Total / (100 + ele?.GSTRate)) *
+                  ele?.GSTRate
+                ).toFixed(2);
+                ele["price"] = ele?.SalesRate;
+                ele["currentStock"] = ele?.Opening_Stock;
+                ele["totalPrice"] = ele?.SalesRate * ele?.Opening_Stock;
+                ele["gstPercentage"] = ele?.GSTRate;
+                ele["productId"] = ele;
+                ele["oQty"] = ele?.Opening_Stock;
+                ele["oRate"] = ele?.Purchase_Rate;
+                ele["oTaxRate"] = ele?.GSTRate;
+                ele["OpeningTax"] = OpeningTax;
+                ele["oTotal"] = Total;
+              });
+              this.setState({ Loading: false });
+              this.setState({
+                rowData: res?.Product,
+                rowAllData: res?.Product,
+              });
+            })
+            .catch((err) => {
+              this.setState({ Loading: false });
+              this.setState({ rowData: [] });
+            });
+        } else {
+          debugger;
+          this.setState({ Loading: false });
+          this.setState({ rowData: [] });
+        }
       });
   }
   async componentDidMount() {
@@ -970,7 +1031,9 @@ class ClosingStockReport extends React.Component {
 
     // If data is found within the date range
     if (filteredItems?.length > 0) {
-      this.setState({ rowData: filteredItems });
+      debugger;
+      let combined = this.combineProducts(filteredItems);
+      this.setState({ rowData: combined });
     } else {
       // If no data is found, find the latest date before the start date
       const previousDateItems = rowAllData
@@ -988,8 +1051,10 @@ class ClosingStockReport extends React.Component {
         const latestPreviousData = previousDateItems.filter((item) => {
           return item.date.split("T")[0] === latestPreviousDate;
         });
+        debugger;
 
-        this.setState({ rowData: latestPreviousData });
+        let combined = this.combineProducts(latestPreviousData);
+        this.setState({ rowData: combined });
       } else {
         // No data found at all
         this.setState({ rowData: [] });

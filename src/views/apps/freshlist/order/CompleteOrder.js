@@ -244,10 +244,9 @@ class CompleteOrder extends React.Component {
 
         {
           headerName: "Invoice",
-          // field: "partyId.ownerName",
           filter: true,
           resizable: true,
-          width: 240,
+          width: 80,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -258,6 +257,25 @@ class CompleteOrder extends React.Component {
                     fill="Blue"
                     size="30px"
                   />
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Date",
+          field: "date",
+          valueGetter: (params) => {
+            return params.data?.date?.split("T")[0];
+          },
+          filter: true,
+          resizable: true,
+          width: 95,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="cursor-pointer text-center">
+                <div>
+                  <span>{params?.value}</span>
                 </div>
               </div>
             );

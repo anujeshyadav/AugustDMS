@@ -683,7 +683,8 @@ class OrderList extends React.Component {
     }).then((value) => {
       switch (value) {
         case "delete":
-          _Delete(Delete_Sales, id)
+          // _Delete(Delete_Sales, id)
+          _Delete(Delete_Sales_order, id)
             .then((res) => {
               let selectedData = this.gridApi.getSelectedRows();
               this.gridApi.updateRowData({ remove: selectedData });
