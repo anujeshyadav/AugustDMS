@@ -61,6 +61,7 @@ import { CONSOLIDATED } from "./GSTR1ReportConst";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { param } from "jquery";
 
 const SelectedColums = [];
 
@@ -241,15 +242,16 @@ class GSTR1 extends React.Component {
           headerName: "Invoice Date",
           field: "date",
           filter: true,
+          valueGetter: (params) => {
+            return moment(params?.data?.order?.date?.split("T")[0]).format(
+              "DD-MMM-YYYY"
+            );
+          },
           width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {moment(params?.data?.order?.date?.split("T")[0]).format(
-                    "DD-MMM-YYYY"
-                  )}
-                </span>
+                <span>{params.value}</span>
               </div>
             );
           },
@@ -777,24 +779,41 @@ class GSTR1 extends React.Component {
             );
           },
         },
+        // {
+        //   headerName: "Invoice Date",
+        //   field: "order.date",
+        //   filter: true,
+        //   width: 105,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <span>
+        //           {moment(params?.data?.order?.date?.split("T")[0]).format(
+        //             "DD-MMM-YYYY"
+        //           )}
+        //         </span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Invoice Date",
-          field: "order.date",
+          field: "date",
           filter: true,
-          width: 105,
+          valueGetter: (params) => {
+            return moment(params?.data?.order?.date?.split("T")[0]).format(
+              "DD-MMM-YYYY"
+            );
+          },
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {moment(params?.data?.order?.date?.split("T")[0]).format(
-                    "DD-MMM-YYYY"
-                  )}
-                </span>
+                <span>{params.value}</span>
               </div>
             );
           },
         },
-
         {
           headerName: "Invoice Value",
           field: "order.grandTotal",
@@ -994,19 +1013,37 @@ class GSTR1 extends React.Component {
             );
           },
         },
+        // {
+        //   headerName: "Invoice Date",
+        //   field: "order.date",
+        //   filter: true,
+        //   width: 105,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <span>
+        //           {moment(params?.data?.order?.date?.split("T")[0]).format(
+        //             "DD-MMM-YYYY"
+        //           )}
+        //         </span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Invoice Date",
-          field: "order.date",
+          field: "date",
           filter: true,
-          width: 105,
+          valueGetter: (params) => {
+            return moment(params?.data?.order?.date?.split("T")[0]).format(
+              "DD-MMM-YYYY"
+            );
+          },
+          width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>
-                  {moment(params?.data?.order?.date?.split("T")[0]).format(
-                    "DD-MMM-YYYY"
-                  )}
-                </span>
+                <span>{params.value}</span>
               </div>
             );
           },
@@ -1988,7 +2025,7 @@ class GSTR1 extends React.Component {
                 </Col>
               )}
               {this.state.filterType == "year" && (
-                <Col xl="4" lg="4" md="4">
+                <Col xl="2" lg="2" md="2">
                   <Row>
                     <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
                       <Label for="year">Year:</Label>
