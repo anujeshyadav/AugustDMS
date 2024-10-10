@@ -92,7 +92,8 @@ class ClosingStockReport extends React.Component {
       columnDefs: [
         {
           headerName: "Product Details",
-          headerClass: "header-group-style",
+          headerClass: "header-group-style ",
+
           children: [
             {
               headerName: "Product Name",
@@ -136,14 +137,15 @@ class ClosingStockReport extends React.Component {
         },
 
         {
-          headerName: "Openning stock details",
-          headerClass: "header-group-style",
+          headerName: "Openning stock details ",
+          headerClass: "header-group-style header-group-style1",
           children: [
             {
               headerName: "Opening qty",
               field: "oQty",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
+
               width: 105,
               sortable: true,
               cellRendererFramework: (params) => {
@@ -159,7 +161,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Purchase Rate",
               field: "oRate",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               width: 125,
               sortable: true,
@@ -180,6 +182,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Tax Rate",
               field: "oTaxRate",
+              headerClass: "header-style header-group-style6",
               filter: true,
               sortable: true,
               width: 105,
@@ -198,6 +201,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Tax",
               field: "OpeningTax",
+              headerClass: "header-style header-group-style6",
               filter: true,
               sortable: true,
               width: 105,
@@ -222,7 +226,7 @@ class ClosingStockReport extends React.Component {
               filter: true,
               width: 105,
               sortable: true,
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               cellRendererFramework: (params) => {
                 return (
                   <>
@@ -241,12 +245,12 @@ class ClosingStockReport extends React.Component {
         },
         {
           headerName: "Pending stock details",
-          headerClass: "header-group-style",
+          headerClass: "header-group-style header-group-style2",
           children: [
             {
               headerName: "Pending Stock",
               field: "pendingStock",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style7",
               filter: true,
               width: 120,
               sortable: true,
@@ -267,7 +271,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Price",
               field: "productId.SalesRate",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style7",
               filter: true,
               width: 100,
               sortable: true,
@@ -289,7 +293,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Tax Rate",
               field: "productId.GSTRate",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style7",
               filter: true,
               width: 90,
               sortable: true,
@@ -310,7 +314,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Total",
               field: "PendingTotal",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style7",
               filter: true,
               width: 100,
               sortable: true,
@@ -332,12 +336,12 @@ class ClosingStockReport extends React.Component {
         },
         {
           headerName: "Inward stock details",
-          headerClass: "header-group-style",
+          headerClass: "header-group-style header-group-style1",
           children: [
             {
               headerName: "Inward Qty",
               field: "pQty",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               width: 105,
               sortable: true,
@@ -357,7 +361,7 @@ class ClosingStockReport extends React.Component {
               filter: true,
               width: 125,
               sortable: true,
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               cellRendererFramework: (params) => {
                 return (
                   <>
@@ -375,7 +379,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Tax Rate",
               field: "pTaxRate",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               width: 105,
               sortable: true,
@@ -412,7 +416,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Total",
               field: "pTotal",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               width: 105,
               sortable: true,
@@ -434,12 +438,12 @@ class ClosingStockReport extends React.Component {
         },
         {
           headerName: "Outward stock details",
-          headerClass: "header-group-style",
+          headerClass: "header-group-style header-group-style3",
           children: [
             {
               headerName: "Sale Qty",
               field: "sQty",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style8",
               filter: true,
               sortable: true,
               width: 105,
@@ -459,7 +463,7 @@ class ClosingStockReport extends React.Component {
               filter: true,
               sortable: true,
               width: 105,
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style8",
               cellRendererFramework: (params) => {
                 return (
                   <>
@@ -480,7 +484,7 @@ class ClosingStockReport extends React.Component {
               filter: true,
               width: 105,
               sortable: true,
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style8",
               cellRendererFramework: (params) => {
                 return (
                   <>
@@ -519,7 +523,7 @@ class ClosingStockReport extends React.Component {
                 return value ? value : 0;
               },
               field: "sTotal",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style8",
               cellRendererFramework: (params) => {
                 return (
                   <>
@@ -535,13 +539,13 @@ class ClosingStockReport extends React.Component {
 
         {
           headerName: "Closing stock details",
-          headerClass: "header-group-style",
+          headerClass: "header-group-style header-group-style4",
           children: [
             {
               headerName: "Closing Stock",
               field: "currentStock",
               width: 120,
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               sortable: true,
               cellRendererFramework: (params) => {
@@ -561,7 +565,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Avg price",
               field: "price",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               width: 105,
               sortable: true,
@@ -582,7 +586,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "GST Percentage",
               field: "gstPercentage",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               width: 130,
               sortable: true,
@@ -619,7 +623,7 @@ class ClosingStockReport extends React.Component {
             {
               headerName: "Total",
               field: "totalPrice",
-              headerClass: "header-style",
+              headerClass: "header-style header-group-style6",
               filter: true,
               width: 105,
               sortable: true,
@@ -665,6 +669,7 @@ class ClosingStockReport extends React.Component {
     }));
   };
   combineProducts = (arr) => {
+    // Create a map to hold combined data
     const combined = {};
     let array = [];
     arr.map((product, index) => {
@@ -685,7 +690,7 @@ class ClosingStockReport extends React.Component {
         let currentItem = current[0];
         currentItem.pQty += pQty;
         currentItem.sQty += sQty;
-        currentItem.pendingStock += +pendingStock;
+        currentItem.pendingStock = +pendingStock;
         currentItem.sRate = product?.productId?.SalesRate;
         currentItem.currentStock = product.currentStock;
         currentItem.sTaxRate = +gstPercentage;
@@ -727,7 +732,6 @@ class ClosingStockReport extends React.Component {
             };
           });
         });
-
         let newClosing = JSON.parse(JSON.stringify(alldata));
         let combined = this.combineProducts(alldata);
         if (alldata?.length) {
@@ -1522,4 +1526,3 @@ class ClosingStockReport extends React.Component {
   }
 }
 export default ClosingStockReport;
-

@@ -48,6 +48,7 @@ const PartyLedgersView = () => {
   const [Partyname, setPartyname] = useState("");
   const [Filter, setFilter] = useState({});
   const [CollectedData, setCollectedData] = useState({});
+  const [PartyData, setPartyData] = useState({});
   const [Master, setMaster] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [PartyList, setPartyList] = useState([]);
@@ -91,6 +92,7 @@ const PartyLedgersView = () => {
   const calculateLedgerFinalData = (ledgerData) => {
     let Allcredit = 0;
     let AllDebit = 0;
+    debugger;
     if (ledgerData?.length > 0) {
       ledgerData?.forEach((ele) => {
         if (ele?.credit) {
@@ -99,8 +101,17 @@ const PartyLedgersView = () => {
           AllDebit += ele?.debit;
         }
       });
-
-      let Difference = Allcredit - AllDebit;
+      // PartyData;
+      let Difference;
+      Difference =
+        PartyData?.userType == "party"
+          ? AllDebit - Allcredit
+          : PartyData?.userType == "User"
+          ? Allcredit - AllDebit
+          : PartyData?.userType == "miscellaneous"
+          ? Allcredit - AllDebit
+          : AllDebit - Allcredit;
+      // Difference = Allcredit - AllDebit;
       setCollectedData({
         creditBalance: Allcredit.toFixed(2),
         debitBalance: AllDebit?.toFixed(2),
@@ -117,6 +128,7 @@ const PartyLedgersView = () => {
 
     await _Get(View_Ledger_by_id, PartyId)
       .then((res) => {
+        debugger;
         res?.Ledger?.forEach((ele) => {
           ele["party"] = true;
         });
@@ -154,6 +166,7 @@ const PartyLedgersView = () => {
         if (TransporterList?.value?.Transporter?.length > 0) {
           TransporterList?.value?.Transporter?.forEach((element) => {
             element["transporter"] = true;
+            element["userType"] = "transporter";
             element["fullName"] = element?.companyName;
           });
         }
@@ -161,18 +174,21 @@ const PartyLedgersView = () => {
         if (CustomeData?.value?.Customer?.length > 0) {
           CustomeData?.value?.Customer?.forEach((element) => {
             element["party"] = true;
+            element["userType"] = "party";
             element["fullName"] = element?.CompanyName;
           });
         }
         if (UserData?.value?.adminDetails?.length > 0) {
           UserData?.value?.adminDetails?.forEach((element) => {
             element["User"] = true;
+            element["userType"] = "User";
             element["fullName"] = element?.firstName;
           });
         }
         if (ExpensesData?.value?.Expenses?.length > 0) {
           ExpensesData?.value?.Expenses?.forEach((element) => {
             element["miscellaneous"] = true;
+            element["userType"] = "miscellaneous";
             element["fullName"] = `${element?.title} ${element?.type}`;
           });
         }
@@ -264,7 +280,9 @@ const PartyLedgersView = () => {
   };
 
   const handleSelectionParty = async (selectedList, selectedItem) => {
+    debugger;
     setPartyId(selectedItem?._id);
+    setPartyData(selectedItem);
     setPartyname(selectedItem?.fullName);
   };
 
@@ -293,9 +311,8 @@ const PartyLedgersView = () => {
             <Card>
               {!HideOtherData && (
                 <>
-                  
-                  <Row style={{marginLeft:'3px',marginRight:'3px'}}>
- <Col lg="2" md="2" sm="2">
+                  <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+                    <Col lg="2" md="2" sm="2">
                       <SuperAdminUI
                         onDropdownChange={handleDropdownChange}
                         onSubmit={handleParentSubmit}
@@ -313,31 +330,6 @@ const PartyLedgersView = () => {
                         onRemove={onRemove1}
                         displayValue="fullName"
                       />
-                      {/* <CustomInput
-                    onChange={e => {
-                      const selected =
-                        e.target.options[e.target.selectedIndex].getAttribute(
-                          "data-name"
-                        );
-                      setPartyId(e.target.value);
-                      setPartyname(selected);
-                    }}
-                    value={PartyId}
-                    type="select"
-                  >
-                    <option value={0}>--Select Party--</option>
-                    {PartyList?.length > 0 &&
-                      PartyList?.map((ele, i) => {
-                        return (
-                          <option
-                            data-name={`${ele?.firstName} ${ele?.lastName} `}
-                            value={ele?._id}
-                          >{`${ele?.firstName && ele?.firstName} ${
-                            ele?.lastName && ele?.lastName
-                          } `}</option>
-                        );
-                      })}
-                  </CustomInput> */}
                     </Col>
                     <Col lg="1" md="1" sm="6" className="mt-2">
                       <div className="table-input mr-1 ">
@@ -359,32 +351,30 @@ const PartyLedgersView = () => {
                     </Col>
 
                     <Col lg="3" xl="3">
-                    <Row>
-                    
-                    
-                    <Col lg="6" md="6">
-                      <div className="table-input   cssforproductlist">
-                        <Label>Start Date</Label>
-                        <Input
-                          value={Filter.startDate}
-                          onChange={handleChangeData}
-                          type="date"
-                          name="startDate"
-                        />
-                      </div>
-                    </Col>
-                    <Col lg="6" md="6">
-                      <div className="table-input   cssforproductlist">
-                        <Label>End Date</Label>
-                        <Input
-                          value={Filter.EndDate}
-                          onChange={handleChangeData}
-                          type="date"
-                          name="EndDate"
-                        />
-                      </div>
-                    </Col>
-                     </Row>
+                      <Row>
+                        <Col lg="6" md="6">
+                          <div className="table-input   cssforproductlist">
+                            <Label>Start Date</Label>
+                            <Input
+                              value={Filter.startDate}
+                              onChange={handleChangeData}
+                              type="date"
+                              name="startDate"
+                            />
+                          </div>
+                        </Col>
+                        <Col lg="6" md="6">
+                          <div className="table-input   cssforproductlist">
+                            <Label>End Date</Label>
+                            <Input
+                              value={Filter.EndDate}
+                              onChange={handleChangeData}
+                              type="date"
+                              name="EndDate"
+                            />
+                          </div>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col lg="1" md="1" sm="6">
                       <div
@@ -405,79 +395,81 @@ const PartyLedgersView = () => {
                           Submit
                         </Button>
                       </div>
-                      
                     </Col>
-                   
-                    
+
                     <Col lg="3" md="3" sm="6">
-                    <div style={{display:"flex", justifyContent:"space-between"}}>
                       <div
-                        className="table-input  mt-2 "
-                        style={{ marginTop: "6px" }}>
-                        <Button
-                          onClick={downloadExcel}
-                          type="download"
-                          className=""
-                          style={{
-                            cursor: "pointer",
-                            backgroundColor: "rgb(8, 91, 245)",
-                            color: "white",
-                            fontWeight: "600",
-                            height: "43px",
-                          }}
-                          color="#39cccc"
-                          title="Download ExcellFile">
-                          .XLSX
-                        </Button>
-                      </div>
-                    
-                    <div>
-                    {Ledger?.length > 0 && Ledger && (
-                      < >
-                        {/* <div className="d-flex justify-content-center">
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}>
+                        <div
+                          className="table-input  mt-2 "
+                          style={{ marginTop: "6px" }}>
+                          <Button
+                            onClick={downloadExcel}
+                            type="download"
+                            className=""
+                            style={{
+                              cursor: "pointer",
+                              backgroundColor: "rgb(8, 91, 245)",
+                              color: "white",
+                              fontWeight: "600",
+                              height: "43px",
+                            }}
+                            color="#39cccc"
+                            title="Download ExcellFile">
+                            .XLSX
+                          </Button>
+                        </div>
+
+                        <div>
+                          {Ledger?.length > 0 && Ledger && (
+                            <>
+                              {/* <div className="d-flex justify-content-center">
                           <LedgerPdf
                             downloadFileName="Ledger"
                             rootElementId="testId"
                           />
                         </div> */}
-                        <Button
-                          color="primary"
-                          className="mt-2"
-                          onClick={() => {
-                            setHideOtherData(true);
-                            setTimeout(() => {
-                              window.print();
-                            }, 100);
-                            setTimeout(() => {
-                              setHideOtherData(false);
-                            }, 1000);
-                          }}>
-                          Print
-                        </Button>
-                      </ >
-                    )}
-                      </div>
-                    
-                      <div className="float-right mt-2">
-                        <Route
-                          render={({ history }) => (
-                            <Button
-                              style={{
-                                cursor: "pointer",
-                                backgroundColor: "rgb(8, 91, 245)",
-                                color: "white",
-                                fontWeight: "600",
-                                height: "43px",
-                              }}
-                              color="#39cccc"
-                              className="float-right"
-                              onClick={() => history.goBack()}>
-                              Back
-                            </Button>
+                              <Button
+                                color="primary"
+                                className="mt-2"
+                                onClick={() => {
+                                  setHideOtherData(true);
+                                  setTimeout(() => {
+                                    window.print();
+                                  }, 100);
+                                  setTimeout(() => {
+                                    setHideOtherData(false);
+                                  }, 1000);
+                                }}>
+                                Print
+                              </Button>
+                            </>
                           )}
-                        />
+                        </div>
+
+                        <div className="float-right mt-2">
+                          <Route
+                            render={({ history }) => (
+                              <Button
+                                style={{
+                                  cursor: "pointer",
+                                  backgroundColor: "rgb(8, 91, 245)",
+                                  color: "white",
+                                  fontWeight: "600",
+                                  height: "43px",
+                                }}
+                                color="#39cccc"
+                                className="float-right"
+                                onClick={() => history.goBack()}>
+                                Back
+                              </Button>
+                            )}
+                          />
+                        </div>
                       </div>
-                     </div>
                     </Col>
                   </Row>
                 </>
@@ -623,14 +615,18 @@ const PartyLedgersView = () => {
                                   </th>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "600",
-                                        fontSize: "18px", }}
+                                      style={{
+                                        fontWeight: "600",
+                                        fontSize: "18px",
+                                      }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "600",
-                                        fontSize: "18px",}}
+                                      style={{
+                                        fontWeight: "600",
+                                        fontSize: "18px",
+                                      }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   {/* <td>
@@ -647,8 +643,10 @@ const PartyLedgersView = () => {
                                   </td> */}
                                   <td>
                                     <div
-                                      style={{ fontWeight: "600",
-                                        fontSize: "18px", }}
+                                      style={{
+                                        fontWeight: "600",
+                                        fontSize: "18px",
+                                      }}
                                       className="d-flex justify-content-center">
                                       <div style={{ fontSize: "20px" }}>
                                         <strong>
@@ -693,7 +691,7 @@ const PartyLedgersView = () => {
                                   <th scope="row">
                                     <div
                                       style={{
-                                       fontWeight: "600",
+                                        fontWeight: "600",
                                         fontSize: "18px",
                                       }}
                                       className="d-flex justify-content-center">
@@ -702,20 +700,26 @@ const PartyLedgersView = () => {
                                   </th>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "600",
-                                        fontSize: "18px", }}
+                                      style={{
+                                        fontWeight: "600",
+                                        fontSize: "18px",
+                                      }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "600",
-                                        fontSize: "18px", }}
+                                      style={{
+                                        fontWeight: "600",
+                                        fontSize: "18px",
+                                      }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   <td>
                                     <div
-                                      style={{ fontWeight: "600",
-                                        fontSize: "18px",}}
+                                      style={{
+                                        fontWeight: "600",
+                                        fontSize: "18px",
+                                      }}
                                       className="d-flex justify-content-center"></div>
                                   </td>
                                   {/* <td>
@@ -735,8 +739,10 @@ const PartyLedgersView = () => {
 
                                   <td>
                                     <div
-                                      style={{ fontWeight: "600",
-                                        fontSize: "18px", }}
+                                      style={{
+                                        fontWeight: "600",
+                                        fontSize: "18px",
+                                      }}
                                       className="d-flex justify-content-center">
                                       <div style={{ fontSize: "20px" }}>
                                         <strong>

@@ -61,7 +61,6 @@ import SuperAdminUI from "../../../SuperAdminUi/SuperAdminUI";
 import Multiselect from "multiselect-react-dropdown";
 import {
   Delete_Sales,
-  Delete_Sales_order,
   Last_Ledger_Balance,
   Sales_OrderTo_DispatchList,
   ViewOther_Charges,
@@ -683,8 +682,7 @@ class InvoiceGenerator extends React.Component {
         case "delete":
           let selectedData = this.gridApi.getSelectedRows();
           this.gridApi.updateRowData({ remove: selectedData });
-          // _Delete(Delete_Sales, id)
-          _Delete(Delete_Sales_order, id)
+          _Delete(Delete_Sales, id)
             .then((res) => {
               // this.componentDidMount();
             })
@@ -1405,7 +1403,7 @@ class InvoiceGenerator extends React.Component {
       }
       value["gstOtherCharges"] = [OtherCharges];
     }
-
+   
     this.setState({ PrintData: value });
     this.setState({ PrintMainData: value });
   };
@@ -2091,7 +2089,9 @@ class InvoiceGenerator extends React.Component {
                         </Col>
                         {this.state.PrintData?.grandTotal > 49999 && (
                           <Col lg="6">
-                            <Label className="mt-1">Add ARN Number *</Label>
+                            <Label className="mt-1">
+                              Add ARN Number *
+                            </Label>
                             <Input
                               required
                               type="text"

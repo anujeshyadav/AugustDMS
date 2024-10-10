@@ -59,6 +59,8 @@ import { ImDownload } from "react-icons/im";
 import { CDNR_Report } from "../../../../../ApiEndPoint/Api";
 import { CONSOLIDATED } from "./GSTR1ReportConst";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const SelectedColums = [];
 
@@ -72,6 +74,7 @@ class GSTR1 extends React.Component {
       isOpen: false,
       MasterShow: false,
       setActiveTab: "1",
+      year: new Date(),
       Arrindex: "",
       rowData: [],
       HSNCodeList: [],
@@ -79,6 +82,7 @@ class GSTR1 extends React.Component {
       CreditNote: [],
       CDNURLIST: [],
       rowAllData: [],
+      CurrentTabAllData: [],
       orderCompletedData: [],
       startDate: "",
       EndDate: "",
@@ -235,14 +239,14 @@ class GSTR1 extends React.Component {
 
         {
           headerName: "Invoice Date",
-          field: "updatedAt",
+          field: "date",
           filter: true,
           width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>
-                  {moment(params?.data?.order?.updatedAt?.split("T")[0]).format(
+                  {moment(params?.data?.order?.date?.split("T")[0]).format(
                     "DD-MMM-YYYY"
                   )}
                 </span>
@@ -519,7 +523,7 @@ class GSTR1 extends React.Component {
             return null;
           },
           filter: true,
-          width:195,
+          width: 195,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">{params?.value}</div>
@@ -775,14 +779,14 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Invoice Date",
-          field: "order.updatedAt",
+          field: "order.date",
           filter: true,
           width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>
-                  {moment(params?.data?.order?.updatedAt?.split("T")[0]).format(
+                  {moment(params?.data?.order?.date?.split("T")[0]).format(
                     "DD-MMM-YYYY"
                   )}
                 </span>
@@ -992,14 +996,14 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Invoice Date",
-          field: "order.updatedAt",
+          field: "order.date",
           filter: true,
           width: 105,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>
-                  {moment(params?.data?.order?.updatedAt?.split("T")[0]).format(
+                  {moment(params?.data?.order?.date?.split("T")[0]).format(
                     "DD-MMM-YYYY"
                   )}
                 </span>
@@ -1169,6 +1173,42 @@ class GSTR1 extends React.Component {
       columnDefs: [],
     };
   }
+  tabOneFilter = (data) => {
+    let selected = data?.filter(
+      (ele) => ele?.order?.partyId?.partyType == "Debitor"
+    );
+    return selected;
+  };
+  tabTwoFilter = (data) => {
+    let selected = data?.filter(
+      (ele) =>
+        ele?.order?.igstTaxType == 1 &&
+        ele?.order?.partyId?.registrationType == "Regular" &&
+        ele?.grandTotal > 250000
+    );
+    return selected;
+  };
+  tabThreeFilter = (data) => {
+    let selected = data?.filter(
+      (ele) => ele?.order?.partyId?.registrationType == "UnRegister"
+    );
+    return selected;
+  };
+  tabFourFilter = (data) => {
+    let cdNrlist = data?.filter(
+      (ele) => ele?.order?.partyId?.registrationType == "Regular"
+    );
+    return cdNrlist;
+  };
+  tabFiveFilter = (data) => {
+    let cdNrlist = data?.filter(
+      (ele) =>
+        ele?.igstRate > 0 &&
+        ele?.order?.partyId?.registrationType == "UnRegister" &&
+        ele?.grandTotal > 250000
+    );
+    return cdNrlist;
+  };
   toggleTab = (tab) => {
     const Context = this.context;
     let ComGSt = Context?.CompanyDetails?.gstNo?.slice(0, 2);
@@ -1181,68 +1221,43 @@ class GSTR1 extends React.Component {
     if (tab == 1) {
       //B2B
       this.setState({ Dropdown: false });
-      let selected = this.state.rowAllData?.filter(
-        (ele) => ele?.order?.partyId?.partyType == "Debitor"
-      );
+      let selected = this.tabOneFilter(this.state.rowAllData);
       this.setState({ columnDefs: this.state.B2B });
       this.setState({ rowData: selected });
     } else if (tab == 2) {
       //B2CL
-      let selected = this.state.rowAllData?.filter(
-        (ele) =>
-          ele?.order?.igstTaxType == 1 &&
-          ele?.order?.partyId?.registrationType == "Regular" &&
-        ele?.grandTotal > 250000
-      );
-      this.setState({ Dropdown: false });
+      let selected = this.tabTwoFilter(this.state.rowAllData);
       this.setState({ rowData: selected });
+      this.setState({ Dropdown: false });
       this.setState({ columnDefs: this.state.B2CL });
     } else if (tab == 3) {
       //B2CS
+      let selected = this.tabThreeFilter(this.state.rowAllData);
       this.setState({ Dropdown: false });
-      let selected = this.state.rowAllData?.filter(
-        (ele) => ele?.order?.partyId?.registrationType == "UnRegister"
-      );
-
-      // let intraState = selected?.filter(
-      //   (ele) => ele?.order?.partyId?.gstNumber?.slice(0, 2) == ComGSt
-      // );
       this.setState({ rowData: selected });
       this.setState({ columnDefs: this.state.B2CS });
     } else if (tab == 4) {
-      
       //CDNR
       this.setState({ Dropdown: false });
-
-      let cdNrlist = this.state.CDNURLIST?.filter(
-        (ele) => ele?.order?.partyId?.registrationType == "Regular"
-      );
+      let cdNrlist = this.tabFourFilter(this.state.CDNURLIST);
       let CDNRList = [...cdNrlist];
       this.setState({ rowData: CDNRList });
       this.setState({ columnDefs: this.state.CDNR });
     } else if (tab == 5) {
       // CDNUR
-      debugger
+      let cdNrlist = this.tabFiveFilter(this.state.CDNURLIST);
       this.setState({ Dropdown: false });
-      let cdNrlist = this.state.CDNURLIST?.filter(
-        (ele) =>
-          ele?.igstRate > 0 &&
-          ele?.order?.partyId?.registrationType == "UnRegister" &&
-          ele?.grandTotal > 250000
-      );
-
       let CDNRList = [...cdNrlist];
       this.setState({ rowData: CDNRList });
       this.setState({ columnDefs: this.state.CDNUR });
 
       // end
     } else if (tab == 6) {
-      //CONSOLIDATED 
+      //CONSOLIDATED
       this.setState({ Dropdown: false });
       this.setState({ columnDefs: this.state.CONSOLIDATED });
       this.setState({ rowData: this.state.rowAllData });
     }
-   
   };
 
   LookupviewStart = () => {
@@ -1264,15 +1279,18 @@ class GSTR1 extends React.Component {
             return { ...val, order: element };
           });
         });
-       
+
         if (Alldata?.length > 0) {
           this.setState({ Loading: false });
           let selected = Alldata?.filter(
-            (ele) => ele?.order?.partyId?.partyType == "Debitor" && ele?.order?.partyId?.registrationType=="Regular"
+            (ele) =>
+              ele?.order?.partyId?.partyType == "Debitor" &&
+              ele?.order?.partyId?.registrationType == "Regular"
           );
           this.setState({
             rowData: selected,
             rowAllData: Alldata,
+            CurrentTabAllData: Alldata,
             orderCompletedData: completed,
           });
         }
@@ -1575,14 +1593,99 @@ class GSTR1 extends React.Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+  filterbytab = (data, tab) => {
+    let currentData =
+      tab == 1
+        ? this.tabOneFilter(data)
+        : tab == 2
+        ? this.tabTwoFilter(data)
+        : tab == 3
+        ? this.tabThreeFilter(data)
+        : tab == 4
+        ? this.tabFourFilter(data)
+        : tab == 5
+        ? this.tabFiveFilter(data)
+        : data;
+    return currentData;
+  };
+  // filterbytabData = (data, tab) => {
+  //   let currentData =
+  //     tab == 1
+  //       ? this.tabOneFilter(data)
+  //       : tab == 2
+  //       ? this.tabTwoFilter(data)
+  //       : tab == 3
+  //       ? this.tabThreeFilter(data)
+  //       : tab == 4
+  //       ? this.tabFourFilter(data)
+  //       : tab == 5
+  //       ? this.tabFiveFilter(data)
+  //       : data;
+  //   return currentData;
+  // };
 
-  handleSubmitDate = () => {
-    // console.log(this.state.rowAllData);
-    const filteredItems = this.state.rowAllData?.filter((item) => {
-      const dateList = new Date(item.updatedAt);
-      const onlyDate = dateList.toISOString().split("T")[0];
-      return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
+  filterByMonth = (data, month, year, tab) => {
+    let currentData = this.filterbytab(data, tab);
+    return currentData.filter((item) => {
+      const date = new Date(item.order?.date);
+      return (
+        date.getMonth() + 1 == month &&
+        date.getFullYear() == new Date(year).getFullYear()
+      );
     });
+  };
+  filterByQuarter = (data, quarter, year, tab) => {
+    let currentData = this.filterbytab(data, tab);
+    return currentData.filter((item) => {
+      const date = new Date(item?.order?.date);
+      const month = date.getMonth() + 1;
+      const isInQuarter =
+        (+quarter == 1 && month >= 1 && month <= 3) ||
+        (+quarter == 2 && month >= 4 && month <= 6) ||
+        (+quarter == 3 && month >= 7 && month <= 9) ||
+        (+quarter == 4 && month >= 10 && month <= 12);
+      return isInQuarter && date.getFullYear() === new Date(year).getFullYear();
+    });
+  };
+  filterByYear = (data, year, tab) => {
+    let currentData = this.filterbytab(data, tab);
+
+    return currentData.filter((item) => {
+      const date = new Date(item?.order?.date);
+      return date?.getFullYear() === new Date(year).getFullYear();
+    });
+  };
+  handleSubmitDate = (type) => {
+    debugger;
+    let tab = this.state.setActiveTab;
+    let filteredItems;
+    let rowforWardData =
+      tab == 4 || tab == 5 ? this.state.CDNURLIST : this.state.rowAllData;
+    if (type == "date") {
+      filteredItems = rowforWardData?.filter((item) => {
+        const dateList = new Date(item?.order?.date);
+        const onlyDate = dateList.toISOString().split("T")[0];
+        return (
+          onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate
+        );
+      });
+    } else if (type == "month") {
+      filteredItems = this.filterByMonth(
+        rowforWardData,
+        this.state.month,
+        this.state.year,
+        tab
+      );
+    } else if (type == "quarter") {
+      filteredItems = this.filterByQuarter(
+        rowforWardData,
+        this.state.quarter,
+        this.state.year,
+        tab
+      );
+    } else if (type == "year") {
+      filteredItems = this.filterByYear(rowforWardData, this.state.year, tab);
+    }
     this.setState({ rowData: filteredItems });
   };
   convertCsvToXml = () => {
@@ -1695,9 +1798,16 @@ class GSTR1 extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-              <Col  >
-                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
+            <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+              <Col>
+                <h2
+                  className="float-left "
+                  style={{
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                    fontSize: "18px",
+                    marginTop: "25px",
+                  }}>
                   GSTR1
                 </h2>
               </Col>
@@ -1712,7 +1822,7 @@ class GSTR1 extends React.Component {
               ) : (
                 <Col></Col>
               )}
-              <Col lg="3" xl="3" md="3" style={{ marginTop: "25px" }}>
+              <Col lg="2" xl="2" md="3" style={{ marginTop: "25px" }}>
                 <div className="table-input cssforproductlist">
                   <Input
                     placeholder="search Item here..."
@@ -1721,49 +1831,212 @@ class GSTR1 extends React.Component {
                   />
                 </div>
               </Col>
-              <Col xl="4" lg="4" md="4">
-                <Row>
-                  <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
-                    <div className="table-input cssforproductlist">
-                      <Label>Start Date</Label>
-                      <Input
-                        type="date"
-                        name="startDate"
-                        value={this.state.startDate}
-                        onChange={this.handleDate}
+
+              {this.state.filterType == "date" && (
+                <Col xl="4" lg="4" md="4">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <div className="table-input cssforproductlist">
+                        <Label>Start Date</Label>
+                        <Input
+                          type="date"
+                          name="startDate"
+                          value={this.state.startDate}
+                          onChange={this.handleDate}
+                        />
+                      </div>
+                    </Col>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <div className="table-input cssforproductlist">
+                        <Label>End Date</Label>
+                        <Input
+                          type="date"
+                          name="EndDate"
+                          value={this.state.EndDate}
+                          onChange={this.handleDate}
+                        />
+                      </div>
+                    </Col>
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="float-left "
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("date")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              {this.state.filterType == "quarter" && (
+                <Col xl="3" lg="3" md="3">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <Label>Select Quarter</Label>
+                      <CustomInput
+                        value={this.state.quarter}
+                        onChange={(e) =>
+                          this.setState({ quarter: e.target.value })
+                        }
+                        type="select">
+                        <option value={0}>--Select--</option>
+                        <option value={1}>Q1</option>
+                        <option value={2}>Q2</option>
+                        <option value={3}>Q3</option>
+                        <option value={4}>Q4</option>
+                      </CustomInput>
+                    </Col>
+                    <Col xl="4" lg="4" md="4" style={{ marginTop: "5px" }}>
+                      <Label for="year">Year:</Label>
+                      <DatePicker
+                        selected={this.state.year}
+                        onChange={(date) => this.setState({ year: date })}
+                        dateFormat="yyyy"
+                        // showIcon
+                        showYearPicker
+                        className="form-control"
                       />
-                    </div>
-                  </Col>
-                  <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
-                    <div className="table-input cssforproductlist">
-                      <Label>End Date</Label>
-                      <Input
-                        type="date"
-                        name="EndDate"
-                        value={this.state.EndDate}
-                        onChange={this.handleDate}
+                    </Col>
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="float-left "
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("quarter")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              {this.state.filterType == "month" && (
+                <Col xl="3" lg="3" md="3" sm="6">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <Label>Select Month</Label>
+                      <CustomInput
+                        value={this.state.month}
+                        onChange={(e) =>
+                          this.setState({ month: e.target.value })
+                        }
+                        type="select">
+                        <option value={0}>--Select--</option>
+                        <option value={1}>January</option>
+                        <option value={2}>February</option>
+                        <option value={3}>March</option>
+                        <option value={4}>April</option>
+                        <option value={5}>May</option>
+                        <option value={6}>June</option>
+                        <option value={7}>July</option>
+                        <option value={8}>August</option>
+                        <option value={9}>September</option>
+                        <option value={10}>October</option>
+                        <option value={11}>November</option>
+                        <option value={12}>December</option>
+                      </CustomInput>
+                    </Col>
+                    <Col xl="4" lg="4" md="4" style={{ marginTop: "5px" }}>
+                      <Label for="year">Year:</Label>
+                      <DatePicker
+                        selected={this.state.year}
+                        onChange={(date) => this.setState({ year: date })}
+                        dateFormat="yyyy"
+                        // showIcon
+                        showYearPicker
+                        className="form-control"
                       />
-                    </div>
-                  </Col>
-                  <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
-                    <div className="table-input">
-                      <Button
-                        type="submit"
-                        style={{
-                          cursor: "pointer",
-                          backgroundColor: "rgb(8, 91, 245)",
-                          color: "white",
-                          fontWeight: "600",
-                          height: "43px",
-                        }}
-                        className="float-left "
-                        color="#39cccc"
-                        onClick={this.handleSubmitDate}>
-                        Submit
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
+                    </Col>
+
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="mr-2"
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("month")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              {this.state.filterType == "year" && (
+                <Col xl="4" lg="4" md="4">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <Label for="year">Year:</Label>
+                      <DatePicker
+                        selected={this.state.year}
+                        onChange={(date) => this.setState({ year: date })}
+                        dateFormat="yyyy"
+                        // showIcon
+                        showYearPicker
+                        className="form-control"
+                      />
+                    </Col>
+
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="float-left "
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("year")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              <Col style={{ marginTop: "5px" }} xl="1" lg="1" md="4">
+                <Label>Filter Type</Label>
+                <CustomInput
+                  value={this.state.filterType}
+                  onChange={(e) =>
+                    this.setState({ filterType: e.target.value })
+                  }
+                  type="select">
+                  <option value="">--Select--</option>
+                  <option value="date">Date Wise</option>
+                  <option value="month">Monthly</option>
+                  <option value="quarter">Quarterly</option>
+                  <option value="year">Yearly</option>
+                </CustomInput>
               </Col>
               {/* {this.state.Dropdown && (
                 <>
@@ -1971,7 +2244,7 @@ class GSTR1 extends React.Component {
                               colResizeDefault={"shift"}
                               animateRows={true}
                               floatingFilter={false}
-                             pagination={true}
+                              pagination={true}
                               paginationPageSize={this.state.paginationPageSize}
                               pivotPanelShow="always"
                               enableRtl={context.state.direction === "rtl"}
