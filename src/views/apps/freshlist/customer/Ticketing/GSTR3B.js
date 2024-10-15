@@ -258,8 +258,8 @@ class GSTR1 extends React.Component {
     await _Get(WareahouseList_For_addProduct, db)
       .then(res => {
         let value = res?.Warehouse;
-        if (value) {
-          this.setState({ Loading: false });
+        this.setState({ Loading: false });
+        if (value?.length) {
           this.setState({ rowData: value });
         }
         this.setState({ AllcolumnDefs: this.state.columnDefs });
@@ -268,7 +268,6 @@ class GSTR1 extends React.Component {
         let userHeading = JSON.parse(localStorage.getItem("OrderReportList"));
         if (userHeading?.length) {
           this.setState({ columnDefs: userHeading });
-          // this.gridApi.setColumnDefs(userHeading);
           this.setState({ SelectedcolumnDefs: userHeading });
         } else {
           this.setState({ columnDefs: this.state.columnDefs });

@@ -19,6 +19,7 @@ import {
   Nav,
   NavItem,
   NavLink,
+  CustomInput,
 } from "reactstrap";
 import { ContextLayout } from "../../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
@@ -51,6 +52,8 @@ import {
   HSN_SAle_Summary_Report,
   HSN_Stock_Report,
 } from "../../../../../ApiEndPoint/Api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const SelectedColums = [];
 
@@ -70,6 +73,7 @@ class HSNWiseReport extends React.Component {
       HSNSummary: [],
       CreditNote: [],
       CDNURLIST: [],
+      year: new Date(),
       rowHSNData: [],
       rowHSNPurchaseSummary: [],
       rowHSNAllData: [],
@@ -113,8 +117,7 @@ class HSNWiseReport extends React.Component {
           headerName: "DESCRIPTION",
           field: "Product_Desc",
           filter: true,
-          
-          
+
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -130,7 +133,7 @@ class HSNWiseReport extends React.Component {
             return value;
           },
           filter: true,
-        
+
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -283,7 +286,7 @@ class HSNWiseReport extends React.Component {
             return value;
           },
           filter: true,
-          
+
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -437,7 +440,7 @@ class HSNWiseReport extends React.Component {
           filter: true,
           editable: true,
           resizable: true,
-          
+
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -593,7 +596,7 @@ class HSNWiseReport extends React.Component {
             return value;
           },
           filter: true,
-          
+
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -861,7 +864,7 @@ class HSNWiseReport extends React.Component {
           headerName: "SGST",
           field: "sgstRate",
           filter: true,
-         
+
           width: 105,
           cellRendererFramework: (params) => {
             return (
@@ -914,7 +917,7 @@ class HSNWiseReport extends React.Component {
       ],
     };
   }
-  toggleTab = tab => {
+  toggleTab = (tab) => {
     const Context = this.context;
 
     const userInfo = JSON.parse(localStorage.getItem("userData"));
@@ -944,7 +947,7 @@ class HSNWiseReport extends React.Component {
   };
 
   LookupviewStart = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       modal: !prevState.modal,
     }));
   };
@@ -953,7 +956,7 @@ class HSNWiseReport extends React.Component {
     this.setState({ Loading: true });
 
     await _Post(HSN_SAle_Summary_Report, db, id)
-      .then(res => {
+      .then((res) => {
         console.log(res?.HSNSales);
         debugger;
         this.setState({
@@ -971,22 +974,23 @@ class HSNWiseReport extends React.Component {
           this.setState({ SelectedcolumnDefs: this.state.HSNSALESUMMART });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ rowData: [] });
         this.setState({ Loading: false });
       });
   }
+
   async hsnPurchaseSummary(id, db) {
     this.setState({ Loading: true });
 
     await _Post(HSN_Purchase_Summary_Report, db, id)
-      .then(res => {
+      .then((res) => {
         this.setState({
           Loading: false,
           rowHSNPurchaseSummary: res?.HSNPurchase,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ rowHSNPurchaseSummary: [] });
         this.setState({ Loading: false });
       });
@@ -994,14 +998,14 @@ class HSNWiseReport extends React.Component {
   async hsnStockSummary(id, db) {
     this.setState({ Loading: true });
     await _Post(HSN_Stock_Report, db, id)
-      .then(res => {
+      .then((res) => {
         this.setState({
           Loading: false,
           rowHSNData: res?.HSNStock,
           rowHSNAllData: res?.HSNStock,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ rowHSNData: [] });
         this.setState({ Loading: false });
       });
@@ -1023,7 +1027,7 @@ class HSNWiseReport extends React.Component {
   }
 
   toggleDropdown = () => {
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+    this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
   //   runthisfunction(id) {
@@ -1049,7 +1053,7 @@ class HSNWiseReport extends React.Component {
   //     });
   //   }
 
-  onGridReady = params => {
+  onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.gridRef.current = params.api;
@@ -1061,11 +1065,11 @@ class HSNWiseReport extends React.Component {
     });
   };
 
-  updateSearchQuery = val => {
+  updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
 
-  filterSize = val => {
+  filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
@@ -1080,7 +1084,7 @@ class HSNWiseReport extends React.Component {
       SelectedColums?.push(value);
     } else {
       const delindex = SelectedColums?.findIndex(
-        ele => ele?.headerName === value?.headerName
+        (ele) => ele?.headerName === value?.headerName
       );
 
       SelectedColums?.splice(delindex, 1);
@@ -1091,14 +1095,14 @@ class HSNWiseReport extends React.Component {
       Papa.parse(csvData, {
         header: true,
         skipEmptyLines: true,
-        complete: result => {
+        complete: (result) => {
           if (result.data && result.data.length > 0) {
             resolve(result.data);
           } else {
             reject(new Error("No data found in the CSV"));
           }
         },
-        error: error => {
+        error: (error) => {
           reject(error);
         },
       });
@@ -1110,7 +1114,7 @@ class HSNWiseReport extends React.Component {
 
     const doc = new jsPDF("landscape", "mm", size, false);
     doc.setTextColor(5, 87, 97);
-    const tableData = parsedData.map(row => Object.values(row));
+    const tableData = parsedData.map((row) => Object.values(row));
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
@@ -1135,12 +1139,12 @@ class HSNWiseReport extends React.Component {
       console.error("Error parsing CSV:", error);
     }
   };
-  processCell = params => {
+  processCell = (params) => {
     return params.value;
   };
 
   convertCsvToExcel(csvData) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       Papa.parse(csvData, {
         header: true,
         dynamicTyping: true,
@@ -1171,7 +1175,7 @@ class HSNWiseReport extends React.Component {
     window.URL.revokeObjectURL(url);
   }
 
-  exportToExcel = async e => {
+  exportToExcel = async (e) => {
     const CsvData = this.gridApi.getDataAsCsv({
       processCellCallback: this.processCell,
     });
@@ -1184,7 +1188,7 @@ class HSNWiseReport extends React.Component {
       processCellCallback: this.processCell,
     });
     Papa.parse(CsvData, {
-      complete: result => {
+      complete: (result) => {
         const ws = XLSX.utils.json_to_sheet(result.data);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
@@ -1215,12 +1219,12 @@ class HSNWiseReport extends React.Component {
       this.setState({ SelectedcolumnDefs: myArrayCopy });
     }
   };
-  handleDate = e => {
+  handleDate = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  handleSubmitDate = async () => {
+  handleSubmitDate = async (type) => {
     const userInfo = JSON.parse(localStorage.getItem("userData"));
     let payload = {
       startDate: this.state.startDate,
@@ -1241,12 +1245,12 @@ class HSNWiseReport extends React.Component {
       processCellCallback: this.processCell,
     });
     Papa.parse(CsvData, {
-      complete: result => {
+      complete: (result) => {
         const rows = result.data;
 
         let xmlString = "<root>\n";
 
-        rows.forEach(row => {
+        rows.forEach((row) => {
           xmlString += "  <row>\n";
           row.forEach((cell, index) => {
             xmlString += `    <field${index + 1}>${cell}</field${index + 1}>\n`;
@@ -1264,7 +1268,7 @@ class HSNWiseReport extends React.Component {
     });
   };
 
-  HandleSetVisibleField = e => {
+  HandleSetVisibleField = (e) => {
     e.preventDefault();
 
     this.gridApi.setColumnDefs(this.state.SelectedcolumnDefs);
@@ -1281,10 +1285,10 @@ class HSNWiseReport extends React.Component {
   HeadingRightShift = () => {
     const updatedSelectedColumnDefs = [
       ...new Set([
-        ...this.state.SelectedcolumnDefs.map(item => JSON.stringify(item)),
-        ...SelectedColums.map(item => JSON.stringify(item)),
+        ...this.state.SelectedcolumnDefs.map((item) => JSON.stringify(item)),
+        ...SelectedColums.map((item) => JSON.stringify(item)),
       ]),
-    ].map(item => JSON.parse(item));
+    ].map((item) => JSON.parse(item));
     this.setState({
       SelectedcolumnDefs: [...new Set(updatedSelectedColumnDefs)], // Update the state with the combined array
     });
@@ -1301,14 +1305,14 @@ class HSNWiseReport extends React.Component {
       });
     }
   };
-  handleParentSubmit = e => {
+  handleParentSubmit = (e) => {
     e.preventDefault();
     let SuperAdmin = JSON.parse(localStorage.getItem("SuperadminIdByMaster"));
     let id = SuperAdmin.split(" ")[0];
     let db = SuperAdmin.split(" ")[1];
     this.Apicalling(id, db);
   };
-  handleDropdownChange = selectedValue => {
+  handleDropdownChange = (selectedValue) => {
     localStorage.setItem("SuperadminIdByMaster", JSON.stringify(selectedValue));
   };
   render() {
@@ -1319,15 +1323,13 @@ class HSNWiseReport extends React.Component {
             display: "flex",
             justifyContent: "center",
             marginTop: "20rem",
-          }}
-        >
+          }}>
           <Spinner
             style={{
               height: "4rem",
               width: "4rem",
             }}
-            color="primary"
-          >
+            color="primary">
             Loading...
           </Spinner>
         </div>
@@ -1348,9 +1350,16 @@ class HSNWiseReport extends React.Component {
       <>
         <div className="app-user-list">
           <Card>
-            <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-              <Col  >
-                <h2 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'22px' ,marginTop:"25px"}}>
+            <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+              <Col>
+                <h2
+                  className="float-left "
+                  style={{
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                    fontSize: "22px",
+                    marginTop: "25px",
+                  }}>
                   HSN Summary Report
                 </h2>
               </Col>
@@ -1369,55 +1378,216 @@ class HSNWiseReport extends React.Component {
                 <div className="table-input cssforproductlist">
                   <Input
                     placeholder="search Item here..."
-                    onChange={e => this.updateSearchQuery(e.target.value)}
+                    onChange={(e) => this.updateSearchQuery(e.target.value)}
                     value={this.state.value}
                   />
                 </div>
               </Col>
-              <Col md="4" xl="4" lg="4">
-                <Row>
-                  <Col style={{ marginTop: "5px" }} md="5" xl="5" lg="5">
-                    <div className="table-input cssforproductlist">
-                      <Label>Start Date</Label>
-                      <Input
-                        type="date"
-                        name="startDate"
-                        value={this.state.startDate}
-                        onChange={this.handleDate}
+              {this.state.filterType == "date" && (
+                <Col xl="4" lg="4" md="4">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <div className="table-input cssforproductlist">
+                        <Label>Start Date</Label>
+                        <Input
+                          type="date"
+                          name="startDate"
+                          value={this.state.startDate}
+                          onChange={this.handleDate}
+                        />
+                      </div>
+                    </Col>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <div className="table-input cssforproductlist">
+                        <Label>End Date</Label>
+                        <Input
+                          type="date"
+                          name="EndDate"
+                          value={this.state.EndDate}
+                          onChange={this.handleDate}
+                        />
+                      </div>
+                    </Col>
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="float-left "
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("date")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              {this.state.filterType == "quarter" && (
+                <Col xl="3" lg="3" md="3">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <Label>Select Quarter</Label>
+                      <CustomInput
+                        value={this.state.quarter}
+                        onChange={(e) =>
+                          this.setState({ quarter: e.target.value })
+                        }
+                        type="select">
+                        <option value={0}>--Select--</option>
+                        <option value={1}>Q1</option>
+                        <option value={2}>Q2</option>
+                        <option value={3}>Q3</option>
+                        <option value={4}>Q4</option>
+                      </CustomInput>
+                    </Col>
+                    <Col xl="4" lg="4" md="4" style={{ marginTop: "5px" }}>
+                      <Label for="year">Year:</Label>
+                      <DatePicker
+                        selected={this.state.year}
+                        onChange={(date) => this.setState({ year: date })}
+                        dateFormat="yyyy"
+                        // showIcon
+                        showYearPicker
+                        className="form-control"
                       />
-                    </div>
-                  </Col>
-                  <Col style={{ marginTop: "5px" }} md="5" xl="5" lg="5">
-                    <div className="table-input cssforproductlist">
-                      <Label>End Date</Label>
-                      <Input
-                        type="date"
-                        name="EndDate"
-                        value={this.state.EndDate}
-                        onChange={this.handleDate}
+                    </Col>
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="float-left "
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("quarter")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              {this.state.filterType == "month" && (
+                <Col xl="3" lg="3" md="3" sm="6">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <Label>Select Month</Label>
+                      <CustomInput
+                        value={this.state.month}
+                        onChange={(e) =>
+                          this.setState({ month: e.target.value })
+                        }
+                        type="select">
+                        <option value={0}>--Select--</option>
+                        <option value={1}>January</option>
+                        <option value={2}>February</option>
+                        <option value={3}>March</option>
+                        <option value={4}>April</option>
+                        <option value={5}>May</option>
+                        <option value={6}>June</option>
+                        <option value={7}>July</option>
+                        <option value={8}>August</option>
+                        <option value={9}>September</option>
+                        <option value={10}>October</option>
+                        <option value={11}>November</option>
+                        <option value={12}>December</option>
+                      </CustomInput>
+                    </Col>
+                    <Col xl="4" lg="4" md="4" style={{ marginTop: "5px" }}>
+                      <Label for="year">Year:</Label>
+                      <DatePicker
+                        selected={this.state.year}
+                        onChange={(date) => this.setState({ year: date })}
+                        dateFormat="yyyy"
+                        // showIcon
+                        showYearPicker
+                        className="form-control"
                       />
-                    </div>
-                  </Col>
-                  <Col style={{ marginTop: "25px" }} md="2" xl="2" lg="2">
-                    <div className="table-input">
-                      <Button
-                        type="submit"
-                        style={{
-                          cursor: "pointer",
-                          backgroundColor: "rgb(8, 91, 245)",
-                          color: "white",
-                          fontWeight: "600",
-                          height: "43px",
-                        }}
-                        
-                        color="#39cccc"
-                        onClick={this.handleSubmitDate}
-                      >
-                        Submit
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
+                    </Col>
+
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="mr-2"
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("month")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              {this.state.filterType == "year" && (
+                <Col xl="2" lg="2" md="2">
+                  <Row>
+                    <Col xl="5" lg="5" md="5" style={{ marginTop: "5px" }}>
+                      <Label for="year">Year:</Label>
+                      <DatePicker
+                        selected={this.state.year}
+                        onChange={(date) => this.setState({ year: date })}
+                        dateFormat="yyyy"
+                        // showIcon
+                        showYearPicker
+                        className="form-control"
+                      />
+                    </Col>
+
+                    <Col xl="2" lg="2" md="2" style={{ marginTop: "25px" }}>
+                      <div className="table-input">
+                        <Button
+                          type="submit"
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "rgb(8, 91, 245)",
+                            color: "white",
+                            fontWeight: "600",
+                            height: "43px",
+                          }}
+                          className="float-left "
+                          color="#39cccc"
+                          onClick={(e) => this.handleSubmitDate("year")}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              )}
+              <Col style={{ marginTop: "5px" }} xl="1" lg="1" md="4">
+                <Label>Filter Type</Label>
+                <CustomInput
+                  value={this.state.filterType}
+                  onChange={(e) =>
+                    this.setState({ filterType: e.target.value })
+                  }
+                  type="select">
+                  <option value="">--Select--</option>
+                  <option value="date">Date Wise</option>
+                  <option value="month">Monthly</option>
+                  <option value="quarter">Quarterly</option>
+                  <option value="year">Yearly</option>
+                </CustomInput>
               </Col>
 
               <Col lg="1" md="1" sm="1" style={{ marginTop: "25px" }}>
@@ -1437,8 +1607,7 @@ class HSNWiseReport extends React.Component {
                   <span
                     onMouseEnter={this.toggleDropdown}
                     onMouseLeave={this.toggleDropdown}
-                    className=""
-                  >
+                    className="">
                     <div className="dropdown-container float-right">
                       <ImDownload
                         style={{ cursor: "pointer" }}
@@ -1455,41 +1624,35 @@ class HSNWiseReport extends React.Component {
                             border: "1px solid rgb(8, 91, 245)",
                             backgroundColor: "white",
                           }}
-                          className="dropdown-content dropdownmy"
-                        >
+                          className="dropdown-content dropdownmy">
                           <h5
                             onClick={() => this.exportToPDF()}
                             style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive mt-1"
-                          >
+                            className=" mx-1 myactive mt-1">
                             .PDF
                           </h5>
                           <h5
                             onClick={() => this.gridApi.exportDataAsCsv()}
                             style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive"
-                          >
+                            className=" mx-1 myactive">
                             .CSV
                           </h5>
                           <h5
                             onClick={this.convertCSVtoExcel}
                             style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive"
-                          >
+                            className=" mx-1 myactive">
                             .XLS
                           </h5>
                           <h5
                             onClick={this.exportToExcel}
                             style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive"
-                          >
+                            className=" mx-1 myactive">
                             .XLSX
                           </h5>
                           <h5
                             onClick={() => this.convertCsvToXml()}
                             style={{ cursor: "pointer" }}
-                            className=" mx-1 myactive"
-                          >
+                            className=" mx-1 myactive">
                             .XML
                           </h5>
                         </div>
@@ -1509,15 +1672,13 @@ class HSNWiseReport extends React.Component {
                       display: "flex",
 
                       justifyContent: "space-around",
-                    }}
-                  >
+                    }}>
                     <NavItem className={setActiveTab === "1" ? "active" : ""}>
                       <NavLink
                         className={setActiveTab === "1" ? "active" : ""}
                         onClick={() => {
                           this.toggleTab("1");
-                        }}
-                      >
+                        }}>
                         <div className="d-flex justify-content-center">
                           GSTR 1 HSN
                         </div>
@@ -1529,8 +1690,7 @@ class HSNWiseReport extends React.Component {
                         className={setActiveTab === "2" ? "active" : ""}
                         onClick={() => {
                           this.toggleTab("2");
-                        }}
-                      >
+                        }}>
                         <div className="d-flex justify-content-center">
                           HSN PURCHASE Summary
                         </div>
@@ -1541,8 +1701,7 @@ class HSNWiseReport extends React.Component {
                         className={setActiveTab === "3" ? "active" : ""}
                         onClick={() => {
                           this.toggleTab("3");
-                        }}
-                      >
+                        }}>
                         <div className="d-flex justify-content-center">
                           HSN STOCK Summary
                         </div>
@@ -1553,8 +1712,7 @@ class HSNWiseReport extends React.Component {
                         className={setActiveTab === "4" ? "active" : ""}
                         onClick={() => {
                           this.toggleTab("4");
-                        }}
-                      >
+                        }}>
                         <div className="d-flex justify-content-center">
                           HSN SALE Summary
                         </div>
@@ -1566,7 +1724,7 @@ class HSNWiseReport extends React.Component {
                     {this.state.rowData === null ? null : (
                       <div className="ag-theme-material w-100 my-2 ag-grid-table">
                         <ContextLayout.Consumer className="ag-theme-alpine">
-                          {context => (
+                          {(context) => (
                             <AgGridReact
                               id="myAgGrid"
                               gridOptions={this.gridOptions}
@@ -1578,7 +1736,7 @@ class HSNWiseReport extends React.Component {
                               colResizeDefault={"shift"}
                               animateRows={true}
                               floatingFilter={false}
-                             pagination={true}
+                              pagination={true}
                               paginationPageSize={this.state.paginationPageSize}
                               pivotPanelShow="always"
                               enableRtl={context.state.direction === "rtl"}
@@ -1644,8 +1802,7 @@ class HSNWiseReport extends React.Component {
           isOpen={this.state.modal}
           toggle={this.LookupviewStart}
           className={this.props.className}
-          style={{ maxWidth: "1050px" }}
-        >
+          style={{ maxWidth: "1050px" }}>
           <ModalHeader toggle={this.LookupviewStart}>Change Fileds</ModalHeader>
           <ModalBody className="modalbodyhead">
             <Row>
@@ -1658,15 +1815,15 @@ class HSNWiseReport extends React.Component {
                         return (
                           <>
                             <div
-                              onClick={e => this.handleChangeHeader(e, ele, i)}
+                              onClick={(e) =>
+                                this.handleChangeHeader(e, ele, i)
+                              }
                               key={i}
-                              className="mycustomtag mt-1"
-                            >
+                              className="mycustomtag mt-1">
                               <span className="mt-1">
                                 <h5
                                   style={{ cursor: "pointer" }}
-                                  className="allfields"
-                                >
+                                  className="allfields">
                                   <input
                                     type="checkbox"
                                     // checked={check && check}
@@ -1725,15 +1882,14 @@ class HSNWiseReport extends React.Component {
                                             : ""
                                         }`,
                                       }}
-                                      className="allfields"
-                                    >
+                                      className="allfields">
                                       <IoMdRemoveCircleOutline
                                         onClick={() => {
                                           const SelectedCols =
                                             this.state.SelectedcolumnDefs?.slice();
                                           const delindex =
                                             SelectedCols?.findIndex(
-                                              element =>
+                                              (element) =>
                                                 element?.headerName ==
                                                 ele?.headerName
                                             );
@@ -1796,8 +1952,7 @@ class HSNWiseReport extends React.Component {
                     style={{ cursor: "pointer" }}
                     className=""
                     color="primary"
-                    onClick={this.HandleSetVisibleField}
-                  >
+                    onClick={this.HandleSetVisibleField}>
                     Submit
                   </Badge>
                 </div>

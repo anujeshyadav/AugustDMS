@@ -592,118 +592,134 @@ const PurchaseReturn = (args) => {
                   return (
                     <Row className="" key={index}>
                       <Col className="mb-1">
-                      <div className="viewspacebetweenReturn">
-                        <div className=""  style={{width:'300px'}}>
-                          <Label>Product Name</Label>
-                          <Input
-                            type="text"
-                            placeholder="ProductName"
-                            name="Product_Title"
-                            readOnly
-                            value={product?.productId?.Product_Title}
-                            onChange={(e) =>
-                              handleProductChangeProduct(e, index)
-                            }
-                          />
-                        </div>                     
-                        <div className="viewspacebetween1" style={{width:'90px'}}>
-                        <FormGroup>
-                          <Label>HSN Code</Label>
-                          <Input
-                            readOnly
-                            type="text"
-                            placeholder="HSTCode"
-                            name="HSN_Code"
-                            value={product?.productId?.HSN_Code}
-                          />
-                        </FormGroup>
-                        </div>
-                        <div className="viewspacebetween1" style={{width:'90px'}}>
-                          <Label>Gross Unit</Label>
-                          <Input
-                            type="text"
-                            name="secondaryUnit"
-                            readOnly
-                            placeholder="Gross Unit"
-                            value={product?.productId?.secondaryUnit}
-                          />
-                        </div>
-                        <div className="viewspacebetween1" style={{width:'90px'}}>
-                        <FormGroup>
-                          <Label>Price</Label>
-                          <Input
-                            type="number"
-                            readOnly
-                            placeholder="Price"
-                            name="Price"
-                            value={product?.price}
-                          />
-                        </FormGroup>
-                        </div>
-                        <div className="viewspacebetween1" style={{width:'105px'}}>
-                        <FormGroup>
-                          <Label>Purchase Qty</Label>
-                          <Input
-                            readOnly
-                            min={0}
-                            type="number"
-                            placeholder="Size"
-                            name="Purchase_qty"
-                            value={product?.Purchase_qty}
-                            onChange={(e) =>
-                              handleProductChangeProduct(e, index)
-                            }
-                          />
-                        </FormGroup>
-                        </div>
-                        <div className="viewspacebetween1" style={{width:'90px'}}>
-                        <FormGroup>
-                          <Label>Return Qty</Label>
-                          <Input
-                            min={1}
-                            max={product.Purchase_qty}
-                            type="number"
-                            placeholder="Size"
-                            name="qty"
-                            value={product?.qty}
-                            onChange={(e) =>
-                              handleProductChangeProduct(e, index)
-                            }
-                          />
-                        </FormGroup>
-                        </div>
-                        <div className="viewspacebetween1" style={{width:'90px'}}>
-                        <FormGroup>
-                          <Label>Net Unit</Label>
-                          <Input
-                            readOnly
-                            type="text"
-                            placeholder={product?.productId?.primaryUnit}
-                            name="qty"
-                            value={product?.productId?.primaryUnit}
-                          />
-                        </FormGroup>
-                        </div>                     
-                        <div className="viewspacebetween1" style={{width:'90px'}}>
-                          <Label>GST %</Label>
-                          <Input
-                            type="text"
-                            name="gstPercentage"
-                            disabled
-                            placeholder="GST Percentage %"
-                            value={product.gstPercentage}
-                          />
-                        </div> 
-                        <div className="viewspacebetween1" style={{width:'90px'}}>
-                          <Label>Basic Total</Label>
-                          <Input
-                            type="number"
-                            name="taxableAmount"
-                            readOnly
-                            placeholder="Price"
-                            value={product.taxableAmount}
-                          />
-                        </div>
+                        <div className="viewspacebetweenReturn">
+                          <div className="" style={{ width: "300px" }}>
+                            <Label>Product Name</Label>
+                            <Input
+                              type="text"
+                              placeholder="ProductName"
+                              name="Product_Title"
+                              readOnly
+                              value={product?.productId?.Product_Title}
+                              onChange={(e) =>
+                                handleProductChangeProduct(e, index)
+                              }
+                            />
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "90px" }}>
+                            <FormGroup>
+                              <Label>HSN Code</Label>
+                              <Input
+                                readOnly
+                                type="text"
+                                placeholder="HSTCode"
+                                name="HSN_Code"
+                                value={product?.productId?.HSN_Code}
+                              />
+                            </FormGroup>
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "90px" }}>
+                            <Label>Gross Unit</Label>
+                            <Input
+                              type="text"
+                              name="secondaryUnit"
+                              readOnly
+                              placeholder="Gross Unit"
+                              value={product?.productId?.secondaryUnit}
+                            />
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "90px" }}>
+                            <FormGroup>
+                              <Label>Price</Label>
+                              <Input
+                                type="number"
+                                readOnly
+                                placeholder="Price"
+                                name="Price"
+                                value={product?.price}
+                              />
+                            </FormGroup>
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "105px" }}>
+                            <FormGroup>
+                              <Label>Purchase Qty</Label>
+                              <Input
+                                readOnly
+                                min={0}
+                                type="number"
+                                placeholder="Size"
+                                name="Purchase_qty"
+                                value={product?.Purchase_qty}
+                                onChange={(e) =>
+                                  handleProductChangeProduct(e, index)
+                                }
+                              />
+                            </FormGroup>
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "90px" }}>
+                            <FormGroup>
+                              <Label>Return Qty</Label>
+                              <Input
+                                // min={1}
+                                max={product.Purchase_qty}
+                                type="number"
+                                placeholder="Size"
+                                name="qty"
+                                value={product?.qty}
+                                onChange={(e) =>
+                                  handleProductChangeProduct(e, index)
+                                }
+                              />
+                            </FormGroup>
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "90px" }}>
+                            <FormGroup>
+                              <Label>Net Unit</Label>
+                              <Input
+                                readOnly
+                                type="text"
+                                placeholder={product?.productId?.primaryUnit}
+                                name="qty"
+                                value={product?.productId?.primaryUnit}
+                              />
+                            </FormGroup>
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "90px" }}>
+                            <Label>GST %</Label>
+                            <Input
+                              type="text"
+                              name="gstPercentage"
+                              disabled
+                              placeholder="GST Percentage %"
+                              value={product.gstPercentage}
+                            />
+                          </div>
+                          <div
+                            className="viewspacebetween1"
+                            style={{ width: "90px" }}>
+                            <Label>Basic Total</Label>
+                            <Input
+                              type="number"
+                              name="taxableAmount"
+                              readOnly
+                              placeholder="Price"
+                              value={product.taxableAmount}
+                            />
+                          </div>
                         </div>
                       </Col>
                       {/* <Col className="mb-1">
@@ -718,8 +734,7 @@ const PurchaseReturn = (args) => {
                           />
                         </div>
                       </Col> */}
-                      
-                     
+
                       {/* {GSTData?.Tax?.IgstTaxType ? (
                         <>
                           <Col className="mb-1">

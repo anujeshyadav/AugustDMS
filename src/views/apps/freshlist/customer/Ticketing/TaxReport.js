@@ -124,12 +124,11 @@ class TaxReport extends React.Component {
           filter: true,
           width: 110,
           cellRendererFramework: (params) => {
-            console.log(params?.data);
             return (
               <div className="text-center cursor-pointer">
                 <span>
                   <strong>
-                    {params?.data?.BalanceTax > 0 &&
+                    {params?.data?.BalanceTax &&
                       Number(params?.data?.BalanceTax).toFixed(2)}
                   </strong>
                 </span>

@@ -61,7 +61,7 @@ import { CONSOLIDATED } from "./GSTR1ReportConst";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { param } from "jquery";
+// import { param } from "jquery";
 
 const SelectedColums = [];
 
@@ -128,21 +128,26 @@ class GSTR1 extends React.Component {
         {
           headerName: "Place of Supply",
           filter: true,
-          valueGetter: (params) => {
-            if (params?.data?.order?.partyId?.gstNumber) {
-              let data = `${params?.data?.order?.partyId?.gstNumber?.slice(
-                0,
-                2
-              )}-${params?.data?.order.partyId.State}`;
-              return data;
-            }
-          },
+          field:"placeOfSupplyb2cs",
+          // valueGetter: (params) => {
+          //   debugger
+          //   if (params?.data?.order?.partyId?.gstNumber) {
+          //     let data = `${params?.data?.order?.partyId?.gstNumber?.slice(
+          //       0,
+          //       2
+          //     )}-${params?.data?.order.partyId.State}`;
+          //     return data;
+          //   }
+          // },
           resizable: true,
           width: 250,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.value}</span>
+                <span>
+                  {params?.data?.placeOfSupplyb2cs &&
+                    params?.data?.placeOfSupplyb2cs}
+                </span>
               </div>
             );
           },
@@ -608,17 +613,23 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Note Date",
-          field: "order.date",
+          // field: "order.date",
           filter: true,
           resizable: true,
+          valueGetter:(params)=>{
+            return moment(params?.data?.order?.date?.split("T")[0]).format(
+              "DD-MMM-YYYY"
+            );
+          },
           width: 110,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
                 <span>
-                  {moment(params?.data?.order?.date?.split("T")[0]).format(
+                {params?.value}
+                  {/* {moment(params?.data?.order?.date?.split("T")[0]).format(
                     "DD-MMM-YYYY"
-                  )}
+                  )} */}
                 </span>
               </div>
             );
@@ -1217,15 +1228,22 @@ class GSTR1 extends React.Component {
     return selected;
   };
   tabTwoFilter = (data) => {
+    // let selected = data?.filter(
+    //   (ele) =>
+    //     ele?.igstTaxType == 1 &&
+    //     ele?.partyId?.registrationType == "Regular" &&
+    //     ele?.grandTotal >= 250000
+    // );
     let selected = data?.filter(
       (ele) =>
         ele?.order?.igstTaxType == 1 &&
         ele?.order?.partyId?.registrationType == "Regular" &&
-        ele?.grandTotal > 250000
+        ele?.grandTotal >= 250000
     );
     return selected;
   };
   tabThreeFilter = (data) => {
+  debugger;
     let selected = data?.filter(
       (ele) => ele?.order?.partyId?.registrationType == "UnRegister"
     );
@@ -1238,11 +1256,12 @@ class GSTR1 extends React.Component {
     return cdNrlist;
   };
   tabFiveFilter = (data) => {
+  
     let cdNrlist = data?.filter(
       (ele) =>
-        ele?.igstRate > 0 &&
+        ele?.igstRate == 1 &&
         ele?.order?.partyId?.registrationType == "UnRegister" &&
-        ele?.grandTotal > 250000
+        ele?.order?.orderId?.grandTotal > 250000
     );
     return cdNrlist;
   };
@@ -1264,6 +1283,7 @@ class GSTR1 extends React.Component {
     } else if (tab == 2) {
       //B2CL
       let selected = this.tabTwoFilter(this.state.rowAllData);
+      // let selected = this.tabTwoFilter(this.state.UnfilteredData);
       this.setState({ rowData: selected });
       this.setState({ Dropdown: false });
       this.setState({ columnDefs: this.state.B2CL });
@@ -1282,6 +1302,7 @@ class GSTR1 extends React.Component {
       this.setState({ columnDefs: this.state.CDNR });
     } else if (tab == 5) {
       // CDNUR
+
       let cdNrlist = this.tabFiveFilter(this.state.CDNURLIST);
       this.setState({ Dropdown: false });
       let CDNRList = [...cdNrlist];
@@ -1308,15 +1329,18 @@ class GSTR1 extends React.Component {
 
     await createOrderhistoryview(id)
       .then((res) => {
+        const { CompanyDetails, UserInformatio } = this.context;
+        let placeOfSupplyb2cs = `${CompanyDetails?.gstNo?.slice(0, 2)}-${
+          UserInformatio?.State
+        }`;
         let completed = res?.orderHistory?.filter(
           (ele) => ele?.status == "completed"
         );
         let Alldata = completed?.flatMap((element, index) => {
           return element?.orderItems?.map((val, i) => {
-            return { ...val, order: element };
+            return { ...val, order: element, placeOfSupplyb2cs };
           });
         });
-
         if (Alldata?.length > 0) {
           this.setState({ Loading: false });
           let selected = Alldata?.filter(
@@ -1327,6 +1351,7 @@ class GSTR1 extends React.Component {
           this.setState({
             rowData: selected,
             rowAllData: Alldata,
+            UnfilteredData: res?.orderHistory,
             CurrentTabAllData: Alldata,
             orderCompletedData: completed,
           });
@@ -1413,7 +1438,6 @@ class GSTR1 extends React.Component {
             return { ...val, order: element };
           });
         });
-        // console.log(Alldata);
         this.setState({ CDNURLIST: Alldata });
       })
       .catch((err) => {
@@ -1693,7 +1717,6 @@ class GSTR1 extends React.Component {
     });
   };
   handleSubmitDate = (type) => {
-    debugger;
     let tab = this.state.setActiveTab;
     let filteredItems;
     let rowforWardData =
@@ -2241,7 +2264,7 @@ class GSTR1 extends React.Component {
                         </div>
                       </NavLink>
                     </NavItem>
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={setActiveTab === "6" ? "active" : ""}
                         onClick={() => {
@@ -2251,7 +2274,7 @@ class GSTR1 extends React.Component {
                           CONSOLIDATED
                         </div>
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                     {/* <NavItem>
                       <NavLink
                         className={setActiveTab === "7" ? "active" : ""}

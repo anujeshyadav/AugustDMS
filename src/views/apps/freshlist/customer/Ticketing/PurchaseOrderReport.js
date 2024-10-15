@@ -457,7 +457,7 @@ class PurchaseOrderReport extends React.Component {
 
   handleSubmitDate = () => {
     const filteredItems = this.state.rowAllData.filter((item) => {
-      const dateList = new Date(item?.order?.updatedAt);
+      const dateList = new Date(item?.order?.date);
       const onlyDate = dateList.toISOString().split("T")[0];
       return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
     });

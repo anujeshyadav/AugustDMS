@@ -146,13 +146,13 @@ class purchasereportamount extends React.Component {
         },
         {
           headerName: "Purchase Date",
-          field: "order.createdAt",
+          field: "order.date",
           filter: true,
           width: 125,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.createdAt?.split("T")[0]}</span>
+                <span>{params?.data?.order?.date?.split("T")[0]}</span>
               </div>
             );
           },
@@ -173,22 +173,36 @@ class purchasereportamount extends React.Component {
         },
         {
           headerName: "Recieved Date",
-          field: "updatedAt",
+          field: "DispatchDate",
           filter: true,
           width: 120,
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.order?.updatedAt?.split("T")[0]}</span>
+                <span>{params?.data?.order?.DispatchDate}</span>
               </div>
             );
           },
         },
+        // {
+        //   headerName: "Recieved Date",
+        //   field: "updatedAt",
+        //   filter: true,
+        //   width: 120,
+        //   cellRendererFramework: (params) => {
+        //     console.log(params?.data);
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <span>{params?.data?.order?.updatedAt?.split("T")[0]}</span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: " Particulard",
           field: "order.partyId.ownerName",
           filter: true,
-          
+
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
@@ -556,7 +570,7 @@ class purchasereportamount extends React.Component {
 
   handleSubmitDate = () => {
     const filteredItems = this.state.rowAllData.filter((item) => {
-      const dateList = new Date(item?.order?.updatedAt);
+      const dateList = new Date(item?.order?.date);
       const onlyDate = dateList.toISOString().split("T")[0];
       return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
     });
