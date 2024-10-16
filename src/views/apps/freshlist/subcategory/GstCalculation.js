@@ -10,15 +10,12 @@ import {
 } from "@react-pdf/renderer";
 
 const GstCalculation = ({ invoiceData }) => {
-  console.log(invoiceData);
   return (
     <>
       <View>
         <View
           style={{
             backgroundColor: "",
-
-            // display: "flex",
             flexDirection: "row",
           }}>
           <View

@@ -3,6 +3,8 @@ import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
 
 // import POInVoice from "./POInVoice";
 import POInvoiceone from "./POInvoiceone";
+import PurchaseLatestInvoice from "./PurchaseLatestInvoice";
+
 // import POInvoiceTwo from "./POInvoiceTwo";
 // import PoinvoiceThree from "./PoinvoiceThree";
 
@@ -47,15 +49,27 @@ const PurchaseInvoice = (props) => {
             fileName="invoice3.pdf"
           />
         )} */}
-        {/* {props?.CompanyDetails?.BillNumber == 3 && ( */}
-        <POInvoiceone
-          invoiceData={Printview}
-          BilData={props}
-          tableList={details}
-          AllCharges={AllCharges}
-          fileName="invoice4.pdf"
-        />
-        {/* )} */}
+        {props?.CompanyDetails?.BillNumber == 5 ? (
+          <PurchaseLatestInvoice
+            invoiceData={Printview}
+            BilData={props}
+            tableList={details}
+            AllCharges={AllCharges}
+            fileName="invoice4.pdf"
+          />
+        ) : (
+          <>
+            <POInvoiceone
+              invoiceData={Printview}
+              BilData={props}
+              tableList={details}
+              AllCharges={AllCharges}
+              fileName="invoice4.pdf"
+            />
+          </>
+        )}
+
+        {/* latest working */}
         {/* {props?.CompanyDetails?.BillNumber == 4 && (
           <POInVoice
             invoiceData={Printview}

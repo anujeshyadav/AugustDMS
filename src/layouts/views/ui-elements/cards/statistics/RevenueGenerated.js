@@ -4,10 +4,8 @@ import { CreditCard } from "react-feather";
 import { revenueGeneratedSeries, revenueGenerated } from "./StatisticsData";
 import { _Get } from "../../../../../ApiEndPoint/ApiCalling";
 import {
-  SalesCalculation,
-  TransactionCalculation,
+  view_dashboard_target,
 } from "../../../../../ApiEndPoint/Api";
-
 class RevenueGenerated extends React.Component {
   constructor(props) {
     super(props);
@@ -20,9 +18,10 @@ class RevenueGenerated extends React.Component {
   async componentDidMount() {
     let userData = JSON.parse(localStorage.getItem("userData"));
     if (userData?.database) {
-      await _Get(TransactionCalculation, userData?.database)
+      await _Get(view_dashboard_target, userData?.database)
         .then((res) => {
-          // this.setState({ rowData: res?.SalesCalculation });
+          this.setState({ rowData: res?.Target });
+          console.log(res?.Target)
         })
         .catch((err) => {
           console.log(err);
@@ -36,12 +35,12 @@ class RevenueGenerated extends React.Component {
         // iconBg="success"
         // stat="97.5k"
         statTitle="Target"
-        statTitle1="Current Month Target"
-        statTitle2="Current Month Achive"
-        statTitle3="Target Pending"
-        statTitle4="Average Target"
-        statTitle5="Average Achivement"
-        statTitle6="Average Pending"
+        statTitle1={`Current Month Target : ${this.state.rowData?.currentMonthTarget?this.state.rowData?.currentMonthTarget:0}`}
+        statTitle2={`Current Month Achive : ${this.state.rowData?.currentMonthAchieve?this.state.rowData?.currentMonthAchieve:0}`}
+       statTitle3 = {`Target Pending : ${this.state.rowData?.targerPending?this.state.rowData?.targerPending:0}`}
+        statTitle4={`Average Target : ${this.state.rowData?.averageTarget?this.state.rowData?.averageTarget:0}`}
+        statTitle5={`Average Achivement : ${this.state.rowData?.averageAchievement?this.state.rowData?.averageAchievement:0}`}
+        statTitle6={`Average Pending : ${this.state.rowData?.averagePending?this.state.rowData?.averagePending:0}`}
         options={revenueGenerated}
         // series={revenueGeneratedSeries}
         // type="area"

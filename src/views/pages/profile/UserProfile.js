@@ -48,11 +48,7 @@ class UserProfile extends React.Component {
       Prefix: "",
       Suffix: "",
       Createmode: false,
-      // formData: {
-      //   Country: '',
-      //   State: '',
-      //   City: '',
-      // },
+
       Loading: "Submit",
       selectedCountry: null,
       selectedState: null,
@@ -87,8 +83,7 @@ class UserProfile extends React.Component {
   };
   componentDidUpdate(prevProps, prevState) {
     if (this.state.selectedCountry !== prevState.selectedCountry) {
-      console.log(this.state.selectedCountry);
-      console.log(this.state.selectedCountry?.isoCode);
+
       console.log(
         State?.getStatesOfCountry(this.state.selectedCountry?.isoCode)
       );
@@ -127,6 +122,8 @@ class UserProfile extends React.Component {
           CompanyAddress: value?.address,
           billNo: value?.billNo,
           bankName: value?.bankName,
+          bankAddress: value?.bankAddress,
+          bankMicr: value?.bankMicr,
           bankIFSC: value?.bankIFSC,
           accountNumber: value?.accountNumber,
           branchName: value?.branchName,
@@ -279,11 +276,13 @@ class UserProfile extends React.Component {
 
     //
     formData.append("bankName", this.state.bankName);
+    formData.append("bankAddress", this.state.bankAddress);
+    formData.append("bankMicr", this.state.bankMicr);
     formData.append("accountNumber", this.state.accountNumber);
     formData.append("branchName", this.state.branchName);
     formData.append("bankIFSC", this.state.bankIFSC);
     formData.append("upiId", this.state.upiId);
-    formData.append("gpay_PhonepayNumber", this.state.gpay_PhonepayNumber);
+    formData.append("gpay_PhonepayNumber", this.state.gpay_PhonepayNumber != null && this.state.gpay_PhonepayNumber );
 
     await Create_CompanyDetails(formData)
       .then((res) => {
@@ -962,6 +961,30 @@ class UserProfile extends React.Component {
                                   className="from-control"
                                   placeholder="Bank IFSC Enter here"
                                   value={this.state.bankIFSC}
+                                  onChange={this.changeHandler}
+                                  // onChange={this.changeHandler}
+                                />
+                              </Col>
+                              <Col sm="12" lg="6" md="6" className="p-1">
+                                <Label>ADDRESS</Label>
+                                <Input
+                                  type="text"
+                                  name="bankAddress"
+                                  className="from-control"
+                                  placeholder="Bank Address Enter here"
+                                  value={this.state.bankAddress}
+                                  onChange={this.changeHandler}
+                                  // onChange={this.changeHandler}
+                                />
+                              </Col>
+                              <Col sm="12" lg="6" md="6" className="p-1">
+                                <Label>MICR CODE</Label>
+                                <Input
+                                  type="text"
+                                  name="bankMicr"
+                                  className="from-control"
+                                  placeholder="Bank Micr Code Enter here"
+                                  value={this.state.bankMicr}
                                   onChange={this.changeHandler}
                                   // onChange={this.changeHandler}
                                 />

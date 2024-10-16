@@ -243,3 +243,32 @@ label {
 h2 {
   text-transform: capitalize !important;
 }
+
+// ::-webkit-scrollbar {
+//   width: 8px;
+//   /* Adjust the width for a thinner scrollbar */
+// }
+
+// ::-webkit-scrollbar-track {
+//   background: transparent;
+//   /* Optional: transparent background */
+// }
+
+// html {
+//   scrollbar-width: thin;
+//   /* Makes the scrollbar thinner in Firefox */
+//   scrollbar-color: rgba(71, 69, 69, 0.712) transparent;
+//   /* Scrollbar color for Firefox */
+// }
+/* Hide scrollbar but keep scroll functionality */
+::-webkit-scrollbar {
+  display: none;
+  /* Hide the scrollbar */
+}
+
+// html {
+//   scrollbar-width: none;
+//   /* Firefox */
+//   -ms-overflow-style: none;
+//   /* IE and Edge */
+// }

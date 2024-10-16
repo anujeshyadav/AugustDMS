@@ -8,7 +8,7 @@ import {
   Row,
   Col,
   Modal,
-  ModalHeader,
+  ModalHeader,  
   ModalBody,
 } from "reactstrap";
 import { Edit } from "react-feather";
@@ -16,9 +16,7 @@ import { ordersReceived, ordersReceivedSeries } from "./StatisticsData";
 // import { Card, CardBody, Row, Col } from "reactstrap";
 import { _Get } from "../../../../../ApiEndPoint/ApiCalling";
 import {
-  LowStock_Calculation,
-  stock_calculate,
-  view_dashboard_stock,
+  view_dashboard_Creditor,
 } from "../../../../../ApiEndPoint/Api";
 
 // class OrdersReceived extends React.Component {
@@ -40,7 +38,7 @@ import {
 
 // import React from 'react'
 
-function OrdersReceived({
+function Creditor({
   // iconBg,
   // stat,
   heading,
@@ -57,7 +55,7 @@ function OrdersReceived({
   statTitle4,
   statTitle5,
 }) {
-  const [stock, setStock] = useState({});
+  const [credit, setCredit] = useState({});
   const [modalEdit, setmodalEdit] = useState(false);
 
   useEffect(() => {
@@ -65,28 +63,26 @@ function OrdersReceived({
       try {
         const userData = JSON.parse(localStorage.getItem("userData"));
         if (userData?.database) {
-          const res = await _Get(view_dashboard_stock, userData.database);
-          setStock(res.WarehouseStock);
+          const res = await _Get(view_dashboard_Creditor, userData.database);
+          setCredit(res.Creditor);
         }
       } catch (err) {
         console.error(err);
       }
     };
-  
-    fetchData();
+    fetchData()
   }, []);
-
   return (
     <div>
       <StatisticsCard
         // stock={stock}
         heading={heading}
         statTitle={statTitle}
-        statTitle1={`Opening Stock : ${stock.OpeningStock?stock.OpeningStock:0}`}
-        statTitle2={`Closing Stock : ${stock.ClosingStock?stock.ClosingStock:0}`}
-        statTitle3={`Dead Stock : ${stock.DeadStock?stock.DeadStock:0}`}
-        statTitle4={`Damage Stock : ${stock.DamageStock?stock.DamageStock:0}`}
-        statTitle5={`Warehouse Stock : ${stock.WarehouseStock?stock.WarehouseStock:0}`}
+        statTitle1={`Total Purchase : ${credit?.totalPurchase?credit?.totalPurchase:0}`}
+        statTitle2={`Total Paid : ${credit?.totalPaid?credit?.totalPaid:0}`}
+        statTitle3={`Currrent Purchase : ${credit?.currentPurchase?credit?.currentPurchase:0}`}
+        statTitle4={`Currrent Paid : ${credit?.currentPaid?credit?.currentPaid:0}`}
+        statTitle5={`Outstanding : ${credit?.outstanding?credit?.outstanding:0}`}
         productName={productName}
         alert={alert}
         grade={grade}
@@ -97,5 +93,4 @@ function OrdersReceived({
     </div>
   );
 }
-
-export default OrdersReceived;
+export default Creditor;

@@ -21,7 +21,12 @@ import QuaterlySales from "../../ui-elements/cards/statistics/QuaterlySales";
 import OrdersReceived from "../../ui-elements/cards/statistics/OrdersReceived";
 import { ChevronDown, ChevronRight, Edit, Trash2 } from "react-feather";
 import "../../../assets/scss/plugins/charts/apex-charts.scss";
-import { _Get, _PostSave } from "../../../../ApiEndPoint/ApiCalling";
+import {
+  _Get,
+  _PostSave,
+  Get,
+  PostSave,
+} from "../../../../ApiEndPoint/ApiCalling";
 import {
   LowStock_Calculation,
   Save_dashboard_Tabs,
@@ -29,6 +34,10 @@ import {
   View_dashboard_Tabs,
 } from "../../../../ApiEndPoint/Api";
 import swal from "sweetalert";
+import Creditor from "../../ui-elements/cards/statistics/Creditor";
+import Debitor from "../../ui-elements/cards/statistics/Debitor";
+import DeadParty from "../../ui-elements/cards/statistics/DeadParty";
+import LowStock from "../../ui-elements/cards/statistics/LowStock";
 
 class EcommerceDashboard extends React.Component {
   constructor(props) {
@@ -41,21 +50,21 @@ class EcommerceDashboard extends React.Component {
           key: 1,
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
           value: <SubscribersGained />,
-          Name: "Ledger",
+          Name: "Todays Sales ",
           Show: true,
         },
         {
           key: 2,
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
           value: <RevenueGenerated />,
-          Name: "Sales",
+          Name: "Target",
           Show: true,
         },
         {
           key: 3,
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
           value: <QuaterlySales />,
-          Name: "Purchase",
+          Name: "Transaction",
           Show: true,
         },
         {
@@ -63,8 +72,8 @@ class EcommerceDashboard extends React.Component {
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
           value: (
             <OrdersReceived
-              // iconBg="warning"
-              // stat="57.5k"
+              iconBg="warning"
+              stat="57.5k"
               statTitle="Stock"
               statTitle1="Opening Stock"
               statTitle2="Closing Stock"
@@ -72,47 +81,40 @@ class EcommerceDashboard extends React.Component {
               statTitle4="Damage Stock"
               statTitle5="Warehouse Stock"
               statTitle6=" Stock"
-              // type="area"
+              type="area"
             />
           ),
-          Name: "Transaction ",
+          Name: "stock ",
           Show: true,
         },
         {
           key: 5,
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
           value: (
-            <OrdersReceived
-              // iconBg="success"
-              // stat="47.5k"
-              heading="Low Stock"
-              productName="Cake box Printed ITC"
-              alert="Stock "
-              grade="A "
+            <LowStock
+            // // iconBg="success"
+            // // stat="47.5k"
+            // heading="Low Stock"
+            // productName="Cake box Printed ITC"
+            // alert="Stock "
+            // grade="A"
             />
           ),
-          Name: "Total Employees",
+          Name: "Low Stock",
           Show: true,
         },
         {
           key: 6,
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
-          value: (
-            <OrdersReceived
-              heading="Dead Party"
-              partyName="Ganga bishan Lal "
-              SalesPersonName="abc"
-              Inactive="A"
-            />
-          ),
-          Name: "Party Name",
+          value: <DeadParty />,
+          Name: "Dead Party",
           Show: true,
         },
         {
           key: 7,
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
           value: (
-            <OrdersReceived
+            <Creditor
               // iconBg="success"
               // stat="37.5k"
               statTitle="Creditor"
@@ -125,14 +127,14 @@ class EcommerceDashboard extends React.Component {
               // type="area"
             />
           ),
-          Name: "Total Customer",
+          Name: "Creditor",
           Show: true,
         },
         {
           key: 8,
           NavLink: "/app/SoftNumen/ticket/Partywiseledger",
           value: (
-            <OrdersReceived
+            <Debitor
               statTitle="Debitor"
               statTitle1="Total Outstanding"
               statTitle2="Total Receipt"
@@ -142,7 +144,7 @@ class EcommerceDashboard extends React.Component {
               statTitle6="Currrent Due"
             />
           ),
-          Name: "Todays Attendance",
+          Name: "Debitor",
           Show: true,
         },
       ],
@@ -170,8 +172,9 @@ class EcommerceDashboard extends React.Component {
       });
     await _Get(View_dashboard_Tabs, userData?._id)
       .then((res) => {
+        debugger;
         let AllTab = [];
-        let SelectedTab = res?.Tab?.tab;
+        let SelectedTab = new Set(res?.Tab?.tab);
 
         let mytab = this.state.basicList?.map((ele, index) => {
           // ele.OpeningStock = this.state.stock?.OpeningStock;
@@ -225,7 +228,7 @@ class EcommerceDashboard extends React.Component {
       userId: userData?._id,
       tab: tabs,
     };
-
+    debugger;
     await _PostSave(Save_dashboard_Tabs, payload)
       .then((res) => {
         console.log(res);

@@ -16,9 +16,7 @@ import { ordersReceived, ordersReceivedSeries } from "./StatisticsData";
 // import { Card, CardBody, Row, Col } from "reactstrap";
 import { _Get } from "../../../../../ApiEndPoint/ApiCalling";
 import {
-  LowStock_Calculation,
-  stock_calculate,
-  view_dashboard_stock,
+  view_dashboard_Debitor
 } from "../../../../../ApiEndPoint/Api";
 
 // class OrdersReceived extends React.Component {
@@ -40,7 +38,7 @@ import {
 
 // import React from 'react'
 
-function OrdersReceived({
+function Debitor({
   // iconBg,
   // stat,
   heading,
@@ -57,7 +55,7 @@ function OrdersReceived({
   statTitle4,
   statTitle5,
 }) {
-  const [stock, setStock] = useState({});
+  const [debit, setDebit] = useState({});
   const [modalEdit, setmodalEdit] = useState(false);
 
   useEffect(() => {
@@ -65,8 +63,8 @@ function OrdersReceived({
       try {
         const userData = JSON.parse(localStorage.getItem("userData"));
         if (userData?.database) {
-          const res = await _Get(view_dashboard_stock, userData.database);
-          setStock(res.WarehouseStock);
+          const res = await _Get(view_dashboard_Debitor, userData.database);
+          setDebit(res.Debtor);
         }
       } catch (err) {
         console.error(err);
@@ -82,11 +80,12 @@ function OrdersReceived({
         // stock={stock}
         heading={heading}
         statTitle={statTitle}
-        statTitle1={`Opening Stock : ${stock.OpeningStock?stock.OpeningStock:0}`}
-        statTitle2={`Closing Stock : ${stock.ClosingStock?stock.ClosingStock:0}`}
-        statTitle3={`Dead Stock : ${stock.DeadStock?stock.DeadStock:0}`}
-        statTitle4={`Damage Stock : ${stock.DamageStock?stock.DamageStock:0}`}
-        statTitle5={`Warehouse Stock : ${stock.WarehouseStock?stock.WarehouseStock:0}`}
+        statTitle1={`Total Outstanding : ${debit?.totalOutstanding? debit?.totalOutstanding : 0}`}
+        statTitle2={`Total Receipt : ${debit?.totalReceipt?debit?.totalReceipt:0}`}
+        statTitle3={`Total Due : ${debit?.totalDue?debit?.totalDue:0}`}
+        statTitle4={`Currrent Outstanding : ${debit?.currentOutstanding?debit?.currentOutstanding:0}`}
+        statTitle5={`Currrent Receipt : ${debit?.currentReceipt?debit?.currentReceipt:0}`}
+        statTitle6={`Currrent Due : ${debit?.outstanding?debit?.outstanding:0}`}
         productName={productName}
         alert={alert}
         grade={grade}
@@ -98,4 +97,4 @@ function OrdersReceived({
   );
 }
 
-export default OrdersReceived;
+export default Debitor;

@@ -1361,7 +1361,7 @@ const horizontalMenuConfig = [
           // },
 
           {
-            id: "PartywiseLedger Report",
+            id: "PartywiseLedgerReport",
             title: "PartywiseLedger Report",
             type: "item",
             icon: <GiCash size={22} />,

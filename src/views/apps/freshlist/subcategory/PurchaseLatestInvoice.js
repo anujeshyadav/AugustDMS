@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Billcomponent1 = ({ invoiceData, BilData }) => {
+const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
+  debugger
   const curentDate = new Date();
   let day = curentDate.getDate();
   let month = curentDate.getMonth() + 1;
@@ -142,8 +143,8 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                       textAlign: "center",
                       textTransform: "uppercase",
                     }}>
-                    {BilData?.CompanyDetails?.name &&
-                      BilData?.CompanyDetails?.name}
+                    {BilData?.PrintData?.partyId?.CompanyName &&
+                      BilData?.PrintData?.partyId?.CompanyName}
                   </Text>
                   <Text
                     style={{
@@ -153,8 +154,8 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                       textAlign: "center",
                       textTransform: "uppercase",
                     }}>
-                    {BilData?.CompanyDetails?.address &&
-                      BilData?.CompanyDetails?.address}
+                    {BilData?.PrintData?.partyId?.address &&
+                      BilData?.PrintData?.partyId?.address}
                   </Text>
                   <Text
                     style={{
@@ -164,10 +165,19 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                       textAlign: "center",
                       textTransform: "uppercase",
                     }}>
-                    {BilData?.CompanyDetails?.email &&
-                      BilData?.CompanyDetails?.email}
-                    {BilData?.CompanyDetails?.mobileNo &&
-                      BilData?.CompanyDetails?.mobileNo}
+                    {BilData?.PrintData?.partyId?.email &&
+                      BilData?.PrintData?.partyId?.email}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: "8px",
+                      marginTop: "5px",
+                      marginBottom: "2px",
+                      textAlign: "center",
+                      textTransform: "uppercase",
+                    }}>
+                    {BilData?.PrintData?.partyId?.mobileNumber &&
+                      BilData?.PrintData?.partyId?.mobileNumber}
                   </Text>
                   <Text
                     style={{
@@ -177,8 +187,8 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                       textAlign: "center",
                       textTransform: "uppercase",
                     }}>
-                    {BilData?.CompanyDetails?.gstNo &&
-                      BilData?.CompanyDetails?.gstNo}
+                    {BilData?.PrintData?.partyId?.gstNumber &&
+                      BilData?.PrintData?.partyId?.gstNumber}
                   </Text>
                   <Text style={styles.header}></Text>
                   <Text style={styles.header}></Text>
@@ -313,7 +323,7 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                         marginBottom: "5px",
                         textTransform: "uppercase",
                       }}>
-                      Ship To
+                      Bill From
                     </Text>
 
                     <Text
@@ -1129,7 +1139,7 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
 
                           textTransform: "uppercase",
                         }}>
-                        bank name:{" "}
+                        Bank name:{" "}
                         {BilData?.CompanyDetails?.bankName &&
                           BilData?.CompanyDetails?.bankName}
                       </Text>
@@ -2759,4 +2769,4 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
   );
 };
 
-export default Billcomponent1;
+export default PurchaseLatestInvoice;

@@ -141,7 +141,12 @@ export const Save_Tabs = "/role/save-tab";
 export const View_Tabs = "/role/view-tab/";
 export const Save_dashboard_Tabs = "/role/save-dashboard-tab";
 export const View_dashboard_Tabs = "/role/view-dashboard-tab/";
-
+export const view_dashboard_stock = "/warehouse/stock-calculate/";
+export const view_dashboard_Creditor = "/purchase-order/creditor-calculate/";
+export const view_dashboard_Debitor = "/order/debitor-calculate/";
+export const view_dashboard_DeadParty = "/customer/dead-party/";
+export const view_dashboard_LowStock = "/product/view-stock-alert/";
+export const view_dashboard_target = "/target-creation/target-calculate/";
 // end tab show on edit button
 
 export const Save_Producton_Process = "/production/save-production";

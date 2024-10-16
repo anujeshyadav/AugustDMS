@@ -1021,10 +1021,8 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                 </Text>
                 <View>
                   <Image
-                    style={{ height: "50px", marginTop: "15px" }}
-                    src={signature}
-                    width="200px"
-                    height="200px"></Image>
+                    style={{ width: "100%", padding: "2px 2px" }}
+                    src={`${Image_URL}/Images/${BilData?.CompanyDetails?.signature}`}></Image>
                 </View>
                 <View
                   style={{

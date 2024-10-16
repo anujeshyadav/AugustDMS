@@ -22,6 +22,7 @@ import {
 import Templatethree from "../../../../../assets/Billtemp/Templatethree.png";
 import Templatetwo from "../../../../../assets/Billtemp/Templatetwo.png";
 import templatefour from "../../../../../assets/Billtemp/templatefour.png";
+import thformat from "../../../../../assets/Billtemp/5thformat.jpg";
 import templateone from "../../../../../assets/Billtemp/templateone.png";
 import { ContextLayout } from "../../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
@@ -247,7 +248,6 @@ class SettingTab extends React.Component {
       formData.append("shipto", this.state.shipto);
       formData.append("BillNumber", this.state.BillNumber);
       formData.append("termsAndCondition", this.state.TermaAndCondition);
-      debugger;
       await Create_CompanyDetails(formData)
         .then((res) => {
           this.setState({ Loading: false });
@@ -1018,8 +1018,8 @@ class SettingTab extends React.Component {
                     />
                   </Col>
                 </Row>
-                <Row className="container p-1">
-                  <Col lg="3" md="3" sm="3">
+                <Row className="p-1">
+                  <Col lg="2" md="2" sm="2">
                     <div
                       style={{
                         backgroundColor:
@@ -1028,17 +1028,17 @@ class SettingTab extends React.Component {
                       }}
                       className="imagebackground p-1">
                       <img
-                        className="mx-1"
+                        // className="mx-1"
                         onClick={(e) => this.handleBillSet(1)}
                         style={{ cursor: "pointer" }}
-                        width={130}
-                        height={150}
+                        width="100%"
+                        height="90%"
                         src={Templatethree}
                         alt="template"
                       />
                     </div>
                   </Col>
-                  <Col lg="3" md="3" s="3">
+                  <Col lg="2" md="2" s="2">
                     <div
                       style={{
                         backgroundColor:
@@ -1047,17 +1047,17 @@ class SettingTab extends React.Component {
                       }}
                       className="imagebackground p-1">
                       <img
-                        className="mx-1 imagebackground"
+                        className="imagebackground"
                         onClick={(e) => this.handleBillSet(2)}
                         style={{ cursor: "pointer" }}
-                        width={130}
-                        height={150}
+                        width="100%"
+                        height="90%"
                         src={Templatetwo}
                         alt="template"
                       />
                     </div>
                   </Col>
-                  <Col lg="3" md="3" s="3">
+                  <Col lg="2" md="2" s="2">
                     <div
                       style={{
                         backgroundColor:
@@ -1067,16 +1067,16 @@ class SettingTab extends React.Component {
                       className="imagebackground p-1">
                       <img
                         onClick={(e) => this.handleBillSet(3)}
-                        className="mx-1 imagebackground"
+                        className="imagebackground"
                         style={{ cursor: "pointer" }}
-                        width={130}
-                        height={150}
+                        width="100%"
+                        height="90%"
                         src={templateone}
                         alt="template"
                       />
                     </div>
                   </Col>
-                  <Col lg="3" md="3" s="3">
+                  <Col lg="2" md="2" s="2">
                     <div
                       style={{
                         backgroundColor:
@@ -1086,15 +1086,35 @@ class SettingTab extends React.Component {
                       className="imagebackground p-1">
                       <img
                         onClick={(e) => this.handleBillSet(4)}
-                        className="mx-1 imagebackground"
+                        className="imagebackground"
                         style={{ cursor: "pointer" }}
-                        width={130}
-                        height={150}
+                        width="100%"
+                        height="90%"
                         src={templatefour}
                         alt="template"
                       />
                     </div>
                   </Col>
+                  <Col lg="2" md="2" s="2">
+                    <div
+                      style={{
+                        backgroundColor:
+                          this.state.BillNumber == 5 ? "#00c0efa6" : null,
+                        borderRadius: this.state.BillNumber == 5 ? "8%" : null,
+                      }}
+                      className="imagebackground p-1">
+                      <img
+                        onClick={(e) => this.handleBillSet(5)}
+                        className="imagebackground"
+                        style={{ cursor: "pointer" }}
+                        width="100%"
+                        height="90%"
+                        src={thformat}
+                        alt="template"
+                      />
+                    </div>
+                  </Col>
+                  <Col lg="2" md="2" s="2"></Col>
                 </Row>
                 <Row>
                   <Col>
