@@ -53,6 +53,8 @@ class QuaterlySales extends React.Component {
         statTitle4="Debt Payment : 0"
         statTitle5={`Transaction : ${
           this.state.rowData?.totalAmount && this.state.rowData?.totalAmount
+            ? this.state.rowData?.totalAmount
+            : 0
         }`}
         options={quaterlySales}
         // series={quaterlySalesSeries}

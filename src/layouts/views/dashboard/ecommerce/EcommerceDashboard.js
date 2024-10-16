@@ -191,6 +191,7 @@ class EcommerceDashboard extends React.Component {
         this.setState({ List: AllTab });
       })
       .catch((err) => {
+        debugger;
         console.log(err);
       });
   }
