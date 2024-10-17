@@ -226,21 +226,20 @@ class Login extends React.Component {
     };
     await UserLogin(data)
       .then((res) => {
+        debugger;
         this.setState({ Loader: false });
         let basicinfor = res?.user;
         this.setState({ UserCredential: basicinfor });
         let CheckMaster = res?.user?.rolename?.roleName == "MASTER";
         if (CheckMaster) {
-          // localStorage.setItem("userData", JSON.stringify(basicinfor));
-          // this.context?.setUserInformatio(basicinfor);
           this.setState({ OtpScreen: true });
-          // for testing
-
-          // setTimeout(() => {
-          //   this.props.history.push("/dashboard");
-          // }, 1000);
-          // for testing
         } else {
+          localStorage.setItem("userData", JSON.stringify(basicinfor));
+          localStorage.setItem("loginTime", Date.now());
+          this.context?.setUserInformatio(basicinfor);
+          setTimeout(() => {
+            this.props.history.push("/dashboard");
+          }, 500);
           (async () => {
             try {
               await ViewCompanyDetails(basicinfor?._id, basicinfor?.database)
@@ -258,13 +257,10 @@ class Login extends React.Component {
               console.error("Error fetching data:", error);
             }
           })();
-          localStorage.setItem("userData", JSON.stringify(basicinfor));
-          localStorage.setItem("loginTime", Date.now());
-          this.context?.setUserInformatio(basicinfor);
 
           swal(
             "Success",
-            "You are LoggedIn!",
+            "Wait You are Logging In",
             "success",
 
             {
@@ -279,23 +275,19 @@ class Login extends React.Component {
               default:
             }
           });
-          setTimeout(() => {
-            this.props.history.push("/dashboard");
-          }, 1000);
         }
       })
       .catch((err) => {
         this.setState({ Loader: false });
 
-        if (err.response?.data.message == "Incorrect password") {
+        if (err.response?.data?.message == "Incorrect password") {
           swal({
             title: "Some Error Occurred",
             text: `Incorrect Password`,
             icon: "warning",
             dangerMode: false,
           });
-        } else if (err.response?.data.message == "Incorrect Email") {
-          // swal("Error", "Please Enter Correct Password");
+        } else if (err.response?.data?.message == "Incorrect Email") {
           swal({
             title: "Some Error Occurred",
             text: `Incorrect Email`,
@@ -311,122 +303,7 @@ class Login extends React.Component {
           });
         }
       });
-    // console.log(this.state.Location);
-    // if (this.state.Location.latitude && this.state.Location?.longitude) {
-    //   try {
-    //     const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${this.state.Location.latitude}&lon=${this.state.Location?.longitude}`;
-    //     const response = await axios.get(apiUrl);
-    //     // console.log(response);
-    //     if (response.data.display_name) {
-    //       // setAddress(response.data.display_name);
-    //       let data = {
-    //         email: this.state.email,
-    //         password: this.state.password,
-    //         latitude: this.state.Location.latitude,
-    //         longitude: this.state.Location?.longitude,
-    //         currentAddress: response.data.display_name,
-    //       };
-    //       await UserLogin(data)
-    //         .then((res) => {
-    //           let basicinfor = res?.user;
-    //           localStorage.setItem("userData", JSON.stringify(basicinfor));
-    //           this.context?.setUserInformatio(basicinfor);
-
-    //           swal(
-    //             "Sucessfully login",
-    //             "You are LoggedIn!",
-    //             "Success",
-
-    //             {
-    //               buttons: {
-    //                 ok: { text: "Ok", value: "ok" },
-    //               },
-    //             }
-    //           ).then((value) => {
-    //             switch (value) {
-    //               case "ok":
-    //                 break;
-    //               default:
-    //             }
-    //           });
-    //           setTimeout(() => {
-    //             this.props.history.push("/dashboard");
-    //           }, 2000);
-    //         })
-    //         .catch((err) => {
-    //           console.log(err.response?.data.message);
-
-    //           if (err.response?.data.message == "Incorrect password") {
-    //             swal({
-    //               title: "Some Error Occurred",
-    //               text: `Incorrect Password`,
-    //               icon: "warning",
-    //               dangerMode: false,
-    //             });
-    //           } else if (err.response?.data.message == "Incorrect Email") {
-    //             // swal("Error", "Please Enter Correct Password");
-    //             swal({
-    //               title: "Some Error Occurred",
-    //               text: `Incorrect Email`,
-    //               icon: "warning",
-    //               dangerMode: false,
-    //             });
-    //           } else {
-    //             swal({
-    //               title: "Please Enter Correct Username",
-    //               text: `Incorrect username`,
-    //               icon: "warning",
-    //               dangerMode: false,
-    //             });
-    //           }
-    //         });
-    //     } else {
-    //       // setAddress("No address found");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching geo-Location data:", error);
-    //   }
-    // } else {
-    //   swal("Please Give Persmission of your Current Location");
-    // }
-
-    // const fromdata = new FormData();
-    // fromdata.append("username", this.state.email);
-    // fromdata.append("password", this.state.password);
-    // axiosConfig
-    //   .post("/usersign", fromdata)
-    //   .then((response) => {
-    //     let msg = response.data?.success;
-    //     if (msg) {
-    //       localStorage.setItem("userData", JSON.stringify(response.data?.data));
-    //       setTimeout(() => {
-    //         this.props.history.push("/dashboard");
-    //       }, 2000);
-    //       swal(
-    //         "Sucessfully login",
-    //         "You are LoggedIn!",
-    //         "Success",
-
-    //         {
-    //           buttons: {
-    //             ok: { text: "Ok", value: "ok" },
-    //           },
-    //         }
-    //       ).then((value) => {
-    //         switch (value) {
-    //           case "ok":
-    //             break;
-    //           default:
-    //         }
-    //       });
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     let msg = error.response?.data.success;
-    //     if (!msg) {
-    //       swal("Error", "Invalid Username or Password");
-    //     }
-    //   });
+    
   };
   changepassword = (e) => {
     e.preventDefault();

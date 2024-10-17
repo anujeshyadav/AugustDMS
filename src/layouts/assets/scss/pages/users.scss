@@ -261,11 +261,22 @@ h2 {
 //   /* Scrollbar color for Firefox */
 // }
 /* Hide scrollbar but keep scroll functionality */
-::-webkit-scrollbar {
-  display: none;
-  /* Hide the scrollbar */
+// ::-webkit-scrollbar {
+//   display: none;
+//   /* Hide the scrollbar */
+// }
+.custom-scrollbar {
+  /* Hide scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+  -webkit-overflow-scrolling: touch;
+  /* Optional for smoother scrolling on iOS */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}
 // html {
 //   scrollbar-width: none;
 //   /* Firefox */

@@ -26,7 +26,7 @@ import ViewAccount from "../accounts/ViewAccount";
 
 import "jspdf-autotable";
 
-import { ChevronDown } from "react-feather";
+import { ChevronDown, Edit, Eye, Trash2 } from "react-feather";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
@@ -131,7 +131,6 @@ class PromotionalActivityList extends React.Component {
             item !== "status" &&
             item !== "database"
         );
-        // debugger
         console.log(keys);
         let unique = [...new Set(myarr)];
         this.setState({ Dropdown: unique });
@@ -388,80 +387,79 @@ class PromotionalActivityList extends React.Component {
       }
 
       let Product = [
-        // {
-        //   headerName: "Actions",
-        //   field: "sortorder",
-        //   field: "transactions",
-        //   width: 190,
-        //   cellRendererFramework: (params) => {
-        //     console.log(params?.data);
-        //     return (
-        //       <div className="actions cursor-pointer">
-        //         {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions?.View && (
-        //             <Route
-        //               render={({ history }) => (
-        //                 <Eye
-        //                   className="mr-50"
-        //                   size="25px"
-        //                   color="green"
-        //                   onClick={() => {
-        //                     history.push({
-        //                       pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
-        //                       state: {
-        //                         data: params?.data,
-        //                         key: this.state.PromotionName,
-        //                         type: "View",
-        //                       },
-        //                     });
-        //                   }}
-        //                 />
-        //               )}
-        //             />
-        //           )}
+        {
+          headerName: "Actions",
+          field: "sortorder",
+          field: "transactions",
+          width: 190,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="actions cursor-pointer">
+                {this.state.InsiderPermissions &&
+                  this.state.InsiderPermissions?.View && (
+                    <Route
+                      render={({ history }) => (
+                        <Eye
+                          className="mr-50"
+                          size="25px"
+                          color="green"
+                          onClick={() => {
+                            history.push({
+                              pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
+                              state: {
+                                data: params?.data,
+                                key: this.state.PromotionName,
+                                type: "View",
+                              },
+                            });
+                          }}
+                        />
+                      )}
+                    />
+                  )}
 
-        //         {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions?.Edit && (
-        //             <Route
-        //               render={({ history }) => (
-        //                 <Edit
-        //                   className="mr-50"
-        //                   size="25px"
-        //                   color="green"
-        //                   onClick={() => {
-        //                     history.push({
-        //                       pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
-        //                       state: {
-        //                         data: params?.data,
-        //                         key: this.state.PromotionName,
-        //                         type: "Edit",
-        //                       },
-        //                     });
-        //                   }}
-        //                 />
-        //               )}
-        //             />
-        //           )}
+                {this.state.InsiderPermissions &&
+                  this.state.InsiderPermissions?.Edit && (
+                    <Route
+                      render={({ history }) => (
+                        <Edit
+                          className="mr-50"
+                          size="25px"
+                          color="green"
+                          onClick={() => {
+                            history.push({
+                              pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
+                              state: {
+                                data: params?.data,
+                                key: this.state.PromotionName,
+                                type: "Edit",
+                              },
+                            });
+                          }}
+                        />
+                      )}
+                    />
+                  )}
 
-        //         {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions?.Delete && (
-        //             <Route
-        //               render={() => (
-        //                 <Trash2
-        //                   className="mr-50"
-        //                   size="25px"
-        //                   color="red"
-        //                   onClick={() => {
-        //                     this.runthisfunction(params?.data?._id);
-        //                   }}
-        //                 />
-        //               )}
-        //             />
-        //           )}
-        //       </div>
-        //     );
-        //   },
-        // },
+                {this.state.InsiderPermissions &&
+                  this.state.InsiderPermissions?.Delete && (
+                    <Route
+                      render={() => (
+                        <Trash2
+                          className="mr-50"
+                          size="25px"
+                          color="red"
+                          onClick={() => {
+                            this.runthisfunction(params?.data?._id);
+                          }}
+                        />
+                      )}
+                    />
+                  )}
+              </div>
+            );
+          },
+        },
 
         ...myHeadings,
         {
@@ -470,15 +468,11 @@ class PromotionalActivityList extends React.Component {
           filter: true,
           width: 95,
           cellRendererFramework: (params) => {
-            return params.data?.status === "Active" ? (
+            return (
               <div className="cursor-pointer text-center">
-                {params.data?.status}
+                {params?.data?.status}
               </div>
-            ) : params.data?.status === "Deactive" ? (
-              <div className="cursor-pointer text-center">
-                {params.data?.status}
-              </div>
-            ) : null;
+            );
           },
         },
         // {
@@ -518,7 +512,6 @@ class PromotionalActivityList extends React.Component {
       let userHeading = JSON.parse(localStorage.getItem("PromotionalActivity"));
       if (userHeading?.length) {
         this.setState({ columnDefs: userHeading });
-        // this.gridApi.setColumnDefs(userHeading);
         this.setState({ SelectedcolumnDefs: userHeading });
       } else {
         this.setState({ columnDefs: Product });
@@ -620,18 +613,21 @@ class PromotionalActivityList extends React.Component {
               ) : (
                 <>
                   <Col sm="12">
-                    <Card>
+                    <Card style={{ height: "100vh" }}>
                       <Row
                         style={{
                           marginRight: "3px",
-                         
                           marginLeft: "3px",
-                           
                         }}>
-                        <Col  >
+                        <Col>
                           <h2
                             className="float-left"
-                           style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px' ,marginTop:"25px"}}>
+                            style={{
+                              fontWeight: "600",
+                              textTransform: "uppercase",
+                              fontSize: "18px",
+                              marginTop: "25px",
+                            }}>
                             Promotional list
                           </h2>
                         </Col>
@@ -663,7 +659,7 @@ class PromotionalActivityList extends React.Component {
                               <CustomInput
                                 type="select"
                                 name="typeofpromotion"
-                                style={{height:"35px"}}
+                                style={{ height: "35px" }}
                                 className="float-right promotiondropdowncss"
                                 onChange={(e) => this.handleFilter(e)}>
                                 <option value="NA">
@@ -693,7 +689,6 @@ class PromotionalActivityList extends React.Component {
                           sm="12"
                           style={{ marginTop: "25px" }}>
                           <div className="">
-                             
                             <div className="table-input cssforproductlist">
                               <Input
                                 placeholder="search Item here..."
@@ -835,7 +830,7 @@ class PromotionalActivityList extends React.Component {
                                             colResizeDefault={"shift"}
                                             animateRows={true}
                                             floatingFilter={false}
-                                             pagination={true}
+                                            pagination={true}
                                             paginationPageSize={
                                               this.state.paginationPageSize
                                             }

@@ -46,7 +46,9 @@ function DeadParty() {
             Inactive
           </Col>
         </Row>
-        <div style={{ maxHeight: "230px", overflowY: "scroll" }}>
+        <div
+          className="custom-scrollbar"
+          style={{ maxHeight: "230px", overflowY: "scroll" }}>
           {dead.map((item) => (
             <Row style={{ height: "50px" }} key={item.id}>
               <Col md="6" lg="6">

@@ -165,22 +165,17 @@ class EcommerceDashboard extends React.Component {
     await _Get(stock_calculate, userInfo?.database)
       .then((res) => {
         this.setState({ stock: res?.WarehouseStock });
-        console.log(res?.WarehouseStock);
       })
       .catch((err) => {
         console.log(err);
       });
     await _Get(View_dashboard_Tabs, userData?._id)
       .then((res) => {
-        debugger;
         let AllTab = [];
         let SelectedTab = new Set(res?.Tab?.tab);
 
-        let mytab = this.state.basicList?.map((ele, index) => {
-          // ele.OpeningStock = this.state.stock?.OpeningStock;
-          // ele.WarehouseStock = this.state.stock?.WarehouseStock;
-          // ele.ClosingStock = this.state.stock?.ClosingStock;
-          SelectedTab?.map((val, i) => {
+        this.state.basicList?.forEach((ele, index) => {
+          SelectedTab?.forEach((val, i) => {
             if (ele?.Name == val?.Name) {
               ele["Show"] = val?.show;
               AllTab.push(ele);
@@ -247,17 +242,24 @@ class EcommerceDashboard extends React.Component {
         <Row className="match-height">
           {this.state.basicList &&
             this.state.basicList.map(
-              (ele, index) =>
-                ele?.Show && (
-                  <Col
-                    key={ele?.NavLink || index} // Use NavLink as unique key if available, otherwise fallback to index
-                    onClick={() => this.props.history.push(ele?.NavLink)}
-                    lg="3"
-                    md="6"
-                    sm="6">
-                    {ele.value}
-                  </Col>
-                )
+              (ele, index) =>{
+                let status = ele?.Show;
+                return (
+                  <>
+                    {status ? 
+                    <Col
+                      key={ele?.NavLink || index} // Use NavLink as unique key if available, otherwise fallback to index
+                      onClick={() => this.props.history.push(ele?.NavLink)}
+                      lg="3"
+                      md="6"
+                      sm="6">
+                      {ele.value}
+                    </Col> : null
+                    }
+                  </>
+                );
+              }
+               
             )}
 
           <span className="editbtn">

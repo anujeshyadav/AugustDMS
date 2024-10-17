@@ -44,7 +44,9 @@ function LowStock() {
             Alert
           </Col>
         </Row>
-        <div style={{ maxHeight: "230px", overflowY: "scroll" }}>
+        <div
+          className="custom-scrollbar"
+          style={{ maxHeight: "230px", overflowY: "scroll" }}>
           {lowStock.map((item) => (
             <Row style={{ height: "50px" }} key={item.id}>
               <Col md="6" lg="6">

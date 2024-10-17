@@ -526,7 +526,7 @@ class SettingTab extends React.Component {
               ) : (
                 <>
                   <Col sm="12">
-                    <Card>
+                    <Card style={{ height: "80vh" }}>
                       <Row className="mt-2 ml-2 mr-2 mb-1">
                         <Col>
                           <h1
