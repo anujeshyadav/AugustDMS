@@ -48,17 +48,17 @@ function DeadParty() {
         </Row>
         <div
           className="custom-scrollbar"
-          style={{ maxHeight: "230px", overflowY: "scroll" }}>
+          style={{ maxHeight: "210px", overflowY: "scroll" }}>
           {dead.map((item) => (
             <Row style={{ height: "50px" }} key={item.id}>
               <Col md="6" lg="6">
-                {item?.id?.CompanyName}
+                {item?.Party?.CompanyName}
               </Col>
               <Col md="3" lg="3">
-                {item?.id?.created_by?.firstName}
+                {item?.Party?.created_by?.firstName}
               </Col>
               <Col md="3" lg="3">
-                {item?.id?.status}
+                {item?.Party?.category?.status}
               </Col>
             </Row>
           ))}

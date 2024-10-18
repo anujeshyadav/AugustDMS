@@ -234,8 +234,10 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
 
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.CompanyDetails?.name &&
-                        BilData?.CompanyDetails?.name}
+                      {BilData?.PrintData?.partyId?.CompanyName &&
+                        BilData?.PrintData?.partyId?.CompanyName}
+                      {/* {BilData?.CompanyDetails?.name &&
+                        BilData?.CompanyDetails?.name} */}
                     </Text>
                     <Text
                       style={{
@@ -245,8 +247,8 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.CompanyDetails?.address &&
-                        BilData?.CompanyDetails?.address}
+                      {BilData?.PrintData?.partyId?.address &&
+                        BilData?.PrintData?.partyId?.address}
                     </Text>
                     <Text
                       style={{
@@ -256,13 +258,11 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {/* {`${
-                        BilData?.CompanyDetails?.City &&
-                        BilData?.CompanyDetails?.City
-                      }-${
-                        BilData?.CompanyDetails?.State &&
-                        BilData?.CompanyDetails?.State
-                      }`} */}
+                      {BilData?.PrintData?.partyId?.City &&
+                        BilData?.PrintData?.partyId?.City}
+                      -
+                      {BilData?.PrintData?.partyId?.State &&
+                        BilData?.CompanyDetails?.State}
                     </Text>
 
                     <Text
@@ -273,8 +273,8 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.CompanyDetails?.email &&
-                        BilData?.CompanyDetails?.email}
+                      {BilData?.PrintData?.partyId?.email &&
+                        BilData?.PrintData?.partyId?.email}
                     </Text>
                     <Text
                       style={{
@@ -284,8 +284,8 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.CompanyDetails?.mobileNo &&
-                        BilData?.CompanyDetails?.mobileNo}
+                      {BilData?.PrintData?.partyId?.contactNumber &&
+                        BilData?.PrintData?.partyId?.contactNumber}
                     </Text>
                     <Text
                       style={{
@@ -295,8 +295,8 @@ const Billcomponent1 = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.CompanyDetails?.gstNo &&
-                        BilData?.CompanyDetails?.gstNo}
+                      {BilData?.PrintData?.partyId?.gstNumber &&
+                        BilData?.PrintData?.partyId?.gstNumber}
                     </Text>
                   </View>
                   <View

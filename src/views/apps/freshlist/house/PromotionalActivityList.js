@@ -7,10 +7,6 @@ import {
   Row,
   Modal,
   Col,
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
   Button,
   ModalHeader,
   ModalBody,
@@ -40,6 +36,7 @@ import {
 
 import swal from "sweetalert";
 import {
+  _Delete,
   DeleteAccount,
   View_PromotionList,
 } from "../../../../ApiEndPoint/ApiCalling";
@@ -58,6 +55,7 @@ import {
   exportDataToExcel,
   exportDataToPDF,
 } from "./Downloader";
+import { DeleteOne_Promotion } from "../../../../ApiEndPoint/Api";
 
 const SelectedColums = [];
 
@@ -103,17 +101,6 @@ class PromotionalActivityList extends React.Component {
     }));
   };
 
-  // handleChangeEdit = (data, types) => {
-  //   let type = types;
-  //   if (type == "readonly") {
-  //     this.setState({ ViewOneUserView: true });
-  //     this.setState({ ViewOneData: data });
-  //   } else {
-  //     this.setState({ EditOneUserView: true });
-  //     this.setState({ EditOneData: data });
-  //   }
-  // };
-
   async Apicalling(id, db) {
     this.setState({ Loading: true });
     await View_PromotionList(id, db)
@@ -131,7 +118,6 @@ class PromotionalActivityList extends React.Component {
             item !== "status" &&
             item !== "database"
         );
-        console.log(keys);
         let unique = [...new Set(myarr)];
         this.setState({ Dropdown: unique });
         this.setState({ AllData: res?.Promotion?.reverse() });
@@ -160,6 +146,7 @@ class PromotionalActivityList extends React.Component {
   };
 
   runthisfunction(id) {
+    let selectedData = this.gridApi.getSelectedRows();
     swal("Warning", "Sure You Want to Delete it", {
       buttons: {
         cancel: "cancel",
@@ -168,9 +155,8 @@ class PromotionalActivityList extends React.Component {
     }).then((value) => {
       switch (value) {
         case "delete":
-          DeleteAccount(id)
+          _Delete(DeleteOne_Promotion, id?.main_id)
             .then((res) => {
-              let selectedData = this.gridApi.getSelectedRows();
               this.gridApi.updateRowData({ remove: selectedData });
             })
             .catch((err) => {
@@ -318,17 +304,17 @@ class PromotionalActivityList extends React.Component {
     let elementWithMaxKeys = null;
     let AllMainData = [];
     let myHeadings = [];
-    // console.log(this.state.AllData);
     if (e.target.value !== "NA") {
       let myarr = this.state.AllData?.filter(
         (ele, i) => ele[e.target.value]?.length
       );
-      // console.log(myarr);
       let mydata = myarr?.map((ele, i) => {
-        AllMainData?.push(ele[e.target.value]);
+        let val = ele[e.target.value];
+        AllMainData?.push(val);
+        return { ...val[0], main_id: ele?._id, status: ele?.status };
       });
-      console.log(AllMainData.flat());
-      let flatarr = AllMainData?.flat();
+
+      let flatarr = mydata?.flat();
 
       for (const element of flatarr) {
         const numKeys = Object.keys(element).length; // Get the number of keys in the current element
@@ -347,6 +333,10 @@ class PromotionalActivityList extends React.Component {
         if (index1 > -1) {
           findheading.splice(index1, 1);
         }
+        let index21 = findheading.indexOf("main_id");
+        if (index21 > -1) {
+          findheading.splice(index21, 1);
+        }
         // if(findheading.indexOf("productId")){
 
         let index2 = findheading.indexOf("productId");
@@ -362,6 +352,7 @@ class PromotionalActivityList extends React.Component {
               filter: true,
               width: 180,
               cellRendererFramework: (params) => {
+                console.log(params.data?.freeOtherProducts);
                 return (
                   <>
                     <div className="d-flex justify-content-center">
@@ -395,7 +386,7 @@ class PromotionalActivityList extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="actions cursor-pointer">
-                {this.state.InsiderPermissions &&
+                {/* {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.View && (
                     <Route
                       render={({ history }) => (
@@ -416,7 +407,7 @@ class PromotionalActivityList extends React.Component {
                         />
                       )}
                     />
-                  )}
+                  )} */}
 
                 {this.state.InsiderPermissions &&
                   this.state.InsiderPermissions?.Edit && (
@@ -428,7 +419,7 @@ class PromotionalActivityList extends React.Component {
                           color="green"
                           onClick={() => {
                             history.push({
-                              pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
+                              pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?.main_id}`,
                               state: {
                                 data: params?.data,
                                 key: this.state.PromotionName,
@@ -450,7 +441,7 @@ class PromotionalActivityList extends React.Component {
                           size="25px"
                           color="red"
                           onClick={() => {
-                            this.runthisfunction(params?.data?._id);
+                            this.runthisfunction(params?.data);
                           }}
                         />
                       )}
@@ -660,6 +651,10 @@ class PromotionalActivityList extends React.Component {
                                 type="select"
                                 name="typeofpromotion"
                                 style={{ height: "35px" }}
+                                value={
+                                  this.statePromotionName &&
+                                  this.statePromotionName?.toUpperCase()
+                                }
                                 className="float-right promotiondropdowncss"
                                 onChange={(e) => this.handleFilter(e)}>
                                 <option value="NA">
@@ -796,12 +791,12 @@ class PromotionalActivityList extends React.Component {
                                         className=" mx-1 myactive">
                                         .XLSX
                                       </h5>
-                                      <h5
+                                      {/* <h5
                                         onClick={() => this.convertCsvToXml()}
                                         style={{ cursor: "pointer" }}
                                         className=" mx-1 myactive">
                                         .XML
-                                      </h5>
+                                      </h5> */}
                                     </div>
                                   )}
                                 </div>

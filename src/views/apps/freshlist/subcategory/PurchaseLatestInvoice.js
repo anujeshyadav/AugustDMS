@@ -323,7 +323,7 @@ const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
                         marginBottom: "5px",
                         textTransform: "uppercase",
                       }}>
-                      Bill From
+                      ship to
                     </Text>
 
                     <Text
@@ -334,8 +334,8 @@ const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
 
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.PrintData?.partyId?.CompanyName &&
-                        BilData?.PrintData?.partyId?.CompanyName}
+                      {BilData?.CompanyDetails?.name &&
+                        BilData?.CompanyDetails?.name}
                     </Text>
                     <Text
                       style={{
@@ -345,8 +345,8 @@ const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.PrintData?.partyId?.address &&
-                        BilData?.PrintData?.partyId?.address}
+                      {BilData?.CompanyDetails?.address &&
+                        BilData?.CompanyDetails?.address}
                     </Text>
                     <Text
                       style={{
@@ -356,11 +356,13 @@ const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.PrintData?.partyId?.City &&
-                        BilData?.PrintData?.partyId?.City}
-                      -
-                      {BilData?.PrintData?.partyId?.State &&
-                        BilData?.CompanyDetails?.State}
+                      {`${
+                        BilData?.CompanyDetails?.City &&
+                        BilData?.CompanyDetails?.City
+                      }-${
+                        BilData?.CompanyDetails?.State &&
+                        BilData?.CompanyDetails?.State
+                      }`}
                     </Text>
 
                     <Text
@@ -371,8 +373,8 @@ const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.PrintData?.partyId?.email &&
-                        BilData?.PrintData?.partyId?.email}
+                      {BilData?.CompanyDetails?.email &&
+                        BilData?.CompanyDetails?.email}
                     </Text>
                     <Text
                       style={{
@@ -382,8 +384,8 @@ const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.PrintData?.partyId?.contactNumber &&
-                        BilData?.PrintData?.partyId?.contactNumber}
+                      {BilData?.CompanyDetails?.mobileNo &&
+                        BilData?.CompanyDetails?.mobileNo}
                     </Text>
                     <Text
                       style={{
@@ -393,8 +395,8 @@ const PurchaseLatestInvoice = ({ invoiceData, BilData }) => {
                         marginTop: "3px",
                         textTransform: "uppercase",
                       }}>
-                      {BilData?.PrintData?.partyId?.gstNumber &&
-                        BilData?.PrintData?.partyId?.gstNumber}
+                      {BilData?.CompanyDetails?.gstNo &&
+                        BilData?.CompanyDetails?.gstNo}
                     </Text>
                   </View>
                   <View

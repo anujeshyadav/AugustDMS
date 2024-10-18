@@ -47,8 +47,9 @@ const CreatePromotionalActivity = (args) => {
   const [error, setError] = useState("");
   const [Status, setStatus] = useState("");
   const [Promocode, setPromocode] = useState("");
+  const [activityName, setActivityName] = useState("");
   const [ProductList, setProductList] = useState([]);
-  const [Salesperson, setSalesperson] = useState("");
+  const [mainProduct, setMainProduct] = useState({});
   const [grandTotalAmt, setGrandTotalAmt] = useState(0);
   const [TotalAmount, setTotalAmount] = useState("");
   const [Discountpercent, setDiscountpercentage] = useState("");
@@ -173,13 +174,7 @@ const CreatePromotionalActivity = (args) => {
   };
 
   useEffect(() => {
-    console.log(product);
-    console.log(GrandTotal);
-  }, [product]);
-
-  useEffect(() => {
     let userdata = JSON.parse(localStorage.getItem("userData"));
-
     ProductListView(userdata?._id, userdata?.database)
       .then((res) => {
         console.log(res?.Product);
@@ -191,7 +186,6 @@ const CreatePromotionalActivity = (args) => {
   }, []);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userData"));
-    console.log(userInfo);
     setUserInfo(userInfo);
   }, []);
 
@@ -254,7 +248,6 @@ const CreatePromotionalActivity = (args) => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    // SavePromotionsActivity();
     let pageparmission = JSON.parse(localStorage.getItem("userData"));
 
     if (DiscountType == "Percentage Wise") {
@@ -288,7 +281,7 @@ const CreatePromotionalActivity = (args) => {
       let amount = [
         {
           totalAmount: TotalAmount,
-          percentageAmount: Discount,
+          percentageAmount: +Discount,
           startDate: startdate,
           endDate: Enddate,
           status: Status,
@@ -302,8 +295,8 @@ const CreatePromotionalActivity = (args) => {
       await SavePromotionsActivity(payload)
         .then((res) => {
           console.log(res);
-        History.goBack();
-          
+          History.goBack();
+
           swal("success", "Submitted Successfully");
         })
         .catch((err) => {
@@ -314,7 +307,7 @@ const CreatePromotionalActivity = (args) => {
       if (FreeSelectedProduct) {
         let productWise = [
           {
-            productId: Salesperson[0]?._id,
+            productId: mainProduct?._id,
             productQty: NumberofProduct,
             discountAmount: Discount,
             discountPercentage: Discountpercent,
@@ -331,7 +324,7 @@ const CreatePromotionalActivity = (args) => {
         };
         await SavePromotionsActivity(payload)
           .then((res) => {
-        History.goBack();
+            History.goBack();
 
             console.log(res);
             swal("success", "Submitted Successfully");
@@ -346,7 +339,7 @@ const CreatePromotionalActivity = (args) => {
         });
         let productWise = [
           {
-            productId: Salesperson[0]?._id,
+            productId: mainProduct?._id,
             productQty: NumberofProduct,
             discountAmount: Discount,
             discountPercentage: Discountpercent,
@@ -364,7 +357,7 @@ const CreatePromotionalActivity = (args) => {
         await SavePromotionsActivity(payload)
           .then((res) => {
             console.log(res);
-        History.goBack();
+            History.goBack();
 
             swal("success", "Submitted Successfully");
           })
@@ -386,7 +379,7 @@ const CreatePromotionalActivity = (args) => {
     });
     let payload = {
       grandTotal: grandTotalAmt,
-      salesPersonId: Salesperson[0]?._id,
+      salesPersonId: mainProduct?._id,
       products: Allproduct,
     };
 
@@ -396,7 +389,7 @@ const CreatePromotionalActivity = (args) => {
     }
   };
   const onSelect1 = (selectedList, selectedItem, index) => {
-    setSalesperson(selectedList);
+    setMainProduct(selectedItem);
   };
   const onRemove1 = (selectedList, removedItem, index) => {
     console.log(selectedList);
@@ -427,7 +420,7 @@ const CreatePromotionalActivity = (args) => {
                       color="info"
                       onClick={toggle}>
                       {" "}
-                      +Promocode
+                      + Activity
                     </Button>
                   )}
                 />
@@ -878,6 +871,19 @@ const CreatePromotionalActivity = (args) => {
               <Form onSubmit={handleSubmitPromocode}>
                 <Row>
                   <Col className="mb-1" lg="6" md="6" sm="12">
+                    <Label>Activity Name</Label>
+                    <Input
+                      required
+                      type="text"
+                      name="activityName"
+                      placeholder="Enter Activity Name"
+                      value={activityName}
+                      onChange={(e) => {
+                        setActivityName(e.target.value.toUpperCase());
+                      }}
+                    />
+                  </Col>
+                  <Col className="mb-1" lg="6" md="6" sm="12">
                     <Label>Promo code</Label>
                     <Input
                       required
@@ -886,12 +892,11 @@ const CreatePromotionalActivity = (args) => {
                       placeholder="Enter Promotion Code"
                       value={Promocode}
                       onChange={(e) => {
-                        console.log(e.target.value.toUpperCase());
                         setPromocode(e.target.value.toUpperCase());
                       }}
                     />
                   </Col>
-                  <Col className="mb-1" lg="6" md="6" sm="12">
+                  {/* <Col className="mb-1" lg="6" md="6" sm="12">
                     <Label>Amount</Label>
                     <Input
                       required
@@ -900,7 +905,7 @@ const CreatePromotionalActivity = (args) => {
                       value={Discount}
                       onChange={(e) => setDiscount(e.target.value)}
                     />
-                  </Col>
+                  </Col> */}
                   <Col className="mb-1" lg="6" md="6" sm="12">
                     <div className="">
                       <Label>Start Date</Label>

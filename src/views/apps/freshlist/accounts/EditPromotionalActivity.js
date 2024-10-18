@@ -1,54 +1,37 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
   Card,
-  CardBody,
   Col,
   Form,
   Row,
   Input,
   Label,
   Button,
-  FormGroup,
-  CustomInput,
   ModalBody,
   ModalHeader,
   Modal,
   InputGroup,
   Badge,
 } from "reactstrap";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import { BiEnvelope } from "react-icons/bi";
-import { BsFillChatDotsFill, BsWhatsapp } from "react-icons/bs";
-import { FaHistory } from "react-icons/fa";
-import { FcPhoneAndroid } from "react-icons/fc";
-import { AiOutlineSearch } from "react-icons/ai";
-import Flatpickr from "react-flatpickr";
 
 import Multiselect from "multiselect-react-dropdown";
 
-import { FiSend } from "react-icons/fi";
-
 import "../../../../assets/scss/pages/users.scss";
-import {
-  ProductListView,
-  CreatePartyList,
-  SavePromotionsActivity,
-  CreateCustomerList,
-} from "../../../../ApiEndPoint/ApiCalling";
+import { _Get, _Put } from "../../../../ApiEndPoint/ApiCalling";
 import "../../../../assets/scss/pages/users.scss";
-import Timepickers from "../../../forms/form-elements/datepicker/Timepicker";
-import Pickers from "../../../forms/form-elements/datepicker/Pickers";
-import { Route, useLocation } from "react-router-dom";
+// import Timepickers from "../../../forms/form-elements/datepicker/Timepicker";
+// import Pickers from "../../../forms/form-elements/datepicker/Pickers";
+import { Route, useParams, useHistory } from "react-router-dom";
 import swal from "sweetalert";
+import {
+  ProductList_View,
+  UpdateOne_Promotion,
+  ViewOne_Promotion,
+} from "../../../../ApiEndPoint/Api";
 
 let GrandTotal = [];
 let SelectedITems = [];
 const CreatePromotionalActivity = (args) => {
-  const [formData, setFormData] = useState({});
-  const [Index, setIndex] = useState("");
-  // const [targetEndDate, settargetEndDate] = useState("");
-  const [index, setindex] = useState("");
   const [DiscountType, setDiscountType] = useState("");
   const [startdate, setStartDate] = useState("");
   const [FreeNumberofProduct, setFreeNumberofProduct] = useState("");
@@ -62,7 +45,7 @@ const CreatePromotionalActivity = (args) => {
   const [Promocode, setPromocode] = useState("");
   const [ProductList, setProductList] = useState([]);
   const [PartyList, setPartyList] = useState([]);
-  const [Salesperson, setSalesperson] = useState("");
+  const [SelectedMainProduct, setSelectMainProduct] = useState({});
   const [grandTotalAmt, setGrandTotalAmt] = useState(0);
   const [TotalAmount, setTotalAmount] = useState("");
   const [Discountpercent, setDiscountpercentage] = useState("");
@@ -70,10 +53,10 @@ const CreatePromotionalActivity = (args) => {
   const [UserInfo, setUserInfo] = useState({});
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  const [items, setItems] = useState("");
   const [audit, setAudit] = useState(false);
 
-  let location = useLocation();
+  let Params = useParams();
+  let History = useHistory();
 
   const audittoggle = () => {
     setAudit(!audit);
@@ -81,21 +64,111 @@ const CreatePromotionalActivity = (args) => {
   };
 
   useEffect(() => {
-    if (location?.state.key == "percentageWise") {
-      setDiscountType("Percentage Wise");
-      setFreeSelectedProduct(false);
-      setAddAnotherProduct(false);
-      setTotalAmount(location?.state?.data?.totalAmount);
-    } else if (location?.state.key == "amountWise") {
-      setDiscountType("Amount Wise");
-      setFreeSelectedProduct(false);
-      setAddAnotherProduct(false);
-    } else if (location?.state.key == "productWise") {
-      setDiscountType("Product Wise");
-    } else {
-      toggle();
-    }
-    localStorage.setItem("Promotionedit", JSON.stringify(location?.state));
+    let userdata = JSON.parse(localStorage.getItem("userData"));
+    let totalProduct = [];
+    let SelectedProductId = "";
+    let SelectedExtraProduct = [];
+    let url = `${ProductList_View + userdata?._id}/`;
+
+    _Get(ViewOne_Promotion, Params?.id)
+      .then((res) => {
+        let data = res?.Promotion;
+        if (data?.percentageWise?.length) {
+          // for Percentage Wise
+          setDiscountType("Percentage Wise");
+          let currentData = data?.percentageWise[0];
+          setDiscountpercentage(currentData?.percentageDiscount);
+          setEnddate(currentData?.endDate);
+          setStartDate(currentData?.startDate);
+          setTotalAmount(currentData?.totalAmount);
+          setStatus(currentData?.status);
+          setFreeSelectedProduct(false);
+          setAddAnotherProduct(false);
+        } else if (data?.amountWise?.length) {
+          // for Amount Wise
+          let currentData = data?.amountWise[0];
+          setDiscountType("Amount Wise");
+          setTotalAmount(currentData?.totalAmount);
+          setDiscount(currentData?.percentageAmount);
+          setEnddate(currentData?.endDate);
+          setStartDate(currentData?.startDate);
+          setStatus(currentData?.status);
+          setFreeSelectedProduct(false);
+          setAddAnotherProduct(false);
+        } else if (data?.productWise?.length) {
+          // for Product Wise
+          setDiscountType("Product Wise");
+          let productwisedata = data?.productWise[0];
+          setNumberofProduct(productwisedata?.productQty);
+          SelectedProductId = productwisedata?.productId;
+          // onSelect1(findProduct, findProduct[0], 1);
+          setDiscount(productwisedata?.discountAmount);
+          setDiscountpercentage(productwisedata?.discountPercentage);
+          setEnddate(productwisedata?.endDate);
+          setStatus(data?.status);
+          setStartDate(productwisedata?.startDate);
+          if (productwisedata?.freeOtherProducts?.length) {
+            setAddAnotherProduct(true);
+            SelectedExtraProduct = productwisedata?.freeOtherProducts;
+            // let freProduct = SelectedExtraProduct?.map((ele) => {
+            //   debugger;
+            //   // let product=
+            //   return { qty: ele?.freeProductQty, product: {} };
+            // });
+            // setProduct(productwisedata?.freeOtherProducts);
+          } else {
+            setFreeSelectedProduct(true);
+          }
+          setFreeNumberofProduct(
+            productwisedata?.freeSameProductQty &&
+              productwisedata?.freeSameProductQty
+              ? productwisedata?.freeSameProductQty
+              : null
+          );
+          // setFreeSelectedProduct(false);
+          // setAddAnotherProduct(false);
+        } else {
+          if (data?.promoCodeWise?.length) {
+            let promo = data?.promoCodeWise[0];
+            setPromocode(promo?.promoCode);
+            setDiscount(promo?.promoAmount);
+            setStartDate(promo?.startDate);
+            setEnddate(promo?.endDate);
+            setStatus(promo?.status);
+            toggle();
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    (async () => {
+      await _Get(url, userdata?.database)
+        .then((res) => {
+          setProductList(res?.Product);
+          totalProduct = res?.Product;
+          let findProduct = totalProduct?.filter(
+            (item) => item?._id == SelectedProductId
+          );
+          onSelect1(findProduct, findProduct[0], 1);
+          if (SelectedExtraProduct?.length) {
+            let freProduct = SelectedExtraProduct?.map((ele) => {
+              let product = totalProduct?.filter(
+                (item) => item?._id == ele?.productId
+              );
+              return {
+                qty: ele?.freeProductQty,
+                productId: product[0]?._id,
+                product: product[0],
+              };
+            });
+            setProduct(freProduct);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })();
   }, []);
 
   const handleHistory = () => {
@@ -120,7 +193,7 @@ const CreatePromotionalActivity = (args) => {
   ]);
 
   const handleProductChangeProduct = (e, index) => {
-    setIndex(index);
+    // setIndex(index);
     const { name, value } = e.target;
     const list = [...product];
     list[index][name] = value;
@@ -146,11 +219,9 @@ const CreatePromotionalActivity = (args) => {
     setProduct((prevProductList) => {
       const updatedProductList = [...prevProductList]; // Create a copy of the productList array
       const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
-      // updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
       updatedProduct.productId = selectedItem?._id;
       updatedProductList[index] = updatedProduct; // Replace the product at the specified index with the updated one
       let myarr = prevProductList?.map((ele, i) => {
-        console.log(ele?.qty * selectedItem[i]?.Product_MRP);
         let indextotal = ele?.qty * SelectedITems[i]?.Product_MRP;
         GrandTotal[index] = indextotal;
         return indextotal;
@@ -160,92 +231,7 @@ const CreatePromotionalActivity = (args) => {
       return updatedProductList; // Return the updated product list to set the state
     });
     product.map((value) => console.log(value.totalprice));
-    // onSelect1(selectedList, selectedItem, index);
   };
-  const handleInputChange = (e, type, i) => {
-    const { name, value, checked } = e.target;
-    setindex(i);
-    if (type == "checkbox") {
-      if (checked) {
-        setFormData({
-          ...formData,
-          [name]: checked,
-        });
-      } else {
-        setFormData({
-          ...formData,
-          [name]: checked,
-        });
-      }
-    } else {
-      if (type == "number") {
-        if (/^\d{0,10}$/.test(value)) {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-          setError("");
-        } else {
-          setError(
-            "Please enter a valid number with a maximum length of 10 digits"
-          );
-        }
-      } else {
-        if (value.length <= 10) {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-          setError("");
-        } else {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-        }
-      }
-    }
-  };
-  // handleInputChange;
-  useEffect(() => {
-    console.log(product);
-    console.log(GrandTotal);
-    // console.log(Salesperson);
-  }, [product]);
-
-  useEffect(() => {
-    // Create_Sales_personList()
-    //   .then((res) => {
-    //     console.log(res?.SalesPerson);
-    //     setSalesPersonList(res?.SalesPerson);
-    //   })
-    //   .catch((err) => console.log(err));
-    let userdata = JSON.parse(localStorage.getItem("userData"));
-
-    ProductListView(userdata?._id, userdata?.database)
-      .then((res) => {
-        console.log(res?.Product);
-        setProductList(res?.Product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // CreateCustomerList(userdata?._id, userdata?.database)
-    //   .then((res) => {
-    //     let value = res?.Customer;
-    //     if (value?.length) {
-    //       setPartyList(value);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  }, []);
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userData"));
-    console.log(userInfo);
-    setUserInfo(userInfo);
-  }, []);
 
   let addMoreProduct = () => {
     setProduct([
@@ -270,22 +256,12 @@ const CreatePromotionalActivity = (args) => {
   let removeMoreProduct = (i) => {
     let newFormValues = [...product];
     newFormValues.splice(i, 1);
-    // GrandTotal.splice(i, 1);
-    // let amt = GrandTotal.reduce((a, b) => a + b);
-    // setGrandTotalAmt(amt);
 
     setProduct(newFormValues);
   };
-  // let handlePartChange = (i, e) => {
-  //   let newFormValues = [...part];
-  //   newFormValues[i][e.target.name] = e.target.value;
-  //   setPart(newFormValues);
-  // };
 
   const handleSubmitPromocode = async (e) => {
     e.preventDefault();
-    // SavePromotionsActivity()
-    let pageparmission = JSON.parse(localStorage.getItem("userData"));
 
     let promo = [
       {
@@ -298,12 +274,12 @@ const CreatePromotionalActivity = (args) => {
     ];
     let mypromot = {
       promoCodeWise: promo,
-      created_by: pageparmission?._id,
       status: Status,
     };
-    await SavePromotionsActivity(mypromot)
+    await _Put(UpdateOne_Promotion, Params.id, mypromot)
       .then((res) => {
         console.log(res);
+        History?.goBack();
         swal("success", "Promotion Code Submitted Successfully");
       })
       .catch((err) => {
@@ -313,7 +289,6 @@ const CreatePromotionalActivity = (args) => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    // SavePromotionsActivity();
     let pageparmission = JSON.parse(localStorage.getItem("userData"));
 
     if (DiscountType == "Percentage Wise") {
@@ -328,14 +303,16 @@ const CreatePromotionalActivity = (args) => {
       ];
       let payload = {
         percentageWise: percentage,
-        created_by: pageparmission?._id,
+        // created_by: pageparmission?._id,
 
         status: Status,
       };
-      await SavePromotionsActivity(payload)
+      await _Put(UpdateOne_Promotion, Params.id, payload)
         .then((res) => {
           console.log(res);
-          swal("success", "Promotion Code Submitted Successfully");
+          History?.goBack();
+
+          swal("success", "Promotion Code Updated Successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -345,7 +322,7 @@ const CreatePromotionalActivity = (args) => {
       let amount = [
         {
           totalAmount: TotalAmount,
-          percentageAmount: Discount,
+          percentageAmount: +Discount,
           startDate: startdate,
           endDate: Enddate,
           status: Status,
@@ -354,12 +331,13 @@ const CreatePromotionalActivity = (args) => {
       let payload = {
         amountWise: amount,
         status: Status,
-        created_by: pageparmission?._id,
+        // created_by: pageparmission?._id,
       };
-      await SavePromotionsActivity(payload)
+      await _Put(UpdateOne_Promotion, Params.id, payload)
         .then((res) => {
-          console.log(res);
-          swal("success", "Submitted Successfully");
+          History?.goBack();
+
+          swal("success", "Updated Successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -369,24 +347,25 @@ const CreatePromotionalActivity = (args) => {
       if (FreeSelectedProduct) {
         let productWise = [
           {
-            productId: Salesperson[0]?._id,
+            productId: SelectedMainProduct?._id,
             productQty: NumberofProduct,
             discountAmount: Discount,
             discountPercentage: Discountpercent,
             startDate: startdate,
             endDate: Enddate,
-            freeSameProductQty: FreeNumberofProduct,
+            freeSameProductQty: +FreeNumberofProduct,
           },
         ];
         let payload = {
           productWise: productWise,
-          created_by: pageparmission?._id,
+          // created_by: pageparmission?._id,
 
           status: Status,
         };
-        await SavePromotionsActivity(payload)
+        await _Put(UpdateOne_Promotion, Params.id, payload)
           .then((res) => {
-            console.log(res);
+            History?.goBack();
+
             swal("success", "Submitted Successfully");
           })
           .catch((err) => {
@@ -395,11 +374,11 @@ const CreatePromotionalActivity = (args) => {
           });
       } else {
         let myproduct = product?.map((ele, i) => {
-          return { productId: ele?.productId, freeProductQty: ele?.qty };
+          return { productId: ele?.productId, freeProductQty: +ele?.qty };
         });
         let productWise = [
           {
-            productId: Salesperson[0]?._id,
+            productId: SelectedMainProduct?._id,
             productQty: NumberofProduct,
             discountAmount: Discount,
             discountPercentage: Discountpercent,
@@ -410,13 +389,14 @@ const CreatePromotionalActivity = (args) => {
         ];
         let payload = {
           productWise: productWise,
-          created_by: pageparmission?._id,
+          // created_by: pageparmission?._id,
           status: Status,
         };
 
-        await SavePromotionsActivity(payload)
+        await _Put(UpdateOne_Promotion, Params.id, payload)
           .then((res) => {
-            console.log(res);
+            History?.goBack();
+
             swal("success", "Submitted Successfully");
           })
           .catch((err) => {
@@ -426,73 +406,15 @@ const CreatePromotionalActivity = (args) => {
       }
     }
 
-    let Allproduct = product?.map((ele, i) => {
-      console.log(ele);
-      return {
-        productId: ele?.productId,
-        qtyAssign: ele?.qty,
-        price: ele?.price,
-        totalPrice: ele?.totalprice,
-      };
-    });
-    let payload = {
-      grandTotal: grandTotalAmt,
-      salesPersonId: Salesperson[0]?._id,
-      products: Allproduct,
-    };
-
     if (error) {
       swal("Error occured while Entering Details");
     } else {
     }
   };
   const onSelect1 = (selectedList, selectedItem, index) => {
-    // console.log(selectedList);
-    setSalesperson(selectedList);
-    // console.log(index);
-    // if (selectedList.length) {
-    //   for (var i = 0; i < selectedList.length; i++) {
-    //     selectedOptions.push(selectedList[i].id);
-    //   }
-    // }
-    // let arr = selectedList.map((ele) => ele.id);
-    // setmultiSelect(arr);
-    // console.log(multiSelect);
-    // let uniqueChars = [...new Set(selectedOptions)];
-    // if (uniqueChars.length === 1) {
-    //   let value = uniqueChars[0];
-    //   const formdata = new FormData();
-    //   formdata.append("state_id", value);
-    //   axiosConfig
-    //     .post(`/getcity`, formdata)
-    //     .then((res) => {
-    //       setCityList(res?.data?.cities);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // } else {
-    //   setCityList([]);
-    // }
+    setSelectMainProduct(selectedItem);
   };
-  const onRemove1 = (selectedList, removedItem, index) => {
-    console.log(selectedList);
-    console.log(index);
-
-    // setmultiSelect(selectedList);
-
-    // let arr = selectedList.map((ele) => ele.id);
-    // console.log(arr);
-    // setmultiSelect(arr);
-    // console.log(multiSelect);
-    // if (selectedList.length) {
-    //   for (var i = 0; i < selectedList.length; i++) {
-    //     selectedOptions.push(selectedList[i].id);
-    //   }
-    // }
-    // let uniqueChars = [...new Set(selectedOptions)];
-    // console.log(uniqueChars);
-  };
+  const onRemove1 = (selectedList, removedItem, index) => {};
   return (
     <div>
       <div>
@@ -507,14 +429,14 @@ const CreatePromotionalActivity = (args) => {
               <div className="float-right">
                 <Route
                   render={({ history }) => (
-                    <Badge
+                    <Button
                       style={{ cursor: "pointer" }}
                       className="float-right mr-1"
                       color="primary"
                       onClick={() => history.goBack()}>
                       {" "}
                       Back
-                    </Badge>
+                    </Button>
                   )}
                 />
               </div>
@@ -523,14 +445,14 @@ const CreatePromotionalActivity = (args) => {
               <div className="d-flex justify-content-end">
                 <Route
                   render={({ history }) => (
-                    <Badge
+                    <Button
                       style={{ cursor: "pointer" }}
                       className=" mr-1"
                       color="primary"
                       onClick={toggle}>
                       {" "}
                       +Promocode
-                    </Badge>
+                    </Button>
                   )}
                 />
               </div>
@@ -713,7 +635,7 @@ const CreatePromotionalActivity = (args) => {
                         // showCheckbox="true"
                         isObject="false"
                         options={ProductList} // Options to display in the dropdown
-                        // selectedValues={selectedValue}   // Preselected value to persist in dropdown
+                        selectedValues={[SelectedMainProduct]} // Preselected value to persist in dropdown
                         onSelect={onSelect1} // Function will trigger on select event
                         onRemove={onRemove1} // Function will trigger on remove event
                         displayValue="Product_Title" // Property name to display in the dropdown options
@@ -792,6 +714,7 @@ const CreatePromotionalActivity = (args) => {
                           <input
                             style={{ marginRight: "3px" }}
                             type="radio"
+                            checked={FreeSelectedProduct ? true : false}
                             name="ProductQuantity1"
                             placeholder="Product Quantity"
                             onChange={(e) => {
@@ -805,6 +728,7 @@ const CreatePromotionalActivity = (args) => {
 
                           <input
                             style={{ marginRight: "3px" }}
+                            checked={AddAnotherProduct ? true : false}
                             type="radio"
                             name="ProductQuantity1"
                             placeholder="Product Quantity"
@@ -825,11 +749,11 @@ const CreatePromotionalActivity = (args) => {
                 </>
               ) : null}
               <Col lg="12" md="12" sm="12">
-                <Row>
-                  {AddAnotherProduct && (
-                    <>
-                      {product &&
-                        product?.map((product, index) => (
+                {AddAnotherProduct && (
+                  <>
+                    {product &&
+                      product?.map((product, index) => {
+                        return (
                           <Row className="" key={index}>
                             <Col className="mb-1" lg="4" md="4" sm="12">
                               <div className="">
@@ -838,6 +762,9 @@ const CreatePromotionalActivity = (args) => {
                                   required
                                   selectionLimit={1}
                                   isObject="false"
+                                  selectedValues={
+                                    product?.product ? [product?.product] : []
+                                  }
                                   options={ProductList}
                                   onSelect={(selectedList, selectedItem) =>
                                     handleSelection(
@@ -871,35 +798,11 @@ const CreatePromotionalActivity = (args) => {
                                 />
                               </div>
                             </Col>
-                            {/* <Col className="mb-1" lg="2" md="2" sm="12">
-                              <div className="">
-                                <Label>Price</Label>
-                                <Input
-                                  type="number"
-                                  name="price"
-                                  readOnly
-                                  placeholder="Price"
-                                  value={product.price}
-                                />
-                              </div>
-                            </Col>
-                            <Col className="mb-1" lg="2" md="2" sm="12">
-                              <div className="">
-                                <Label>Total Price</Label>
-                                <Input
-                                  type="number"
-                                  name="totalprice"
-                                  readOnly
-                                  placeholder="TtlPrice"
-                                  value={product.price * product?.qty}
-                                />
-                              </div>
-                            </Col> */}
 
                             <Col
                               className="d-flex mt-1 abb"
-                              lg="3"
-                              md="3"
+                              lg="4"
+                              md="4"
                               sm="12">
                               <div className="btnStyle">
                                 {index ? (
@@ -908,91 +811,52 @@ const CreatePromotionalActivity = (args) => {
                                     color="danger"
                                     className="button remove "
                                     onClick={() => removeMoreProduct(index)}>
-                                    - Remove
+                                    -
                                   </Button>
                                 ) : null}
                               </div>
-
-                              <div className="btnStyle">
-                                <Button
-                                  className="ml-1 mb-1"
-                                  color="primary"
-                                  type="button"
-                                  onClick={() => addMoreProduct()}>
-                                  + Add
-                                </Button>
-                              </div>
                             </Col>
                           </Row>
-                        ))}
-                      {/* <Col className="mb-1" lg="4" md="4" sm="12">
-                        <div className="">
-                          <Label>Add another Product *</Label>
-
-                          <Multiselect
-                            required
-                            selectionLimit={1}
-                            // showCheckbox="true"
-                            isObject="false"
-                            options={ProductList} // Options to display in the dropdown
-                            // selectedValues={selectedValue}   // Preselected value to persist in dropdown
-                            onSelect={onSelect1} // Function will trigger on select event
-                            onRemove={onRemove1} // Function will trigger on remove event
-                            displayValue="Product_Title" // Property name to display in the dropdown options
-                          />
-                        </div>
-                      </Col>
-
-                      <Col className="mb-1" lg="4" md="4" sm="12">
-                        <div className="">
-                          <Label>Quantity</Label>
-                          <Input
-                            required
-                            type="number"
-                            name="targetEndDate"
-                            placeholder="Number of Quantity"
-                            value={addonproductQty}
-                            onChange={(e) => setaddonproductQty(e.target.value)}
-                          />
-                        </div>
-                      </Col> */}
-                    </>
-                  )}
-                  {FreeSelectedProduct && (
-                    <>
-                      {/* <Col className="mb-1" lg="3" md="3" sm="12">
-                    <div className="">
-                     <Label>Choose Warehouse (to be Transfer) * </Label>
-
-                    <Multiselect
-                      required
-                      selectionLimit={1}
-                      // showCheckbox="true"
-                      isObject="false"
-                      options={SalesPersonList} // Options to display in the dropdown
-                      // selectedValues={selectedValue}   // Preselected value to persist in dropdown
-                      onSelect={onSelect1} // Function will trigger on select event
-                      onRemove={onRemove1} // Function will trigger on remove event
-                      displayValue="firstName" // Property name to display in the dropdown options
-                    />
-                    </div>
-                     </Col> */}
-                      <Col className="mb-1" lg="4" md="4" sm="12">
-                        <div className="">
-                          <Label>Free Selected Product Quantity</Label>
-                          <Input
-                            required
-                            type="number"
-                            placeholder="Number of Quantity"
-                            value={FreeNumberofProduct}
-                            onChange={(e) =>
-                              setFreeNumberofProduct(e.target.value)
-                            }
-                          />
-                        </div>
-                      </Col>
-                    </>
-                  )}
+                        );
+                      })}
+                  </>
+                )}
+                {AddAnotherProduct && (
+                  <Row>
+                    <Col>
+                      <div className="float-right btnStyle">
+                        <Button
+                          className="ml-1 mb-1"
+                          color="primary"
+                          type="button"
+                          onClick={() => addMoreProduct()}>
+                          + Add
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                )}
+                <Row>
+                  <Col>
+                    {FreeSelectedProduct && (
+                      <>
+                        <Col className="mb-1" lg="4" md="4" sm="12">
+                          <div className="">
+                            <Label>Free Selected Product Quantity</Label>
+                            <Input
+                              required
+                              type="number"
+                              placeholder="Number of Quantity"
+                              value={FreeNumberofProduct}
+                              onChange={(e) =>
+                                setFreeNumberofProduct(e.target.value)
+                              }
+                            />
+                          </div>
+                        </Col>
+                      </>
+                    )}
+                  </Col>
                 </Row>
               </Col>
               {/* <Col className="mb-1" lg="3" md="3" sm="12">

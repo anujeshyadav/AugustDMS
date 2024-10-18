@@ -101,235 +101,173 @@ class PromotionalActivityReport extends React.Component {
         resizable: true,
         suppressMenu: true,
       },
-      columnDefs: [],
-      // columnDefs: [
-      //   {
-      //     headerName: "UID",
-      //     valueGetter: "node.rowIndex + 1",
-      //     field: "node.rowIndex + 1",
-      //     width: 80,
-      //     filter: true,
-      //   },
+      // columnDefs: [],
+      columnDefs: [
+        {
+          headerName: "UID",
+          valueGetter: "node.rowIndex + 1",
+          field: "node.rowIndex + 1",
+          width: 80,
+          filter: true,
+        },
 
-      //   // {
-      //   //   headerName: "Actions",
-      //   //   field: "transactions",
-      //   //   width: 180,
-      //   //   cellRendererFramework: (params) => {
-      //   //     return (
-      //   //       <div className="actions cursor-pointer">
-      //   //         {this.state.InsiderPermissions &&
-      //   //           this.state.InsiderPermissions?.View && (
-      //   //             <Eye
-      //   //               className="mr-50"
-      //   //               size="25px"
-      //   //               color="green"
-      //   //               onClick={() => {
-      //   //                 this.togglemodal();
-      //   //                 this.handleChangeView(params.data, "readonly");
-      //   //               }}
-      //   //             />
-      //   //           )}
-      //   //       </div>
-      //   //     );
-      //   //   },
-      //   // },
-      //   // {
-      //   //   headerName: "Status",
-      //   //   field: "status",
-      //   //   filter: true,
-      //   //   width: 150,
-      //   //   cellRendererFramework: (params) => {
-      //   //     return params.value == "Active" ? (
-      //   //       <div className="badge badge-pill badge-success">
-      //   //         {params.data.status}
-      //   //       </div>
-      //   //     ) : params.value == "Deactive" ? (
-      //   //       <div className="badge badge-pill badge-warning">
-      //   //         {params.data.status}
-      //   //       </div>
-      //   //     ) : params.value == "return" ? (
-      //   //       <div className="badge badge-pill badge-danger">
-      //   //         {params.data.status}
-      //   //       </div>
-      //   //     ) : params.value == "InProcess" ? (
-      //   //       <div className="badge badge-pill badge-secondary">
-      //   //         {params.data.status}
-      //   //       </div>
-      //   //     ) : params.value == "cancelled" ? (
-      //   //       <div className="badge badge-pill badge-danger">
-      //   //         {params.data.status}
-      //   //       </div>
-      //   //     ) : null;
-      //   //   },
-      //   // },
+        // {
+        //   headerName: "Actions",
+        //   field: "transactions",
+        //   width: 180,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="actions cursor-pointer">
+        //         {this.state.InsiderPermissions &&
+        //           this.state.InsiderPermissions?.View && (
+        //             <Eye
+        //               className="mr-50"
+        //               size="25px"
+        //               color="green"
+        //               onClick={() => {
+        //                 this.togglemodal();
+        //                 this.handleChangeView(params.data, "readonly");
+        //               }}
+        //             />
+        //           )}
+        //       </div>
+        //     );
+        //   },
+        // },
+        // {
+        //   headerName: "Status",
+        //   field: "status",
+        //   filter: true,
+        //   width: 150,
+        //   cellRendererFramework: (params) => {
+        //     return params.value == "Active" ? (
+        //       <div className="badge badge-pill badge-success">
+        //         {params.data.status}
+        //       </div>
+        //     ) : params.value == "Deactive" ? (
+        //       <div className="badge badge-pill badge-warning">
+        //         {params.data.status}
+        //       </div>
+        //     ) : params.value == "return" ? (
+        //       <div className="badge badge-pill badge-danger">
+        //         {params.data.status}
+        //       </div>
+        //     ) : params.value == "InProcess" ? (
+        //       <div className="badge badge-pill badge-secondary">
+        //         {params.data.status}
+        //       </div>
+        //     ) : params.value == "cancelled" ? (
+        //       <div className="badge badge-pill badge-danger">
+        //         {params.data.status}
+        //       </div>
+        //     ) : null;
+        //   },
+        // },
 
-      //   {
-      //     headerName: "INVOICE Number",
-      //     field: "invoiceId",
-      //     filter: true,
-      //     width: 200,
-      //     cellRendererFramework: (params) => {
-      //       console.log(params?.data);
-      //       return (
-      //         <div>
-      //           <span>{params?.data?.invoiceId}</span>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Purchase Date",
-      //     field: "DateofDelivery",
-      //     filter: true,
-      //     width: 180,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div>
-      //           <span>{params?.data?.DateofDelivery}</span>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Supplier Name",
-      //     field: "partyId.firstName",
-      //     filter: true,
-      //     width: 180,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div>
-      //           <span>{params?.data?.partyId?.firstName}</span>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Supplier Last Name",
-      //     field: "partyId.lastName",
-      //     filter: true,
-      //     width: 180,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div>
-      //           <span>{params?.data?.partyId?.lastName}</span>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "GST Number",
-      //     field: "partyId.gstNumber",
-      //     filter: true,
-      //     width: 250,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div>
-      //           <span>{params?.data?.partyId?.gstNumber}</span>
-      //         </div>
-      //       );
-      //     },
-      //   },
+        {
+          headerName: "Customer Name",
+          field: "invoiceId",
+          filter: true,
+          width: 200,
+          cellRendererFramework: (params) => {
+            console.log(params?.data);
+            return (
+              <div>
+                <span>{params?.data?.invoiceId}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Customer Mobile No",
+          field: "DateofDelivery",
+          filter: true,
+          width: 180,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.DateofDelivery}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Sales Person name",
+          field: "partyId.firstName",
+          filter: true,
+          width: 180,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.partyId?.firstName}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Sales Person Mobile No.",
+          field: "partyId.lastName",
+          filter: true,
+          width: 180,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.partyId?.lastName}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "target Qty",
+          field: "partyId.gstNumber",
+          filter: true,
+          width: 250,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.partyId?.gstNumber}</span>
+              </div>
+            );
+          },
+        },
 
-      //   {
-      //     headerName: "SGST",
-      //     field: "updatedAt",
-      //     filter: true,
-      //     width: 180,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div className="d-flex align-items-center cursor-pointer">
-      //           <div>
-      //             <Badge color="primary">
-      //               {params.data?.sgstTotal && params.data?.sgstTotal}
-      //             </Badge>
-      //           </div>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "CGST",
-      //     field: "updatedAt",
-      //     filter: true,
-      //     width: 180,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div className="d-flex align-items-center cursor-pointer">
-      //           <div>
-      //             <Badge color="primary">
-      //               {params.data?.cgstTotal && params.data?.cgstTotal}
-      //             </Badge>
-      //           </div>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "IGST",
-      //     field: "updatedAt",
-      //     filter: true,
-      //     width: 180,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div className="d-flex align-items-center cursor-pointer">
-      //           <div>
-      //             <Badge color="primary">
-      //               {params.data?.igstTotal && params.data?.igstTotal}
-      //             </Badge>
-      //           </div>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Amount",
-      //     field: "amount",
-      //     filter: true,
-      //     width: 150,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div className="d-flex align-items-center cursor-pointer">
-      //           <div>
-      //             <Badge color="primary">
-      //               {params.data?.amount?.toFixed(2)}
-      //             </Badge>
-      //           </div>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "RoundOff",
-      //     field: "roundOff",
-      //     filter: true,
-      //     width: 150,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div className="d-flex align-items-center cursor-pointer">
-      //           <div>
-      //             <Badge color="primary">{params.data?.roundOff}</Badge>
-      //           </div>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      //   {
-      //     headerName: "Grand Total",
-      //     field: "grandTotal",
-      //     filter: true,
-      //     width: 150,
-      //     cellRendererFramework: (params) => {
-      //       return (
-      //         <div className="d-flex align-items-center cursor-pointer">
-      //           <div>
-      //             <Badge color="primary">{params.data?.grandTotal}</Badge>
-      //           </div>
-      //         </div>
-      //       );
-      //     },
-      //   },
-      // ],
+        {
+          headerName: "Achieved Qty",
+          field: "updatedAt",
+          filter: true,
+          width: 180,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div>
+                  <Badge color="primary">
+                    {params.data?.sgstTotal && params.data?.sgstTotal}
+                  </Badge>
+                </div>
+              </div>
+            );
+          },
+        },
+       
+        {
+          headerName: "Activity Type",
+          field: "amount",
+          filter: true,
+          width: 150,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div>
+                  <Badge color="primary">
+                    {params.data?.amount?.toFixed(2)}
+                  </Badge>
+                </div>
+              </div>
+            );
+          },
+        },
+       
+      ],
     };
   }
   toggleModal = () => {
@@ -368,30 +306,28 @@ class PromotionalActivityReport extends React.Component {
             item !== "__v" &&
             item !== "created_by" &&
             item !== "status" &&
-            item !== "database"
+            item !== "database" &&
+            item !== "createdAt" &&
+            item !== "updatedAt" 
         );
         let unique = [...new Set(myarr)];
         this.setState({ Dropdown: unique });
         this.setState({ AllData: res?.Promotion });
 
-        // this.setState({ rowData: res?.Promotion });
-        // this.setState({ rowAllData: res?.Promotion });
-        // }
 
-        // this.setState({ AllcolumnDefs: this.state.columnDefs });
-        // this.setState({ SelectedCols: this.state.columnDefs });
+        this.setState({ AllcolumnDefs: this.state.columnDefs });
+        this.setState({ SelectedCols: this.state.columnDefs });
 
-        // let userHeading = JSON.parse(
-        //   localStorage.getItem("PromotionalActivityList")
-        // );
-        // if (userHeading?.length) {
-        //   this.setState({ columnDefs: userHeading });
-        //   // this.gridApi.setColumnDefs(userHeading);
-        //   this.setState({ SelectedcolumnDefs: userHeading });
-        // } else {
-        //   this.setState({ columnDefs: this.state.columnDefs });
-        //   this.setState({ SelectedcolumnDefs: this.state.columnDefs });
-        // }
+        let userHeading = JSON.parse(
+          localStorage.getItem("PromotionalActivityList")
+        );
+        if (userHeading?.length) {
+          this.setState({ columnDefs: userHeading });
+          this.setState({ SelectedcolumnDefs: userHeading });
+        } else {
+          this.setState({ columnDefs: this.state.columnDefs });
+          this.setState({ SelectedcolumnDefs: this.state.columnDefs });
+        }
       })
       .catch((err) => {
         this.setState({ Loading: false });
@@ -988,9 +924,11 @@ class PromotionalActivityReport extends React.Component {
                   <Col lg="2" md="2" sm="2" xs="2" style={{marginTop:'30px'}}>
                     <CustomInput
                       type="select"
+                      style={{textTransform:"uppercase"}}
                       name="typeofpromotion"
                       className="float-right"
-                      onChange={(e) => this.handleFilter(e)}>
+                      // onChange={(e) => this.handleFilter(e)}
+                      >
                       <option value="NA">--Select Promotion Type--</option>
                       {this.state.Dropdown &&
                         this.state.Dropdown?.map((ele, i) => {

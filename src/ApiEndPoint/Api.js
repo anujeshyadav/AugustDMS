@@ -110,6 +110,9 @@ export const CashbookList = "/cashbook/view-order-list/";
 
 export const Save_Promotion = "/promotion/save-promotion";
 export const View_Promotion_List = "/promotion/view-promotion/";
+export const DeleteOne_Promotion = "/promotion/delete-promotion/";
+export const ViewOne_Promotion = "/promotion/view-promotion-by-id/";
+export const UpdateOne_Promotion = "/promotion/update-promotion/";
 export const Create_transporter_xmlView = "/transporter/get-xml";
 export const Create_transporter_save = "/transporter/save-transporter";
 export const Create_Transporter_List = "/transporter/view-transporter/";
