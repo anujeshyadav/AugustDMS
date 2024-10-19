@@ -1017,7 +1017,8 @@ const POInvoiceone = ({ invoiceData, BilData }) => {
                     marginBottom: "8px",
                   }}>
                   {" "}
-                  JUPITECH CORPORATE MANAGEMENT SERVICES PVT. LTD.
+                  {BilData?.CompanyDetails?.name &&
+                    BilData?.CompanyDetails?.name}
                 </Text>
                 <View>
                   <Image

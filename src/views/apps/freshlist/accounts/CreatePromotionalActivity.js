@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import {
@@ -13,6 +12,8 @@ import {
   ModalHeader,
   Modal,
   Badge,
+  Table,
+  CustomInput,
 } from "reactstrap";
 
 import "react-phone-input-2/lib/style.css";
@@ -21,6 +22,11 @@ import Multiselect from "multiselect-react-dropdown";
 
 import "../../../../assets/scss/pages/users.scss";
 import {
+  _Delete,
+  _Get,
+  _Post,
+  _PostSave,
+  _Put,
   ProductListView,
   SavePromotionsActivity,
 } from "../../../../ApiEndPoint/ApiCalling";
@@ -28,15 +34,20 @@ import "../../../../assets/scss/pages/users.scss";
 
 import { Route } from "react-router-dom";
 import swal from "sweetalert";
+import { Copy, Edit, Trash2 } from "react-feather";
+import {
+  ActivityList,
+  Delete_Activity,
+  Update_Activity,
+} from "../../../../ApiEndPoint/Api";
+import { handleSidebar } from "../../../../redux/actions/calendar";
 
 let GrandTotal = [];
 let SelectedITems = [];
 const CreatePromotionalActivity = (args) => {
   let History = useHistory();
   const [formData, setFormData] = useState({});
-  const [Index, setIndex] = useState("");
   // const [targetEndDate, settargetEndDate] = useState("");
-  const [index, setindex] = useState("");
   const [DiscountType, setDiscountType] = useState("");
   const [startdate, setStartDate] = useState("");
   const [FreeNumberofProduct, setFreeNumberofProduct] = useState("");
@@ -46,9 +57,8 @@ const CreatePromotionalActivity = (args) => {
   const [NumberofProduct, setNumberofProduct] = useState("");
   const [error, setError] = useState("");
   const [Status, setStatus] = useState("");
-  const [Promocode, setPromocode] = useState("");
-  const [activityName, setActivityName] = useState("");
   const [ProductList, setProductList] = useState([]);
+  const [ActivityLists, setActivityList] = useState([]);
   const [mainProduct, setMainProduct] = useState({});
   const [grandTotalAmt, setGrandTotalAmt] = useState(0);
   const [TotalAmount, setTotalAmount] = useState("");
@@ -69,29 +79,19 @@ const CreatePromotionalActivity = (args) => {
   };
   const [product, setProduct] = useState([
     {
-      product: "", //
       productId: "",
-      availableQty: "",
-      qty: 1, //
-      price: "", //
-      totalprice: "", //
-      Salespersonname: "",
-      targetstartDate: "",
-      targetEndDate: "",
-      discount: "",
-      Shipping: "",
-      tax: "",
-      grandTotal: "",
+      targetQty: null,
+      discountAmount: null,
+      discountPercentage: null,
+      freeProductQty: "", //
+      freeProduct: "",
     },
   ]);
 
   const handleProductChangeProduct = (e, index) => {
-    setIndex(index);
     const { name, value } = e.target;
     const list = [...product];
-    list[index][name] = value;
-    let amt = 0;
-
+    list[index][name] = +value;
     setProduct(list);
   };
 
@@ -107,30 +107,22 @@ const CreatePromotionalActivity = (args) => {
     let amt = myarr.reduce((a, b) => a + b);
     setGrandTotalAmt(amt);
   };
-  const handleSelection = (selectedList, selectedItem, index) => {
+  const handleSelection = (selectedList, selectedItem, index, type) => {
     SelectedITems.push(selectedItem);
     setProduct((prevProductList) => {
-      const updatedProductList = [...prevProductList]; // Create a copy of the productList array
-      const updatedProduct = { ...updatedProductList[index] }; // Create a copy of the product at the specified index
-      // updatedProduct.price = selectedItem?.Product_MRP; // Update the price of the copied product
-      updatedProduct.productId = selectedItem?._id;
-      updatedProductList[index] = updatedProduct; // Replace the product at the specified index with the updated one
-      let myarr = prevProductList?.map((ele, i) => {
-        console.log(ele?.qty * selectedItem[i]?.Product_MRP);
-        let indextotal = ele?.qty * SelectedITems[i]?.Product_MRP;
-        GrandTotal[index] = indextotal;
-        return indextotal;
-      });
-      let amt = myarr.reduce((a, b) => a + b);
-      setGrandTotalAmt(amt);
-      return updatedProductList; // Return the updated product list to set the state
+      const updatedProductList = [...prevProductList];
+      const updatedProduct = { ...updatedProductList[index] };
+      if (type == "productId") {
+        updatedProduct.productId = selectedItem?._id;
+      } else {
+        updatedProduct.freeProduct = selectedItem?._id;
+      }
+      updatedProductList[index] = updatedProduct;
+      return updatedProductList;
     });
-    product.map((value) => console.log(value.totalprice));
-    // onSelect1(selectedList, selectedItem, index);
   };
   const handleInputChange = (e, type, i) => {
     const { name, value, checked } = e.target;
-    setindex(i);
     if (type == "checkbox") {
       if (checked) {
         setFormData({
@@ -157,24 +149,32 @@ const CreatePromotionalActivity = (args) => {
           );
         }
       } else {
-        if (value.length <= 10) {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-          setError("");
-        } else {
-          setFormData({
-            ...formData,
-            [name]: value,
-          });
-        }
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
       }
     }
   };
 
   useEffect(() => {
+    console.log(formData);
+    console.log(product);
+  }, [formData, product]);
+
+  const HandleActivityList = async () => {
     let userdata = JSON.parse(localStorage.getItem("userData"));
+    _Get(ActivityList, userdata?.database)
+      .then((res) => {
+        setActivityList(res?.Activity);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    let userdata = JSON.parse(localStorage.getItem("userData"));
+    HandleActivityList();
     ProductListView(userdata?._id, userdata?.database)
       .then((res) => {
         console.log(res?.Product);
@@ -193,19 +193,12 @@ const CreatePromotionalActivity = (args) => {
     setProduct([
       ...product,
       {
-        product: "", //
         productId: "",
-        availableQty: "",
-        qty: 1, //
-        price: "", //
-        totalprice: "", //
-        Salespersonname: "",
-        targetstartDate: "",
-        targetEndDate: "",
-        discount: "",
-        Shipping: "",
-        tax: "",
-        grandTotal: "",
+        targetQty: null,
+        discountAmount: null,
+        discountPercentage: null,
+        freeProductQty: "", //
+        freeProduct: "",
       },
     ]);
   };
@@ -216,51 +209,71 @@ const CreatePromotionalActivity = (args) => {
     setProduct(newFormValues);
   };
 
-  const handleSubmitPromocode = async (e) => {
+  const handleSubmitActivity = async (e) => {
     e.preventDefault();
-    // SavePromotionsActivity()
-    let pageparmission = JSON.parse(localStorage.getItem("userData"));
-
-    let promo = [
-      {
-        promoCode: Promocode,
-        promoAmount: Discount,
-        startDate: startdate,
-        endDate: Enddate,
-        status: Status,
-      },
-    ];
-    let mypromot = {
-      promoCodeWise: promo,
-      created_by: pageparmission?._id,
-      status: Status,
+    let userinfor = JSON.parse(localStorage.getItem("userData"));
+    let Data = {
+      ActivityName: formData?.ActivityName,
+      FromDate: formData?.FromDate,
+      ToDate: formData?.ToDate,
+      status: formData?.status,
+      database: userinfor?.database,
     };
-    await SavePromotionsActivity(mypromot)
-      .then((res) => {
-        // console.log(res);
-        History.goBack();
-        swal("success", "Promotion Code Submitted Successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-        swal("Error", "Something went wrong");
-      });
+    if (!!formData?.editActivity && formData?.editActivity) {
+      await _Put(Update_Activity, formData?.id, Data)
+        .then((res) => {
+          HandleActivityList();
+          swal("success", "Updated Successfully");
+        })
+        .catch((err) => {
+          swal("Error", "Something went wrong");
+        });
+    } else {
+    }
+
+    // let promo = [
+    //   {
+    //     promoCode: Promocode,
+    //     promoAmount: Discount,
+    //     startDate: startdate,
+    //     endDate: Enddate,
+    //     status: Status,
+    //   },
+    // ];
+    // let mypromot = {
+    //   promoCodeWise: promo,
+    //   created_by: pageparmission?._id,
+    //   status: Status,
+    // };
+    // await _PostSave()
+    // await SavePromotionsActivity(mypromot)
+    //   .then((res) => {
+    //     // console.log(res);
+    //     History.goBack();
+    //     swal("success", "Promotion Code Submitted Successfully");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     swal("Error", "Something went wrong");
+    //   });
   };
   const submitHandler = async (e) => {
     e.preventDefault();
     let pageparmission = JSON.parse(localStorage.getItem("userData"));
+    debugger;
 
     if (DiscountType == "Percentage Wise") {
       let percentage = [
         {
-          totalAmount: TotalAmount,
-          percentageDiscount: Discountpercent,
-          startDate: startdate,
-          endDate: Enddate,
+          totalAmount: +TotalAmount,
+          percentageDiscount: +Discountpercent,
+          activityId: formData?.selectedActivity?._id,
           status: Status,
+          database: pageparmission?.database,
         },
       ];
       let payload = {
+        database: pageparmission?.database,
         percentageWise: percentage,
         created_by: pageparmission?._id,
 
@@ -271,7 +284,7 @@ const CreatePromotionalActivity = (args) => {
           console.log(res);
           History.goBack();
 
-          swal("success", "Promotion Code Submitted Successfully");
+          swal("success", "Promotion Submitted Successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -280,16 +293,19 @@ const CreatePromotionalActivity = (args) => {
     } else if (DiscountType == "Amount Wise") {
       let amount = [
         {
-          totalAmount: TotalAmount,
+          totalAmount: +TotalAmount,
           percentageAmount: +Discount,
-          startDate: startdate,
-          endDate: Enddate,
+          activityId: formData?.selectedActivity?._id,
+          database: pageparmission?.database,
+
           status: Status,
         },
       ];
       let payload = {
         amountWise: amount,
         status: Status,
+        database: pageparmission?.database,
+
         created_by: pageparmission?._id,
       };
       await SavePromotionsActivity(payload)
@@ -304,89 +320,49 @@ const CreatePromotionalActivity = (args) => {
           swal("Error", "Something went wrong");
         });
     } else {
-      if (FreeSelectedProduct) {
-        let productWise = [
-          {
-            productId: mainProduct?._id,
-            productQty: NumberofProduct,
-            discountAmount: Discount,
-            discountPercentage: Discountpercent,
-            startDate: startdate,
-            endDate: Enddate,
-            freeSameProductQty: FreeNumberofProduct,
-          },
-        ];
-        let payload = {
-          productWise: productWise,
-          created_by: pageparmission?._id,
-
-          status: Status,
+      let myproduct = product?.map((ele, i) => {
+        return {
+          productId: ele?.productId,
+          targetQty: ele?.targetQty,
+          discountAmount: ele?.discountAmount,
+          discountPercentage: ele?.discountPercentage,
+          freeProductQty: ele?.freeProductQty,
+          freeProduct: ele?.freeProduct,
+          database: pageparmission?.database,
         };
-        await SavePromotionsActivity(payload)
-          .then((res) => {
-            History.goBack();
+      });
+      let productWise = [
+        {
+          activityId: formData?.selectedActivity?._id,
+          freeOtherProducts: myproduct,
+          database: pageparmission?.database,
+        },
+      ];
+      let payload = {
+        productWise: productWise,
+        created_by: pageparmission?._id,
+        database: pageparmission?.database,
 
-            console.log(res);
-            swal("success", "Submitted Successfully");
-          })
-          .catch((err) => {
-            console.log(err);
-            swal("Error", "Something went wrong");
-          });
-      } else {
-        let myproduct = product?.map((ele, i) => {
-          return { productId: ele?.productId, freeProductQty: ele?.qty };
-        });
-        let productWise = [
-          {
-            productId: mainProduct?._id,
-            productQty: NumberofProduct,
-            discountAmount: Discount,
-            discountPercentage: Discountpercent,
-            startDate: startdate,
-            endDate: Enddate,
-            freeOtherProducts: myproduct,
-          },
-        ];
-        let payload = {
-          productWise: productWise,
-          created_by: pageparmission?._id,
-          status: Status,
-        };
-
-        await SavePromotionsActivity(payload)
-          .then((res) => {
-            console.log(res);
-            History.goBack();
-
-            swal("success", "Submitted Successfully");
-          })
-          .catch((err) => {
-            console.log(err);
-            swal("Error", "Something went wrong");
-          });
-      }
-    }
-
-    let Allproduct = product?.map((ele, i) => {
-      console.log(ele);
-      return {
-        productId: ele?.productId,
-        qtyAssign: ele?.qty,
-        price: ele?.price,
-        totalPrice: ele?.totalprice,
+        status: Status,
       };
-    });
-    let payload = {
-      grandTotal: grandTotalAmt,
-      salesPersonId: mainProduct?._id,
-      products: Allproduct,
-    };
 
-    if (error) {
-      swal("Error occured while Entering Details");
-    } else {
+      await SavePromotionsActivity(payload)
+        .then((res) => {
+          console.log(res);
+          History.goBack();
+
+          swal("success", "Submitted Successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+          swal("Error", "Something went wrong");
+        });
     }
+
+    
+   
+
+    
   };
   const onSelect1 = (selectedList, selectedItem, index) => {
     setMainProduct(selectedItem);
@@ -394,6 +370,16 @@ const CreatePromotionalActivity = (args) => {
   const onRemove1 = (selectedList, removedItem, index) => {
     console.log(selectedList);
     console.log(index);
+  };
+  const HandleDeleteActivity = async (data) => {
+    await _Delete(Delete_Activity, data?._id)
+      .then((res) => {
+        let selected = ActivityLists?.filter((item) => item?._id !== data?._id);
+        setActivityList(selected);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>
@@ -443,48 +429,132 @@ const CreatePromotionalActivity = (args) => {
               </div>
             </Col>
           </Row>
-
-          <Form className="p-1" onSubmit={submitHandler}>
-            <Col lg="7" md="8" sm="10" xs="12" className="mb-2 mt-1">
-              <div className="form-label-group">
-                <input
-                  style={{ marginRight: "10px" }}
-                  type="radio"
-                  name="Product Quantity"
-                  value={DiscountType}
+          <Row>
+            {/* <Col></Col> */}
+            <Col className="mt-2" lg="3" md="3" sm="12">
+              <div className="mx-1">
+                <Label>
+                  Select Activity <span style={{ color: "red" }}>*</span>
+                </Label>
+                <CustomInput
+                  required
+                  name="ActivityName"
                   onChange={(e) => {
-                    setDiscountType("Percentage Wise");
-                    setFreeSelectedProduct(false);
-                    setAddAnotherProduct(false);
+                    let value = e.target.value;
+                    let selected = ActivityLists?.filter(
+                      (item) => item?._id == value
+                    );
+                    setFormData({
+                      ...formData,
+                      [e.target.name]: value,
+                      selectedActivity: selected[0],
+                    });
                   }}
-                />
-                <span style={{ marginRight: "99px" }}>Percentage Wise</span>
-
-                <input
-                  style={{ marginRight: "10px" }}
-                  type="radio"
-                  name="Product Quantity"
-                  value={DiscountType}
-                  onChange={(e) => {
-                    setDiscountType("Amount Wise");
-                    setFreeSelectedProduct(false);
-                    setAddAnotherProduct(false);
-                  }}
-                />
-                <span style={{ marginRight: "124px" }}>Amount Wise</span>
-                <input
-                  style={{ marginRight: "10px" }}
-                  type="radio"
-                  name="Product Quantity"
-                  placeholder="Product Quantity"
-                  value={DiscountType}
-                  onChange={(e) => setDiscountType("Product Wise")}
-                />
-                <span style={{ marginRight: "60px" }}>Product Wise</span>
+                  type="select">
+                  <option>------------Select Activity-----------------</option>
+                  {ActivityLists?.length &&
+                    ActivityLists?.map((ele, i) => {
+                      return (
+                        <option value={ele?._id}>
+                          {ele?.ActivityName}(Code:{ele?.Code})(from:
+                          {ele?.FromDate?.split("T")[0]} -To:
+                          {ele?.ToDate?.split("T")[0]} )
+                        </option>
+                      );
+                    })}
+                </CustomInput>
               </div>
             </Col>
+            <Col>
+              <span>
+                {!!formData?.selectedActivity && (
+                  <>
+                    <div>
+                      {" "}
+                      Promo-Code:{formData?.selectedActivity?.Code}{" "}
+                      <span
+                        onClick={() => {
+                          setFormData({
+                            ...formData,
+                            clipboardCopy: true,
+                          });
+                          navigator.clipboard.writeText(
+                            formData?.selectedActivity?.Code
+                          );
+                        }}
+                        style={{ cursor: "pointer" }}
+                        title="click to Copy">
+                        <Copy
+                          className="mx-1"
+                          color={
+                            !!formData?.clipboardCopy && formData?.clipboardCopy
+                              ? "green"
+                              : "blue"
+                          }
+                          size={20}
+                        />
+                      </span>
+                    </div>
+                    <div>
+                      Name:
+                      {formData?.selectedActivity?.ActivityName}
+                    </div>
+                    <div>
+                      From Date:
+                      {formData?.selectedActivity?.FromDate?.split("T")[0]}
+                    </div>
+                    <div>
+                      To Date:
+                      {formData?.selectedActivity?.ToDate?.split("T")[0]}
+                    </div>
+                  </>
+                )}
+              </span>
+            </Col>
+          </Row>
 
-            <Row className="p-1">
+          <Form className="p-1" onSubmit={submitHandler}>
+            <Row>
+              <Col lg="7" md="8" sm="10" xs="12" className="mb-2 mt-1">
+                <div className="form-label-group">
+                  <input
+                    style={{ marginRight: "10px" }}
+                    type="radio"
+                    name="Product Quantity"
+                    value={DiscountType}
+                    onChange={(e) => {
+                      setDiscountType("Percentage Wise");
+                      setFreeSelectedProduct(false);
+                      setAddAnotherProduct(false);
+                    }}
+                  />
+                  <span style={{ marginRight: "99px" }}>Percentage Wise</span>
+
+                  <input
+                    style={{ marginRight: "10px" }}
+                    type="radio"
+                    name="Product Quantity"
+                    value={DiscountType}
+                    onChange={(e) => {
+                      setDiscountType("Amount Wise");
+                      setFreeSelectedProduct(false);
+                      setAddAnotherProduct(false);
+                    }}
+                  />
+                  <span style={{ marginRight: "124px" }}>Amount Wise</span>
+                  <input
+                    style={{ marginRight: "10px" }}
+                    type="radio"
+                    name="Product Quantity"
+                    placeholder="Product Quantity"
+                    value={DiscountType}
+                    onChange={(e) => setDiscountType("Product Wise")}
+                  />
+                  <span style={{ marginRight: "60px" }}>Product Wise</span>
+                </div>
+              </Col>
+            </Row>
+            <Row>
               {DiscountType && DiscountType == "Percentage Wise" ? (
                 <>
                   <Col className="mb-1" lg="3" md="3" sm="12">
@@ -507,20 +577,20 @@ const CreatePromotionalActivity = (args) => {
                       <Input
                         required
                         type="number"
+                        step="0.01"
+                        min={0}
+                        max={99}
                         name="DiscountinPercentage"
                         placeholder="Discount in Percentage %"
                         value={Discountpercent}
                         onChange={(e) => {
-                          if (e.target.value.length < 3) {
-                            setDiscountpercentage(e.target.value);
-                          } else {
-                          }
+                          setDiscountpercentage(e.target.value);
                         }}
                         onWheel={(e) => e.preventDefault()}
                       />
                     </div>
                   </Col>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
+                  {/* <Col className="mb-1" lg="3" md="3" sm="12">
                     <div className="">
                       <Label>Start Date</Label>
                       <Input
@@ -545,9 +615,11 @@ const CreatePromotionalActivity = (args) => {
                         onWheel={(e) => e.preventDefault()}
                       />
                     </div>
-                  </Col>
+                  </Col> */}
                 </>
               ) : null}
+            </Row>
+            <Row>
               {DiscountType && DiscountType == "Amount Wise" ? (
                 <>
                   <Col className="mb-1" lg="3" md="3" sm="12">
@@ -578,7 +650,7 @@ const CreatePromotionalActivity = (args) => {
                       />
                     </div>
                   </Col>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
+                  {/* <Col className="mb-1" lg="3" md="3" sm="12">
                     <div className="">
                       <Label>Start Date</Label>
                       <Input
@@ -603,10 +675,12 @@ const CreatePromotionalActivity = (args) => {
                         onWheel={(e) => e.preventDefault()}
                       />
                     </div>
-                  </Col>
+                  </Col> */}
                 </>
               ) : null}
-              {DiscountType && DiscountType == "Product Wise" ? (
+            </Row>
+            {/* <Row className="p-1"> */}
+            {/* {DiscountType && DiscountType == "Product Wise" ? (
                 <>
                   <Col className="mb-1" lg="3" md="3" sm="12">
                     <div className="">
@@ -727,107 +801,182 @@ const CreatePromotionalActivity = (args) => {
                     </Row>
                   </div>
                 </>
-              ) : null}
-              <Col lg="12" md="12" sm="12">
-                <Row>
-                  {AddAnotherProduct && (
-                    <>
-                      {product &&
-                        product?.map((product, index) => (
-                          <Row className="" key={index}>
-                            <Col className="mb-1" lg="4" md="4" sm="12">
-                              <div className="">
-                                <Label>Product Name</Label>
-                                <Multiselect
-                                  required
-                                  selectionLimit={1}
-                                  isObject="false"
-                                  options={ProductList}
-                                  onSelect={(selectedList, selectedItem) =>
-                                    handleSelection(
-                                      selectedList,
-                                      selectedItem,
-                                      index
-                                    )
-                                  }
-                                  onRemove={(selectedList, selectedItem) => {
-                                    handleRemoveSelected(
-                                      selectedList,
-                                      selectedItem,
-                                      index
-                                    );
-                                  }}
-                                  displayValue="Product_Title" // Property name to display in the dropdown options
-                                />
-                              </div>
-                            </Col>
-                            <Col className="mb-1" lg="4" md="4" sm="12">
-                              <div className="">
-                                <Label>Quantity</Label>
-                                <Input
-                                  type="number"
-                                  name="qty"
-                                  placeholder="Req_Qty"
-                                  value={product?.qty}
-                                  onChange={(e) =>
-                                    handleProductChangeProduct(e, index)
-                                  }
-                                />
-                              </div>
-                            </Col>
+              ) : null} */}
+            {/* </Row> */}
 
-                            <Col
-                              className="d-flex mt-1 abb"
-                              lg="3"
-                              md="3"
-                              sm="12">
-                              <div className="btnStyle">
-                                {index ? (
-                                  <Button
-                                    type="button"
-                                    color="danger"
-                                    className="button remove "
-                                    onClick={() => removeMoreProduct(index)}>
-                                    - Remove
-                                  </Button>
-                                ) : null}
-                              </div>
+            <div>
+              {DiscountType && DiscountType == "Product Wise" && (
+                <>
+                  {product &&
+                    product?.map((product, index) => (
+                      <Row className="" key={index}>
+                        <Col className="mb-1" lg="3" md="3" sm="12">
+                          <div className="">
+                            <Label>Product Name</Label>
+                            <Multiselect
+                              required
+                              selectionLimit={1}
+                              isObject="false"
+                              options={ProductList}
+                              onSelect={(selectedList, selectedItem) =>
+                                handleSelection(
+                                  selectedList,
+                                  selectedItem,
+                                  index,
+                                  "productId"
+                                )
+                              }
+                              onRemove={(selectedList, selectedItem) => {
+                                handleRemoveSelected(
+                                  selectedList,
+                                  selectedItem,
+                                  index
+                                );
+                              }}
+                              displayValue="Product_Title" // Property name to display in the dropdown options
+                            />
+                          </div>
+                        </Col>
+                        <Col className="mb-1" lg="1" md="1" sm="12">
+                          <div className="">
+                            <Label>Target</Label>
+                            <Input
+                              type="number"
+                              name="targetQty"
+                              min={0}
+                              placeholder="target Qty"
+                              value={product?.targetQty}
+                              onChange={(e) =>
+                                handleProductChangeProduct(e, index)
+                              }
+                            />
+                          </div>
+                        </Col>
+                        <Col className="mb-1" lg="1" md="1" sm="12">
+                          <div className="">
+                            <Label>Amount</Label>
+                            <Input
+                              min={0}
+                              type="number"
+                              name="discountAmount"
+                              placeholder="Discount Amount"
+                              value={product?.discountAmount}
+                              onChange={(e) =>
+                                handleProductChangeProduct(e, index)
+                              }
+                            />
+                          </div>
+                        </Col>
+                        <Col className="mb-1" lg="1" md="1" sm="12">
+                          <div className="">
+                            <Label>Percentage</Label>
+                            <Input
+                              min={0}
+                              max={100}
+                              type="number"
+                              name="discountPercentage"
+                              placeholder="Discount Percentage"
+                              value={product?.discountPercentage}
+                              onChange={(e) =>
+                                handleProductChangeProduct(e, index)
+                              }
+                            />
+                          </div>
+                        </Col>
+                        <Col className="mb-1" lg="1" md="1" sm="12">
+                          <div className="">
+                            <Label>Piece</Label>
+                            <Input
+                              min={0}
+                              type="number"
+                              name="freeProductQty"
+                              placeholder="free Product Qty"
+                              value={product?.freeProductQty}
+                              onChange={(e) =>
+                                handleProductChangeProduct(e, index)
+                              }
+                            />
+                          </div>
+                        </Col>
+                        {product?.freeProductQty > 0 &&
+                        <Col className="mb-1" lg="3" md="3" sm="12">
+                          <div className="">
+                            <Label>Free Piece Product Name <span style={{color:"red"}}>*</span></Label>
+                            <Multiselect
+                              required
+                              selectionLimit={1}
+                              isObject="false"
+                              options={ProductList}
+                              onSelect={(selectedList, selectedItem) =>
+                                handleSelection(
+                                  selectedList,
+                                  selectedItem,
+                                  index,
+                                  "freeProduct"
+                                )
+                              }
+                              onRemove={(selectedList, selectedItem) => {
+                                handleRemoveSelected(
+                                  selectedList,
+                                  selectedItem,
+                                  index
+                                );
+                              }}
+                              displayValue="Product_Title" // Property name to display in the dropdown options
+                            />
+                          </div>
+                        </Col>
+                        }
 
-                              <div className="btnStyle">
-                                <Button
-                                  className="ml-1 mb-1"
-                                  color="primary"
-                                  type="button"
-                                  onClick={() => addMoreProduct()}>
-                                  + Add
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        ))}
-                    </>
-                  )}
-                  {FreeSelectedProduct && (
-                    <>
-                      <Col className="mb-1" lg="4" md="4" sm="12">
-                        <div className="">
-                          <Label>Free Selected Product Quantity</Label>
-                          <Input
-                            required
-                            type="number"
-                            placeholder="Number of Quantity"
-                            value={FreeNumberofProduct}
-                            onChange={(e) =>
-                              setFreeNumberofProduct(e.target.value)
-                            }
-                          />
-                        </div>
-                      </Col>
-                    </>
-                  )}
-                </Row>
-              </Col>
-            </Row>
+                        <Col className="" lg="1" md="1" sm="12">
+                          {index ? (
+                            <Button
+                              type="button"
+                              color="danger"
+                              className="button remove mt-2 "
+                              onClick={() => removeMoreProduct(index)}>
+                              X
+                            </Button>
+                          ) : null}
+                        </Col>
+                      </Row>
+                    ))}
+                </>
+              )}
+            </div>
+            {DiscountType && DiscountType == "Product Wise" && (
+              <Row>
+                <Col>
+                  <div className="float-right">
+                    <div className="btnStyle">
+                      <Button
+                        className="ml-1 mb-1"
+                        color="primary"
+                        type="button"
+                        onClick={() => addMoreProduct()}>
+                        + Add
+                      </Button>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            )}
+            {/* {FreeSelectedProduct && (
+              <>
+                <Col className="mb-1" lg="4" md="4" sm="12">
+                  <div className="">
+                    <Label>Free Selected Product Quantity</Label>
+                    <Input
+                      required
+                      type="number"
+                      placeholder="Number of Quantity"
+                      value={FreeNumberofProduct}
+                      onChange={(e) => setFreeNumberofProduct(e.target.value)}
+                    />
+                  </div>
+                </Col>
+              </>
+            )} */}
 
             <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
               <Label className="mb-0">Status</Label>
@@ -865,25 +1014,67 @@ const CreatePromotionalActivity = (args) => {
               </Col>
             </Row>
           </Form>
-          <Modal isOpen={modal} toggle={toggle} {...args}>
-            <ModalHeader toggle={toggle}>Add Promotion Code here</ModalHeader>
+          <Modal size="lg" isOpen={modal} toggle={toggle} {...args}>
+            <ModalHeader toggle={toggle}>Add Activity here</ModalHeader>
             <ModalBody>
-              <Form onSubmit={handleSubmitPromocode}>
-                <Row>
-                  <Col className="mb-1" lg="6" md="6" sm="12">
-                    <Label>Activity Name</Label>
-                    <Input
-                      required
-                      type="text"
-                      name="activityName"
-                      placeholder="Enter Activity Name"
-                      value={activityName}
-                      onChange={(e) => {
-                        setActivityName(e.target.value.toUpperCase());
-                      }}
+              <Row>
+                <Col>
+                  <Label className="mb-0">Choose Activity Action</Label>
+                  <div
+                    className="form-label-group mt-1"
+                    name="type"
+                    onChange={(e) => {
+                      setFormData({
+                        ...formData,
+                        type: e.target.value,
+                        editActivity: false,
+                        ActivityName: "",
+                        FromDate: "",
+                        ToDate: "",
+                      });
+                    }}
+                    value={formData?.type}>
+                    <input
+                      checked={formData?.type == "Add"}
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="type"
+                      value="Add"
                     />
-                  </Col>
-                  <Col className="mb-1" lg="6" md="6" sm="12">
+                    <span style={{ marginRight: "20px" }}>Add New</span>
+
+                    <input
+                      checked={formData?.type == "List"}
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="type"
+                      value="List"
+                    />
+                    <span style={{ marginRight: "3px" }}>List</span>
+                  </div>
+                </Col>
+              </Row>
+              {formData?.type == "Add" && (
+                <Form onSubmit={handleSubmitActivity}>
+                  <div className="d-flex justify-content-center">
+                    <h3>{!!formData?.editActivity && <>Edit Activity</>}</h3>
+                  </div>
+                  <Row>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <Label>Activity Name</Label>
+                      <Input
+                        required
+                        type="text"
+                        name="ActivityName"
+                        placeholder="Enter Activity Name"
+                        onChange={handleInputChange}
+                        value={formData?.ActivityName}
+                        // onChange={(e) => {
+                        //   setActivityName(e.target.value.toUpperCase());
+                        // }}
+                      />
+                    </Col>
+                    {/* <Col className="mb-1" lg="6" md="6" sm="12">
                     <Label>Promo code</Label>
                     <Input
                       required
@@ -895,8 +1086,8 @@ const CreatePromotionalActivity = (args) => {
                         setPromocode(e.target.value.toUpperCase());
                       }}
                     />
-                  </Col>
-                  {/* <Col className="mb-1" lg="6" md="6" sm="12">
+                  </Col> */}
+                    {/* <Col className="mb-1" lg="6" md="6" sm="12">
                     <Label>Amount</Label>
                     <Input
                       required
@@ -906,73 +1097,137 @@ const CreatePromotionalActivity = (args) => {
                       onChange={(e) => setDiscount(e.target.value)}
                     />
                   </Col> */}
-                  <Col className="mb-1" lg="6" md="6" sm="12">
-                    <div className="">
-                      <Label>Start Date</Label>
-                      <Input
-                        required
-                        type="date"
-                        name="DiscountinPercentage"
-                        value={startdate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        onWheel={(e) => e.preventDefault()}
-                      />
-                    </div>
-                  </Col>
-                  <Col className="mb-1" lg="6" md="6" sm="12">
-                    <div className="">
-                      <Label>End Date</Label>
-                      <Input
-                        required
-                        type="date"
-                        name="DiscountinPercentage"
-                        value={Enddate}
-                        onChange={(e) => setEnddate(e.target.value)}
-                        onWheel={(e) => e.preventDefault()}
-                      />
-                    </div>
-                  </Col>
-                  <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
-                    <Label className="mb-0">Status</Label>
-                    <div
-                      className="form-label-group mt-1"
-                      onChange={(e) => {
-                        setStatus(e.target.value);
-                      }}>
-                      <input
-                        checked={Status == "Active"}
-                        style={{ marginRight: "3px" }}
-                        type="radio"
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>Start Date</Label>
+                        <Input
+                          required
+                          type="date"
+                          name="FromDate"
+                          onChange={handleInputChange}
+                          value={formData?.FromDate}
+                        />
+                      </div>
+                    </Col>
+                    <Col className="mb-1" lg="6" md="6" sm="12">
+                      <div className="">
+                        <Label>End Date</Label>
+                        <Input
+                          required
+                          type="date"
+                          name="ToDate"
+                          onChange={handleInputChange}
+                          value={formData?.ToDate}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
+                      <Label className="mb-0">Status</Label>
+                      <div
+                        className="form-label-group mt-1"
                         name="status"
-                        value="Active"
-                      />
-                      <span style={{ marginRight: "20px" }}>Active</span>
+                        onChange={handleInputChange}
+                        value={formData?.status}>
+                        <input
+                          checked={formData?.status == "Active"}
+                          style={{ marginRight: "3px" }}
+                          type="radio"
+                          name="status"
+                          value="Active"
+                        />
+                        <span style={{ marginRight: "20px" }}>Active</span>
 
-                      <input
-                        // checked={status == "Inactive"}
-                        checked={Status == "Deactive"}
-                        style={{ marginRight: "3px" }}
-                        type="radio"
-                        name="status"
-                        value="Deactive"
-                      />
-                      <span style={{ marginRight: "3px" }}>Deactive</span>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div className="d-flex justify-content-center">
-                      <Button.Ripple
-                        color="primary"
-                        type="submit"
-                        className="mt-2">
-                        Submit
-                      </Button.Ripple>
-                    </div>
-                  </Col>
-                </Row>
-              </Form>
+                        <input
+                          checked={formData?.status == "Deactive"}
+                          style={{ marginRight: "3px" }}
+                          type="radio"
+                          name="status"
+                          value="Deactive"
+                        />
+                        <span style={{ marginRight: "3px" }}>Deactive</span>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <div className="d-flex justify-content-center">
+                        <Button.Ripple
+                          color="primary"
+                          type="submit"
+                          className="mt-2">
+                          Submit
+                        </Button.Ripple>
+                      </div>
+                    </Col>
+                  </Row>
+                </Form>
+              )}
+
+              {formData?.type == "List" && (
+                <>
+                  <div className="d-flex justify-content-center">
+                    <h4>Activity List </h4>
+                  </div>
+                  <Table
+                    style={{ overflowY: "scroll", height: "100px" }}
+                    responsive>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Activity Name</th>
+                        <th>Code</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ActivityLists?.length &&
+                        ActivityLists?.map((ele, i) => {
+                          return (
+                            <tr key={i}>
+                              <th scope="row">{i + 1}</th>
+                              <td>{ele?.ActivityName}</td>
+                              <td>{ele?.Code}</td>
+                              <td>{ele?.FromDate?.split("T")[0]}</td>
+                              <td>{ele?.ToDate?.split("T")[0]}</td>
+                              <td>{ele?.status}</td>
+
+                              <td style={{ cursor: "pointer" }}>
+                                <span title="Edit">
+                                  <Edit
+                                    onClick={(e) => {
+                                      setFormData({
+                                        ...formData,
+                                        ActivityName: ele?.ActivityName,
+                                        FromDate: ele?.FromDate?.split("T")[0],
+                                        ToDate: ele?.ToDate?.split("T")[0],
+                                        status: ele?.status,
+                                        editActivity: true,
+                                        id: ele?._id,
+                                        type: "Add",
+                                      });
+                                    }}
+                                    color="green"
+                                    size={20}
+                                  />
+                                </span>{" "}
+                                <span title="Delete">
+                                  <Trash2
+                                    onClick={() => HandleDeleteActivity(ele)}
+                                    color="red"
+                                    size={20}
+                                  />
+                                </span>{" "}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
+                </>
+              )}
             </ModalBody>
           </Modal>
         </Card>

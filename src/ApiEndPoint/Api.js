@@ -108,6 +108,9 @@ export const Create_order_by_cashbook = "/cashbook/cashbook-order";
 //cashbookgetapi
 export const CashbookList = "/cashbook/view-order-list/";
 
+export const ActivityList = "/promotion/view-activity/";
+export const Update_Activity = "/promotion/update-activity/";
+export const Delete_Activity = "/promotion/delete-activity/";
 export const Save_Promotion = "/promotion/save-promotion";
 export const View_Promotion_List = "/promotion/view-promotion/";
 export const DeleteOne_Promotion = "/promotion/delete-promotion/";

@@ -718,7 +718,7 @@ class PromotionalActivityList extends React.Component {
                                           "/app/ajgroup/account/CreatePromotionalActivity"
                                         )
                                       }>
-                                      <FaPlus size={14} /> Activiity
+                                      <FaPlus size={14} /> Promotion
                                     </Button>
                                   )}
                                 />
