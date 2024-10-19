@@ -49,12 +49,8 @@ const CreatePromotionalActivity = (args) => {
   const [formData, setFormData] = useState({});
   // const [targetEndDate, settargetEndDate] = useState("");
   const [DiscountType, setDiscountType] = useState("");
-  const [startdate, setStartDate] = useState("");
-  const [FreeNumberofProduct, setFreeNumberofProduct] = useState("");
-  const [Enddate, setEnddate] = useState("");
   const [FreeSelectedProduct, setFreeSelectedProduct] = useState(false);
   const [AddAnotherProduct, setAddAnotherProduct] = useState(false);
-  const [NumberofProduct, setNumberofProduct] = useState("");
   const [error, setError] = useState("");
   const [Status, setStatus] = useState("");
   const [ProductList, setProductList] = useState([]);
@@ -81,9 +77,9 @@ const CreatePromotionalActivity = (args) => {
     {
       productId: "",
       targetQty: null,
-      discountAmount: null,
-      discountPercentage: null,
-      freeProductQty: "", //
+      // discountAmount: null,
+      // discountPercentage: null,
+      // freeProductQty: null,
       freeProduct: "",
     },
   ]);
@@ -157,11 +153,6 @@ const CreatePromotionalActivity = (args) => {
     }
   };
 
-  useEffect(() => {
-    console.log(formData);
-    console.log(product);
-  }, [formData, product]);
-
   const HandleActivityList = async () => {
     let userdata = JSON.parse(localStorage.getItem("userData"));
     _Get(ActivityList, userdata?.database)
@@ -195,9 +186,9 @@ const CreatePromotionalActivity = (args) => {
       {
         productId: "",
         targetQty: null,
-        discountAmount: null,
-        discountPercentage: null,
-        freeProductQty: "", //
+        // discountAmount: null,
+        // discountPercentage: null,
+        // freeProductQty: null,
         freeProduct: "",
       },
     ]);
@@ -267,12 +258,12 @@ const CreatePromotionalActivity = (args) => {
         {
           totalAmount: +TotalAmount,
           percentageDiscount: +Discountpercent,
-          activityId: formData?.selectedActivity?._id,
           status: Status,
           database: pageparmission?.database,
         },
       ];
       let payload = {
+        activityId: formData?.selectedActivity?._id,
         database: pageparmission?.database,
         percentageWise: percentage,
         created_by: pageparmission?._id,
@@ -295,17 +286,16 @@ const CreatePromotionalActivity = (args) => {
         {
           totalAmount: +TotalAmount,
           percentageAmount: +Discount,
-          activityId: formData?.selectedActivity?._id,
           database: pageparmission?.database,
 
           status: Status,
         },
       ];
       let payload = {
+        activityId: formData?.selectedActivity?._id,
         amountWise: amount,
         status: Status,
         database: pageparmission?.database,
-
         created_by: pageparmission?._id,
       };
       await SavePromotionsActivity(payload)
@@ -333,16 +323,16 @@ const CreatePromotionalActivity = (args) => {
       });
       let productWise = [
         {
-          activityId: formData?.selectedActivity?._id,
           freeOtherProducts: myproduct,
           database: pageparmission?.database,
         },
       ];
       let payload = {
-        productWise: productWise,
+        activityId: formData?.selectedActivity?._id,
+        productWise: myproduct,
+        // productWise: productWise,
         created_by: pageparmission?._id,
         database: pageparmission?.database,
-
         status: Status,
       };
 
@@ -358,11 +348,6 @@ const CreatePromotionalActivity = (args) => {
           swal("Error", "Something went wrong");
         });
     }
-
-    
-   
-
-    
   };
   const onSelect1 = (selectedList, selectedItem, index) => {
     setMainProduct(selectedItem);

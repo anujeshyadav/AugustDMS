@@ -116,6 +116,8 @@ class PromotionalActivityList extends React.Component {
             item !== "createdAt" &&
             item !== "updatedAt" &&
             item !== "status" &&
+            item !== "activityId" &&
+            item !== "promoCodeWise" &&
             item !== "database"
         );
         let unique = [...new Set(myarr)];
@@ -308,12 +310,33 @@ class PromotionalActivityList extends React.Component {
       let myarr = this.state.AllData?.filter(
         (ele, i) => ele[e.target.value]?.length
       );
-      let mydata = myarr?.map((ele, i) => {
-        let val = ele[e.target.value];
-        AllMainData?.push(val);
-        return { ...val[0], main_id: ele?._id, status: ele?.status };
-      });
+      let mydata=[];
+      if (e.target.value == "percentageWise") {
+        mydata = myarr?.map((ele, i) => {
+          let val = ele[e.target.value];
+          AllMainData?.push(val);
+          return {
+            ...val[0],
+            main_id: ele?._id,
+            status: ele?.status,
+            ...ele?.activityId,
+          };
+        });
+      } else if (e.target.value == "amountWise") {
+        mydata = myarr?.map((ele, i) => {
+          let val = ele[e.target.value];
+          AllMainData?.push(val);
+          return {
+            ...val[0],
+            main_id: ele?._id,
+            status: ele?.status,
+            ...ele?.activityId,
+          };
+        });
+      } else if (e.target.value == "productWise") {
+      }
 
+      debugger;
       let flatarr = mydata?.flat();
 
       for (const element of flatarr) {
