@@ -107,7 +107,9 @@ export const Create_Party_List = "/party/view-party";
 export const Create_order_by_cashbook = "/cashbook/cashbook-order";
 //cashbookgetapi
 export const CashbookList = "/cashbook/view-order-list/";
-
+export const SaveActivity = "/promotion/save-activity";
+export const UpdateProductWisePromotion =
+  "/promotion/update-product-promotion/";
 export const ActivityList = "/promotion/view-activity/";
 export const Update_Activity = "/promotion/update-activity/";
 export const Delete_Activity = "/promotion/delete-activity/";

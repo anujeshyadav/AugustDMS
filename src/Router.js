@@ -2309,7 +2309,7 @@ class AppRouter extends React.Component {
             component={CreatePromotionalActivity}
           />
           <AppRoute
-            path="/app/ajgroup/account/EditPromotionalActivity/:id"
+            path="/app/ajgroup/account/EditPromotionalActivity/:id/:Uid"
             component={EditPromotionalActivity}
           />
           <AppRoute

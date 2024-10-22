@@ -40,9 +40,7 @@ import StockTrxInvoice from "../../subcategory/StockTrxInvoice";
 import {
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
-  FaDownload,
   FaFilter,
-  FaPlus,
 } from "react-icons/fa";
 import swal from "sweetalert";
 import {
@@ -218,7 +216,20 @@ class PromotionalActivityReport extends React.Component {
           },
         },
         {
-          headerName: "target Qty",
+          headerName: "Product Name",
+          field: "partyId.lastName",
+          filter: true,
+          width: 180,
+          cellRendererFramework: (params) => {
+            return (
+              <div>
+                <span>{params?.data?.partyId?.lastName}</span>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Target",
           field: "partyId.gstNumber",
           filter: true,
           width: 250,
@@ -232,7 +243,7 @@ class PromotionalActivityReport extends React.Component {
         },
 
         {
-          headerName: "Achieved Qty",
+          headerName: "Achieved",
           field: "updatedAt",
           filter: true,
           width: 180,
@@ -248,9 +259,9 @@ class PromotionalActivityReport extends React.Component {
             );
           },
         },
-       
+
         {
-          headerName: "Activity Type",
+          headerName: "Balance",
           field: "amount",
           filter: true,
           width: 150,
@@ -266,7 +277,57 @@ class PromotionalActivityReport extends React.Component {
             );
           },
         },
-       
+        {
+          headerName: "Status",
+          field: "amount",
+          filter: true,
+          width: 150,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div>
+                  <Badge color="primary">
+                    {params.data?.amount?.toFixed(2)}
+                  </Badge>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Offer",
+          field: "amount",
+          filter: true,
+          width: 150,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div>
+                  <Badge color="primary">
+                    {params.data?.amount?.toFixed(2)}
+                  </Badge>
+                </div>
+              </div>
+            );
+          },
+        },
+        {
+          headerName: "Unit",
+          field: "amount",
+          filter: true,
+          width: 150,
+          cellRendererFramework: (params) => {
+            return (
+              <div className="d-flex align-items-center cursor-pointer">
+                <div>
+                  <Badge color="primary">
+                    {params.data?.amount?.toFixed(2)}
+                  </Badge>
+                </div>
+              </div>
+            );
+          },
+        },
       ],
     };
   }
@@ -308,12 +369,13 @@ class PromotionalActivityReport extends React.Component {
             item !== "status" &&
             item !== "database" &&
             item !== "createdAt" &&
-            item !== "updatedAt" 
+            item !== "activityId" &&
+            item !== "promoCodeWise" &&
+            item !== "updatedAt"
         );
         let unique = [...new Set(myarr)];
         this.setState({ Dropdown: unique });
         this.setState({ AllData: res?.Promotion });
-
 
         this.setState({ AllcolumnDefs: this.state.columnDefs });
         this.setState({ SelectedCols: this.state.columnDefs });
@@ -902,194 +964,194 @@ class PromotionalActivityReport extends React.Component {
     } = this.state;
     return (
       <>
-        
-            <Card>
-              <Row style={{marginLeft:'3px',marginRight:'3px'}}>
-                <Col  >
-                  <h3 className="float-left " style={{ fontWeight: "600" ,textTransform:'uppercase', fontSize:'18px',marginTop:'20px' }}>
-                    Promotional Activity Report
-                  </h3>
-                </Col>
-                {this.state.MasterShow && this.state.MasterShow ? (
-                  <Col lg="2" md="2" sm="6" style={{marginTop:'30px'}}>
-                    <SuperAdminUI
-                      onDropdownChange={this.handleDropdownChange}
-                      onSubmit={this.handleParentSubmit}
+        <Card>
+          <Row style={{ marginLeft: "3px", marginRight: "3px" }}>
+            <Col>
+              <h3
+                className="float-left "
+                style={{
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  fontSize: "18px",
+                  marginTop: "20px",
+                }}>
+                Promotional Activity Report
+              </h3>
+            </Col>
+            {this.state.MasterShow && this.state.MasterShow ? (
+              <Col lg="2" md="2" sm="6" style={{ marginTop: "30px" }}>
+                <SuperAdminUI
+                  onDropdownChange={this.handleDropdownChange}
+                  onSubmit={this.handleParentSubmit}
+                />
+              </Col>
+            ) : (
+              <Col></Col>
+            )}
+            {InsiderPermissions && InsiderPermissions?.View && (
+              <Col lg="2" md="2" sm="2" xs="2" style={{ marginTop: "30px" }}>
+                <CustomInput
+                  type="select"
+                  style={{ textTransform: "uppercase" }}
+                  name="typeofpromotion"
+                  className="float-right"
+                  // onChange={(e) => this.handleFilter(e)}
+                >
+                  <option value="NA">--Select Promotion Type--</option>
+                  {this.state.Dropdown &&
+                    this.state.Dropdown?.map((ele, i) => {
+                      return (
+                        <>
+                          <option value={ele}>{ele}</option>
+                        </>
+                      );
+                    })}
+                </CustomInput>
+              </Col>
+            )}
+            <Col lg="2" md="2" sm="2" style={{ marginTop: "30px" }}>
+              <div className="table-input ">
+                <Input
+                  className=" "
+                  placeholder="search Item here..."
+                  onChange={(e) => this.updateSearchQuery(e.target.value)}
+                  value={this.state.value}
+                />
+              </div>
+            </Col>
+            <Col lg="4" md="4" sm="4">
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div className="table-input  " style={{ marginTop: "10px" }}>
+                  <Label>Start Date</Label>
+                  <Input
+                    type="date"
+                    name="startDate"
+                    value={this.state.startDate}
+                    onChange={this.handleDate}
+                  />
+                </div>
+
+                <div className="table-input " style={{ marginTop: "10px" }}>
+                  <Label>End Date</Label>
+                  <Input
+                    type="date"
+                    name="EndDate"
+                    value={this.state.EndDate}
+                    onChange={this.handleDate}
+                  />
+                </div>
+
+                <div className="table-input " style={{ marginTop: "30px" }}>
+                  <Button
+                    type="submit"
+                    color="primary"
+                    onClick={this.handleSubmitDate}>
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </Col>
+            <Col lg="1" md="1" sm="6" xs="6" style={{ marginTop: "30px" }}>
+              {InsiderPermissions && InsiderPermissions?.View && (
+                <span className="">
+                  <FaFilter
+                    style={{ cursor: "pointer" }}
+                    title="filter coloumn"
+                    size="35px"
+                    onClick={this.LookupviewStart}
+                    color="#39cccc"
+                    className="float-right "
+                  />
+                </span>
+              )}
+              {InsiderPermissions && InsiderPermissions?.Download && (
+                <span
+                  onMouseEnter={this.toggleDropdown}
+                  onMouseLeave={this.toggleDropdown}
+                  className="">
+                  <div className="dropdown-container float-right">
+                    <ImDownload
+                      style={{ cursor: "pointer" }}
+                      title="Download file"
+                      size="35px"
+                      className="dropdown-button  "
+                      color="#39cccc"
                     />
-                  </Col>
-                ) : (
-                  <Col></Col>
-                )}
-                {InsiderPermissions && InsiderPermissions?.View && (
-                  <Col lg="2" md="2" sm="2" xs="2" style={{marginTop:'30px'}}>
-                    <CustomInput
-                      type="select"
-                      style={{textTransform:"uppercase"}}
-                      name="typeofpromotion"
-                      className="float-right"
-                      // onChange={(e) => this.handleFilter(e)}
-                      >
-                      <option value="NA">--Select Promotion Type--</option>
-                      {this.state.Dropdown &&
-                        this.state.Dropdown?.map((ele, i) => {
-                          return (
-                            <>
-                              <option value={ele}>{ele}</option>
-                            </>
-                          );
-                        })}
-                    </CustomInput>
-                  </Col>
-                )}
-                  <Col lg="2" md="2" sm="2" style={{marginTop:'30px'}}>
-                   <div className="table-input ">
-                          <Input
-                            className=" "
-                            placeholder="search Item here..."
-                            onChange={(e) =>
-                              this.updateSearchQuery(e.target.value)
-                            }
-                            value={this.state.value}
-                          />
-                        </div>
-                  </Col>
-                  <Col lg="4" md="4" sm="4" >
-                  <div style={{display:"flex",justifyContent:"space-between"}}>
-                        <div className="table-input  " style={{marginTop:'10px'}}>
-                          <Label>Start Date</Label>
-                          <Input
-                            type="date"
-                            name="startDate"
-                            value={this.state.startDate}
-                            onChange={this.handleDate}
-                          />
-                        </div>
-
-                        <div className="table-input " style={{marginTop:'10px'}}>
-                          <Label>End Date</Label>
-                          <Input
-                            type="date"
-                            name="EndDate"
-                            value={this.state.EndDate}
-                            onChange={this.handleDate}
-                          />
-                        </div>
-
-                        <div className="table-input " style={{marginTop:'30px'}}>
-                          <Button
-                            type="submit"
-                            
-                            color="primary"
-                            onClick={this.handleSubmitDate}>
-                            Submit
-                          </Button>
-                        </div>
-                       
-                      </div>
-                  </Col>
-                <Col lg="1" md="1" sm="6" xs="6" style={{marginTop:'30px'}}>
-                  {InsiderPermissions && InsiderPermissions?.View && (
-                    <span className="">
-                      <FaFilter
-                        style={{ cursor: "pointer" }}
-                        title="filter coloumn"
-                        size="35px"
-                        onClick={this.LookupviewStart}
-                        color="#39cccc"
-                        className="float-right "
-                      />
-                    </span>
-                  )}
-                  {InsiderPermissions && InsiderPermissions?.Download && (
-                    <span
-                      onMouseEnter={this.toggleDropdown}
-                      onMouseLeave={this.toggleDropdown}
-                      className="">
-                      <div className="dropdown-container float-right">
-                        <ImDownload
-                          style={{ cursor: "pointer" }}
-                          title="Download file"
-                          size="35px"
-                          className="dropdown-button  "
-                          color="#39cccc"
-                        />
-                        {isOpen && (
-                          <div
-                          style={{
+                    {isOpen && (
+                      <div
+                        style={{
                           position: "absolute",
                           zIndex: "1",
                           border: "1px solid rgb(8, 91, 245)",
                           backgroundColor: "white",
                         }}
-                            className="dropdown-content dropdownmy">
-                            <h5
-                              onClick={() => this.exportToPDF()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive mt-1">
-                              .PDF
-                            </h5>
-                            <h5
-                              onClick={() => this.gridApi.exportDataAsCsv()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .CSV
-                            </h5>
-                            <h5
-                              onClick={this.convertCSVtoExcel}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XLS
-                            </h5>
-                            <h5
-                              onClick={this.exportToExcel}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XLSX
-                            </h5>
-                            <h5
-                              onClick={() => this.convertCsvToXml()}
-                              style={{ cursor: "pointer" }}
-                              className=" mx-1 myactive">
-                              .XML
-                            </h5>
-                          </div>
-                        )}
+                        className="dropdown-content dropdownmy">
+                        <h5
+                          onClick={() => this.exportToPDF()}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive mt-1">
+                          .PDF
+                        </h5>
+                        <h5
+                          onClick={() => this.gridApi.exportDataAsCsv()}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .CSV
+                        </h5>
+                        <h5
+                          onClick={this.convertCSVtoExcel}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .XLS
+                        </h5>
+                        <h5
+                          onClick={this.exportToExcel}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .XLSX
+                        </h5>
+                        <h5
+                          onClick={() => this.convertCsvToXml()}
+                          style={{ cursor: "pointer" }}
+                          className=" mx-1 myactive">
+                          .XML
+                        </h5>
                       </div>
-                    </span>
-                  )}
-                </Col>
-              </Row>
-              <CardBody style={{ marginTop: "0rem" }}>
-                {this.state.rowData === null ? null : (
-                  <div className="ag-theme-material w-100 my-2 ag-grid-table">
-                     
-                    <ContextLayout.Consumer className="ag-theme-alpine">
-                      {(context) => (
-                        <AgGridReact
-                          id="myAgGrid"
-                          gridOptions={this.gridOptions}
-                          rowSelection="multiple"
-                          defaultColDef={defaultColDef}
-                          columnDefs={columnDefs}
-                          rowData={rowData}
-                          onGridReady={this.onGridReady}
-                          colResizeDefault={"shift"}
-                          animateRows={true}
-                          floatingFilter={false}
-                         pagination={true}
-                          paginationPageSize={this.state.paginationPageSize}
-                          pivotPanelShow="always"
-                          enableRtl={context.state.direction === "rtl"}
-                          ref={this.gridRef} // Attach the ref to the grid
-                          domLayout="autoHeight" // Adjust layout as needed
-                        />
-                      )}
-                    </ContextLayout.Consumer>
+                    )}
                   </div>
-                )}
-              </CardBody>
-            </Card>
-          
+                </span>
+              )}
+            </Col>
+          </Row>
+          <CardBody style={{ marginTop: "0rem" }}>
+            {this.state.rowData === null ? null : (
+              <div className="ag-theme-material w-100 my-2 ag-grid-table">
+                <ContextLayout.Consumer className="ag-theme-alpine">
+                  {(context) => (
+                    <AgGridReact
+                      id="myAgGrid"
+                      gridOptions={this.gridOptions}
+                      rowSelection="multiple"
+                      defaultColDef={defaultColDef}
+                      columnDefs={columnDefs}
+                      rowData={rowData}
+                      onGridReady={this.onGridReady}
+                      colResizeDefault={"shift"}
+                      animateRows={true}
+                      floatingFilter={false}
+                      pagination={true}
+                      paginationPageSize={this.state.paginationPageSize}
+                      pivotPanelShow="always"
+                      enableRtl={context.state.direction === "rtl"}
+                      ref={this.gridRef} // Attach the ref to the grid
+                      domLayout="autoHeight" // Adjust layout as needed
+                    />
+                  )}
+                </ContextLayout.Consumer>
+              </div>
+            )}
+          </CardBody>
+        </Card>
 
         <Modal
           isOpen={this.state.modal}

@@ -38,6 +38,7 @@ import { Copy, Edit, Trash2 } from "react-feather";
 import {
   ActivityList,
   Delete_Activity,
+  SaveActivity,
   Update_Activity,
 } from "../../../../ApiEndPoint/Api";
 import { handleSidebar } from "../../../../redux/actions/calendar";
@@ -49,14 +50,11 @@ const CreatePromotionalActivity = (args) => {
   const [formData, setFormData] = useState({});
   // const [targetEndDate, settargetEndDate] = useState("");
   const [DiscountType, setDiscountType] = useState("");
-  const [FreeSelectedProduct, setFreeSelectedProduct] = useState(false);
-  const [AddAnotherProduct, setAddAnotherProduct] = useState(false);
+
   const [error, setError] = useState("");
   const [Status, setStatus] = useState("");
   const [ProductList, setProductList] = useState([]);
   const [ActivityLists, setActivityList] = useState([]);
-  const [mainProduct, setMainProduct] = useState({});
-  const [grandTotalAmt, setGrandTotalAmt] = useState(0);
   const [TotalAmount, setTotalAmount] = useState("");
   const [Discountpercent, setDiscountpercentage] = useState("");
   const [Discount, setDiscount] = useState("");
@@ -67,7 +65,6 @@ const CreatePromotionalActivity = (args) => {
 
   const audittoggle = () => {
     setAudit(!audit);
-    // setModal(!modal);
   };
 
   const handleHistory = () => {
@@ -80,7 +77,7 @@ const CreatePromotionalActivity = (args) => {
       // discountAmount: null,
       // discountPercentage: null,
       // freeProductQty: null,
-      freeProduct: "",
+      // freeProduct: "",
     },
   ]);
 
@@ -93,15 +90,6 @@ const CreatePromotionalActivity = (args) => {
 
   const handleRemoveSelected = (selectedList, selectedItem, index) => {
     SelectedITems.splice(index, 1);
-    let myarr = product?.map((ele, i) => {
-      console.log(ele?.qty * selectedItem[i]?.Product_MRP);
-      let indextotal = ele?.qty * SelectedITems[i]?.Product_MRP;
-      GrandTotal[index] = indextotal;
-      return indextotal;
-    });
-
-    let amt = myarr.reduce((a, b) => a + b);
-    setGrandTotalAmt(amt);
   };
   const handleSelection = (selectedList, selectedItem, index, type) => {
     SelectedITems.push(selectedItem);
@@ -168,7 +156,6 @@ const CreatePromotionalActivity = (args) => {
     HandleActivityList();
     ProductListView(userdata?._id, userdata?.database)
       .then((res) => {
-        console.log(res?.Product);
         setProductList(res?.Product);
       })
       .catch((err) => {
@@ -189,7 +176,7 @@ const CreatePromotionalActivity = (args) => {
         // discountAmount: null,
         // discountPercentage: null,
         // freeProductQty: null,
-        freeProduct: "",
+        // freeProduct: "",
       },
     ]);
   };
@@ -199,14 +186,25 @@ const CreatePromotionalActivity = (args) => {
 
     setProduct(newFormValues);
   };
+  const calculateDays = (startDate, endDate) => {
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffTime = Math.abs(end - start); // difference in milliseconds
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // converting milliseconds to days
+      return diffDays;
+    }
+  };
 
   const handleSubmitActivity = async (e) => {
     e.preventDefault();
+    let NoOfDays = calculateDays(formData?.FromDate, formData?.ToDate);
     let userinfor = JSON.parse(localStorage.getItem("userData"));
     let Data = {
       ActivityName: formData?.ActivityName,
       FromDate: formData?.FromDate,
       ToDate: formData?.ToDate,
+      NoOfDays: NoOfDays,
       status: formData?.status,
       database: userinfor?.database,
     };
@@ -220,38 +218,19 @@ const CreatePromotionalActivity = (args) => {
           swal("Error", "Something went wrong");
         });
     } else {
+      await _PostSave(SaveActivity, Data)
+        .then((res) => {
+          swal("success", "Created Successfully");
+          HandleActivityList();
+        })
+        .catch((err) => {
+          swal("Error", "Something went wrong");
+        });
     }
-
-    // let promo = [
-    //   {
-    //     promoCode: Promocode,
-    //     promoAmount: Discount,
-    //     startDate: startdate,
-    //     endDate: Enddate,
-    //     status: Status,
-    //   },
-    // ];
-    // let mypromot = {
-    //   promoCodeWise: promo,
-    //   created_by: pageparmission?._id,
-    //   status: Status,
-    // };
-    // await _PostSave()
-    // await SavePromotionsActivity(mypromot)
-    //   .then((res) => {
-    //     // console.log(res);
-    //     History.goBack();
-    //     swal("success", "Promotion Code Submitted Successfully");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     swal("Error", "Something went wrong");
-    //   });
   };
   const submitHandler = async (e) => {
     e.preventDefault();
     let pageparmission = JSON.parse(localStorage.getItem("userData"));
-    debugger;
 
     if (DiscountType == "Percentage Wise") {
       let percentage = [
@@ -330,7 +309,6 @@ const CreatePromotionalActivity = (args) => {
       let payload = {
         activityId: formData?.selectedActivity?._id,
         productWise: myproduct,
-        // productWise: productWise,
         created_by: pageparmission?._id,
         database: pageparmission?.database,
         status: Status,
@@ -338,9 +316,7 @@ const CreatePromotionalActivity = (args) => {
 
       await SavePromotionsActivity(payload)
         .then((res) => {
-          console.log(res);
           History.goBack();
-
           swal("success", "Submitted Successfully");
         })
         .catch((err) => {
@@ -349,13 +325,7 @@ const CreatePromotionalActivity = (args) => {
         });
     }
   };
-  const onSelect1 = (selectedList, selectedItem, index) => {
-    setMainProduct(selectedItem);
-  };
-  const onRemove1 = (selectedList, removedItem, index) => {
-    console.log(selectedList);
-    console.log(index);
-  };
+
   const HandleDeleteActivity = async (data) => {
     await _Delete(Delete_Activity, data?._id)
       .then((res) => {
@@ -478,6 +448,9 @@ const CreatePromotionalActivity = (args) => {
                           }
                           size={20}
                         />
+                        <span style={{ color: "green" }}>
+                          {!!formData?.clipboardCopy && <>Copied</>}
+                        </span>
                       </span>
                     </div>
                     <div>
@@ -509,8 +482,6 @@ const CreatePromotionalActivity = (args) => {
                     value={DiscountType}
                     onChange={(e) => {
                       setDiscountType("Percentage Wise");
-                      setFreeSelectedProduct(false);
-                      setAddAnotherProduct(false);
                     }}
                   />
                   <span style={{ marginRight: "99px" }}>Percentage Wise</span>
@@ -522,8 +493,6 @@ const CreatePromotionalActivity = (args) => {
                     value={DiscountType}
                     onChange={(e) => {
                       setDiscountType("Amount Wise");
-                      setFreeSelectedProduct(false);
-                      setAddAnotherProduct(false);
                     }}
                   />
                   <span style={{ marginRight: "124px" }}>Amount Wise</span>
@@ -664,130 +633,6 @@ const CreatePromotionalActivity = (args) => {
                 </>
               ) : null}
             </Row>
-            {/* <Row className="p-1"> */}
-            {/* {DiscountType && DiscountType == "Product Wise" ? (
-                <>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
-                    <div className="">
-                      <Label>Choose Product *</Label>
-                      <Multiselect
-                        required
-                        selectionLimit={1}
-                        // showCheckbox="true"
-                        isObject="false"
-                        options={ProductList} // Options to display in the dropdown
-                        // selectedValues={selectedValue}   // Preselected value to persist in dropdown
-                        onSelect={onSelect1} // Function will trigger on select event
-                        onRemove={onRemove1} // Function will trigger on remove event
-                        displayValue="Product_Title" // Property name to display in the dropdown options
-                      />
-                    </div>
-                  </Col>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
-                    <div className="">
-                      <Label>Product Quantity</Label>
-                      <Input
-                        required
-                        type="number"
-                        name="TotalAmount"
-                        placeholder="Product Total Amount"
-                        value={NumberofProduct}
-                        onChange={(e) => setNumberofProduct(e.target.value)}
-                        onWheel={(e) => e.preventDefault()}
-                      />
-                    </div>
-                  </Col>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
-                    <div className="">
-                      <Label>Discount Amount</Label>
-                      <Input
-                        type="number"
-                        name="DiscountAmount"
-                        placeholder="Discount Amount"
-                        value={Discount}
-                        onChange={(e) => setDiscount(e.target.value)}
-                        onWheel={(e) => e.preventDefault()}
-                      />
-                    </div>
-                  </Col>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
-                    <div className="">
-                      <Label> or Discount %</Label>
-                      <Input
-                        type="number"
-                        name="DiscountAmount"
-                        placeholder="Discount Percentage %"
-                        value={Discountpercent}
-                        onChange={(e) => setDiscountpercentage(e.target.value)}
-                        onWheel={(e) => e.preventDefault()}
-                      />
-                    </div>
-                  </Col>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
-                    <div className="">
-                      <Label>Start Date</Label>
-                      <Input
-                        required
-                        type="date"
-                        value={startdate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        onWheel={(e) => e.preventDefault()}
-                      />
-                    </div>
-                  </Col>
-                  <Col className="mb-1" lg="3" md="3" sm="12">
-                    <div className="">
-                      <Label>End Date</Label>
-                      <Input
-                        required
-                        type="date"
-                        value={Enddate}
-                        onChange={(e) => setEnddate(e.target.value)}
-                        onWheel={(e) => e.preventDefault()}
-                      />
-                    </div>
-                  </Col>
-
-                  <div className="p-1">
-                    <Row>
-                      <Col lg="12" md="12" sm="12" className="">
-                        <div className="form-label-group">
-                          <input
-                            style={{ marginRight: "3px" }}
-                            type="radio"
-                            name="ProductQuantity1"
-                            placeholder="Product Quantity"
-                            onChange={(e) => {
-                              setFreeSelectedProduct(true);
-                              setAddAnotherProduct(false);
-                            }}
-                          />
-                          <span style={{ marginRight: "60px" }}>
-                            or Free selected Product Quantity
-                          </span>
-
-                          <input
-                            style={{ marginRight: "3px" }}
-                            type="radio"
-                            name="ProductQuantity1"
-                            placeholder="Product Quantity"
-                            // value={targetStartDate}
-                            onChange={(e) => {
-                              setFreeSelectedProduct(false);
-
-                              setAddAnotherProduct(true);
-                            }}
-                          />
-                          <span style={{ marginRight: "60px" }}>
-                            Want to Add Another Product
-                          </span>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </>
-              ) : null} */}
-            {/* </Row> */}
 
             <div>
               {DiscountType && DiscountType == "Product Wise" && (
@@ -883,35 +728,38 @@ const CreatePromotionalActivity = (args) => {
                             />
                           </div>
                         </Col>
-                        {product?.freeProductQty > 0 &&
-                        <Col className="mb-1" lg="3" md="3" sm="12">
-                          <div className="">
-                            <Label>Free Piece Product Name <span style={{color:"red"}}>*</span></Label>
-                            <Multiselect
-                              required
-                              selectionLimit={1}
-                              isObject="false"
-                              options={ProductList}
-                              onSelect={(selectedList, selectedItem) =>
-                                handleSelection(
-                                  selectedList,
-                                  selectedItem,
-                                  index,
-                                  "freeProduct"
-                                )
-                              }
-                              onRemove={(selectedList, selectedItem) => {
-                                handleRemoveSelected(
-                                  selectedList,
-                                  selectedItem,
-                                  index
-                                );
-                              }}
-                              displayValue="Product_Title" // Property name to display in the dropdown options
-                            />
-                          </div>
-                        </Col>
-                        }
+                        {product?.freeProductQty > 0 && (
+                          <Col className="mb-1" lg="3" md="3" sm="12">
+                            <div className="">
+                              <Label>
+                                Free Piece Product Name{" "}
+                                <span style={{ color: "red" }}>*</span>
+                              </Label>
+                              <Multiselect
+                                required
+                                selectionLimit={1}
+                                isObject="false"
+                                options={ProductList}
+                                onSelect={(selectedList, selectedItem) =>
+                                  handleSelection(
+                                    selectedList,
+                                    selectedItem,
+                                    index,
+                                    "freeProduct"
+                                  )
+                                }
+                                onRemove={(selectedList, selectedItem) => {
+                                  handleRemoveSelected(
+                                    selectedList,
+                                    selectedItem,
+                                    index
+                                  );
+                                }}
+                                displayValue="Product_Title" // Property name to display in the dropdown options
+                              />
+                            </div>
+                          </Col>
+                        )}
 
                         <Col className="" lg="1" md="1" sm="12">
                           {index ? (
@@ -946,22 +794,6 @@ const CreatePromotionalActivity = (args) => {
                 </Col>
               </Row>
             )}
-            {/* {FreeSelectedProduct && (
-              <>
-                <Col className="mb-1" lg="4" md="4" sm="12">
-                  <div className="">
-                    <Label>Free Selected Product Quantity</Label>
-                    <Input
-                      required
-                      type="number"
-                      placeholder="Number of Quantity"
-                      value={FreeNumberofProduct}
-                      onChange={(e) => setFreeNumberofProduct(e.target.value)}
-                    />
-                  </div>
-                </Col>
-              </>
-            )} */}
 
             <Col lg="6" md="6" sm="6" className="mb-2 mt-1">
               <Label className="mb-0">Status</Label>
@@ -1054,34 +886,9 @@ const CreatePromotionalActivity = (args) => {
                         placeholder="Enter Activity Name"
                         onChange={handleInputChange}
                         value={formData?.ActivityName}
-                        // onChange={(e) => {
-                        //   setActivityName(e.target.value.toUpperCase());
-                        // }}
                       />
                     </Col>
-                    {/* <Col className="mb-1" lg="6" md="6" sm="12">
-                    <Label>Promo code</Label>
-                    <Input
-                      required
-                      type="text"
-                      name="targetEndDate"
-                      placeholder="Enter Promotion Code"
-                      value={Promocode}
-                      onChange={(e) => {
-                        setPromocode(e.target.value.toUpperCase());
-                      }}
-                    />
-                  </Col> */}
-                    {/* <Col className="mb-1" lg="6" md="6" sm="12">
-                    <Label>Amount</Label>
-                    <Input
-                      required
-                      type="number"
-                      placeholder="Enter Amount"
-                      value={Discount}
-                      onChange={(e) => setDiscount(e.target.value)}
-                    />
-                  </Col> */}
+
                     <Col className="mb-1" lg="6" md="6" sm="12">
                       <div className="">
                         <Label>Start Date</Label>
