@@ -164,7 +164,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.grandTotal}</span>
+                <span>
+                  {params?.data?.grandTotal &&
+                    params?.data?.grandTotal?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -177,7 +180,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.taxableAmount}</span>
+                <span>
+                  {params?.data?.taxableAmount &&
+                    params?.data?.taxableAmount?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -205,7 +211,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.sgstRate}</span>
+                <span>
+                  {params?.data?.sgstRate && params?.data?.sgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -218,7 +226,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.cgstRate}</span>
+                <span>
+                  {params?.data?.cgstRate && params?.data?.cgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -231,7 +241,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.igstRate}</span>
+                <span>
+                  {params?.data?.igstRate && params?.data?.igstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -317,7 +329,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.grandTotal?.toFixed(2)}</span>
+                <span>
+                  {params?.data?.grandTotal &&
+                    params?.data?.grandTotal?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -343,7 +358,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.taxableAmount}</span>
+                <span>
+                  {params?.data?.taxableAmount &&
+                    params?.data?.taxableAmount?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -357,7 +375,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.sgstRate}</span>
+                <span>
+                  {params?.data?.sgstRate && params?.data?.sgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -370,7 +390,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.cgstRate}</span>
+                <span>
+                  {params?.data?.cgstRate && params?.data?.cgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -383,7 +405,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.igstRate}</span>
+                <span>
+                  {params?.data?.igstRate && params?.data?.igstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -431,24 +455,25 @@ class HSNWiseReport extends React.Component {
           },
         },
 
-        {
-          headerName: "UQC",
-          valueGetter: (params) => {
-            let value = `${params?.data?.primaryUnit} - ${params?.data?.secondaryUnit}`;
-            return value;
-          },
-          filter: true,
-          editable: true,
-          resizable: true,
+        // {
+        //   headerName: "UQC",
+        //   valueGetter: (params) => {
+        //     debugger;
+        //     let value = `${params?.data?.primaryUnit} - ${params?.data?.secondaryUnit}`;
+        //     return value;
+        //   },
+        //   filter: true,
+        //   editable: true,
+        //   resizable: true,
 
-          cellRendererFramework: (params) => {
-            return (
-              <div className="cursor-pointer text-center">
-                <span>{params?.value}</span>
-              </div>
-            );
-          },
-        },
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="cursor-pointer text-center">
+        //         <span>{params?.value}</span>
+        //       </div>
+        //     );
+        //   },
+        // },
         {
           headerName: "Total Quantity",
           field: "qty",
@@ -472,7 +497,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.grandTotal}</span>
+                <span>
+                  {params?.data?.grandTotal &&
+                    params?.data?.grandTotal?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -499,7 +527,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.taxableAmount}</span>
+                <span>
+                  {params?.data?.taxableAmount &&
+                    params?.data?.taxableAmount?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -513,7 +544,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.sgstRate}</span>
+                <span>
+                  {params?.data?.sgstRate && params?.data?.sgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -526,7 +559,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.cgstRate}</span>
+                <span>
+                  {params?.data?.cgstRate && params?.data?.cgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -539,7 +574,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.igstRate}</span>
+                <span>
+                  {params?.data?.igstRate && params?.data?.igstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -583,7 +620,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.Product_Desc}</span>
+                <span>
+                  {params?.data?.Product_Desc && params?.data?.Product_Desc}
+                </span>
               </div>
             );
           },
@@ -627,7 +666,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.grandTotal?.toFixed(2)}</span>
+                <span>
+                  {params?.data?.grandTotal &&
+                    params?.data?.grandTotal?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -653,7 +695,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.taxableAmount}</span>
+                <span>
+                  {params?.data?.taxableAmount &&
+                    params?.data?.taxableAmount?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -667,7 +712,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.sgstRate}</span>
+                <span>
+                  {params?.data?.sgstRate && params?.data?.sgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -680,7 +727,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.cgstRate}</span>
+                <span>
+                  {params?.data?.cgstRate && params?.data?.cgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -693,7 +742,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.igstRate}</span>
+                <span>
+                  {params?.data?.igstRate && params?.data?.igstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -855,7 +906,10 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.taxableAmount}</span>
+                <span>
+                  {params?.data?.taxableAmount &&
+                    params?.data?.taxableAmount?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -869,7 +923,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.sgstRate}</span>
+                <span>
+                  {params?.data?.sgstRate && params?.data?.sgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -882,7 +938,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.cgstRate}</span>
+                <span>
+                  {params?.data?.cgstRate && params?.data?.cgstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -895,7 +953,9 @@ class HSNWiseReport extends React.Component {
           cellRendererFramework: (params) => {
             return (
               <div className="cursor-pointer text-center">
-                <span>{params?.data?.igstRate}</span>
+                <span>
+                  {params?.data?.igstRate && params?.data?.igstRate?.toFixed(2)}
+                </span>
               </div>
             );
           },
@@ -999,6 +1059,7 @@ class HSNWiseReport extends React.Component {
     this.setState({ Loading: true });
     await _Post(HSN_Stock_Report, db, id)
       .then((res) => {
+        console.log(res?.HSNStock);
         this.setState({
           Loading: false,
           rowHSNData: res?.HSNStock,
