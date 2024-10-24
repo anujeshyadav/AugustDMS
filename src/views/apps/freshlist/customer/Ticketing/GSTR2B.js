@@ -111,7 +111,7 @@ class GSTR1 extends React.Component {
           field: "invoiceId",
           filter: true,
           width: 200,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div className="text-center">
@@ -122,13 +122,13 @@ class GSTR1 extends React.Component {
         },
         {
           headerName: "Purchase Date",
-          field: "DateofDelivery",
+          field: "date",
           filter: true,
           width: 120,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
-                <span>{params?.data?.DateofDelivery}</span>
+                <span>{params?.data?.date?.split("T")[0]}</span>
               </div>
             );
           },
@@ -138,7 +138,7 @@ class GSTR1 extends React.Component {
           field: "partyId.CompanyName",
           filter: true,
           width: 220,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <span>{params?.data?.partyId?.CompanyName}</span>
@@ -146,28 +146,19 @@ class GSTR1 extends React.Component {
             );
           },
         },
-        {
-          headerName: "Supplier Last Name",
-          field: "partyId.lastName",
-          filter: true,
-          width: 190,
-          cellRendererFramework: params => {
-            return (
-              <div className="text-center">
-                <span>{params?.data?.partyId?.lastName}</span>
-              </div>
-            );
-          },
-        },
+
         {
           headerName: "GST Number",
           field: "partyId.gstNumber",
           filter: true,
           width: 150,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
-                <span>{params?.data?.partyId?.gstNumber}</span>
+                <span>
+                  {params?.data?.partyId?.gstNumber &&
+                    params?.data?.partyId?.gstNumber}
+                </span>
               </div>
             );
           },
@@ -178,7 +169,7 @@ class GSTR1 extends React.Component {
           field: "updatedAt",
           filter: true,
           width: 100,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <div>{params.data?.sgstTotal && params.data?.sgstTotal}</div>
@@ -190,8 +181,8 @@ class GSTR1 extends React.Component {
           headerName: "CGST",
           field: "updatedAt",
           filter: true,
-         width: 100,
-          cellRendererFramework: params => {
+          width: 100,
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <div>{params.data?.cgstTotal && params.data?.cgstTotal}</div>
@@ -203,8 +194,8 @@ class GSTR1 extends React.Component {
           headerName: "IGST",
           field: "updatedAt",
           filter: true,
-         width: 100,
-          cellRendererFramework: params => {
+          width: 100,
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <div>{params.data?.igstTotal && params.data?.igstTotal}</div>
@@ -217,7 +208,7 @@ class GSTR1 extends React.Component {
           field: "amount",
           filter: true,
           width: 100,
-          cellRendererFramework: params => {
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <div>{params.data?.amount?.toFixed(2)}</div>
@@ -229,8 +220,8 @@ class GSTR1 extends React.Component {
           headerName: "Round Off",
           field: "roundOff",
           filter: true,
-         width: 105,
-          cellRendererFramework: params => {
+          width: 105,
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <div>{params.data?.roundOff}</div>
@@ -242,8 +233,8 @@ class GSTR1 extends React.Component {
           headerName: "Grand Total",
           field: "grandTotal",
           filter: true,
-         width: 110,
-          cellRendererFramework: params => {
+          width: 110,
+          cellRendererFramework: (params) => {
             return (
               <div className="text-center">
                 <div>{params.data?.grandTotal}</div>
@@ -268,6 +259,7 @@ class GSTR1 extends React.Component {
         const pendingStatus = res?.orderHistory?.filter(ele =>
           ele.status == "completed" ? ele.status : null
         );
+   
         if (pendingStatus) {
           this.setState({ rowData: pendingStatus });
           this.setState({ rowAllData: res?.orderHistory });
@@ -482,7 +474,7 @@ class GSTR1 extends React.Component {
 
   handleSubmitDate = () => {
     const filteredItems = this.state.rowAllData?.filter(item => {
-      const dateList = new Date(item.DateofDelivery);
+      const dateList = new Date(item?.date);
       const onlyDate = dateList.toISOString().split("T")[0];
 
       return onlyDate >= this.state.startDate && onlyDate <= this.state.EndDate;
