@@ -60,7 +60,10 @@ import UserContext from "../../../../../context/Context";
 import { CheckPermission } from "../../house/CheckPermission";
 import SuperAdminUI from "../../../../SuperAdminUi/SuperAdminUI";
 import { ImDownload } from "react-icons/im";
-import { WareahouseList_For_addProduct } from "../../../../../ApiEndPoint/Api";
+import {
+  Promotion_Report_List,
+  WareahouseList_For_addProduct,
+} from "../../../../../ApiEndPoint/Api";
 import { B2B } from "./GSTR2Reportconst";
 const SelectedColums = [];
 
@@ -87,7 +90,7 @@ class PromotionalActivityReport extends React.Component {
       InsiderPermissions: {},
       setMySelectedarr: [],
       SelectedCols: [],
-      paginationPageSize: 15,
+      paginationPageSize: 20,
       currenPageSize: "",
       getPageSize: "",
       AllcolumnDefs: [],
@@ -164,53 +167,53 @@ class PromotionalActivityReport extends React.Component {
 
         {
           headerName: "Customer Name",
-          field: "invoiceId",
+          field: "partyId.CompanyName",
           filter: true,
           width: 200,
           cellRendererFramework: (params) => {
             console.log(params?.data);
             return (
               <div>
-                <span>{params?.data?.invoiceId}</span>
+                <span>{params?.data?.partyId?.CompanyName}</span>
               </div>
             );
           },
         },
         {
           headerName: "Customer Mobile No",
-          field: "DateofDelivery",
+          field: "partyId.contactNumber",
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.DateofDelivery}</span>
+                <span>{params?.data?.partyId?.contactNumber}</span>
               </div>
             );
           },
         },
         {
           headerName: "Sales Person name",
-          field: "partyId.firstName",
+          field: "partyId?.created_by?.firstName",
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.partyId?.firstName}</span>
+                <span>{params?.data?.partyId?.created_by?.firstName}</span>
               </div>
             );
           },
         },
         {
           headerName: "Sales Person Mobile No.",
-          field: "partyId.lastName",
+          field: "partyId.created_by.mobileNumber",
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.partyId?.lastName}</span>
+                <span>{params?.data?.partyId?.created_by?.mobileNumber}</span>
               </div>
             );
           },
@@ -230,13 +233,13 @@ class PromotionalActivityReport extends React.Component {
         },
         {
           headerName: "Target",
-          field: "partyId.gstNumber",
+          field: "Target",
           filter: true,
           width: 250,
           cellRendererFramework: (params) => {
             return (
               <div>
-                <span>{params?.data?.partyId?.gstNumber}</span>
+                <span>{params?.data?.Target}</span>
               </div>
             );
           },
@@ -244,16 +247,14 @@ class PromotionalActivityReport extends React.Component {
 
         {
           headerName: "Achieved",
-          field: "updatedAt",
+          field: "Achieved",
           filter: true,
           width: 180,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <Badge color="primary">
-                    {params.data?.sgstTotal && params.data?.sgstTotal}
-                  </Badge>
+                  <span>{params.data?.Achieved}</span>
                 </div>
               </div>
             );
@@ -262,16 +263,14 @@ class PromotionalActivityReport extends React.Component {
 
         {
           headerName: "Balance",
-          field: "amount",
+          field: "Balance",
           filter: true,
           width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <Badge color="primary">
-                    {params.data?.amount?.toFixed(2)}
-                  </Badge>
+                  <span>{params.data?.Balance?.toFixed(2)}</span>
                 </div>
               </div>
             );
@@ -279,16 +278,14 @@ class PromotionalActivityReport extends React.Component {
         },
         {
           headerName: "Status",
-          field: "amount",
+          field: "Status",
           filter: true,
           width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <Badge color="primary">
-                    {params.data?.amount?.toFixed(2)}
-                  </Badge>
+                  <span>{params.data?.Status}</span>
                 </div>
               </div>
             );
@@ -296,38 +293,36 @@ class PromotionalActivityReport extends React.Component {
         },
         {
           headerName: "Offer",
-          field: "amount",
+          field: "OfferAmount",
           filter: true,
           width: 150,
           cellRendererFramework: (params) => {
             return (
               <div className="d-flex align-items-center cursor-pointer">
                 <div>
-                  <Badge color="primary">
-                    {params.data?.amount?.toFixed(2)}
-                  </Badge>
+                  <span>{params.data?.OfferAmount}</span>
                 </div>
               </div>
             );
           },
         },
-        {
-          headerName: "Unit",
-          field: "amount",
-          filter: true,
-          width: 150,
-          cellRendererFramework: (params) => {
-            return (
-              <div className="d-flex align-items-center cursor-pointer">
-                <div>
-                  <Badge color="primary">
-                    {params.data?.amount?.toFixed(2)}
-                  </Badge>
-                </div>
-              </div>
-            );
-          },
-        },
+        // {
+        //   headerName: "Unit",
+        //   field: "amount",
+        //   filter: true,
+        //   width: 150,
+        //   cellRendererFramework: (params) => {
+        //     return (
+        //       <div className="d-flex align-items-center cursor-pointer">
+        //         <div>
+        //           <Badge color="primary">
+        //             {params.data?.amount?.toFixed(2)}
+        //           </Badge>
+        //         </div>
+        //       </div>
+        //     );
+        //   },
+        // },
       ],
     };
   }
@@ -356,26 +351,32 @@ class PromotionalActivityReport extends React.Component {
 
   async Apicalling(id, db) {
     this.setState({ Loading: true });
-    await View_PromotionList(id, db)
+    // await View_PromotionList(id, db);
+    await _Get(Promotion_Report_List, db)
       .then((res) => {
+        debugger;
         this.setState({ Loading: false });
 
         let keys = Object.keys(res?.Promotion[0]);
-        let myarr = keys.filter(
-          (item) =>
-            item !== "_id" &&
-            item !== "__v" &&
-            item !== "created_by" &&
-            item !== "status" &&
-            item !== "database" &&
-            item !== "createdAt" &&
-            item !== "activityId" &&
-            item !== "promoCodeWise" &&
-            item !== "updatedAt"
-        );
+        let myarr = ["ProductWise", "PercentageWise", "AmountWise"];
+        // let myarr = keys.filter(
+        //   (item) =>
+        //     item !== "_id" &&
+        //     item !== "__v" &&
+        //     item !== "created_by" &&
+        //     item !== "status" &&
+        //     item !== "database" &&
+        //     item !== "createdAt" &&
+        //     item !== "activityId" &&
+        //     item !== "promoCodeWise" &&
+        //     item !== "updatedAt"
+        // );
+
         let unique = [...new Set(myarr)];
         this.setState({ Dropdown: unique });
         this.setState({ AllData: res?.Promotion });
+        this.setState({ rowData: res?.Promotion });
+        debugger;
 
         this.setState({ AllcolumnDefs: this.state.columnDefs });
         this.setState({ SelectedCols: this.state.columnDefs });
@@ -511,14 +512,14 @@ class PromotionalActivityReport extends React.Component {
     doc.addImage(Logo, "JPEG", 10, 10, 50, 30);
     let date = new Date();
     doc.setCreationDate(date);
-    doc.text("UserAccount", 14, 51);
+    doc.text("PromotionTrackerList", 14, 51);
     doc.autoTable({
       head: [Object.keys(parsedData[0])],
       body: tableData,
       startY: 60,
     });
 
-    doc.save("UserList.pdf");
+    doc.save("PromotionTrackerList.pdf");
   }
 
   exportToPDF = async () => {
@@ -562,7 +563,7 @@ class PromotionalActivityReport extends React.Component {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Userlist.xlsx";
+    a.download = "PromotionTrackerList.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -586,7 +587,7 @@ class PromotionalActivityReport extends React.Component {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
         const excelType = "xls";
-        XLSX.writeFile(wb, `UserList.${excelType}`);
+        XLSX.writeFile(wb, `PromotionTrackerList.${excelType}`);
       },
     });
   };
@@ -698,229 +699,232 @@ class PromotionalActivityReport extends React.Component {
 
   handleFilter = (e) => {
     this.setState({ PromotionName: e.target.value });
-    let headings;
-    let maxKeys = 0;
-    let elementWithMaxKeys = null;
-    let AllMainData = [];
-    let myHeadings = [];
-    // console.log(this.state.AllData);
-    if (e.target.value !== "NA") {
-      let myarr = this.state.AllData?.filter(
-        (ele, i) => ele[e.target.value]?.length
-      );
-      // console.log(myarr);
-      myarr?.map((ele, i) => {
-        AllMainData?.push(ele[e.target.value]);
-      });
-      console.log(AllMainData.flat());
-      let flatarr = AllMainData?.flat();
-
-      for (const element of flatarr) {
-        const numKeys = Object.keys(element).length; // Get the number of keys in the current element
-        if (numKeys > maxKeys) {
-          maxKeys = numKeys; // Update the maximum number of keys
-          elementWithMaxKeys = element; // Update the element with maximum keys
-        }
-      }
-      if (elementWithMaxKeys) {
-        let findheading = Object.keys(elementWithMaxKeys);
-        let index = findheading.indexOf("_id");
-        if (index > -1) {
-          findheading.splice(index, 1);
-        }
-        let index1 = findheading.indexOf("status");
-        if (index1 > -1) {
-          findheading.splice(index1, 1);
-        }
-        // if(findheading.indexOf("productId")){
-
-        let index2 = findheading.indexOf("productId");
-        if (index2 > -1) {
-          findheading.splice(index2, 1);
-        }
-        // }
-        headings = findheading?.map((ele) => {
-          if (ele == "freeOtherProducts") {
-            return {
-              headerName: "freeOtherProducts",
-              field: "freeOtherProducts",
-              filter: true,
-              width: 180,
-              cellRendererFramework: (params) => {
-                return (
-                  <>
-                    <div className="d-flex justify-content-center">
-                      <span>
-                        {params.data?.freeOtherProducts?.length} Product
-                      </span>
-                    </div>
-                  </>
-                );
-              },
-            };
-          }
-          return {
-            headerName: ele,
-            field: ele,
-            filter: true,
-            sortable: true,
-          };
-        });
-        myHeadings = [...headings];
-      } else {
-        myHeadings = [];
-      }
-
-      let Product = [
-        // {
-        //   headerName: "Actions",
-        //   field: "sortorder",
-        //   field: "transactions",
-        //   width: 190,
-        //   cellRendererFramework: (params) => {
-        //     console.log(params?.data);
-        //     return (
-        //       <div className="actions cursor-pointer">
-        //         {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions?.View && (
-        //             <Route
-        //               render={({ history }) => (
-        //                 <Eye
-        //                   className="mr-50"
-        //                   size="25px"
-        //                   color="green"
-        //                   onClick={() => {
-        //                     history.push({
-        //                       pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
-        //                       state: {
-        //                         data: params?.data,
-        //                         key: this.state.PromotionName,
-        //                         type: "View",
-        //                       },
-        //                     });
-        //                   }}
-        //                 />
-        //               )}
-        //             />
-        //           )}
-
-        //         {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions?.Edit && (
-        //             <Route
-        //               render={({ history }) => (
-        //                 <Edit
-        //                   className="mr-50"
-        //                   size="25px"
-        //                   color="green"
-        //                   onClick={() => {
-        //                     history.push({
-        //                       pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
-        //                       state: {
-        //                         data: params?.data,
-        //                         key: this.state.PromotionName,
-        //                         type: "Edit",
-        //                       },
-        //                     });
-        //                   }}
-        //                 />
-        //               )}
-        //             />
-        //           )}
-
-        //         {this.state.InsiderPermissions &&
-        //           this.state.InsiderPermissions?.Delete && (
-        //             <Route
-        //               render={() => (
-        //                 <Trash2
-        //                   className="mr-50"
-        //                   size="25px"
-        //                   color="red"
-        //                   onClick={() => {
-        //                     this.runthisfunction(params?.data?._id);
-        //                   }}
-        //                 />
-        //               )}
-        //             />
-        //           )}
-        //       </div>
-        //     );
-        //   },
-        // },
-
-        ...myHeadings,
-        {
-          headerName: "Status",
-          field: "status",
-          filter: true,
-          width: 150,
-          cellRendererFramework: (params) => {
-            return params.data?.status === "Active" ? (
-              <div className="badge badge-pill badge-success">
-                {params.data?.status}
-              </div>
-            ) : params.data?.status === "Deactive" ? (
-              <div className="badge badge-pill badge-warning">
-                {params.data?.status}
-              </div>
-            ) : null;
-          },
-        },
-        // {
-        //   headerName: "Created date",
-        //   field: "createdAt",
-        //   filter: true,
-        //   sortable: true,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <>
-        //         <div className="actions cursor-pointer"></div>
-        //       </>
-        //     );
-        //   },
-        // },
-        // {
-        //   headerName: "Updated date",
-        //   field: "updatedAt",
-        //   filter: true,
-        //   sortable: true,
-        //   cellRendererFramework: (params) => {
-        //     return (
-        //       <>
-        //         <div className="actions cursor-pointer"></div>
-        //       </>
-        //     );
-        //   },
-        // },
-      ];
-      if (flatarr) {
-        this.setState({ rowData: flatarr });
-        this.setState({ rowAllData: flatarr });
-      } else {
-        swal("No Data Found");
-      }
-      this.setState({ AllcolumnDefs: Product });
-
-      let userHeading = JSON.parse(
-        localStorage.getItem("Promotional Activity Report")
-      );
-      if (userHeading?.length) {
-        this.setState({ columnDefs: userHeading });
-        // this.gridApi.setColumnDefs(userHeading);
-        this.setState({ SelectedcolumnDefs: userHeading });
-      } else {
-        this.setState({ columnDefs: Product });
-        this.setState({ SelectedcolumnDefs: Product });
-      }
-      this.setState({ SelectedCols: Product });
-      if (myarr.length) {
-        this.setState({ Table: true });
-      } else {
-        this.setState({ Table: false });
-      }
-    } else {
-      this.setState({ Table: false });
-    }
     this.setState({ SelectedFilter: e.target.value });
+    let selected = this.state.AllData?.filter((item)=>item?.type==e.target.value)
+     this.setState({ rowData: selected });
+    // let headings;
+    // let maxKeys = 0;
+    // let elementWithMaxKeys = null;
+    // let AllMainData = [];
+    // let myHeadings = [];
+    // console.log(this.state.AllData);
+    // if (e.target.value !== "NA") {
+    //   let myarr = this.state.AllData?.filter(
+    //     (ele, i) => ele[e.target.value]?.length
+    //   );
+    //   // console.log(myarr);
+    //   myarr?.map((ele, i) => {
+    //     AllMainData?.push(ele[e.target.value]);
+    //   });
+    //   console.log(AllMainData.flat());
+    //   let flatarr = AllMainData?.flat();
+
+    //   for (const element of flatarr) {
+    //     const numKeys = Object.keys(element).length; // Get the number of keys in the current element
+    //     if (numKeys > maxKeys) {
+    //       maxKeys = numKeys; // Update the maximum number of keys
+    //       elementWithMaxKeys = element; // Update the element with maximum keys
+    //     }
+    //   }
+    //   if (elementWithMaxKeys) {
+    //     let findheading = Object.keys(elementWithMaxKeys);
+    //     let index = findheading.indexOf("_id");
+    //     if (index > -1) {
+    //       findheading.splice(index, 1);
+    //     }
+    //     let index1 = findheading.indexOf("status");
+    //     if (index1 > -1) {
+    //       findheading.splice(index1, 1);
+    //     }
+    //     // if(findheading.indexOf("productId")){
+
+    //     let index2 = findheading.indexOf("productId");
+    //     if (index2 > -1) {
+    //       findheading.splice(index2, 1);
+    //     }
+    //     // }
+    //     headings = findheading?.map((ele) => {
+    //       if (ele == "freeOtherProducts") {
+    //         return {
+    //           headerName: "freeOtherProducts",
+    //           field: "freeOtherProducts",
+    //           filter: true,
+    //           width: 180,
+    //           cellRendererFramework: (params) => {
+    //             return (
+    //               <>
+    //                 <div className="d-flex justify-content-center">
+    //                   <span>
+    //                     {params.data?.freeOtherProducts?.length} Product
+    //                   </span>
+    //                 </div>
+    //               </>
+    //             );
+    //           },
+    //         };
+    //       }
+    //       return {
+    //         headerName: ele,
+    //         field: ele,
+    //         filter: true,
+    //         sortable: true,
+    //       };
+    //     });
+    //     myHeadings = [...headings];
+    //   } else {
+    //     myHeadings = [];
+    //   }
+
+    //   let Product = [
+    //     // {
+    //     //   headerName: "Actions",
+    //     //   field: "sortorder",
+    //     //   field: "transactions",
+    //     //   width: 190,
+    //     //   cellRendererFramework: (params) => {
+    //     //     console.log(params?.data);
+    //     //     return (
+    //     //       <div className="actions cursor-pointer">
+    //     //         {this.state.InsiderPermissions &&
+    //     //           this.state.InsiderPermissions?.View && (
+    //     //             <Route
+    //     //               render={({ history }) => (
+    //     //                 <Eye
+    //     //                   className="mr-50"
+    //     //                   size="25px"
+    //     //                   color="green"
+    //     //                   onClick={() => {
+    //     //                     history.push({
+    //     //                       pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
+    //     //                       state: {
+    //     //                         data: params?.data,
+    //     //                         key: this.state.PromotionName,
+    //     //                         type: "View",
+    //     //                       },
+    //     //                     });
+    //     //                   }}
+    //     //                 />
+    //     //               )}
+    //     //             />
+    //     //           )}
+
+    //     //         {this.state.InsiderPermissions &&
+    //     //           this.state.InsiderPermissions?.Edit && (
+    //     //             <Route
+    //     //               render={({ history }) => (
+    //     //                 <Edit
+    //     //                   className="mr-50"
+    //     //                   size="25px"
+    //     //                   color="green"
+    //     //                   onClick={() => {
+    //     //                     history.push({
+    //     //                       pathname: `/app/ajgroup/account/EditPromotionalActivity/${params?.data?._id}`,
+    //     //                       state: {
+    //     //                         data: params?.data,
+    //     //                         key: this.state.PromotionName,
+    //     //                         type: "Edit",
+    //     //                       },
+    //     //                     });
+    //     //                   }}
+    //     //                 />
+    //     //               )}
+    //     //             />
+    //     //           )}
+
+    //     //         {this.state.InsiderPermissions &&
+    //     //           this.state.InsiderPermissions?.Delete && (
+    //     //             <Route
+    //     //               render={() => (
+    //     //                 <Trash2
+    //     //                   className="mr-50"
+    //     //                   size="25px"
+    //     //                   color="red"
+    //     //                   onClick={() => {
+    //     //                     this.runthisfunction(params?.data?._id);
+    //     //                   }}
+    //     //                 />
+    //     //               )}
+    //     //             />
+    //     //           )}
+    //     //       </div>
+    //     //     );
+    //     //   },
+    //     // },
+
+    //     ...myHeadings,
+    //     {
+    //       headerName: "Status",
+    //       field: "status",
+    //       filter: true,
+    //       width: 150,
+    //       cellRendererFramework: (params) => {
+    //         return params.data?.status === "Active" ? (
+    //           <div className="badge badge-pill badge-success">
+    //             {params.data?.status}
+    //           </div>
+    //         ) : params.data?.status === "Deactive" ? (
+    //           <div className="badge badge-pill badge-warning">
+    //             {params.data?.status}
+    //           </div>
+    //         ) : null;
+    //       },
+    //     },
+    //     // {
+    //     //   headerName: "Created date",
+    //     //   field: "createdAt",
+    //     //   filter: true,
+    //     //   sortable: true,
+    //     //   cellRendererFramework: (params) => {
+    //     //     return (
+    //     //       <>
+    //     //         <div className="actions cursor-pointer"></div>
+    //     //       </>
+    //     //     );
+    //     //   },
+    //     // },
+    //     // {
+    //     //   headerName: "Updated date",
+    //     //   field: "updatedAt",
+    //     //   filter: true,
+    //     //   sortable: true,
+    //     //   cellRendererFramework: (params) => {
+    //     //     return (
+    //     //       <>
+    //     //         <div className="actions cursor-pointer"></div>
+    //     //       </>
+    //     //     );
+    //     //   },
+    //     // },
+    //   ];
+    //   if (flatarr) {
+    //     this.setState({ rowData: flatarr });
+    //     this.setState({ rowAllData: flatarr });
+    //   } else {
+    //     swal("No Data Found");
+    //   }
+    //   this.setState({ AllcolumnDefs: Product });
+
+    //   let userHeading = JSON.parse(
+    //     localStorage.getItem("Promotional Activity Report")
+    //   );
+    //   if (userHeading?.length) {
+    //     this.setState({ columnDefs: userHeading });
+    //     // this.gridApi.setColumnDefs(userHeading);
+    //     this.setState({ SelectedcolumnDefs: userHeading });
+    //   } else {
+    //     this.setState({ columnDefs: Product });
+    //     this.setState({ SelectedcolumnDefs: Product });
+    //   }
+    //   this.setState({ SelectedCols: Product });
+    //   if (myarr.length) {
+    //     this.setState({ Table: true });
+    //   } else {
+    //     this.setState({ Table: false });
+    //   }
+    // } else {
+    //   this.setState({ Table: false });
+    // }
+    // this.setState({ SelectedFilter: e.target.value });
   };
   handleParentSubmit = (e) => {
     e.preventDefault();
@@ -995,7 +999,7 @@ class PromotionalActivityReport extends React.Component {
                   style={{ textTransform: "uppercase" }}
                   name="typeofpromotion"
                   className="float-right"
-                  // onChange={(e) => this.handleFilter(e)}
+                  onChange={(e) => this.handleFilter(e)}
                 >
                   <option value="NA">--Select Promotion Type--</option>
                   {this.state.Dropdown &&
@@ -1019,7 +1023,7 @@ class PromotionalActivityReport extends React.Component {
                 />
               </div>
             </Col>
-            <Col lg="4" md="4" sm="4">
+            {/* <Col lg="4" md="4" sm="4">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div className="table-input  " style={{ marginTop: "10px" }}>
                   <Label>Start Date</Label>
@@ -1050,7 +1054,7 @@ class PromotionalActivityReport extends React.Component {
                   </Button>
                 </div>
               </div>
-            </Col>
+            </Col> */}
             <Col lg="1" md="1" sm="6" xs="6" style={{ marginTop: "30px" }}>
               {InsiderPermissions && InsiderPermissions?.View && (
                 <span className="">

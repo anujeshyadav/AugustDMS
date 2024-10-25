@@ -405,11 +405,8 @@ class HouseProductList extends React.Component {
         formValues[i]["lossStatus"] = false;
       }
     } else {
-      debugger;
-
       let data = formValues[i];
       let LandedCost = data?.landedCost || data?.Purchase_Rate;
-
       let Mrp = data?.Product_MRP;
       let gst = (100 + data?.GSTRate) / 100;
       let Dis = (100 + data?.maxDiscount) / 100;

@@ -111,6 +111,7 @@ export const SaveActivity = "/promotion/save-activity";
 export const UpdateProductWisePromotion =
   "/promotion/update-product-promotion/";
 export const ActivityList = "/promotion/view-activity/";
+export const Promotion_Report_List = "/promotion/promotion-apply/";
 export const Update_Activity = "/promotion/update-activity/";
 export const Delete_Activity = "/promotion/delete-activity/";
 export const Save_Promotion = "/promotion/save-promotion";

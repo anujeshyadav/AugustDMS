@@ -144,7 +144,7 @@ class LowStockAlert extends React.Component {
         },
         {
           headerName: "Party Name",
-          field: "SupplierName",
+          field: "partyId.CompanyName",
           filter: true,
 
           sortable: true,
@@ -153,7 +153,7 @@ class LowStockAlert extends React.Component {
             return (
               <>
                 <div className="actions cursor-pointer">
-                  <span>{params?.data?.SupplierName}</span>
+                  <span>{params?.data?.partyId?.CompanyName}</span>
                 </div>
               </>
             );

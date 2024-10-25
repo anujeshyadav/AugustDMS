@@ -103,7 +103,6 @@ const LowStockPurchase = (args) => {
   const handleSelectionParty = (selectedList, selectedItem) => {
     setPartyId(selectedItem._id);
     setParty(selectedItem);
-
     const gstdetails = PurchaseGstCalculation(
       selectedItem,
       product,
@@ -233,11 +232,12 @@ const LowStockPurchase = (args) => {
     CreateCustomerList(userdata?._id, userdata?.database)
       .then((res) => {
         let value = res?.Customer;
+        let SelectedParty = value?.filter((ele) => ele?._id == partyid);
+        handleSelectionParty([], SelectedParty[0]);
         if (value?.length) {
           setPartyList(value);
         }
-        let SelectedParty = value?.filter((ele) => ele?._id == partyid);
-        handleSelectionParty([], SelectedParty[0]);
+        debugger;
       })
       .catch((err) => {
         console.log(err);
@@ -489,7 +489,7 @@ const LowStockPurchase = (args) => {
                             handleSelectionParty(selectedList, selectedItem)
                           }
                           onRemove={onRemove1}
-                          displayValue="firstName"
+                          displayValue="CompanyName"
                         />
                       </div>
                     </Col>

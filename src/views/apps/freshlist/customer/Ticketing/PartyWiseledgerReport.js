@@ -437,6 +437,8 @@ class PartyWiseledgerReport extends React.Component {
         }
         let value = res?.Customer;
         if (value?.length) {
+          console.log(value);
+          debugger;
           this.setState({ PartyList: value });
         }
       })
@@ -813,8 +815,7 @@ class PartyWiseledgerReport extends React.Component {
                         e.target.options[e.target.selectedIndex].getAttribute(
                           "data-name"
                         );
-                      //                     PartyId: "",
-                      //   PartyName: "",
+                   
                       this.setState({
                         PartyId: e.target.value,
                         PartyName: selected,
@@ -827,10 +828,8 @@ class PartyWiseledgerReport extends React.Component {
                       PartyList?.map((ele, i) => {
                         return (
                           <option
-                            data-name={`${ele?.firstName} ${ele?.lastName} `}
-                            value={
-                              ele?._id
-                            }>{`${ele?.firstName} ${ele?.lastName} `}</option>
+                            data-name={`${ele?.CompanyName}`}
+                            value={ele?._id}>{`${ele?.CompanyName}`}</option>
                         );
                       })}
                   </CustomInput>

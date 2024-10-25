@@ -184,26 +184,6 @@ const CreateOrder = (args) => {
   const handleSelection = async (selectedList, selectedItem, index) => {
     const userdata = JSON.parse(localStorage.getItem("userData"));
 
-    let landedCost = selectedItem?.landedCost * 1.05;
-    let PurchaseRate = selectedItem?.Purchase_Rate * 1.05;
-
-    // let costPrice = Number(
-    //   (
-    //     selectedItem?.Product_MRP /
-    //     ((100 + Number(selectedItem?.GSTRate)) / 100)
-    //   ).toFixed(2)
-    // );
-    // if (costPrice <= landedCost || PurchaseRate >= costPrice) {
-    //   swal(
-    //     "error",
-    //     `${
-    //       costPrice <= landedCost
-    //         ? "MRP is less Then Landed Cost"
-    //         : "Base Price is Less then Purchase Rate"
-    //     }`,
-    //     "error"
-    //   );
-    // } else {
     SelectedITems.push(selectedItem);
     let costPrice = Number(
       (
@@ -214,19 +194,6 @@ const CreateOrder = (args) => {
           ((100 + Number(selectedItem?.GSTRate)) / 100))
       ).toFixed(2)
     );
-    // let URl = `${WareHouse_Current_Stock}${selectedItem?.warehouse?._id}/`;
-    // var Stock;
-    // await _Get(URl, selectedItem?._id)
-    //   .then(res => {
-    //     console.log(res?.currentStock);
-    //     console.log(res?.currentStock.currentStock);
-    //     Stock = res?.currentStock;
-    //   })
-    //   .catch(err => {
-    //     if (!!err.response?.data?.message) {
-    //       swal("Error", `${err.response?.data?.message}`, "error");
-    //     }
-    //   });
 
     setProduct((prevProductList) => {
       const updatedProductList = [...prevProductList];
@@ -342,20 +309,11 @@ const CreateOrder = (args) => {
     _Get(PurchaseProductList_Product, userdata?.database)
       .then((res) => {
         setProductList(res?.Product);
-      })
+      }) 
       .catch((err) => {
         console.log(err);
       });
-    // ProductListView(userdata?._id, userdata?.database)
-    //   .then((res) => {
-    //     let product = res?.Product?.filter(
-    //       (ele) => ele?.addProductType == "Product"
-    //     );
-    //     setProductList(res?.Product);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
     CreateCustomerList(userdata?._id, userdata?.database)
       .then((res) => {
         let value = res?.Customer;
