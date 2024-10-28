@@ -35,12 +35,36 @@ class RevenueGenerated extends React.Component {
         // iconBg="success"
         // stat="97.5k"
         statTitle="Target"
-        statTitle1={`Current Month Target : ${this.state.rowData?.currentMonthTarget?this.state.rowData?.currentMonthTarget:0}`}
-        statTitle2={`Current Month Achive : ${this.state.rowData?.currentMonthAchieve?this.state.rowData?.currentMonthAchieve:0}`}
-       statTitle3 = {`Target Pending : ${this.state.rowData?.targerPending?this.state.rowData?.targerPending:0}`}
-        statTitle4={`Average Target : ${this.state.rowData?.averageTarget?this.state.rowData?.averageTarget:0}`}
-        statTitle5={`Average Achivement : ${this.state.rowData?.averageAchievement?this.state.rowData?.averageAchievement:0}`}
-        statTitle6={`Average Pending : ${this.state.rowData?.averagePending?this.state.rowData?.averagePending:0}`}
+        statTitle1={`Current Month Target : ${
+          this.state.rowData?.currentMonthTarget
+            ? this.state.rowData?.currentMonthTarget?.toFixed(2)
+            : 0
+        }`}
+        statTitle2={`Current Month Acheive : ${
+          this.state.rowData?.currentMonthAchieve
+            ? this.state.rowData?.currentMonthAchieve?.toFixed(2)
+            : 0
+        }`}
+        statTitle3={`Target Pending : ${
+          this.state.rowData?.targerPending
+            ? this.state.rowData?.targerPending?.toFixed(2)
+            : 0
+        }`}
+        statTitle4={`Average Target : ${
+          this.state.rowData?.averageTarget
+            ? this.state.rowData?.averageTarget?.toFixed(2)
+            : 0
+        }`}
+        statTitle5={`Average Achivement : ${
+          this.state.rowData?.averageAchievement
+            ? this.state.rowData?.averageAchievement?.toFixed(2)
+            : 0
+        }`}
+        statTitle6={`Average Pending : ${
+          this.state.rowData?.averagePending
+            ? this.state.rowData?.averagePending?.toFixed(2)
+            : 0
+        }`}
         options={revenueGenerated}
         // series={revenueGeneratedSeries}
         // type="area"
